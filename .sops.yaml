@@ -1,0 +1,4 @@
+---
+creation_rules:
+  - path_regex: .*\.sops\.ya?ml
+    pgp: 'C5B9ADB07DBE5A2E'
