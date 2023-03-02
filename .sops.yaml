@@ -1,4 +1,10 @@
 ---
 creation_rules:
+  - path_regex: k8s/.*\.sops\.ya?ml
+    encrypted_regex: "^(data|stringData)$"
+    pgp: C5B9ADB07DBE5A2E
+    age: >-
+      age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+
   - path_regex: .*\.sops\.ya?ml
-    pgp: 'C5B9ADB07DBE5A2E'
+    pgp: C5B9ADB07DBE5A2E

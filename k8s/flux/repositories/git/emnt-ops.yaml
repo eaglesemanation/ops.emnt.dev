@@ -1,0 +1,14 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: emnt-ops
+  namespace: flux-system
+spec:
+  interval: 10m
+  ref:
+    branch: main
+  url: https://github.com/eaglesemanation/ops.emnt.dev.git
+  ignore: |
+    /*
+    !/k8s
