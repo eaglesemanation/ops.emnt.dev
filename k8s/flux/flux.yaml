@@ -33,7 +33,6 @@ spec:
   interval: 10m
   path: ./k8s/flux
   prune: true
-  wait: false
   sourceRef:
     kind: GitRepository
     name: emnt-ops
@@ -47,4 +46,3 @@ spec:
     substituteFrom:
       - kind: ConfigMap
         name: cluster-settings
-        optional: false
