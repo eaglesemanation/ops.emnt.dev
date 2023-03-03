@@ -5,4 +5,5 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  SVC_DNS_ADDR: 192.168.25.2
   SVC_INGRESS_ADDR: 192.168.25.5
