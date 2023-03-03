@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
     name: tunnel-creds
+    namespace: cloudflared
 data:
     credentials.json: ENC[AES256_GCM,data:UJCXVTBHbFiZan+hpT7BuxKHtaiQMIh9yJzsfj38+qJVA5xJJjDDPujTcmk87LyNs7CZl+eDj/YyAAxTMro8RgNzm7BhWZYjjPXESMQrz/AbADRKWYMq6mS8AD+k9PsgLZcEri0reb5+KHBqiHUOcq9BwtBviD/kbnGXncRnGjwiVJ6gH5uEoZbLX1ZeOf/Aoi45oebLDJbM8efJT+AYiCVY46WVYVtpv8iLP+Ur9XsnyyqIqQR9UQ==,iv:AlnOykHevEY1/XExNd4h8R7CSAL3lnN/8sfWLnTTV64=,tag:sBngAd8OLZX1EaUOt11eLw==,type:str]
 sops:
