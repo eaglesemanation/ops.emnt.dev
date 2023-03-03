@@ -3,8 +3,8 @@ kind: Secret
 metadata:
     name: tunnel-creds
     namespace: cloudflared
-data:
-    token: ENC[AES256_GCM,data:yqVXBLIDU6Jduaxss/Mh8l1sfiDlaKGgvfTZLAUNP57R22VI7xzvV/Pt2QbmrV68XdEN0ZvfedbrFJYB+6aDXWG4bCPR3rlM4i9wWIy36v6K5WPJ1bZ9Po2O3I/obdE9FyUfyajDWx03MuhAdW0UqOg56cFo4CFd6w73J3dHuEjR/tOzi6J3GAriebNZHKEW1LQ9TnGhTD3cy7+GA8Cak0Lxm+91CmbfgDF7faK4tkl5WJgg5UaI0A==,iv:FlhYClXqLpBF+sl0oV7BpKjO17eaGYgcqjAvXpqESLY=,tag:0k3V7XVBMlGSpOPaDC3xDw==,type:str]
+stringData:
+    token: ENC[AES256_GCM,data:wO7Jl7Y5zvqOXq4SmUeD7K+yx0VHpzPTjOo3eiJYjXoMqPiB95MIU9bCHnPYRmLD1QOldvaK4JtI1kkgDZb6BPkBdCvXhYhitJTecjAnP9b/3ttCtWHlpE76Ih8txCRCJhOnjOOieud4jorY3EBDF7VCTy8EqlQixRc+gphW6OZANJRG5+V3bSdHuGUEHR1tcDK77SpNf3wohqMYJ6kq5tccu+GFhDuMm2S7NBTrck8rrSqyv2SuKQ==,iv:gPhL1PAhdXALsEdMWWQv84/RTKqR2yiESvS12RVqcNE=,tag:X7995i+KkOkQVdRDrSJaIQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -14,28 +14,28 @@ sops:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxNmlJZVpRdlY1WXRQOEw3
-            Z3JmaGIzNlJTMnVhYUphUzdsM0Zxb29mRXk4Cm1xWjMzTEdKTzV3bEorYjdlMUxW
-            MldGZk9hb1ZRNGZhd0pyODJxaHQ0MDQKLS0tIFBhSmxvS1Q1RUNBdU9nNDExUWZ6
-            Y3NxdGlUcEJSSDFRa3VYOUVWSWo5OE0KNkSzFbEC6bEGF+Zk6dnaedlR4VAe5xyH
-            WyUXSxHXCj1/lheg0Z6g0fxNzyoC/F5+Q0wqxIbw7PzFrDtDyrlh+A==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBicVJPUkxvbmFPczZ0TTNv
+            M2RkajBUY1JjN1JOWUJFOEVZUG13RHJlaVFNCnUxeDRtSHBDUHd1OEh1YjQ1L2hN
+            c1UybzVRVFcvZ3FxTUoxT3QvV3ZSTmcKLS0tIHdhTWw0bURuQmFxbDd2b29xa0hY
+            eEFnN1NTNDlicjR3NHFGT0tLQ2xjQncKpHcONzK6MtsfQ2DhOCIoD/4vE7QQEJfA
+            A47zrwpC31fCM7Bq+F3CI0oFm1dqJHrokQjsGNOtyv8vBGnzAjFG1g==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-03-03T04:54:41Z"
-    mac: ENC[AES256_GCM,data:YkZ8cP1aTKT3XxszOT7U5q/TeqncaeXR2CMHX0aVi0QPzy4vf8rmjnlpaYPtntQgYYj8N9PfDpvdZ7U8VFF5rmQz1eZDFlOc0F34mgYt+eoQnOan9lNXWiUe6SboGTYt61ehCPM3Q5Gt/DWiPGJcPfEDNxH2UaAzw/ezga32yo0=,iv:MDeqSvqjrB2utH3DW1a8DVoIZDoIRYgcFLB2daAXGJg=,tag:737DPbHI5XeUnP6i1h/L0w==,type:str]
+    lastmodified: "2023-03-03T05:03:31Z"
+    mac: ENC[AES256_GCM,data:9vi6FZteOuN3ymkeYIrx8vNyXAkh4Q1AYQm3dJ0idcBxXYZvMuVzYWVMKxm5jdRNpJHZsZurY7tnMpDOxxUzrYIylKi+FR47BzKNl91USmF8AOWyNVNKmJwlQMqSY77wIJwdaZD2rDI32IEiDu3A8cHX3vlMMOTAVbqw9OvpJqA=,iv:weVvPhDm59jRS8Zf5Ig6Mnmcbd1wk4tTs99v/7IoI9A=,tag:8pin34q+LiiJjCcqGDeP1w==,type:str]
     pgp:
-        - created_at: "2023-03-03T04:54:41Z"
+        - created_at: "2023-03-03T05:03:31Z"
           enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf/bARjnD2tX3cKJXTk+xN6WVcsI3IZvqIlbI2UmRjrWdod
-            o8sQCaZGh75kYYZuMNAtuJNN33mm8QUrMyUvnrq/WulaCD2mZP8NflHNno3xgTw4
-            K3ssT/0Crs6Wb3nHWrH79ZLOs5S0mxe1pxmfhJfxARIwidn3rc5QSA5I+d713EEh
-            efttX9wBAKQMKz4xfxsIR5/MHOjjjirK32KkZ/7UOAtA476foUFodQDiKvMpa98C
-            RxXYJATAEdhxL20ybzoYh5NchykQezWJimL1kTOcatCERZJy3wGj4G/m7vYniGP1
-            UyZ6in84kVpdgAJiJdLOHVf1yBOVovUdKhJm1QZnMNJeAYY2LmpWuo9ik+asiaWi
-            NHmufAA4J2CZV0QY7+lo+OA7tCCpx7M/iPVEQ6pFUaBTa8lOQbJa9L0kZqYOdcYj
-            qhKUAK5O7XmV9vMGXmSKHRtaQjhhwsRYJvZ4SmLqOQ==
-            =x6h/
+            hQEMAzB6fv8Ha/LEAQgAnwVJeuXtqXMBtfWMPKGSUqh4vvaehj2yaUSsnoJm2OUS
+            FZIOjaVu2lrL2X+FxafT1yb6E3/wKCP1pkk07t1j4cvY6Lp0pHen/ThJTtGm6hMu
+            dq98IxG8Y2iwzXVt/1iHZ09bcBtqOQoMl0G4+QhwSmwQ4lH2JNCzspfuuwbJsVBR
+            x+DTLCzEEAH5jyKOSzY6KfyluioxItEMFSGX1KRx1TbjBoRKe62ZLNaiYxrp+xAG
+            nE7/YOHsLZRZ/kNmiCA4gBeRqGAN50q5OyUrBVmtWY+a7aWgvSRqlAQQmjuaFEFO
+            tmvQ0Lw6ufaf4m0XYTTIaF69maatLAN3cyMJoXf8F9JeAf9lw3zx2opkg26k4Nge
+            LnrGlimBA9Mx0xnzI3M9ish5nhcU4ltl77Lm63QhaQi6VipxMwq680MIPhW1Ypp5
+            Wd89cR637FKyueg70rwaimbT0zj/szfiV8tpl3+DoQ==
+            =yb07
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
     encrypted_regex: ^(data|stringData)$
