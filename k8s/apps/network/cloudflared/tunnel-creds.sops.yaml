@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: tunnel-creds
+data:
+    credentials.json: ENC[AES256_GCM,data:UJCXVTBHbFiZan+hpT7BuxKHtaiQMIh9yJzsfj38+qJVA5xJJjDDPujTcmk87LyNs7CZl+eDj/YyAAxTMro8RgNzm7BhWZYjjPXESMQrz/AbADRKWYMq6mS8AD+k9PsgLZcEri0reb5+KHBqiHUOcq9BwtBviD/kbnGXncRnGjwiVJ6gH5uEoZbLX1ZeOf/Aoi45oebLDJbM8efJT+AYiCVY46WVYVtpv8iLP+Ur9XsnyyqIqQR9UQ==,iv:AlnOykHevEY1/XExNd4h8R7CSAL3lnN/8sfWLnTTV64=,tag:sBngAd8OLZX1EaUOt11eLw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYSFRUdWc5RE0rbjhvNEdL
+            d2d4TnJPWHJobWtDZTlwQmExOFdtWDlEZ0VZClVPQUx6djRRSi9wak1Qd0JyMDRn
+            WFFPbmVndDhGUWJ5eEorV21pVjllRDgKLS0tIGE4K2wxYnMyd3oyTmRiNzB4enNs
+            WUlNckprUk02bGNtanU5NGYxZ3RIbDgKgDM/NcbkjVz9OJxgehs8MBTtgM/9F3aM
+            ESsX2p7S873clWTAthtEkdPhJ1kd3PIAX6rjJ2h73gK3XdLxbmpz0w==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-03-03T04:11:36Z"
+    mac: ENC[AES256_GCM,data:iSf/YFcjHQVd4dcbrdfnOJFR4HQ0stgTHy8jdNRlJUwb+FR+T/+qpP1hRpg3EefL3mrLIAfRHBjEKmh7h5rswwfVzKI0oqH2dFmAA6Sjab8rBuGWAYDGj5fRF4qkKLfscxm3Qx3NAZkFvAvd24H7C6vREKpZZI3ui8x0n6knHbM=,iv:AmBGPYmXM9M509Xni+oATbPgwGuFHB2cckyJoGrsC+4=,tag:Z/rxGipfOtYVig7dAve/SQ==,type:str]
+    pgp:
+        - created_at: "2023-03-03T04:11:35Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf+OXH0xUASM4OxOMqROGyC0xgCkZHQKcScv+jKZ0JSFxtL
+            Wr1twbREDLuIOS/zIDJwOJ3iMWjYyxlUgSzSZC58nLAVfdpaoZTxSBj88iTa6VcG
+            ZNvbZhkFPv7ffsBjON1j/wtOT5uGxn2Yp9z4x4jN5GhwEgsZsqx8Rb3Wu+oz1S19
+            pdj8pLWlI0LmMFXM+4R7ca1XBSq8ToVkd7i4oYMnKxGtLtwO9yB8Uic99gS0/+99
+            5OiZd0PBoGZOToCxknrqLUsj+Hx28ALX4AeK6OlaL1X741YCHcMTdMzwro2rcnHq
+            wPI1SSo/K30q80p62qzkEykEdayRN9r+cyUhFkJbWNJeARXiejHyt7mIahg+yxds
+            zhOJl9zSzDhNF9jc9012xPakav3jpWQngTTyNbVo5MNBImjA8qoYsFS8LBmzf1x4
+            34j0NJVuRBCigHRJjZQnWeNupWbZ7xIPUkwPRJw+9A==
+            =LbJ3
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
