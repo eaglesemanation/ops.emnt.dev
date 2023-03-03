@@ -35,13 +35,13 @@ spec:
             - name: creds
               mountPath: /etc/cloudflared/creds
               readOnly: true
-          volumes:
-            - name: config
-              configMap:
-                name: cloudflared
-                items:
-                  - key: config.yaml
-                    path: config.yaml
-            - name: creds
-              secret:
-                secretName: tunnel-creds
+      volumes:
+        - name: config
+          configMap:
+            name: cloudflared
+            items:
+              - key: config.yaml
+                path: config.yaml
+        - name: creds
+          secret:
+            secretName: tunnel-creds
