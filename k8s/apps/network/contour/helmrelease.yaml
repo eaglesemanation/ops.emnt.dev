@@ -6,6 +6,7 @@ metadata:
   namespace: contour
 spec:
   interval: 30m
+  prune: true
   chart:
     spec:
       chart: contour
@@ -16,6 +17,6 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
-    service:
-      type: LoadBalancer
-      loadBalancerIP: "${SVC_INGRESS_ADDR}"
+    envoy:
+      service:
+        loadBalancerIP: "${SVC_INGRESS_ADDR}"
