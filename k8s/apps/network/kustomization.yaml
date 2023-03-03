@@ -5,3 +5,4 @@ resources:
   - metallb.yaml
   - cloudflared.yaml
   - ingress-nginx.yaml
+  - pihole.yaml
