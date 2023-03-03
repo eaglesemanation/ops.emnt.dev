@@ -12,6 +12,6 @@ spec:
     kind: GitRepository
     name: emnt-ops
   dependsOn:
-    - metallb
-    - cloudflared
+    - name: metallb
+    - name: cloudflared
   wait: true
