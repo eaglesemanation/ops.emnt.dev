@@ -5,3 +5,9 @@ resources:
   - namespace.yaml
   - tunnel-creds.sops.yaml
   - deployment.yaml
+
+configMapGenerator:
+  - name: tunnel-creds
+    namespace: cloudflared
+    files:
+      - config.yaml

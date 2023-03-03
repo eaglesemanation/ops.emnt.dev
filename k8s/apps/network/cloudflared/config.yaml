@@ -1,0 +1,8 @@
+  tunnel: talos-cluster
+  credentials-file: /etc/cloudflared/creds/talos-cluster.json
+  metrics: 0.0.0.0:2000
+  no-autoupdate: true
+
+  ingress:
+    - hostname: *.emnt.dev
+      service: ${SVC_INGRESS_ADDR}
