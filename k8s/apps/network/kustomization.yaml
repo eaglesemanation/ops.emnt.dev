@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - metallb.yaml
   - cloudflared.yaml
-  - contour.yaml
+  - ingress-nginx.yaml
