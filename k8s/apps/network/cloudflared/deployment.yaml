@@ -44,4 +44,4 @@ spec:
                     path: config.yaml
             - name: creds
               secret:
-                secretName: tunnel-credentials
+                secretName: tunnel-creds

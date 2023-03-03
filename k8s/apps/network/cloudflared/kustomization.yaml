@@ -7,7 +7,7 @@ resources:
   - deployment.yaml
 
 configMapGenerator:
-  - name: tunnel-creds
+  - name: cloudflared
     namespace: cloudflared
     files:
       - config.yaml
