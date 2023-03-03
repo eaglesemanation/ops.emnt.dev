@@ -5,4 +5,4 @@
 
   ingress:
     - hostname: *.emnt.dev
-      service: ${SVC_INGRESS_ADDR}
+      service: "${SVC_INGRESS_ADDR}"
