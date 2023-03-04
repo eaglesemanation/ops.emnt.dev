@@ -51,6 +51,8 @@ metadata:
   name: infrared
   namespace: minecraft
 spec:
+  type: LoadBalancer
+  loadBalancerIP: ${SVC_MINECRAFT_ADDR}
   selector:
     app.kubernetes.io/name: infrared
   ports:
