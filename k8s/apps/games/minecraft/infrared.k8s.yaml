@@ -1,4 +1,3 @@
----
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -54,7 +53,7 @@ spec:
   type: LoadBalancer
   loadBalancerIP: ${SVC_MINECRAFT_ADDR}
   selector:
-    app.kubernetes.io/name: infrared
+    app: infrared
   ports:
     - protocol: TCP
       port: 25565
