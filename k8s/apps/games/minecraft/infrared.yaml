@@ -42,8 +42,8 @@ spec:
           configMap:
             name: infrared-targets
         - name: icons
-          emptyDir:
-            sizeLimit: 100Mi
+          configMap:
+            name: infrared-icons
 ---
 apiVersion: v1
 kind: Service

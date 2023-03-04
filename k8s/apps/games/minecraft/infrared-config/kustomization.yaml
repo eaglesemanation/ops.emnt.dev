@@ -18,3 +18,6 @@ configMapGenerator:
       - proxies/defaults.yaml
       - proxies/gateway.yaml
       - proxies/vault.yaml
+  - name: infrared-icons
+    files:
+      - icons/default.png
