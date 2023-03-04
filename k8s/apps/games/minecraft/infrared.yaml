@@ -19,6 +19,7 @@ spec:
       containers:
         - name: infrared
           image: docker.io/haveachin/infrared:2.0.0-alpha.13
+          args: ["-c config.yaml"]
           ports:
             - containerPort: 25565
           volumeMounts:
