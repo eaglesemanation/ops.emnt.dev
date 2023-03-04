@@ -1,0 +1,43 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: infrared
+  namespace: minecraft
+  labels:
+    app: infrared
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: infrared
+  template:
+    metadata:
+      labels:
+        app: infrared
+    spec:
+      containers:
+        - name: infrared
+          image: docker.io/haveachin/infrared:2.0.0-alpha.13
+          ports:
+            - containerPort: 25565
+          volumeMounts:
+            - name: config
+              mountPath: /configs
+      volumes:
+        - name: config
+          configMap:
+            name: infrared-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: infrared
+  namespace: minecraft
+spec:
+  selector:
+    app.kubernetes.io/name: infrared
+  ports:
+    - protocol: TCP
+      port: 25565
+      targetPort: 25565
