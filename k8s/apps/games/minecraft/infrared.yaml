@@ -29,6 +29,8 @@ spec:
               mountPath: /infrared/plugins
             - name: targets
               mountPath: /infrared/proxies
+            - name: icons
+              mountPath: /infrared/icons
       volumes:
         - name: config
           configMap:
@@ -39,6 +41,9 @@ spec:
         - name: targets
           configMap:
             name: infrared-targets
+        - name: icons
+          emptyDir:
+            sizeLimit: 100Mi
 ---
 apiVersion: v1
 kind: Service
