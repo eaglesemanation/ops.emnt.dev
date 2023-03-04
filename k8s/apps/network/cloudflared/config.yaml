@@ -2,3 +2,9 @@ tunnel: talos-cluster
 credentials-file: /etc/cloudflared/creds/talos-cluster.json
 metrics: 0.0.0.0:2000
 no-autoupdate: true
+
+ingress:
+  - hostname: *.mc.emnt.dev
+    service: tcp://infrared.minecraft.svc.cluster.local:25565
+  - hostname: *.emnt.dev
+    service: https://ingress-nginx.ingress-nginx.svc.cluster.local:443
