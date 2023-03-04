@@ -1,0 +1,21 @@
+java:
+  servers:
+    vault:
+      gateways:
+        - default
+      domains:
+        - vault.mc.emnt.dev
+      address: vault.minecraft.svc.cluster.local:25565
+      #proxyBind: 0.0.0.0
+      #proxyPass: socks5://127.0.0.1:1080
+      #sendProxyProtocol: true
+      #sendRealIP: true
+      #overrideStatus:
+        #versionName: Infrared
+        #protocolNumber: 0
+        #maxPlayerCount: 0
+        #playerCount: 0
+        #iconPath: icons/default.png
+        #motd: |
+        #  Powered by Infrared
+        #  §aServer at {{serverDomain}} is online.

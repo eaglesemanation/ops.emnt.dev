@@ -1,2 +1,0 @@
-domainName: vault.mc.emnt.dev
-proxyTo: vault.minecraft.svc.cluster.local:25565

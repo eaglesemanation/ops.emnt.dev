@@ -1,0 +1,7 @@
+providers:
+  file:
+    directories: 
+      - directory: ./proxies
+        watch: true
+      - directory: ./plugins
+        watch: true

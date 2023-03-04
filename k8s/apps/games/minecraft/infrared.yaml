@@ -23,11 +23,21 @@ spec:
             - containerPort: 25565
           volumeMounts:
             - name: config
-              mountPath: /configs
+              mountPath: /infrared
+            - name: plugins
+              mountPath: /infrared/plugins
+            - name: targets
+              mountPath: /infrared/proxies
       volumes:
         - name: config
           configMap:
             name: infrared-config
+        - name: plugins
+          configMap:
+            name: infrared-plugins
+        - name: targets
+          configMap:
+            name: infrared-targets
 ---
 apiVersion: v1
 kind: Service

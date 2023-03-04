@@ -1,0 +1,6 @@
+java:
+  gateways:
+    default:
+      listeners:
+        default:
+          bind: :25565
