@@ -6,4 +6,4 @@ metadata:
   namespace: flux-system
 data:
   SVC_INGRESS_ADDR: 192.168.25.5
-  SVC_MINECRAFT_ADDR: 192.168.25.6
+  SVC_PIHOLE_ADDR: 192.168.25.2
