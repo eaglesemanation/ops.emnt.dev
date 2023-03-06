@@ -4,3 +4,6 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
+  - cloudflare-token.sops.yaml
+  - letsencrypt-prod.k8s.yaml
+  - letsencrypt-staging.k8s.yaml

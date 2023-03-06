@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cloudflare-api-token
+    namespace: cloudflare
+type: Opaque
+stringData:
+    api-token: ENC[AES256_GCM,data:QcIy2/23XfNw6XrBDvQR6nU0Po86BjtqrTJZBdzS47DR1jJ4mAmhCw==,iv:s2k+QMCA5Hax1xiKP7hnl1HfS7vIio+/vTm6t2kkpHA=,tag:cmXJeB6hOqEQZmAJE0UInA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBCcm85N2x1eWN0RU1sRVZM
+            TTAxTWR0UTY4ckZwcU9Gb0Q2eitXVDlSYmpJCk5yL21TdG52VzdObk83K2pMMVZ0
+            VHdvbXU1Rk14b3kyclJlTGJnVUhxcDgKLS0tIHo0N242RjBLQ0IrQkJHWTdaUEI5
+            MDI3Zi84aUM5RWNTZDJhbWNhaUlnVkkKCgiFhVbof0JIq1GeYCQ1HP85mgv7aD/o
+            yosoM4SRJt8TkbjN+Q5tScihjlHCbutLH0WcxIhcMFY8CotYAIFMjg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-03-06T01:43:58Z"
+    mac: ENC[AES256_GCM,data:8IvjY2oKvlh+04bn5RkkBLpSL6r214DwEM195FFA2/IMePc5llSz2CMKQmS2OOM70/M4h7Or5rUhxUGK4/8iuJhGist665nQnv+7SAXZVv4RTw8Kf/p2EVlETEYNJ98GwWF6Tit1haj1bNVcVUSR070nuUlKxy8f7ZVQFl3yPP4=,iv:iy8FmaYXhg2PvLUzokCkrxiNeddwd+1SZKvrVGuXUyo=,tag:W5gJVjnbOIw8wf5dbXPCJA==,type:str]
+    pgp:
+        - created_at: "2023-03-06T01:43:58Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/ZlyZpZtR6fuli29QrzNY4JeisEhWIpKztnhlL/QPUhgM
+            kQjNkm6RyZ9Am2yE9DDdAknDHNOo3x144PH+b9HWg5SHHEuGWti033hW5INUFGPn
+            kkfc3TZZ054VOyNQCmTCc5VbJ7TMXznUqkNi38jib1wdOeEZwgiZN2eVC6vN1f1B
+            d2BdJGx94FnEQY2wXSBCgbeIBCrmVOjhPe37b0LZUkmEL8rK7WsjPYcse7v6jjI1
+            2DdafFg9aehHao+Xs8ySpFmK95tbOQLLLt4fDXKgN+fCBq8j2nZNz7rW8UnCa3tk
+            SpQq58aQzqKzpQEoDLcjrFtkc4dRX0Am157cJkW2AtJeAetFo3hgxw/m5p7+yfNV
+            fypb+AkLvicKraMZMe6yFDXKInoWGsvKZ39JXaj8GcZXVISeZRMaKEb1UtcA6pmr
+            FNA6uPzHxuMb45mQLrQlE4tAHCRXx/5NTDplw7Jbpw==
+            =Z6Pp
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
