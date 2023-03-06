@@ -1,15 +1,13 @@
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-prod
-  # This namespace is just to make FluxCD happy, ClusterIssuer is cluster scoped
-  namespace: cert-manager
+  name: letsencrypt-staging
 spec:
   acme:
     email: eaglesemanation@gmail.com
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: letsencrypt-staging
     solvers:
       - dns01:
           cloudflare:
