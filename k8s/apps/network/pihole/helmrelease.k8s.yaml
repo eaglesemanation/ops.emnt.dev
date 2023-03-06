@@ -17,9 +17,14 @@ spec:
   values:
     serviceDns:
       type: LoadBalancer
-      loadBalancerIP: "${SVC_PIHOLE_ADDR}"
+      loadBalancerIP: "${SVC_DNS_ADDR}"
       annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-svc
+        metallb.universe.tf/allow-shared-ip: pihole-dns-svc
+    serviceDhcp:
+      type: LoadBalancer
+      loadBalancerIP: "${SVC_DHCP_ADDR}"
+      annotations:
+        metallb.universe.tf/allow-shared-ip: pihole-dhcp-svc
     ingress:
       enabled: true
       path: /

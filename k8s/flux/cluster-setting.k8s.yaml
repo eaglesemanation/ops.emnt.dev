@@ -5,6 +5,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
-  SVC_PIHOLE_ADDR: 192.168.25.2
+  SVC_DHCP_ADDR: 192.168.25.2
+  SVC_DNS_ADDR: 192.168.25.3
   SVC_INGRESS_ADDR: 192.168.25.5
   SVC_MINECRAFT_ADDR: 192.168.25.6
