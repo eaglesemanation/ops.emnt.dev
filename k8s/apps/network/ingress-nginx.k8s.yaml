@@ -13,5 +13,5 @@ spec:
     name: emnt-ops
   dependsOn:
     - name: metallb
-    - name: cloudflared
+    - name: cert-manager
   wait: true
