@@ -20,7 +20,5 @@ spec:
       service:
         loadBalancerIP: "${SVC_INGRESS_ADDR}"
         externalTrafficPolicy: Local
-        annotations:
-          metallb.universe.tf/allow-shared-ip: ingress-svc
       ingressClassResource:
         default: true

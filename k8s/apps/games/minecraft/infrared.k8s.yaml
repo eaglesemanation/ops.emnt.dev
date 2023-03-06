@@ -49,11 +49,10 @@ kind: Service
 metadata:
   name: infrared
   namespace: minecraft
-  annotations:
-    metallb.universe.tf/allow-shared-ip: ingress-svc
 spec:
   type: LoadBalancer
-  loadBalancerIP: ${SVC_INGRESS_ADDR}
+  loadBalancerIP: ${SVC_MINECRAFT_ADDR}
+  externalTrafficPolicy: Local
   selector:
     app: infrared
   ports:
