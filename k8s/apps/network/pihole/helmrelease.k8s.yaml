@@ -22,15 +22,9 @@ spec:
         metallb.universe.tf/allow-shared-ip: pihole-svc
     ingress:
       enabled: true
-      annotations:
-        cert-manager.io/cluster-issuer: letsencrypt-prod
       path: /
       hosts:
         - pihole.emnt.dev
-      tls:
-        - hosts:
-            - emnt.dev
-          secretName: ingress-cert
     dnsmasq:
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_ADDR}"

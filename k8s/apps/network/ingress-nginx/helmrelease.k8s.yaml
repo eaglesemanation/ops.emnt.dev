@@ -22,3 +22,5 @@ spec:
         externalTrafficPolicy: Local
       ingressClassResource:
         default: true
+      extraArgs:
+        default-ssl-certificate: ingress-nginx/wildcard-cert
