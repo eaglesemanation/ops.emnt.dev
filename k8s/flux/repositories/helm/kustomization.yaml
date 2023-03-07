@@ -6,3 +6,4 @@ resources:
   - pihole.k8s.yaml
   - ingress-nginx.k8s.yaml
   - jetstack.k8s.yaml
+  - openebs-mayastor.k8s.yaml
