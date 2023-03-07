@@ -6,5 +6,5 @@ creation_rules:
     age: >-
       age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
 
-  - path_regex: .*\.sops\.ya?ml
+  - path_regex: .*\.sops\.(ya?ml|toml)
     pgp: C5B9ADB07DBE5A2E
