@@ -1,12 +1,5 @@
 ---
 creation_rules:
-  # Config for democratic-csi
-  - path_regex: k8s/.*\.driver\.sops\.ya?ml
-    encrypted_regex: "^(apiKey|password)$"
-    pgp: C5B9ADB07DBE5A2E
-    age: >-
-      age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
-
   # K8s secret
   - path_regex: k8s/.*\.sops\.ya?ml
     encrypted_regex: "^(data|stringData)$"

@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - helmrelease-iscsi.k8s.yaml
-  - iscsi.driver.sops.yaml
+  - iscsi-driver.sops.yaml
