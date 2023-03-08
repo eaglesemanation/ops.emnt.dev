@@ -9,3 +9,5 @@ secretGenerator:
     namespace: democratic-csi
     files:
       - driver-config-file.yaml=iscsi.driver.sops.yaml
+    options:
+      disableNameSuffixHash: true
