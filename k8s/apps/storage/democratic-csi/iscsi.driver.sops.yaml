@@ -1,83 +1,90 @@
-driver: freenas-api-iscsi
-instance_id: null
-httpConnection:
-    protocol: https
-    host: ${NAS_ADDR}
-    port: 443
-    apiKey: ENC[AES256_GCM,data:9MnUQnxxR7aC+rDM5NbUyCqQoIn0xgpE1DCril+fljoi5m+s/11B1fYiO3R53pP3By6jTT6FdKlyXLjInXWyEAzS,iv:/yJx0/VSNLU5JEd4t4LMq/vEp7890ufvG/2u3tLj+Ao=,tag:wtqg5HPoQwKXBSUQOJDb2Q==,type:str]
-    #username: root
-    #password:
-    allowInsecure: false
-    # use apiVersion 2 for TrueNAS-12 and up (will work on 11.x in some scenarios as well)
-    # leave unset for auto-detection
-    #apiVersion: 2
-zfs:
-    # can be used to override defaults if necessary
-    # the example below is useful for TrueNAS 12
-    #cli:
-    #  sudoEnabled: true
-    #
-    #  leave paths unset for auto-detection
-    #  paths:
-    #    zfs: /usr/local/sbin/zfs
-    #    zpool: /usr/local/sbin/zpool
-    #    sudo: /usr/local/bin/sudo
-    #    chroot: /usr/sbin/chroot
-    # can be used to set arbitrary values on the dataset/zvol
-    # can use handlebars templates with the parameters from the storage class/CO
-    #datasetProperties:
-    #  "org.freenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
-    #  "org.freenas:test": "{{ parameters.foo }}"
-    #  "org.freenas:test2": "some value"
-    # total volume name (zvol/<datasetParentName>/<pvc name>) length cannot exceed 63 chars
-    # https://www.ixsystems.com/documentation/freenas/11.2-U5/storage.html#zfs-zvol-config-opts-tab
-    # standard volume naming overhead is 46 chars
-    # datasetParentName should therefore be 17 chars or less when using TrueNAS 12 or below (SCALE and 13+ do not have the same limits)
-    # for work-arounds see https://github.com/democratic-csi/democratic-csi/issues/54
-    datasetParentName: tank/k8s/b/vols
-    # do NOT make datasetParentName and detachedSnapshotsDatasetParentName overlap
-    # they may be siblings, but neither should be nested in the other 
-    detachedSnapshotsDatasetParentName: tanks/k8s/b/snaps
-    # "" (inherit), lz4, gzip-9, etc
-    zvolCompression: null
-    # "" (inherit), on, off, verify
-    zvolDedup: null
-    zvolEnableReservation: false
-    # 512, 1K, 2K, 4K, 8K, 16K, 64K, 128K default is 16K
-    zvolBlocksize: null
-iscsi:
-    targetPortal: ${NAS_ADDR}:3260
-    # for multipath
-    targetPortals: []
-    # leave empty to omit usage of -I with iscsiadm
-    interface: null
-    # MUST ensure uniqueness
-    # full iqn limit is 223 bytes, plan accordingly
-    # default is "{{ name }}"
-    #nameTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
-    namePrefix: csi-
-    nameSuffix: -cluster
-    # add as many as needed
-    targetGroups:
-        # get the correct ID from the "portal" section in the UI
-        - targetGroupPortalGroup: 1
-          # get the correct ID from the "initiators" section in the UI
-          targetGroupInitiatorGroup: 1
-          # None, CHAP, or CHAP Mutual
-          targetGroupAuthType: None
-          # get the correct ID from the "Authorized Access" section of the UI
-          # only required if using Chap
-          targetGroupAuthGroup: null
-    #extentCommentTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
-    extentInsecureTpc: true
-    extentXenCompat: false
-    extentDisablePhysicalBlocksize: true
-    # 512, 1024, 2048, or 4096,
-    extentBlocksize: 512
-    # "" (let FreeNAS decide, currently defaults to SSD), Unknown, SSD, 5400, 7200, 10000, 15000
-    extentRpm: ""
-    # 0-100 (0 == ignore)
-    extentAvailThreshold: 0
+apiVersion: v1
+kind: Secret
+metadata:
+    name: freenas-api-iscsi-driver
+    namespace: democratic-csi
+stringData:
+    driver-config-file.yaml:
+        driver: freenas-api-iscsi
+        instance_id: null
+        httpConnection:
+            protocol: https
+            host: ${NAS_ADDR}
+            port: 443
+            apiKey: ENC[AES256_GCM,data:SYnZvIZxxW82PKqp1Uf8BbmBMC9lIuwiLdyFZJJk7pMGkpPm2PNUZ9hWiBneIEa4nrsU/2POaAwfqfOeDm0s1jcA,iv:ZetrqJM8yExN4o7EvmTjp/FS+zBD1qSI2Vd/DePW2iY=,tag:/vVsdeL+cyNE8WblwjTJhA==,type:str]
+            #username: root
+            #password:
+            allowInsecure: false
+            # use apiVersion 2 for TrueNAS-12 and up (will work on 11.x in some scenarios as well)
+            # leave unset for auto-detection
+            #apiVersion: 2
+        zfs:
+            # can be used to override defaults if necessary
+            # the example below is useful for TrueNAS 12
+            #cli:
+            #  sudoEnabled: true
+            #
+            #  leave paths unset for auto-detection
+            #  paths:
+            #    zfs: /usr/local/sbin/zfs
+            #    zpool: /usr/local/sbin/zpool
+            #    sudo: /usr/local/bin/sudo
+            #    chroot: /usr/sbin/chroot
+            # can be used to set arbitrary values on the dataset/zvol
+            # can use handlebars templates with the parameters from the storage class/CO
+            #datasetProperties:
+            #  "org.freenas:description": "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+            #  "org.freenas:test": "{{ parameters.foo }}"
+            #  "org.freenas:test2": "some value"
+            # total volume name (zvol/<datasetParentName>/<pvc name>) length cannot exceed 63 chars
+            # https://www.ixsystems.com/documentation/freenas/11.2-U5/storage.html#zfs-zvol-config-opts-tab
+            # standard volume naming overhead is 46 chars
+            # datasetParentName should therefore be 17 chars or less when using TrueNAS 12 or below (SCALE and 13+ do not have the same limits)
+            # for work-arounds see https://github.com/democratic-csi/democratic-csi/issues/54
+            datasetParentName: tank/k8s/b/vols
+            # do NOT make datasetParentName and detachedSnapshotsDatasetParentName overlap
+            # they may be siblings, but neither should be nested in the other 
+            detachedSnapshotsDatasetParentName: tanks/k8s/b/snaps
+            # "" (inherit), lz4, gzip-9, etc
+            zvolCompression: null
+            # "" (inherit), on, off, verify
+            zvolDedup: null
+            zvolEnableReservation: false
+            # 512, 1K, 2K, 4K, 8K, 16K, 64K, 128K default is 16K
+            zvolBlocksize: null
+        iscsi:
+            targetPortal: ${NAS_ADDR}:3260
+            # for multipath
+            targetPortals: []
+            # leave empty to omit usage of -I with iscsiadm
+            interface: null
+            # MUST ensure uniqueness
+            # full iqn limit is 223 bytes, plan accordingly
+            # default is "{{ name }}"
+            #nameTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+            namePrefix: csi-
+            nameSuffix: -cluster
+            # add as many as needed
+            targetGroups:
+                # get the correct ID from the "portal" section in the UI
+                - targetGroupPortalGroup: 1
+                  # get the correct ID from the "initiators" section in the UI
+                  targetGroupInitiatorGroup: 1
+                  # None, CHAP, or CHAP Mutual
+                  targetGroupAuthType: None
+                  # get the correct ID from the "Authorized Access" section of the UI
+                  # only required if using Chap
+                  targetGroupAuthGroup: null
+            #extentCommentTemplate: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}/{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+            extentInsecureTpc: true
+            extentXenCompat: false
+            extentDisablePhysicalBlocksize: true
+            # 512, 1024, 2048, or 4096,
+            extentBlocksize: 512
+            # "" (let FreeNAS decide, currently defaults to SSD), Unknown, SSD, 5400, 7200, 10000, 15000
+            extentRpm: ""
+            # 0-100 (0 == ignore)
+            extentAvailThreshold: 0
 sops:
     kms: []
     gcp_kms: []
@@ -87,28 +94,28 @@ sops:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSRnFva0w2ZFkxS2VNN3g5
-            bnVzRXJDZC9WNHhOTFRUY2VyTWpKUGFITUNrCnNmdldtaFJXdklFZXVwcFU5Q0JT
-            VmlHUUxzMStYNG9HR3pOcTNpbndLSXcKLS0tIEg3MHJZaWE4SFlBZnFRV2p0bUpQ
-            ZUJhTFRMZlZDc3BkMmdrNVdyZHVtcTgKPQIKO6jRjslY3YuWihMFIgH7DdTG5fBj
-            pETixzCz2kMbBiPN5pUcOK1914x0M/AE/5C0GDjRhED7EyJ1bSZE1g==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBaVnZCK2wzVHVsVHR2eVh6
+            eVlORm1hOElDYW9YcnMzQ3JKVE1BZmRXRDNjCnFhT2liNlNxQk9ZVGVaKy8vV0xq
+            WXo3Qm5NRHF2NjBrdWl6b1l4NDV4QW8KLS0tIGUyQ2JzZ1RsbEFDV3ppQy9ibzZt
+            eXZkRk5xVXlEUnRYdUpibVJFTGtBcHMKFOCz70+RShEXS8BFKH+gEovTe7jm61y1
+            84uocdzKWTOcQZwMExjQ6T5hZy2+bhc8yl3cCAE6Xfp8cTgyaPoUWg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-03-08T04:48:22Z"
-    mac: ENC[AES256_GCM,data:NcArd6sYKNvDLVF/HKyfozNWFe52IS4bhjnl7hvZHcAPKeeKYgaPJIUm7IhlQw/8r1gwG6hLXR0D49RvdjGUNNA4gDq5l0Lzgtp7NhUB7HbYFrGKoKgK59aqmg8jb5e383POUtontJPUiGo/6XsSo8WrNuaUWdVx1pQrGph7TKM=,iv:EuUn3+NgCYLoiL+rWF9flhke+FucqMRuOdUc1MCU03U=,tag:08UKojAuy4/sjAeYTtBT3Q==,type:str]
+    lastmodified: "2023-03-08T06:45:25Z"
+    mac: ENC[AES256_GCM,data:h9UtD8Vz5mWUk0DcPyjsBCCiNgi2YRRK8OGZHkI1ibq9MtOWtFAXwNnL8UZRYojiE5wgd4G561G+PFgN2DquKJ0hPVs6umVYqZtsTsFnt1ugIPO5WqQjQvFrkAZQO+KsifjCePBajV4yzInm/Xjfm0LZ3eJeOuFp6uVKEGL71Bg=,iv:qg4p+K20tzLubOhcO9i662RRezRTDjTdI9haL9Ehnm8=,tag:LA4J/3kpIo01SZKgWubf7A==,type:str]
     pgp:
-        - created_at: "2023-03-08T04:48:22Z"
+        - created_at: "2023-03-08T06:45:24Z"
           enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf8Cf7q9vl1gxytWkT6EHwHZPMuxeTCXGnFDLNShOPgdxa0
-            CjJAXLe66M4IoscD4rSPrDoz2GSpx2ZPeisQXRgJH+nOzrWg9t2vMTzmVMMTGHxz
-            FqU7DU9MTVV5LQszmWyN829xCP/itd9g/WPM2Ljl9dmQoadNIUCns+d7NWh35lQa
-            LnMfKT1hSnoHYOIlhcJbTngDBpDHnMeCRJCHj6dPvFqciZvoMb3jM6XDujakhawh
-            7hqGO7oo/8oY0CX5VY73h19Phi3s0WeeG+4vX+DQJeSdr/tF7EWInaveYjQAAfS6
-            2oWaU/2vTLdQS69rmAdd5lmfEDfellSAaEL6DgChKNJeASCWM++F0+SghesQXb1o
-            LdkX+vLtm8a2LOeyXlVsUmQM3hPCR54N2FArr4EqgobOTTUgjdp4KnhFbfvqEpgB
-            W14/Y9Dvft6JoE2/wGAh8Qvikx9jtsFi2JPuMqGf0w==
-            =Cpcc
+            hQEMAzB6fv8Ha/LEAQf9GH5O9m9HtSNW7bMUWrptVrZ/RbGc0nKyFCfzumZGAiaA
+            LM52szs8OfFKWyXvWyP0JrphcSmQwVbZHSl6bLXTKUZWPg/AlNcmIT9v6P7qddSF
+            izRMlcoAyzj7MtxwHBHv/yIUxN2+SDwIbW9e8vvGGQtaspWt1V2e3Pt3po65MI9w
+            CI5GfhmbcfszQECQ7/fCz1JMXQc2AeXyuJ6QhBALri2Tj5ssYa9l2Xg+ZO/CLb/f
+            XcpNkKuthznIcw8h+mN63tgBT+OSs+dz2EPNBamw2iY8bG6egVWqAZG35JFx/fqa
+            jT5m2eEC/wlFem8gCsiK9v4VE4jeNX6KRuuGcn9YONJcATNA8T5d9CszX6Cjyp0H
+            4TN7RrUk/oi2FdCYThnc3X/4JG1LrB+i0Vx2QAPLJqUUk1BTe8LZu60hjbk5TYGa
+            V2e0RtTPTqReUpIgNYcX19AcuehyxROordsCjgE=
+            =Vhk9
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
     encrypted_regex: ^(apiKey|password)$

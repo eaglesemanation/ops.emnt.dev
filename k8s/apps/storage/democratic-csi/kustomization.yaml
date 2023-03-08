@@ -3,11 +3,4 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - helmrelease-iscsi.k8s.yaml
-
-secretGenerator:
-  - name: freenas-api-iscsi-driver
-    namespace: democratic-csi
-    files:
-      - driver-config-file.yaml=iscsi.driver.sops.yaml
-    options:
-      disableNameSuffixHash: true
+  - iscsi.driver.sops.yaml
