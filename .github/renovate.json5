@@ -8,5 +8,11 @@
         "k8s/apps/.+\\.k8s\\.yaml",
         "k8s/flux/.+\\.k8s\\.yaml"
     ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+        "k8s/apps/.+\\.k8s\\.yaml",
+        "k8s/flux/.+\\.k8s\\.yaml"
+    ]
   }
 }
