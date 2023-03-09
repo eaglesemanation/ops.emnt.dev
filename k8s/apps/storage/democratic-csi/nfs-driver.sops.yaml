@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: freenas-api-nfs-driver
+    namespace: democratic-csi
+    labels:
+        kustomize.toolkit.fluxcd.io/force: enabled
+stringData:
+    driver-config-file.yaml: ENC[AES256_GCM,data:Gh1zt9syeGBAzsnaHF9luowFR9Zftgp2+iDTAFYcYI2+v07TwjbHc3IzJqi2bBoLYgrfcOnmYfU6pShFBppegmU86UWy33+C2COncRzTUXEh0BeGfqHlgd2oHNRkEwQjyXBrpyu0K2QrbuV5ME3YOW8U/7VKgc7UNRCGlpJabIW9geEs3H3gfqN1JdVYV4RhKLAvhIxvBiR8IiSXL0zii88we2bV06bkkyDX5VVzE5f8pQvbijZMgPwT2WFCCK5S1YufxdSDAgkcobBTJnbPRzUJHLrLBAcckAkEVlHpaADxbpY2UzaSYeFj4iUSZ72wkdqtkTQx1YRnlhPabd067yV/PZqeO6zKnj9mrWcRv+XJBcbn4V9L/t93x7L6hAtRx/Ca86zFC5VTaRBofar+YsIEzvWANjzM8hD3MBMSe9fKMVr5MhlEvqBJNf5xocKDe1jtmvav+ho19kzjJlMI2K6PRQRBzuOTjNC3VRTEhc3IcKjkGlPhlBhnWsLp+75tUHIawwK7RWNkQtkitnSn5iYGzWnZaQuDMTkZI/62alFY0Y/yrbSeWxEbhVLgivGfQHL3zbVd8utDSjRTF2EzOeFebI4XTZAs/V/cmD8g+abZInQSuWF68SPUB7PWn9K0MvRSUscrPx4XgW3/uK9EytRoyzH4dCMa1BL4pAUcu09QJDZcuA4BXy7bkNcBOioKLkovRBFTXQvrxajpAlPPgBtVX6iyB03m2hfNpGbS6MBUSF3HMZKCLyU3Pl/wBPnDkEq0JT49VH6ZZ0voFsZGgziFjlvBMEVQbxcH8rN2lBFirsHaj8vvYTVE9f6wFUF9NKtOSRvkqwFn6DS2pR6e/XEgHeT9PElQmXq3qVIkKjsiXDINhw3Xqd6I2oPjj3Fko4gZ7diaFaERoMPnxe3w+e7/MQKadWUauHINT4LKNl9ziyosHPHADGh1bHqzM09UhC41CBcKnO18lxIlhaauG/7bip1IGT0Nm9dKvNsT4JmY9blieQRXHXNuQqqDBdKlOWOU2LG7DYYn5uHFXgwckm8F8htHABXFPYs99HISHZm0hiEaAmH132HWg1iGzzf6f9S4hM3C9RZuu/SZVs+cT7oJwj0xowibvwYDLSRFnOdRC8lgPW7GtR5IednxA4kMT+ZewbJ0Vd6Rjh4K/FIJLgaykjQ8bazEjlAOLvLgwRVWBOXAJEQ5nO/psBD1bTnQk5uCUrKCvJUycR/HcIcbIvcBRMwaCO5ccCee7cHciAcEVB9W9w1STAZhVEhTqRpezHE1i75wbmaEeKvSSGfF19lM0zfJKilGev3bQpovzfN/5Ltse8BkU0qM5uOHBlAL8evO7V9gjQIe+HG2jgIb8+6A9tQBurhyy2gg/jaOeGLCNF2UuvtFFQSMIgcFGYd+yf9ikzgyG0i2cZUVRLO6cofjeBbQWnlXXMdUbevgHOmPr+FZJdqswVZ6YxaxDyCqxdiNh2k2PoVhECO1lPg+DTzSsYkEXJKGeqZ1wSWkrW4HIOF7PdqR8ljWMmxp/DAJ+RNo/8hiz2wDUdlliM/4/31VRloPf5IVFddjAyOSOsxuJbr+XJYbpQUlXRLqRlRZeMCxS9l4rKpM8yzzkLOzoTIL6Vk1QBv0Berohqqduw0/1Ex9+kv+EUI1b35spaS4Oq1M877xLiJrGRry4h8AdclMue1aA8tS0Rw5Z+mGEGFtPwdW8N+eAk3R+Q4h5g==,iv:AqlvPC+XTCF0VV8hBeSEkWziXLOWUq6cGGY5cOnczno=,tag:Vaa2dZeDfHmlrBAAqo9pmg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBSN3NBSUc1V0JXcGpPdmhp
+            K24xMERVV05GcHFwL3UxWGU2RFEzU3ZZOEdJCmhmY3U2ZlRySU1RY284Q0VnMGJP
+            amEwblI2eVFNTm4vS0lPOTA0VkJad28KLS0tIEx6eU1sYlRZOUxwYTZrcE9zUk9i
+            bUF4cEoxT1o2MXhoQ21jNmI4eCt3S00KoIcljsgv9cjiq+TG5PnVW3Q8J4iPQ/8V
+            KZxouPj1O09TNYfG5qZBf+9r2dBNbJmkp/nSRdnaeLlKUsUGwcBZ4Q==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-03-09T06:59:59Z"
+    mac: ENC[AES256_GCM,data:TPnUuKr7toqloOgfh1nYIEhC8MEvQSUHHqQrm22dGTOuoP11D2VicBjXF4R7QegsgDv/PtXLmKnDnqTfilkMNyGBhtVDUcuDZouU5u7o2X4a79bVeNHwtxyUEHBbSaovR6Olz5TtwwL8zN38TPK0oIENICBhTE/g0QDHGVsdmdw=,iv:YYB6X1ZC+VMPFmchleqNP/sHIcIbDaEHQzVoOc6sBF8=,tag:XYTzmzjnuwiOAFWa9eof1w==,type:str]
+    pgp:
+        - created_at: "2023-03-09T06:59:59Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQgAhOLLQ27J3WwsX+qSLxuMV4ZHO9tELuBmF72KcFD0LwYj
+            JFGM9qN2S2vPX+EtBCP2YUvUWZpe81kJF94e+BtG1qzTTz+Agm2gxhQk55RpAOdI
+            LbxQZekIU88mc+ZqFUOXuX2rDpqk24Eau4dYYWwG86Sm8f6Ufn0f2u0BHoIlKx7+
+            Rh+CpNc94yoZI7MoHAua7xVMaec6PZiHwzhYm04tQwQ/Fasdn4p3+0MKoQ2ch3uA
+            YLksttkugptl073UtyOamdDALwn0UUeS5hRFYnhOzLaOUNNX6z0gSpKkclKiVIBM
+            HX7DKoop5WHgr+MI/Z9cfZxygJwA6cAI7mX9sTTuw9JeAe0QiOJZHrS+Y4dcqpZd
+            t4uQG7XgTbahl6HVZZUIddXZRtnUM7WUcKoTivRTgMqdXmUOfIkRHlIbG0O9qF06
+            t3JlEyhc4tGbH35mHXlusaG7tPMyu50+oYuNkX/thA==
+            =WIWG
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
