@@ -30,6 +30,9 @@ spec:
       path: /
       hosts:
         - pihole.emnt.dev
+    persistentVolumeClaim:
+      enabled: true
+      storageClass: freenas-api-nfs-csi
     dnsmasq:
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_ADDR}"
