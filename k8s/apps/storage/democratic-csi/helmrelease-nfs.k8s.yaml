@@ -16,7 +16,6 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
-    enablePSP: true
     csiDriver:
       name: "org.democratic-csi.freenas-api-nfs"
     storageClasses:

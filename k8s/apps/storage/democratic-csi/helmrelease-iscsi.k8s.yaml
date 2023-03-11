@@ -16,7 +16,6 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
-    enablePSP: true
     node:
       hostPID: true
       driver:
