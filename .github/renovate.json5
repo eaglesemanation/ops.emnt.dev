@@ -3,6 +3,8 @@
   "extends": [
     "config:base"
   ],
+  "timezone": "America/Toronto",
+  "schedule": ["every friday at 19:00"],
   "flux": {
     "fileMatch": [
         "k8s/apps/.+\\.k8s\\.yaml",
