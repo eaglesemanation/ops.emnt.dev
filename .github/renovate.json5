@@ -5,6 +5,7 @@
   ],
   "timezone": "America/Toronto",
   "schedule": ["after 19:00 every friday"],
+  "prHourlyLimit": 5,
   "flux": {
     "fileMatch": [
         "k8s/apps/.+\\.k8s\\.yaml",
