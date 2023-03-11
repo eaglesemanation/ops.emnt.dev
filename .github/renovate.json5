@@ -1,0 +1,22 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base"
+  ],
+  "timezone": "America/Toronto",
+  "schedule": ["after 19:00 every friday"],
+  "prHourlyLimit": 5,
+  "rangeStrategy": "bump",
+  "flux": {
+    "fileMatch": [
+        "k8s/apps/.+\\.k8s\\.yaml",
+        "k8s/flux/.+\\.k8s\\.yaml"
+    ]
+  },
+  "kubernetes": {
+    "fileMatch": [
+        "k8s/apps/.+\\.k8s\\.yaml",
+        "k8s/flux/.+\\.k8s\\.yaml"
+    ]
+  }
+}
