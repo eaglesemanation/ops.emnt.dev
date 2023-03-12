@@ -4,7 +4,7 @@ metadata:
   name: redirect-to-admin
   namespace: pihole
 data:
-  99-redirect-to-admin.conf: |-
+  conf: |-
     $HTTP["url"] == "/" {
          url.redirect = ("" => "/admin/")
     }
