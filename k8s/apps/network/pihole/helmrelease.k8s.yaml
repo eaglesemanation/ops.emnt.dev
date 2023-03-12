@@ -42,4 +42,4 @@ spec:
           name: redirect-to-admin
     extraVolumeMounts:
       redirect-to-admin-conf:
-        mountPath: /etc/lighttpd/config-enabled/
+        mountPath: /etc/lighttpd/conf-enabled/
