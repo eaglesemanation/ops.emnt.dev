@@ -11,7 +11,4 @@ spec:
   sourceRef:
     kind: GitRepository
     name: emnt-ops
-  dependsOn:
-    - name: metallb
-    - name: cert-manager
   wait: true
