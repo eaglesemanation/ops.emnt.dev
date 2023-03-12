@@ -36,3 +36,10 @@ spec:
     dnsmasq:
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_ADDR}"
+    extraVolumes:
+      redirect-to-admin-conf:
+        configMap:
+          name: redirect-to-admin
+    extraVolumeMounts:
+      redirect-to-admin-conf:
+        mountPath: /etc/lighttpd/config-enabled/

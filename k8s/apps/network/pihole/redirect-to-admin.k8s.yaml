@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: redirect-to-admin
+  namespace: pihole
+data:
+  99-redirect-to-admin.conf: |-
+    $HTTP["url"] == "/" {
+         url.redirect = ("" => "/admin/")
+    }

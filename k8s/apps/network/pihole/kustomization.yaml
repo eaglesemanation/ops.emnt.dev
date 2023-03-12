@@ -4,4 +4,5 @@ kind: Kustomization
 
 resources:
   - namespace.k8s.yaml
+  - redirect-to-admin.k8s.yaml
   - helmrelease.k8s.yaml
