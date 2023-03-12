@@ -14,8 +14,26 @@ spec:
         name: pihole
         namespace: flux-system
       interval: 30m
+  postRenderers:
+    - kustomize:
+        patchesStrategicMerge:
+          - kind: Deployment
+            apiVersion: apps/v1
+            metadata:
+              name: pihole
+            spec:
+              template:
+                spec:
+                  containers:
+                    - name: pihole
+                      securityContext:
+                        capabilities:
+                          add:
+                            - NET_ADMIN
   values:
     hostNetwork: true
+    admin:
+      existingSecret: pihole-web-password
     serviceDns:
       type: LoadBalancer
       loadBalancerIP: "${SVC_DNS_ADDR}"

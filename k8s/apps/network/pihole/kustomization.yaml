@@ -5,4 +5,5 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - redirect-to-admin.k8s.yaml
+  - web-password.sops.yaml
   - helmrelease.k8s.yaml
