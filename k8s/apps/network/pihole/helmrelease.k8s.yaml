@@ -22,10 +22,7 @@ spec:
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-dns-svc
     serviceDhcp:
-      type: LoadBalancer
-      loadBalancerIP: "${SVC_DHCP_ADDR}"
-      annotations:
-        metallb.universe.tf/allow-shared-ip: pihole-dhcp-svc
+      type: NodePort
     ingress:
       enabled: true
       path: /
