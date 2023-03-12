@@ -48,7 +48,7 @@ spec:
       hosts:
         - pihole.emnt.dev
     persistentVolumeClaim:
-      enabled: true
+      enabled: false
       storageClass: freenas-api-nfs-csi
     dnsmasq:
       customDnsEntries:
