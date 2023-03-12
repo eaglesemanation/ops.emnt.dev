@@ -38,7 +38,8 @@ spec:
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-dns-svc
     serviceDhcp:
-      type: NodePort
+      type: LoadBalancer
+      loadBalancerIP: "${SVC_DHCP_ADDR}"
     ingress:
       enabled: true
       path: /
@@ -51,6 +52,15 @@ spec:
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_ADDR}"
         - "address=/mc.emnt.dev/${SVC_MINECRAFT_ADDR}"
+    extraEnvVars:
+      DHCP_ACTIVE: true
+      DHCP_START: 192.168.25.11
+      DHCP_END: 192.168.25.100
+      DHCP_ROUTER: 192.168.25.1
+      DHCP_LEASETIME: 24
+      PIHOLE_DOMAIN: local
+      DHCP_IPv6: true
+      DHCP_rapid_commit: true
     extraVolumes:
       redirect-to-admin-conf:
         configMap:
