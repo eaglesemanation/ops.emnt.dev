@@ -55,6 +55,7 @@ spec:
       spigetResources:
         - 19254 # ViaVersion
         - 27448 # ViaBackwards
+        - 102990 # NoChatReports
       rcon:
         enabled: true
         existingSecret: vanilla-rcon-pass
