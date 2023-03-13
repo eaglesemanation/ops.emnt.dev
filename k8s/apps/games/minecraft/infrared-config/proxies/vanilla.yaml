@@ -5,7 +5,7 @@ java:
         - default
       domains:
         - vanilla.mc.emnt.dev
-      address: vanilla.minecraft.svc.cluster.local:25565
+      address: vanilla-minecraft.minecraft.svc.cluster.local:25565
       #proxyBind: 0.0.0.0
       #proxyPass: socks5://127.0.0.1:1080
       #sendProxyProtocol: true

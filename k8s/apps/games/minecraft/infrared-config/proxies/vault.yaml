@@ -5,7 +5,7 @@ java:
         - default
       domains:
         - vault.mc.emnt.dev
-      address: vault.minecraft.svc.cluster.local:25565
+      address: vault-minecraft.minecraft.svc.cluster.local:25565
       #proxyBind: 0.0.0.0
       #proxyPass: socks5://127.0.0.1:1080
       #sendProxyProtocol: true
