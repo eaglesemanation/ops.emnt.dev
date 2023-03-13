@@ -30,7 +30,7 @@ spec:
     initContainers:
       - name: copy-config
         image: busybox
-        command: ["cp", "-r", "/src/*", "/dest"]
+        command: ["sh", "-c", "cp -r /src/* /dest"]
         volumeMounts:
           - name: vanilla-config
             mountPath: "/src"
