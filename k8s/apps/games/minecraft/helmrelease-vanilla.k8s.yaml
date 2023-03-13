@@ -46,6 +46,9 @@ spec:
       motd: "Vanilla survival"
       spigetResources:
         - 1997 # ProtocolLib
+      rcon:
+        enabled: true
+        existingSecret: vanilla-rcon-pass
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"
@@ -53,6 +56,3 @@ spec:
       storageClass: freenas-api-iscsi-csi
       dataDir:
         enabled: true
-    rcon:
-      enabled: true
-      existingSecret: vanilla-rcon-pass
