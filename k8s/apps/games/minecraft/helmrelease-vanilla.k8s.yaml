@@ -28,6 +28,7 @@ spec:
           - name: vanilla-config
             configMap:
               name: vanilla-config
+              defaultMode: 436 # 0664
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
