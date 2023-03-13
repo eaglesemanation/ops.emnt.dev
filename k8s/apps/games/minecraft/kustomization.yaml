@@ -1,4 +1,3 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: minecraft
@@ -6,3 +5,4 @@ resources:
   - namespace.k8s.yaml
   - infrared-config
   - infrared.k8s.yaml
+  - helmrelease-vanilla.k8s.yaml

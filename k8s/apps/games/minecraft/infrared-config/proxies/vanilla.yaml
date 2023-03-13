@@ -1,11 +1,11 @@
 java:
   servers:
-    vault:
+    vanilla:
       gateways:
         - default
       domains:
-        - vault.mc.emnt.dev
-      address: vault.minecraft.svc.cluster.local:25565
+        - vanilla.mc.emnt.dev
+      address: vanilla.minecraft.svc.cluster.local:25565
       #proxyBind: 0.0.0.0
       #proxyPass: socks5://127.0.0.1:1080
       #sendProxyProtocol: true

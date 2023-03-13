@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - bitnami.k8s.yaml
   - democratic-csi.k8s.yaml
-  - pihole.k8s.yaml
   - ingress-nginx.k8s.yaml
+  - itzg-minecraft.k8s.yaml
   - jetstack.k8s.yaml
+  - pihole.k8s.yaml
