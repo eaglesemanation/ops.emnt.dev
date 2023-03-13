@@ -48,7 +48,7 @@ spec:
       maxPlayers: 10
       motd: "Vanilla survival"
       removeOldMods: true
-      spiget:
+      spigetResources:
         - 1997 # ProtocolLib
         - 19254 # ViaVersion
         - 27448 # ViaBackwards
