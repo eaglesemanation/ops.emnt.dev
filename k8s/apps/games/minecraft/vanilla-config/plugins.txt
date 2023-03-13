@@ -1,0 +1,1 @@
+https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
