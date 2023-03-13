@@ -20,7 +20,11 @@ spec:
         memory: 4Gi
         cpu: 2000m
     extraVolumes:
-      - volumes:
+      - volumeMounts:
+          - name: vanilla-config
+            mountPath: /data/plugins.txt
+            subPath: plugins.txt
+        volumes:
           - name: vanilla-config
             configMap:
               name: vanilla-config
@@ -46,14 +50,14 @@ spec:
       type: "PAPER"
       maxPlayers: 10
       motd: "Vanilla survival"
-      spigetResources:
-        - 1997 # ProtocolLib
+      removeOldMods: true
       rcon:
         enabled: true
         existingSecret: vanilla-rcon-pass
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"
+      MODS_FILE: /data/plugins.txt
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
