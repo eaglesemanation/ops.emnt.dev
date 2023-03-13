@@ -24,13 +24,13 @@ spec:
           - name: vanilla-config
             configMap:
               name: vanilla-config
-              items:
-                - key: vane-admin.yaml
-                  path: plugins/vane-admin/config.yml
     initContainers:
       - name: copy-config
         image: busybox
-        command: ["sh", "-c", "cp -r /src/* /dest"]
+        command: 
+          - sh
+          - -c
+          - cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml
         volumeMounts:
           - name: vanilla-config
             mountPath: "/src"
