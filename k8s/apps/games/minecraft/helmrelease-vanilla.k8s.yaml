@@ -31,13 +31,13 @@ spec:
         command:
           - sh
           - -c
-          - cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml
+          - |-
+            cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml;
         volumeMounts:
           - name: vanilla-config
             mountPath: /src
           - name: datadir
             mountPath: /dest
-
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
@@ -46,6 +46,7 @@ spec:
       spigetResources:
         - 1997 # ProtocolLib
         - 34315 # Vault
+        - 28140 # LuckPerms
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"
