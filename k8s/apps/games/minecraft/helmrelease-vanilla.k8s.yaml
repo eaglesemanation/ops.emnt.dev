@@ -19,6 +19,23 @@ spec:
       limits:
         memory: 4Gi
         cpu: 2000m
+    extraVolumes:
+      - volumes:
+          - name: vanilla-config
+            configMap:
+              name: vanilla-config
+              items:
+                - key: vane-admin.yaml
+                  path: plugins/vane-admin/config.yml
+    initContainers:
+      - name: copy-config
+        image: busybox
+        command: ["cp", "-r", "/src/*", "/dest"]
+        volumeMounts:
+          - name: vanilla-config
+            mountPath: "/src"
+          - name: datadir
+            mountPath: "/dest"
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
@@ -26,6 +43,7 @@ spec:
       motd: "Vanilla survival"
       spigetResources:
         - 1997 # ProtocolLib
+        - 34315 # Vault
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"
