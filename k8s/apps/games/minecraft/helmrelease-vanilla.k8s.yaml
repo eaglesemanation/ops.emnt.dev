@@ -58,7 +58,6 @@ spec:
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"
-      MODS_FILE: /data/plugins.txt
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
