@@ -15,9 +15,18 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
+    resources:
+      limits:
+        memory: 4Gi
+        cpu: 2000m
     minecraftServer:
       eula: "TRUE"
+      type: "PAPER"
       maxPlayers: 10
+      motd: "Vanilla survival"
+    extraEnv:
+      MODRINTH_PROJECTS: "vane"
+      MODRINTH_ALLOWED_VERSION_TYPE: "release"
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
