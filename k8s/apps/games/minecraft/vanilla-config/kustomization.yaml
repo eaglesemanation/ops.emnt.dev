@@ -4,5 +4,7 @@ namespace: minecraft
 
 configMapGenerator:
   - name: vanilla-config
+    options:
+      disableNameSuffixHash: true
     files:
       - vane-admin.yaml
