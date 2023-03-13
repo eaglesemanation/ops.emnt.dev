@@ -24,7 +24,7 @@ spec:
       type: "PAPER"
       maxPlayers: 10
       motd: "Vanilla survival"
-      spiget:
+      spigetResources:
         - 1997 # ProtocolLib
     extraEnv:
       MODRINTH_PROJECTS: "vane"
