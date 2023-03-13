@@ -20,23 +20,14 @@ spec:
         memory: 4Gi
         cpu: 2000m
     extraVolumes:
-      - volumes:
+      - volumeMounts:
+          - name: vanilla-config
+            mountPath: /data/plugins/vane-admin/config.yml
+            subPath: vane-admin.yaml
+        volumes:
           - name: vanilla-config
             configMap:
               name: vanilla-config
-    initContainers:
-      - name: copy-config
-        image: busybox
-        command: 
-          - sh
-          - -c
-          - sleep 999999
-          #- cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml
-        volumeMounts:
-          - name: vanilla-config
-            mountPath: "/src"
-          - name: datadir
-            mountPath: "/dest"
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
