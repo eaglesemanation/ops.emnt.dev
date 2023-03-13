@@ -28,7 +28,8 @@ spec:
           fsType: nfs
         mountOptions:
           - noatime
-          - nfsvers=4.2
+          - nolock
+          - nfsvers=3
     driver:
       existingConfigSecret: freenas-api-nfs-driver
       config:
