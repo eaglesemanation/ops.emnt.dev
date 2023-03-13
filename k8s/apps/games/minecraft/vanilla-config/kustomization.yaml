@@ -8,3 +8,4 @@ configMapGenerator:
       disableNameSuffixHash: true
     files:
       - vane-admin.yaml
+      - vane-permissions.yaml

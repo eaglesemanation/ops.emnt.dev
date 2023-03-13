@@ -33,6 +33,7 @@ spec:
           - -c
           - |-
             cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml;
+            cp -r /src/vane-permissions.yaml /dest/plugins/vane-permissions/config.yml;
         volumeMounts:
           - name: vanilla-config
             mountPath: /src
@@ -45,8 +46,6 @@ spec:
       motd: "Vanilla survival"
       spigetResources:
         - 1997 # ProtocolLib
-        - 34315 # Vault
-        - 28140 # LuckPerms
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"
