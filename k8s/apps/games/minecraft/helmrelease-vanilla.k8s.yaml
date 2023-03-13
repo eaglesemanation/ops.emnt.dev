@@ -30,7 +30,8 @@ spec:
         command: 
           - sh
           - -c
-          - cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml
+          - sleep 999999
+          #- cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml
         volumeMounts:
           - name: vanilla-config
             mountPath: "/src"
