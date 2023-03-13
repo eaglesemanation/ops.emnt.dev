@@ -33,9 +33,9 @@ spec:
           - -c
           - |-
             mkdir -p /dest/plugins/vane-admin;
-            cp -r /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml;
+            cp /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml;
             mkdir -p /dest/plugins/vane-permissions;
-            cp -r /src/vane-permissions.yaml /dest/plugins/vane-permissions/config.yml;
+            cp /src/vane-permissions.yaml /dest/plugins/vane-permissions/config.yml;
         volumeMounts:
           - name: vanilla-config
             mountPath: /src
