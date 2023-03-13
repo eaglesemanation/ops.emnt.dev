@@ -20,11 +20,7 @@ spec:
         memory: 4Gi
         cpu: 2000m
     extraVolumes:
-      - volumeMounts:
-          - name: vanilla-config
-            mountPath: /data/plugins.txt
-            subPath: plugins.txt
-        volumes:
+      - volumes:
           - name: vanilla-config
             configMap:
               name: vanilla-config
@@ -48,9 +44,14 @@ spec:
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
+      version: "1.19.2"
       maxPlayers: 10
       motd: "Vanilla survival"
       removeOldMods: true
+      spiget:
+        - 1997 # ProtocolLib
+        - 19254 # ViaVersion
+        - 27448 # ViaBackwards
       rcon:
         enabled: true
         existingSecret: vanilla-rcon-pass
