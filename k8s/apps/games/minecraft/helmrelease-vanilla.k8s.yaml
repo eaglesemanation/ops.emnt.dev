@@ -53,3 +53,6 @@ spec:
       storageClass: freenas-api-iscsi-csi
       dataDir:
         enabled: true
+    rcon:
+      enabled: true
+      existingSecret: vanilla-rcon-pass

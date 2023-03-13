@@ -7,3 +7,4 @@ resources:
   - infrared.k8s.yaml
   - helmrelease-vanilla.k8s.yaml
   - vanilla-config
+  - vanilla-rcon-pass.sops.yaml
