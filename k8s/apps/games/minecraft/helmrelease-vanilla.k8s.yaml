@@ -72,9 +72,12 @@ spec:
           ingress:
             ingressClassName: nginx
             enabled: true
+            annotations:
+              nginx.ingress.kubernetes.io/use-regex: "true"
+              nginx.ingress.kubernetes.io/rewrite-target: /$2
             hosts:
               - name: mc.emnt.dev
-                path: /map/vanilla
+                path: /map/vanilla(/|$)(.*)
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"
