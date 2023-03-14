@@ -25,22 +25,4 @@ spec:
       ingressClass: internal
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-cert
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
-  name: internal-to-external
-  namespace: ingress-nginx
-spec:
-  ingressClassName: internal
-  rules:
-    - host: "*.emnt.dev"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: ingress-nginx-external-controller
-                port:
-                  name: http
+        default-backend-service: ingress-nginx/ingress-nginx-external-controller
