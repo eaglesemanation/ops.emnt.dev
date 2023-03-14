@@ -44,6 +44,9 @@ spec:
       loadBalancerIP: "${SVC_DHCP_ADDR}"
     ingress:
       enabled: true
+      ingressClassName: internal
+      annotations:
+        nginx.ingress.kubernetes.io/app-root: /admin
       path: /
       hosts:
         - pihole.emnt.dev
@@ -63,11 +66,3 @@ spec:
       PIHOLE_DOMAIN: local
       DHCP_IPv6: true
       DHCP_rapid_commit: true
-    extraVolumes:
-      redirect-to-admin-conf:
-        configMap:
-          name: redirect-to-admin
-    extraVolumeMounts:
-      redirect-to-admin-conf:
-        mountPath: /etc/lighttpd/conf-enabled/99-redirect-to-admin.conf
-        subPath: conf
