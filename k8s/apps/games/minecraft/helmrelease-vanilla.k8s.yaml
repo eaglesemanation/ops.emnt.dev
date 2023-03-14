@@ -68,7 +68,7 @@ spec:
             enabled: true
             port: 8100
           ingress:
-            ingressClassName: ingress-nginx
+            ingressClassName: nginx
             enabled: true
             hosts:
               - name: mc.emnt.dev
