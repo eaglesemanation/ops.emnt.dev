@@ -3,5 +3,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.k8s.yaml
-  - helmrelease.k8s.yaml
+  - helmrelease-internal.k8s.yaml
+  - helmrelease-external.k8s.yaml
   - wildcard-cert.k8s.yaml

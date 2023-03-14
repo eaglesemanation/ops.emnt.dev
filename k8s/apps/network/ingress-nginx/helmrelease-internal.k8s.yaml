@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ingress-nginx-internal
+  namespace: ingress-nginx
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: ingress-nginx
+      version: 4.5.2
+      sourceRef:
+        kind: HelmRepository
+        name: ingress-nginx
+        namespace: flux-system
+      interval: 30m
+  values:
+    controller:
+      service:
+        loadBalancerIP: "${SVC_INGRESS_INTERNAL_ADDR}"
+        externalTrafficPolicy: Local
+      ingressClassResource:
+        name: internal
+        default: true
+      ingressClass: internal
+      extraArgs:
+        default-ssl-certificate: ingress-nginx/wildcard-cert
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: internal-to-external
+  namespace: ingress-nginx
+spec:
+  ingressClassName: internal
+  rules:
+    - host: "*.emnt.dev"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: ingress-nginx-external-controller
+                port:
+                  name: http

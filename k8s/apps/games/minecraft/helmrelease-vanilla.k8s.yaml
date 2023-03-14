@@ -70,14 +70,14 @@ spec:
             enabled: true
             port: 8100
           ingress:
-            ingressClassName: nginx
+            ingressClassName: external
             enabled: true
             annotations:
               nginx.ingress.kubernetes.io/use-regex: "true"
-              nginx.ingress.kubernetes.io/rewrite-target: /$2
+              nginx.ingress.kubernetes.io/rewrite-target: /$1
             hosts:
               - name: mc.emnt.dev
-                path: /map/vanilla(/|$)(.*)
+                path: /map/vanilla/(.*)
     extraEnv:
       MODRINTH_PROJECTS: "vane"
       MODRINTH_ALLOWED_VERSION_TYPE: "release"

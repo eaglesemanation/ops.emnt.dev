@@ -1,8 +1,7 @@
----
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: ingress-nginx
+  name: ingress-nginx-external
   namespace: ingress-nginx
 spec:
   interval: 30m
@@ -18,9 +17,10 @@ spec:
   values:
     controller:
       service:
-        loadBalancerIP: "${SVC_INGRESS_ADDR}"
+        loadBalancerIP: "${SVC_INGRESS_EXTERNAL_ADDR}"
         externalTrafficPolicy: Local
       ingressClassResource:
-        default: true
+        name: external
+      ingressClass: external
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-cert
