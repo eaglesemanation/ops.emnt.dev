@@ -10,3 +10,4 @@ configMapGenerator:
       - vane-admin.yaml
       - vane-permissions.yaml
       - plugins.txt
+      - bluemap.conf

@@ -40,6 +40,8 @@ spec:
             cp /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml;
             mkdir -p /dest/plugins/vane-permissions;
             cp /src/vane-permissions.yaml /dest/plugins/vane-permissions/config.yml;
+            mkdir -p /dest/plugins/BlueMap;
+            cp /src/bluemap.conf /dest/plugins/BlueMap/core.conf;
         volumeMounts:
           - name: vanilla-config
             mountPath: /src
