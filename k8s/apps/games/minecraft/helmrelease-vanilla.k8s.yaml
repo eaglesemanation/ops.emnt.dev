@@ -75,7 +75,7 @@ spec:
             annotations:
               nginx.ingress.kubernetes.io/use-regex: "true"
               nginx.ingress.kubernetes.io/configuration-snippet: |
-                rewrite ^/map/vanilla(?:/(.*))?$ /map/vanilla/$1
+                rewrite ^/map/vanilla(?:/(.*))?$ /map/vanilla/$1 break;
             hosts:
               - name: mc.emnt.dev
                 path: /map/vanilla
