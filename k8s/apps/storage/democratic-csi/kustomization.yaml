@@ -4,5 +4,7 @@ resources:
   - namespace.k8s.yaml
   - helmrelease-iscsi.k8s.yaml
   - iscsi-driver.sops.yaml
-  - helmrelease-nfs.k8s.yaml
-  - nfs-driver.sops.yaml
+  - helmrelease-smb.k8s.yaml
+  - smb-driver.sops.yaml
+  - smb-creds.sops.yaml
+  - smb-storageclass.k8s.yaml

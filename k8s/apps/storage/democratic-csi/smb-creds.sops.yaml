@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: freenas-smb-creds
+    namespace: democratic-csi
+stringData:
+    mountflags: ENC[AES256_GCM,data:sQk27IOw0bTNAnA0IcOrLJQc66sGMVQctpv+q5SziZFo1EpHDiWKVJXYSlKCkJKL/5kW,iv:f1MT667UxrHCYaeAf6GDAZOoeVb9WWbEy0LbVN3yZSM=,tag:0Oq3Cw+l4uMfD2pAaZcoAQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAyc0VEUlRZM0pNYUp0UnNx
+            SFFjcFpOWnVaNzZDSndON0NmK3Fvc1hWZDNBCkpjeHFVUDUvbW9MdkdGREpNVnZE
+            U05LMjRxTGxMdHRTVFcvNkszaFlqcXMKLS0tIFZObk9tTmZLYTFuT2RUaEEyNnM1
+            azh3YjJxZGV6ZWpNRzMyMTc5Zys4M2cKRBqKa24iLzSomXBN0oY5yNBPM2szlsJu
+            +gM57EGtbEk1yIPjtAjsy0q9treQffaJAPRo5mR0N27z/yLY95nivg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-03-16T07:40:40Z"
+    mac: ENC[AES256_GCM,data:NhSynR0wqUenawCFGfQoc1cMX2MYhNE1xYPQgcgaRQVDHin7ZxolOsCrCagDXqOjK6IZTen2Xu6SO9G/iRJ9oyf7blwVq799EKatuXPGUQ80HVXf3WNUmEET6bUK5IAOdfS3tvwid8FRV16msUNOBA/4sCiCx5SHoptVN6HfiaM=,iv:lsdUcuoKC+jWtTzG9dZvZIRlcdiLzpY7zdAUv5ShalE=,tag:bBVhLzaB7SbQCFD8kC9CjA==,type:str]
+    pgp:
+        - created_at: "2023-03-16T07:40:40Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf+P3jyr4j6Y2U0smbjkZ7YtBQ78nX0usckB+aOAYNd0mX0
+            Dqzx6InfOVP3Et8FrhLB7yi35XFFxyzadY2W0+M33wmrsHb51QAI3oVXN1GUXO0R
+            zfR47DRMUUNQ4d2V6eMs2IXIcA2ip6Ch8Q3p05boSd1jbG/Ot1EldtZ22tSGzP+P
+            7WSXH+LSbHXv3Vk0YU1XQkGUokpmRn5S8suUQCLxntGQWwJoKpczkTtS1xxA4Ok5
+            f71Z+f1qFfOduqwBCWF479ScExFLDkec3F0okU8GyHRMsZLEynQtUJfGKiLsLwNt
+            F2ShzL/BxJR9IB3KWw2yxlvb5reCZjMcts1bt8ChZdJeAQC/jk9f2WTQRldDhEbg
+            +yKYorhFKWwqYrk3DpoF4AvClEdyWrWGD92i8Ak4BreXHEHzRpnN7Nhn3+/0KXpP
+            Eh3I5Ugfq7Kngpc/BSpPya7UWxbabFI7ll4G5ZAI3w==
+            =NXwK
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
