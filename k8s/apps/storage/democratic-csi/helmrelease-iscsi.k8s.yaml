@@ -15,6 +15,8 @@ spec:
         name: democratic-csi
         namespace: flux-system
       interval: 30m
+  dependsOn:
+    - name: snapshot-controller
   values:
     node:
       hostPID: true
@@ -36,6 +38,13 @@ spec:
         allowVolumeExpansion: true
         parameters:
           fsType: ext4
+    volumeSnapshotClasses:
+      - name: freenas-iscsi-csi
+        parameters:
+          detachedSnapshots: "false"
+      - name: freenas-iscsi-detached-csi
+        parameters:
+          detachedSnapshots: "true"
     driver:
       existingConfigSecret: freenas-api-iscsi-driver
       config:

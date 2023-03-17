@@ -19,11 +19,3 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
-  values:
-    volumeSnapshotClasses:
-      - name: freenas-api-smb
-        driver: "org.democratic-csi.freenas-api-smb"
-        deletionPolicy: Delete
-      - name: freenas-api-iscsi
-        driver: "org.democratic-csi.freenas-api-iscsi"
-        deletionPolicy: Delete

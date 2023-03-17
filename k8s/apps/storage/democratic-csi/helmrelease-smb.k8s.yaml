@@ -15,9 +15,18 @@ spec:
         name: democratic-csi
         namespace: flux-system
       interval: 30m
+  dependsOn:
+    - name: snapshot-controller
   values:
     csiDriver:
       name: "org.democratic-csi.freenas-api-smb"
+    volumeSnapshotClasses:
+      - name: freenas-smb-csi
+        parameters:
+          detachedSnapshots: "false"
+      - name: freenas-smb-detached-csi
+        parameters:
+          detachedSnapshots: "true"
     driver:
       existingConfigSecret: freenas-api-smb-driver
       config:
