@@ -1,15 +1,15 @@
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: freenas-api-smb-csi
+  name: freenas-api-iscsi-csi
   labels:
     app.kubernetes.io/name: democratic-csi
-    app.kubernetes.io/instance: democratic-csi-smb
-provisioner: org.democratic-csi.freenas-api-smb
+    app.kubernetes.io/instance: democratic-csi-iscsi
+provisioner: org.democratic-csi.freenas-api-iscsi
 reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
 parameters:
-  fsType: cifs
-  csi.storage.k8s.io/node-stage-secret-name: freenas-smb-creds
+  fsType: ext4
+  csi.storage.k8s.io/node-stage-secret-name: freenas-iscsi-creds
   csi.storage.k8s.io/node-stage-secret-namespace: democratic-csi

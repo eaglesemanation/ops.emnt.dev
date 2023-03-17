@@ -89,3 +89,4 @@ spec:
       storageClass: freenas-api-iscsi-csi
       dataDir:
         enabled: true
+        Size: 10Gi

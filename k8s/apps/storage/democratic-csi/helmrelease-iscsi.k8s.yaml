@@ -31,14 +31,6 @@ spec:
         iscsiDirHostPathType: ""
     csiDriver:
       name: "org.democratic-csi.freenas-api-iscsi"
-    storageClasses:
-      - name: freenas-api-iscsi-csi
-        defaultClass: false
-        reclaimPolicy: Delete
-        volumeBindingMode: Immediate
-        allowVolumeExpansion: true
-        parameters:
-          fsType: ext4
     volumeSnapshotClasses:
       - name: freenas-iscsi-csi
         parameters:
