@@ -10,6 +10,6 @@ reclaimPolicy: Delete
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
 parameters:
-  fsType: cifs
+  csi.storage.k8s.io/fsType: cifs
   csi.storage.k8s.io/node-stage-secret-name: freenas-smb-creds
   csi.storage.k8s.io/node-stage-secret-namespace: democratic-csi
