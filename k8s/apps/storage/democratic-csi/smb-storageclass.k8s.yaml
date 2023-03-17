@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: democratic-csi
     app.kubernetes.io/instance: democratic-csi-smb
 provisioner: org.democratic-csi.freenas-api-smb
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 allowVolumeExpansion: true
 volumeBindingMode: Immediate
 parameters:
