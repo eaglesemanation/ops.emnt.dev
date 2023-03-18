@@ -24,5 +24,16 @@ spec:
       ingressClass: external
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-cert
+      extraContainers:
+        - name: wireguard-tunnel
+          image: alpine:3.17.2
+          volumeMounts:
+            - name: wireguard-config
+              mountPath: /etc/wireguard
+          command: ["sh", "-c", "apk add wireguard-tools; wg-quick up wg0; trap : TERM INT; sleep 9999999999d & wait"]
+      extraVolumes:
+        - name: wireguard-config
+          configMap:
+            name: wireguard-config
     tcp:
       "25565": "minecraft/infrared:25565"
