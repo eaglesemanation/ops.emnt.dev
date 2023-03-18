@@ -6,4 +6,3 @@ resources:
   - helmrelease-internal.k8s.yaml
   - helmrelease-external.k8s.yaml
   - wildcard-cert.k8s.yaml
-  - tcp-services.k8s.yaml

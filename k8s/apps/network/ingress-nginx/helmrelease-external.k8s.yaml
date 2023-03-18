@@ -24,4 +24,5 @@ spec:
       ingressClass: external
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-cert
-        tcp-services-configmap: ingress-nginx/tcp-services
+    tcp:
+      25565: "minecraft/infrared:25565"
