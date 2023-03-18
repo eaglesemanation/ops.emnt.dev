@@ -27,4 +27,4 @@ spec:
         default-ssl-certificate: ingress-nginx/wildcard-cert
         default-backend-service: ingress-nginx/ingress-nginx-external-controller
     tcp:
-      25565: "minecraft/infrared:25565"
+      "25565": "minecraft/infrared:25565"

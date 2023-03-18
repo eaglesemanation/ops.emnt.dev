@@ -25,4 +25,4 @@ spec:
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-cert
     tcp:
-      25565: "minecraft/infrared:25565"
+      "25565": "minecraft/infrared:25565"
