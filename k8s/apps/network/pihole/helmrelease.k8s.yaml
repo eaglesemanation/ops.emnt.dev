@@ -56,7 +56,6 @@ spec:
     dnsmasq:
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_INTERNAL_ADDR}"
-        - "address=/*.mc.emnt.dev/${SVC_MINECRAFT_ADDR}"
     extraEnvVars:
       DHCP_ACTIVE: true
       DHCP_START: 192.168.25.11

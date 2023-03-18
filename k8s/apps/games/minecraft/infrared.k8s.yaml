@@ -50,9 +50,7 @@ metadata:
   name: infrared
   namespace: minecraft
 spec:
-  type: LoadBalancer
-  loadBalancerIP: ${SVC_MINECRAFT_ADDR}
-  externalTrafficPolicy: Local
+  type: ClusterIP
   selector:
     app: infrared
   ports:
