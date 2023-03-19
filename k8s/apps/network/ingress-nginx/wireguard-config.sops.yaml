@@ -4,7 +4,7 @@ metadata:
     name: wireguard-config
     namespace: ingress-nginx
 stringData:
-    wg0.conf: ENC[AES256_GCM,data:eucXL5/Eyd56mnOU9nKkywduUI/9XGbqMdlggzoEJXJMpb6cuKBi/L2m1DBK/Kqtuzp5l41YhoIQk1Cw/AFhbxkBvpXpUQ1aYM0TyvevBMQ5u/ELQZRNtuqwiBSNiY25plfVcu3CW3bD53MzMLS4ztTkNwlxfJe45oLWuYFHHKvOb5Q9RgdnNp9UwdEuIIxW8RKwpncqf7DP6WJL2DDEbdkth2uXIVH6ofP82kFeXy7Nh9mzDogQAZEkmXbJTWUeFR+gGihVZrZ4xsDG6Cw1ry/RogW/Kq5bb/Ql25nrZmLkLiHlajVHhjPrYVL/B2+AetrDDg==,iv:4EfwU+OkH75cdYAvb6Emag1f6PyHy/e0VlXADwkgu3w=,tag:7mC8Iy6XoJhVtcJhMdB+xA==,type:str]
+    wg0.conf: ENC[AES256_GCM,data:tIOnVq8XRsAogJiaZ7g84YYt4UkSP4BJTSksp6FP7EZR2tQK1YEUmCPkFrEYrFD9UivLTKAw20zlx72NKHmT467j7njPPCFZ4le3lUnpQv4Sto1YlXbsderFWFpvySlRszRzCcM0ckh+LF9ecrINVB/1hmu5J6/sMJmjHX+u1UEAyo5Ksmeb3+vVRPLvHc0v8n1+4/+U4fXGQOJ+ScLAbZqjthm2uB59uFN8aIY8TFaZLGHEuhw+XRBKzEcct6LxVBTC7E3Agbs6JJivHrhQsUeM6Ryg968u61bvAttwXXS0zt8IraAal7d7eFe0z6r3bXZLow==,iv:o+MNBolxVq74diuTP+n1q7O7BJn+qQVC0+FaXWohCMk=,tag:RzPMlxTr9FgU2bUwWf7Uyg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -14,28 +14,28 @@ sops:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBYUt0QmxFNDc0RnVRZ0ZW
-            cEF1YnJDRm14UTlPV0hMSG13UUpwUEdoNG1NCjZHRnRKbGF6WnVlZ0hST2ZXSWp1
-            ckFjNCs3dVd2K1p1WWZLY25EQ1ozTkkKLS0tIFJKdlYyb0xFVkt0RzJ2WjRXQ3FC
-            SW9nVjM1V3RXcHgvL0ZtRE43Y1J2OUUKKPwEsDGnJWOSkYAJU90fVSig0b5XMw6Y
-            hVXQ6D7dUmNn4QOBIQF7Lynogxo0LQCh58Sst3AMuAZN22B+Ly7RBw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBxSlVScVc2Yis5bU9pSCtr
+            SmN6US9FM05teURwcW5GdVZkd1dIYjJ1b1cwClVETDRmZjlXYnRwTVM0eDdwNFZx
+            VlVOWk5XS29vU2dZbzF1NFVVTEY0dVUKLS0tIDYwVVRRK0hGaVNQcUN1YzZIQURI
+            ZVUxa0QvWGl2ay9JcHd6Y1NxdEdHSVkKiBv3daCHxQXuiDwgbhhNfKXVRY6Nmvy/
+            wpzPAPNz+EIr/xNibNSwWj5E1bjqrG62iJnPA8/lFRgTNeBmJl5aUg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-03-18T20:08:07Z"
-    mac: ENC[AES256_GCM,data:6uJZFpAwtEkpLdJxGncF6HDsQPEzsC8Mk6ZAs2INbRDuhXPi0/dFWz/M9t6jH3aWJWoNIwmChNELeNADYta4eVtaqYlfhPOsF/vdtmL+Rm0cTXDp0DYgBVyNPE0Ve/Afm/aoscBvJMaPEUCatQV0cBOoN8XMeNpX5mqPbBmK0ZM=,iv:Z/ToXzMm+25J8MVkhZaLXdQ2n6YuW7ex0ZNQ9RcYORc=,tag:vQrGvyV7Wb61D7Bby4l2PA==,type:str]
+    lastmodified: "2023-03-19T00:58:36Z"
+    mac: ENC[AES256_GCM,data:cfZIFR3AfjMtSpXfMoW+WVxzlNRO7u7D1wVZRWSG/rOEiu1nZujD1zUkOZMyyEM8SWIxfXefQIpouAqpzOiwi6IlvECK5+L3HJKvw0CCmNCExN6+YL82l8fvIujzlL6vXr2egaSGtGjoFizgfeP3f1X4GoOL0vVs5D5hY1eygto=,iv:AY4k60b8U+GugYjx5bAg9R7KSqb8b7X0V0p2N6mCTPU=,tag:Sh7vwVoWxbkt/bCvbzevrQ==,type:str]
     pgp:
-        - created_at: "2023-03-18T20:08:07Z"
+        - created_at: "2023-03-19T00:58:36Z"
           enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf9Ek21q58MPCEXSGsJb3KYEFqAgEseqJnc3W7VnEYJOPfu
-            Hjw5NO33T1inl6kcLnOWqDwDLssiS8GFKUyADYV26vUJdpGZDmsnDzJLxEnldxcn
-            hx2xOleCul/4MHnyisouNWsAaybRYDmyuXDv7VxnAICqBfv9twBaGrtTJUTOjb+2
-            mir++a1roSTJPaZ4WIQQ7YitIHjrogVOa3GKoYJcQmsPoZ6o7ED5E7eNdIjrgWdJ
-            gPqCGRD7ZMeg1y4155z7m2qSU+Gh/qRZsx/jn8Cd08oYFo4ocIt8qvjcPh7Pfe16
-            gA2a1BnV3F3Qaw3VbIRux+N59yFX+3uIDa2ddlxLwtJeAefGJd9Z1xVQvRwJ4xU3
-            xESMV/89cESgIz9q1WCHWXR6OdrdgsqcbTCxKXmAgFa8GY0/9AYm2r0zjzSePBLV
-            B3VWZMYxLsQDaasE7FVAvH5SP3uNKP6dkdffSp3QGQ==
-            =K1k8
+            hQEMAzB6fv8Ha/LEAQf+JfhJgSe/me23/q9y9/0mr8L6mHyYzE+7NLQRzgQmvHnR
+            qVoicWdQQzILuaBPR6L4WKeNe9wZdeGk4daHmeseQxSzcPgbtQAUMuHBqlD3ZhhF
+            LA16UilEQrBYzTdAX9SNNzkfKCap9Luey5zxJW/DsnLyW/8aMI4fiwlkRWti0D+J
+            vz6lIHmRg37BCNSRAMGpYlrdvGGAAS45liJxdqy+Zg7cIA6CR2Gjb17SIldUUzdL
+            WBlbd7KfeDVRuVUskCOBqhKanPm6wd/0HrU+Bd2H5z0FhMOmYKfiD/k5xhyPbxDF
+            ATadjReQYS1Y+HI/O7mzdwMm/qHYcEs5cccYVNPwEtJcAbvnnPLH0gT/NUxp9Uvx
+            z5cUuXTRdA8+vBazEs2Ood5woyflTzE1NJgbbHlo3zKdwnG94gaz9ah332dE6CcR
+            Y5sQfNvlDhwVLYNC86C6t0TZtqmMRrUT4Im8SUg=
+            =KqE5
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
     encrypted_regex: ^(data|stringData)$
