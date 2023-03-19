@@ -34,6 +34,6 @@ spec:
       extraVolumes:
         - name: wireguard-config
           secret:
-            name: wireguard-config
+            secretName: wireguard-config
     tcp:
       "25565": "minecraft/infrared:25565"
