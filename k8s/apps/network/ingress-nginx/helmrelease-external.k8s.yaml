@@ -31,6 +31,10 @@ spec:
             - name: wireguard-config
               mountPath: /etc/wireguard
           command: ["sh", "-c", "apk add wireguard-tools; wg-quick up wg0; trap : TERM INT; sleep 9999999999d & wait"]
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
       extraVolumes:
         - name: wireguard-config
           secret:
