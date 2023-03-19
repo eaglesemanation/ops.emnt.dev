@@ -33,7 +33,7 @@ spec:
           command: ["sh", "-c", "apk add wireguard-tools; wg-quick up wg0; trap : TERM INT; sleep 9999999999d & wait"]
       extraVolumes:
         - name: wireguard-config
-          configMap:
+          secret:
             name: wireguard-config
     tcp:
       "25565": "minecraft/infrared:25565"
