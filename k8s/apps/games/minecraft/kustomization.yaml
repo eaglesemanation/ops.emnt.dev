@@ -8,3 +8,6 @@ resources:
   - helmrelease-vanilla.k8s.yaml
   - vanilla-config
   - vanilla-rcon-pass.sops.yaml
+  - helmrelease-vault.k8s.yaml
+  - vault-config
+  - vault-rcon-pass.sops.yaml

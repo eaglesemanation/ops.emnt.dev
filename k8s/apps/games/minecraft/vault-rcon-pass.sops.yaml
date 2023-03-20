@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+    namespace: minecraft
+    name: vault-rcon-pass
+stringData:
+    rcon-password: ENC[AES256_GCM,data:XfMFEwd5q2oKY3m4EldhoWjTWN5rN6pSvg==,iv:zhqhCfamuuwcRVBBUtFhir/KW9d8VFf1J9lpyi9WQiM=,tag:kgR9c0MQztafQC6L2VlVUw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB3aWVrMWx1dWdTVTF2ZDY4
+            RU5WMzd5WEhBOHIxKy9vdVhZQ1c2dkVncUVvCmh4Q1VkSzlKc0swQlY1c2JLcHBB
+            b2lwNC9zZGk3S0JjL1hZQkdVZW13c2cKLS0tIHl2NFpWR0xJazBGTVpTei9ZL3Vx
+            Vmc2RVJYcVFQMzBVenhOa25MWTZjN3MK1MRJ2+AVWk5rpII++9fQt0/PTLDytNC8
+            pL5GN5/ycEJsuk9UTxLQ4r6edDFhLSu+na9j6Mjttk4buJ0Tdhwfpw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-03-20T01:35:17Z"
+    mac: ENC[AES256_GCM,data:ApyuQZPRnSUlT8FD8A86aZTL3GZeUBfiU8nyAC80zLAL/cShneJgcfxcaLDZGpo20AuxrrLDfVzayN/zeLzPnDtnWBAlBGHJsUyG0ABZ3K34dXFhQwGA8o/teTtouzXF/mP8syksa6KYpMJcMIVMssnsGkMmXJ2ET10/BvbHL38=,iv:7ybSIF041M0/x17+PUu6z2IRZeqPUpHsbDjkvUAXZaA=,tag:QSUA4DGgMJ2HUnoFvnWYsg==,type:str]
+    pgp:
+        - created_at: "2023-03-20T01:35:16Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/SIpKO3NnBnpBTzAqFLn1HDiJsxLVpMRFCfshS/dRzsZq
+            QbwVu/XgxNDTD8nsOv83KW6yg6kk17lWXXrXWi/OW+YwYse0fdhZTKaPA7k4JlLP
+            AChhlU6yiPl02gDPAluXuMh4iztae40M4fVIs1Ohwg8LM7rYfdKaiKr6jNbd0shg
+            lFC4HUswxCR3LSknSP2zXbyFBKORAkLitss+VxtB1CDymS8gdpsn2FglAZU8TTyP
+            e6cKA5kdMrHu3QG3ankqSH5gVGa35w1oqeCINLIrMc9WcV328lMEVL3YV5FjOHOG
+            ZQSKQSYUA7s9FrFgMG+ILxVXy3oULvbM4m4kaAeU3tJeARF6R9QZCy+G2bhOJBG8
+            gkpYkbHzF9wywlAFx9jYbEn8pRRvkOuYE1Ck46Qe444w0ouxfQC7eFbLGaE4B+0F
+            9EVPVcdE0dom7xC/qkGvinuCKan1VQZcXzYenjIAnA==
+            =e3DK
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
