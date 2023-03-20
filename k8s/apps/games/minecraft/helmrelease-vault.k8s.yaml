@@ -17,7 +17,7 @@ spec:
   values:
     resources:
       limits:
-        memory: 8Gi
+        memory: 9Gi
         cpu: 4000m
     extraVolumes:
       - volumes:
@@ -43,7 +43,7 @@ spec:
       eula: "TRUE"
       type: "AUTO_CURSEFORGE"
       maxPlayers: 10
-      memory: "4G"
+      memory: "8G"
       motd: "Vault Hunters"
       removeOldMods: true
       rcon:
