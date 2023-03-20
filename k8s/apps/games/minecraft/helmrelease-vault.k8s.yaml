@@ -43,6 +43,7 @@ spec:
       eula: "TRUE"
       type: "AUTO_CURSEFORGE"
       maxPlayers: 10
+      memory: "4G"
       motd: "Vault Hunters"
       removeOldMods: true
       rcon:
@@ -68,7 +69,7 @@ spec:
                 path: /map/vault(/|$)(.*)
     extraEnv:
       CF_SLUG: vault-hunters-1-18-2
-      MODS: "https://www.curseforge.com/minecraft/mc-mods/bluemap/download/4437305/file"
+      CF_FORCE_INCLUDE_MODS: bluemap
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
