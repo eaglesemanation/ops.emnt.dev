@@ -41,7 +41,8 @@ spec:
             mountPath: /dest
     minecraftServer:
       eula: "TRUE"
-      type: "AUTO_CURSEFORGE"
+      type: "CURSEFORGE"
+      cfServerMod: "https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2/download/4437399/file"
       maxPlayers: 10
       memory: "8G"
       motd: "Vault Hunters"
@@ -67,9 +68,6 @@ spec:
             hosts:
               - name: mc.emnt.dev
                 path: /map/vault(/|$)(.*)
-    extraEnv:
-      CF_SLUG: vault-hunters-1-18-2
-      CF_FORCE_INCLUDE_MODS: bluemap
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
