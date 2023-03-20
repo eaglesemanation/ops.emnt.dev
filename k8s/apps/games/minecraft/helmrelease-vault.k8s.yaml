@@ -19,6 +19,8 @@ spec:
       limits:
         memory: 9Gi
         cpu: 4000m
+    readinessProbe:
+      initialDelaySeconds: 60
     extraVolumes:
       - volumes:
           - name: vault-config
