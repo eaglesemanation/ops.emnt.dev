@@ -7,6 +7,8 @@ metadata:
 spec:
   interval: 10m
   path: ./k8s/apps/games/minecraft
+  dependsOn:
+    - name: democratic-csi
   prune: true
   sourceRef:
     kind: GitRepository
