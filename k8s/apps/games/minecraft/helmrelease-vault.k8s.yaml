@@ -20,7 +20,7 @@ spec:
         memory: 9Gi
         cpu: 4000m
     readinessProbe:
-      initialDelaySeconds: 60
+      initialDelaySeconds: 180
     extraVolumes:
       - volumes:
           - name: vault-config
