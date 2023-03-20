@@ -72,7 +72,7 @@ spec:
     extraEnv:
       CF_PAGE_URL: https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2
       CF_EXCLUDE_MODS: "torohealth-damage-indicators,legendary-tooltips"
-      CF_INCLUDE_MODS: "bluemap"
+      CF_FORCE_INCLUDE_MODS: "bluemap"
       CF_FORCE_SYNCHRONIZE: "true"
     persistence:
       storageClass: freenas-api-iscsi-csi
