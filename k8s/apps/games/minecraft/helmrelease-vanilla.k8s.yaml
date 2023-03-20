@@ -24,34 +24,26 @@ spec:
           - name: vanilla-config
             mountPath: /data/plugins.txt
             subPath: plugins.txt
+          - name: vanilla-config
+            mountPath: /plugins/vane-admin/config.yaml
+            subPath: vane-admin.yaml
+          - name: vanilla-config
+            mountPath: /plugins/vane-permissions/config.yaml
+            subPath: vane-permissions.yaml
+          - name: vanilla-config
+            mountPath: /plugins/BlueMap/core.conf
+            subPath: bluemap.conf
         volumes:
           - name: vanilla-config
             configMap:
               name: vanilla-config
               defaultMode: 436 # 0664
-    initContainers:
-      - name: copy-config
-        image: busybox:1.36
-        command:
-          - sh
-          - -c
-          - |-
-            mkdir -p /dest/plugins/vane-admin;
-            cp /src/vane-admin.yaml /dest/plugins/vane-admin/config.yml;
-            mkdir -p /dest/plugins/vane-permissions;
-            cp /src/vane-permissions.yaml /dest/plugins/vane-permissions/config.yml;
-            mkdir -p /dest/plugins/BlueMap;
-            cp /src/bluemap.conf /dest/plugins/BlueMap/core.conf;
-        volumeMounts:
-          - name: vanilla-config
-            mountPath: /src
-          - name: datadir
-            mountPath: /dest
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
       version: "1.19.2"
       maxPlayers: 10
+      ops: eaglesemanation
       motd: "Vanilla survival"
       removeOldMods: true
       spigetResources:
@@ -59,9 +51,6 @@ spec:
         - 27448 # ViaBackwards
         - 83557 # BlueMap
         - 102990 # NoChatReports
-      rcon:
-        enabled: true
-        existingSecret: vanilla-rcon-pass
       extraPorts:
         - name: bluemap
           containerPort: 8100

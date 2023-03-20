@@ -38,9 +38,7 @@ spec:
       memory: "10G"
       motd: "Vault Hunters"
       removeOldMods: true
-      rcon:
-        enabled: true
-        existingSecret: vault-rcon-pass
+      ops: eaglesemanation
       extraPorts:
         - name: bluemap
           containerPort: 8100
@@ -64,6 +62,7 @@ spec:
       CF_EXCLUDE_MODS: torohealth-damage-indicators,legendary-tooltips
       CF_FORCE_SYNCHRONIZE: true
       MODRINTH_PROJECTS: bluemap:wR5j7NpL
+      OVERRIDE_OPS: true
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
