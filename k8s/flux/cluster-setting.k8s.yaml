@@ -5,6 +5,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  K8S_API_ADDR: 192.168.25.100
   NAS_ADDR: 192.168.25.200
 
   SVC_DHCP_ADDR: 192.168.25.2

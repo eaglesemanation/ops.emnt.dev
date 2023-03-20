@@ -9,16 +9,3 @@ machine:
         routes:
           - network: 0.0.0.0/0
             gateway: 192.168.25.1
-  disks:
-    - device: /dev/vdb
-      partitions:
-        - mountpoint: /var/local
-  kubelet:
-    extraMounts:
-      - destination: /var/local
-        type: bind
-        source: /var/local
-        options:
-          - rbind
-          - rshared
-          - rw
