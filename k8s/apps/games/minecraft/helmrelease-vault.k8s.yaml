@@ -35,6 +35,7 @@ spec:
       eula: "TRUE"
       type: "AUTO_CURSEFORGE"
       maxPlayers: 10
+      onlineMode: false
       memory: "10G"
       motd: "Vault Hunters"
       removeOldMods: true
