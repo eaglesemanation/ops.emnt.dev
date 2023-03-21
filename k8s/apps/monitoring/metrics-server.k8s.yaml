@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: pihole
+  name: metrics-server
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./k8s/apps/network/pihole
+  path: ./k8s/apps/monitoring/metrics-server
   prune: true
   sourceRef:
     kind: GitRepository

@@ -7,5 +7,6 @@ resources:
   - ingress-nginx.k8s.yaml
   - itzg-minecraft.k8s.yaml
   - jetstack.k8s.yaml
+  - metrics-server.k8s.yaml
   - pihole.k8s.yaml
   - piraeus.k8s.yaml
