@@ -21,7 +21,7 @@ spec:
         externalTrafficPolicy: Local
       ingressClassResource:
         name: external
-      ingressClass: external
+        controllerValue: k8s.io/ingress-nginx-external
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-cert
       extraContainers:
