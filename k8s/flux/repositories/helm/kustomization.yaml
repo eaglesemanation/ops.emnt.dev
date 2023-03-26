@@ -11,3 +11,4 @@ resources:
   - metrics-server.k8s.yaml
   - pihole.k8s.yaml
   - piraeus.k8s.yaml
+  - vmware-tanzu.k8s.yaml

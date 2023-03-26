@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - democratic-csi.k8s.yaml
   - external-snapshotter.k8s.yaml
+  - velero.k8s.yaml

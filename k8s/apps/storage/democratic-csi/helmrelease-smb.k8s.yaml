@@ -23,10 +23,11 @@ spec:
       name: "org.democratic-csi.freenas-api-smb"
     volumeSnapshotClasses:
       - name: freenas-smb-csi
+        annotations:
+          velero.io/csi-volumesnapshot-class: "true"
         parameters:
-          detachedSnapshots: "false"
-      - name: freenas-smb-detached-csi
-        parameters:
+          # This will consume more space, but at least 
+          # snapshot is not coupled with original PV
           detachedSnapshots: "true"
     driver:
       existingConfigSecret: freenas-api-smb-driver
