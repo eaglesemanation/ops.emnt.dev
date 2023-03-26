@@ -39,6 +39,11 @@ spec:
         name: b2
         bucket: talos-cluster-1
         config:
+          region: us-east-005
           s3Url: "https://s3.us-east-005.backblazeb2.com"
     credentials:
       existingSecret: b2-creds
+    # Instead of using velero snapshots for volume backups it's done through
+    # CSI snapshots support and file system backups
+    snapshotsEnabled: false
+    deployNodeAgent: true
