@@ -17,8 +17,8 @@ spec:
   values:
     resources:
       limits:
-        memory: 3Gi
-        cpu: 1000m
+        memory: 2Gi
+        cpu: 2000m
     extraVolumes:
       - volumeMounts:
           - name: vanilla-config
