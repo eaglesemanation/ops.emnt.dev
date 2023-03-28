@@ -24,6 +24,7 @@ data:
             ${NAS_ADDR} ${NAS_URL}
             fallthrough
         }
+        forward emnt.dev ${DNS_ADDR}
         forward . /etc/resolv.conf
         cache 30
         loop
