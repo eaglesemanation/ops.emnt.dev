@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - helmrelease-external.k8s.yaml
   - helmrelease-internal.k8s.yaml
+  - minio-ingress.k8s.yaml
   - namespace.k8s.yaml
   - truenas-ingress.k8s.yaml
   - wildcard-cert.k8s.yaml
