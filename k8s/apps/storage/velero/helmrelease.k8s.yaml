@@ -36,13 +36,31 @@ spec:
       features: EnableCSI
       provider: aws
       backupStorageLocation:
-        name: b2
-        bucket: talos-cluster-1
+        name: minio
+        bucket: velero
         config:
-          region: us-east-005
-          s3Url: "https://s3.us-east-005.backblazeb2.com"
+          profile: minio
+          region: us-west-1
+          s3Url: https://minio.emnt.dev
+    extraObjects:
+      - apiVersion: velero.io/v1
+        kind: BackupStorageLocation
+        metadata:
+          name: b2
+          namespace: velero
+        spec:
+          validationFrequency: 30m
+          backupSyncPeriod: 1h
+          accessMode: ReadWrite
+          config:
+            profile: b2
+            region: us-east-005
+            s3Url: https://s3.us-east-005.backblazeb2.com
+          objectStorage:
+            bucket: talos-cluster-1
+          provider: aws
     credentials:
-      existingSecret: b2-creds
+      existingSecret: s3-creds
     # Instead of using velero snapshots for volume backups it's done through
     # CSI snapshots support and file system backups
     snapshotsEnabled: false
