@@ -36,7 +36,7 @@ spec:
       type: "AUTO_CURSEFORGE"
       maxPlayers: 10
       onlineMode: false
-      memory: "9.5G"
+      memory: "9G"
       maxTickTime: 120000
       motd: "Vault Hunters"
       removeOldMods: true
