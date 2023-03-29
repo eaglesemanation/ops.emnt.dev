@@ -21,7 +21,7 @@ spec:
         cpu: 2000m
     startupProbe:
       enabled: true
-      failureThreshold: 60
+      failureThreshold: 120
     extraVolumes:
       - volumeMounts:
           - name: vault-config
