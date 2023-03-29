@@ -33,7 +33,7 @@ spec:
       name: "org.democratic-csi.freenas-api-iscsi"
     volumeSnapshotClasses:
       - name: freenas-iscsi-csi
-        annotations:
+        labels:
           velero.io/csi-volumesnapshot-class: "true"
         parameters:
           # This will consume more space, but at least 
