@@ -17,7 +17,7 @@ spec:
   values:
     resources:
       limits:
-        memory: 8Gi
+        memory: 8.1Gi
         cpu: 2000m
     startupProbe:
       enabled: true
