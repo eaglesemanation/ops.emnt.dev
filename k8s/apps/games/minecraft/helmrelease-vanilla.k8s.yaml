@@ -17,7 +17,7 @@ spec:
   values:
     resources:
       limits:
-        memory: 2.1Gi
+        memory: 4Gi
         cpu: 2000m
     extraVolumes:
       - volumeMounts:
@@ -43,7 +43,7 @@ spec:
       type: "PAPER"
       version: "1.19.2"
       maxPlayers: 10
-      memory: "2G"
+      memory: "4G"
       ops: eaglesemanation
       motd: "Vanilla survival"
       removeOldMods: true

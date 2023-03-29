@@ -17,8 +17,8 @@ spec:
   values:
     resources:
       limits:
-        memory: 12Gi
-        cpu: 4000m
+        memory: 8Gi
+        cpu: 2000m
     startupProbe:
       enabled: true
     extraVolumes:
@@ -36,7 +36,8 @@ spec:
       type: "AUTO_CURSEFORGE"
       maxPlayers: 10
       onlineMode: false
-      memory: "11G"
+      memory: "8G"
+      maxTickTime: 120000
       motd: "Vault Hunters"
       removeOldMods: true
       ops: eaglesemanation
