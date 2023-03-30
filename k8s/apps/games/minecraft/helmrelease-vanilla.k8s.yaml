@@ -52,7 +52,6 @@ spec:
       spigetResources:
         - 19254 # ViaVersion
         - 27448 # ViaBackwards
-        - 81297 # GeyserMC
         - 83557 # BlueMap
         - 102990 # NoChatReports
       extraPorts:

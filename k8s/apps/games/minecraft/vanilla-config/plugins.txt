@@ -1,1 +1,3 @@
 https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
+https://download.geysermc.org/v2/projects/geyser/versions/latest/builds/latest/downloads/spigot
+https://download.geysermc.org/v2/projects/floodgate/versions/latest/builds/latest/downloads/spigot
