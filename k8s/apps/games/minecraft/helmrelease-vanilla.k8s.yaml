@@ -33,6 +33,9 @@ spec:
           - name: vanilla-config
             mountPath: /plugins/BlueMap/core.conf
             subPath: bluemap.conf
+          - name: vanilla-config
+            mountPath: /plugins/Geyser-Spigot/config.yml
+            subPath: geyser.yaml
         volumes:
           - name: vanilla-config
             configMap:

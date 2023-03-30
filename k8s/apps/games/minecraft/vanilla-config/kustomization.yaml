@@ -11,3 +11,4 @@ configMapGenerator:
       - vane-permissions.yaml
       - plugins.txt
       - bluemap.conf
+      - geyser.yaml
