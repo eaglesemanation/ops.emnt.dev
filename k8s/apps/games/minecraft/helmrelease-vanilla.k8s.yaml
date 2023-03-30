@@ -52,9 +52,16 @@ spec:
       spigetResources:
         - 19254 # ViaVersion
         - 27448 # ViaBackwards
+        - 81297 # GeyserMC
         - 83557 # BlueMap
         - 102990 # NoChatReports
       extraPorts:
+        - name: bedrock
+          containerPort: 19132
+          protocol: UDP
+          service:
+            enabled: true
+            port: 19132
         - name: bluemap
           containerPort: 8100
           protocol: TCP

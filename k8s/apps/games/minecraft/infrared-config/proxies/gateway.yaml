@@ -4,3 +4,9 @@ java:
       listeners:
         default:
           bind: :25565
+bedrock:
+  gateways:
+    default:
+      listeners:
+        default:
+          bind: :19132

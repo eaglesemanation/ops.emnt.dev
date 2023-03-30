@@ -41,3 +41,5 @@ spec:
             secretName: wireguard-config
     tcp:
       "25565": "minecraft/infrared:25565"
+    udp:
+      "19132": "minecraft/infrared:19132"
