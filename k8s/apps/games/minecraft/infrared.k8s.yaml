@@ -55,9 +55,11 @@ spec:
   selector:
     app: infrared
   ports:
-    - protocol: TCP
+    - name: minecraft-java
+      protocol: TCP
       port: 25565
       targetPort: 25565
-    - protocol: UDP
+    - name: minecraft-bedrock
+      protocol: UDP
       port: 19132
       targetPort: 19132
