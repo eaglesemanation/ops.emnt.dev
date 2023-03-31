@@ -60,7 +60,7 @@ spec:
     snapshotsEnabled: false
     deployNodeAgent: true
     schedules:
-      onSite:
+      on-site:
         disabled: false
         # Every day at 22:00
         schedule: 0 22 * * *
