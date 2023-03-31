@@ -59,3 +59,17 @@ spec:
     # CSI snapshots support and file system backups
     snapshotsEnabled: false
     deployNodeAgent: true
+    schedules:
+      onSite:
+        disabled: false
+        # Every day at 22:00
+        schedule: 0 22 * * *
+        template:
+          includedResources:
+            # Used for fs backup by injecting sidecar
+            - pod
+            # Will backup PV as well if includeClusterResources is null (default)
+            - pvc
+          storageLocation: minio
+          ttl: 168h # 7 days
+          defaultVolumesToFsBackup: true
