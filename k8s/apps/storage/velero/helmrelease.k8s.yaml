@@ -62,8 +62,8 @@ spec:
     schedules:
       on-site:
         disabled: false
-        # Every day at 22:00
-        schedule: 0 22 * * *
+        # Every 6 hours
+        schedule: 0 0/6 * * *
         template:
           includedResources:
             # Used for fs backup by injecting sidecar

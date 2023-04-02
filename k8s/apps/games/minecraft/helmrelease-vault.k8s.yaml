@@ -80,5 +80,5 @@ spec:
       dataDir:
         enabled: true
         Size: 50Gi
-    podLabels:
+    podAnnotations:
       backup.velero.io/backup-volumes: datadir
