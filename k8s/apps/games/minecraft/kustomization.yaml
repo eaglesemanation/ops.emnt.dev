@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: minecraft
 resources:
   - namespace.k8s.yaml
+  - curseforge-apikey.sops.yaml
   - infrared-config
   - infrared.k8s.yaml
   - helmrelease-vanilla.k8s.yaml
