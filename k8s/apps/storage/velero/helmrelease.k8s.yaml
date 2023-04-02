@@ -72,4 +72,4 @@ spec:
             - pvc
           storageLocation: minio
           ttl: 168h # 7 days
-          defaultVolumesToFsBackup: false # Opt-in FS backup
+          defaultVolumesToFsBackup: true

@@ -22,6 +22,9 @@ spec:
     extraVolumes:
       - volumeMounts:
           - name: vanilla-config
+            mountPath: /data/plugins.txt
+            subPath: plugins.txt
+          - name: vanilla-config
             mountPath: /plugins/vane-admin/config.yaml
             subPath: vane-admin.yaml
           - name: vanilla-config
@@ -41,7 +44,6 @@ spec:
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
-      enforceSecureProfile: false
       version: "1.19.2"
       maxPlayers: 10
       memory: "2G"
@@ -55,13 +57,6 @@ spec:
         - 27448 # ViaBackwards
         - 83557 # BlueMap
         - 102990 # NoChatReports
-      modrinth:
-        projects:
-          - vane
-      modUrls:
-        - https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
-        - https://download.geysermc.org/v2/projects/geyser/versions/2.1.0/builds/42/downloads/spigot
-        - https://download.geysermc.org/v2/projects/floodgate/versions/2.2.2/builds/31/downloads/spigot
       extraPorts:
         - name: bedrock
           containerPort: 19132
@@ -88,10 +83,13 @@ spec:
             hosts:
               - name: mc.emnt.dev
                 path: /map/vanilla(/|$)(.*)
+    extraEnv:
+      MODRINTH_PROJECTS: "vane"
+      MODRINTH_ALLOWED_VERSION_TYPE: "release"
+      MODS_FILE: /data/plugins.txt
+      ENFORCE_SECURE_PROFILE: "false"
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
         enabled: true
         Size: 10Gi
-    podLabels:
-      backup.velero.io/backup-volumes: datadir
