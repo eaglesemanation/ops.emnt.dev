@@ -9,6 +9,5 @@ configMapGenerator:
     files:
       - vane-admin.yaml
       - vane-permissions.yaml
-      - plugins.txt
       - bluemap.conf
       - geyser.yaml
