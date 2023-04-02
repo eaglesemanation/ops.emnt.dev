@@ -49,9 +49,8 @@ spec:
           existingSecret: curseforge-apikey
         slug: vault-hunters-1-18-2
         excludeMods:
-          - 245733 # torohealth-damage-indicators
-          - 532127 # legendary-tooltips
-        forceSynchronize: true
+          - torohealth-damage-indicators
+          - legendary-tooltips
       modrinth:
         projects:
           - bluemap:wR5j7NpL
