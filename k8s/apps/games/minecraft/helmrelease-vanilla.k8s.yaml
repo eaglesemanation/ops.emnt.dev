@@ -52,11 +52,12 @@ spec:
       spigetResources:
         - 19254 # ViaVersion
         - 27448 # ViaBackwards
-        - 83557 # BlueMap
         - 102990 # NoChatReports
       modrinth:
         projects:
           - vane
+          - bluemap
+          - bbanner
       modUrls:
         - https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
         - https://download.geysermc.org/v2/projects/geyser/versions/2.1.0/builds/42/downloads/spigot
