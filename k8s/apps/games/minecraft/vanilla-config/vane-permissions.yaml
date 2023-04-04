@@ -74,6 +74,7 @@ groups:
     - vane.portals.admin
     - vane.regions.admin
     - vane.*.commands.*
+    - bmarker.command.*
   user:
     - vane.permissions.groups.default
     - vane.admin.commands.spawn

@@ -57,6 +57,7 @@ spec:
         projects:
           - vane
           - bluemap
+          - bmarker
           - bbanner
       modUrls:
         - https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
