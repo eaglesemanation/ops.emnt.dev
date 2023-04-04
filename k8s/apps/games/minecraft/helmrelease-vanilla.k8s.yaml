@@ -31,6 +31,9 @@ spec:
             mountPath: /plugins/BlueMap/core.conf
             subPath: bluemap.conf
           - name: vanilla-config
+            mountPath: /plugins/BlueMap-BannerMarker/settings.yml
+            subPath: bluemap-bannermarkers.conf
+          - name: vanilla-config
             mountPath: /plugins/Geyser-Spigot/config.yml
             subPath: geyser.yaml
         volumes:
@@ -57,7 +60,6 @@ spec:
         projects:
           - vane
           - bluemap
-          - bmarker
           - bbanner
       modUrls:
         - https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
