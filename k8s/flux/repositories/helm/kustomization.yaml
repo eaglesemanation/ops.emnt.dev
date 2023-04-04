@@ -12,4 +12,5 @@ resources:
   - pihole.k8s.yaml
   - piraeus.k8s.yaml
   - postgres-operator.k8s.yaml
+  - prometheus-community.k8s.yaml
   - vmware-tanzu.k8s.yaml
