@@ -32,7 +32,7 @@ spec:
             subPath: bluemap.conf
           - name: vanilla-config
             mountPath: /plugins/BlueMap-BannerMarker/settings.yml
-            subPath: bluemap-bannermarkers.conf
+            subPath: bluemap-bannermarkers.yaml
           - name: vanilla-config
             mountPath: /plugins/Geyser-Spigot/config.yml
             subPath: geyser.yaml
