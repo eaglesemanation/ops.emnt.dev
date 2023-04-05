@@ -7,7 +7,7 @@
 
 ## Steps
 1. Decrypt secrets with `sops -d secrets.sops.yaml > secrets.yaml`
-2. Generate default machine configs with `talosctl gen config --with-secrets secrets.yaml talos-cluster-1 https://192.168.25.100:6443 --config-patch @common/disable-flannel.patch.yaml --config-patch @common/cert-rotation.patch.yaml`
+2. Generate default machine configs with `talosctl gen config --with-secrets secrets.yaml talos-cluster-1 https://192.168.25.100:6443 --config-patch @common/disable-flannel.patch.yaml --config-patch @common/cert-rotation.patch.yaml --config-patch @common/metrics-bind-address.patch.yaml`
 3. Apply config to controlplane machines with `talosctl -n <VM IP> apply-config --insecure --file controlplane.yaml --config-patch @controlplane/virtual-ip.patch.yaml --config-patch @machines/talos-controlplane-<NODE NUM>.patch.yaml`
 4. Apply config to worker machines with `talosctl -n <VM IP> apply-config --insecure --file worker.yaml --config-patch @worker/iscsi.patch.yaml --config-patch @machines/talos-worker-<NODE NUM>.patch.yaml`
 5. Update talosconfig endpoint with virtual IP `talosctl --talosconfig ./talosconfig config endpoints 192.168.25.100`
