@@ -1,13 +1,13 @@
 machine:
   install:
-    disk: /dev/vda
+    disk: /dev/sda
   network:
-    hostname: talos-worker-1
+    hostname: talos-worker-2
     interfaces:
       - interface: eth0
         dhcp: false
         addresses:
-          - 192.168.25.111/24
+          - 192.168.25.112/24
         routes:
           - network: 0.0.0.0/0
             gateway: 192.168.25.1

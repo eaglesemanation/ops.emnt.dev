@@ -1,4 +1,6 @@
 machine:
+  install:
+    disk: /dev/vda
   network:
     hostname: talos-controlplane-1
     interfaces:
