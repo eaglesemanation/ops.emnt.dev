@@ -36,6 +36,9 @@ spec:
           - name: vanilla-config
             mountPath: /plugins/Geyser-Spigot/config.yml
             subPath: geyser.yaml
+          - name: vanilla-config
+            mountPath: /plugins/NoChatReports/config.yml
+            subPath: no-chat-reports.yaml
         volumes:
           - name: vanilla-config
             configMap:

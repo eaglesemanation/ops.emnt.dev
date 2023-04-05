@@ -7,8 +7,9 @@ configMapGenerator:
     options:
       disableNameSuffixHash: true
     files:
+      - bluemap-bannermarkers.yaml
+      - bluemap.conf
+      - geyser.yaml
+      - no-chat-reports.yaml
       - vane-admin.yaml
       - vane-permissions.yaml
-      - bluemap.conf
-      - bluemap-bannermarkers.yaml
-      - geyser.yaml
