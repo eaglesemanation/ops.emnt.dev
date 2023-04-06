@@ -16,6 +16,9 @@ spec:
       interval: 30m
   values:
     resources:
+      requests:
+        memory: 3Gi
+        cpu: 1000m
       limits:
         memory: 4Gi
         cpu: 2000m
