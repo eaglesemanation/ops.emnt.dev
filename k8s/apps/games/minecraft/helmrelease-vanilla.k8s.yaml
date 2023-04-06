@@ -110,7 +110,7 @@ spec:
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - name: datadir
-            mountpath: /server
+            mountPath: /server
         env:
           - name: MC_WORLD
             value: /server/world
