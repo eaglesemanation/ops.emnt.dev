@@ -104,3 +104,51 @@ spec:
         Size: 10Gi
     podAnnotations:
       backup.velero.io/backup-volumes: datadir
+    sidecarContainers:
+      - name: minecraft-exporter 
+        image: ghcr.io/dirien/minecraft-exporter:latest
+        imagePullPolicy: IfNotPresent
+        volumeMounts:
+          - name: datadir
+            mountpath: /server
+        env:
+          - name: MC_WORLD
+            value: /server/world
+          - name: MC_RCON_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: vanilla-rcon
+                key: rcon-password
+          - name: MC_MOD_SERVER_STATS
+            value: papermc
+        ports:
+          - name: http
+            containerPort: 9150
+            protocol: TCP
+        livenessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /
+            port: http
+          initialDelaySeconds: 30
+          timeoutSeconds: 10
+        resources:
+          limits:
+            cpu: 500m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          runAsGroup: 10003
+          runAsUser: 10003
+          capabilities:
+            drop:
+              - ALL
