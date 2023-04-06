@@ -17,7 +17,7 @@ spec:
   values:
     resources:
       limits:
-        memory: 12Gi
+        memory: 14Gi
         cpu: 2000m
     startupProbe:
       enabled: true
@@ -37,7 +37,7 @@ spec:
       type: "AUTO_CURSEFORGE"
       maxPlayers: 10
       onlineMode: false
-      memory: "10G"
+      memory: "12G"
       maxTickTime: 120000
       motd: "Vault Hunters"
       jvmOpts: |-
@@ -53,6 +53,9 @@ spec:
       modrinth:
         projects:
           - bluemap:wR5j7NpL
+      rcon:
+        enabled: true
+        existingSecret: vault-rcon
       extraPorts:
         - name: bluemap
           containerPort: 8100

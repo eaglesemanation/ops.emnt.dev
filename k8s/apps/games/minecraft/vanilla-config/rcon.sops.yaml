@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: vanilla-rcon
+    namespace: minecraft
+stringData:
+    rcon-password: ENC[AES256_GCM,data:KlWFrlmTyR9mnTgrCWPUU7X7EaYubgLUzQ==,iv:OtPiUjc42CJqllshExsI1fQjps8BBE4tP19QfyK49JA=,tag:4kd1U3xUi20Z0Otm4Qlk+A==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2UitSSDJDQ285NXlQNkYy
+            SUJtR21FNm1WcXB5cGhIenIrS3NHMWlLYkJJCmM2OWZMWEJ6WVhnMHh0TnRWeE9C
+            T01lVjlRQkZlN2djbmIyT1BRQTRkSm8KLS0tIHFhR3RyVTQ3MEc4RnJlRXRleXpi
+            c1diMURZYUZkeEtDTnEyOW5vazdCU0UKK5uBJGCcryjx8o8mwmPhqO9gq4WEJVSh
+            E/4LnFeN9hMv9lV5QXTODmfxeQAv9sW22dUefgWQQCVpq+geLG5k3A==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-04-06T06:23:55Z"
+    mac: ENC[AES256_GCM,data:pNKWheBSjoxdrupajO5TMyMiTZ0KfKo2CXAwOjj8N21irFfJFoDLeqUc0zXROvUTzgaraLNGfKO4ulWFTku7fQXbDSo/dw1xi3pB7jCmX8jWZxBZLibSgzFXuxmmg/n78JiSkOLeM3f7HpJrATpfrNh4ylzIYkCUaf4qePmax4M=,iv:bjCcsjh4wl2NXrEm2xaQtzzewYsPckEGUw+dMXVi9jM=,tag:5qxpAvzS7hHsD2zWKKH4ag==,type:str]
+    pgp:
+        - created_at: "2023-04-06T06:23:54Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/QRvz9n6GzBrBy9yhYl6B3nYopVKZ5lxePul0XWr7uxRq
+            Sk0eXUjeLkPF8FXHQ35TCy5GaaqHYVW+DG6eJZvbrxLQZA2qoe9iUT9r+UaBYfoB
+            WgS1ba3m2A5ONzIPhlxASkzZJqB7STfhelCbSJWFcmrnuFP955X96OfWGLxuugMC
+            wBQSUByqCfxv8pwxUQe6n4KyXcKhz7aNF9LocVu0Ld6gBw6zUFUNiwH3a6c3NG7M
+            F289s3hjVeTwXUcGh/6lwfuvHS4xvfyte888ttWbwjzTEGM5MzVnObJDW9IV/1qT
+            Zw0gdAmHHOWDnuKrwOu0lWzma/8IQJH/nsPiwZI2F9JeAdPfDUbp9JCxCrx8Wu+L
+            nAd9G9NHOd/6nvbyn9zRzWMo6LcMsLJVN/AD0vbainOaQJ45eXJ/zJS8cnjOMo0I
+            JagZTYny/s9r87n09QD353UMeKmFc2zEdlZr7YdgyQ==
+            =hlP4
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

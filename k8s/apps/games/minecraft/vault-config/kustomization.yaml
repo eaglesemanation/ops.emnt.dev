@@ -2,6 +2,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: minecraft
 
+resources:
+  - rcon.sops.yaml
+
 configMapGenerator:
   - name: vault-config
     options:
