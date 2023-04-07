@@ -5,6 +5,7 @@ metadata:
   namespace: ingress-nginx
   annotations:
     gethomepage.dev/enabled: "true"
+    gethomepage.dev/href: "minio-console.emnt.dev"
     gethomepage.dev/name: "MinIO"
     gethomepage.dev/group: "Infra"
     gethomepage.dev/icon: "minio"
