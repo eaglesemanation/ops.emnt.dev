@@ -26,11 +26,23 @@ spec:
       ingress:
         enabled: true
         ingressClassName: internal
+        labels:
+          gethomepage.dev/enabled: "true"
+        annotations:
+          gethomepage.dev/name: "Grafana"
+          gethomepage.dev/group: "Monitoring"
+          gethomepage.dev/icon: "grafana"
         hosts:
           - grafana.emnt.dev
     prometheus:
       ingress:
         enabled: true
         ingressClassName: internal
+        labels:
+          gethomepage.dev/enabled: "true"
+        annotations:
+          gethomepage.dev/name: "Prometheus"
+          gethomepage.dev/group: "Monitoring"
+          gethomepage.dev/icon: "prometheus"
         hosts:
           - prometheus.emnt.dev
