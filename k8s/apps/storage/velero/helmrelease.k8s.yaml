@@ -68,8 +68,9 @@ spec:
           includedResources:
             # Used for fs backup by injecting sidecar
             - pod
-            # Will backup PV as well if includeClusterResources is null (default)
             - pvc
+            # For some reason not provisioned by CSI, include explicitly
+            - pv
           storageLocation: minio
           ttl: 168h # 7 days
           defaultVolumesToFsBackup: false # Opt-in FS backup
