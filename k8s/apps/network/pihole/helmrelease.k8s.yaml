@@ -45,11 +45,10 @@ spec:
     ingress:
       enabled: true
       ingressClassName: internal
-      labels:
-        gethomepage.dev/enabled: "true"
       annotations:
+        gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "PiHole"
-        gethomepage.dev/group: "Networking"
+        gethomepage.dev/group: "Infra"
         gethomepage.dev/icon: "pihole"
         nginx.ingress.kubernetes.io/app-root: /admin
       path: /

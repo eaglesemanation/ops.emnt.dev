@@ -35,11 +35,6 @@ spec:
       bookmarks: []
       services: []
       widgets:
-        - resources:
-            backend: kubernetes
-            expanded: true
-            cpu: true
-            memory: true
         - search:
             provider: duckduckgo
             focus: true

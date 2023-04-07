@@ -13,6 +13,10 @@ metadata:
   name: truenas
   namespace: ingress-nginx
   annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "TrueNas"
+    gethomepage.dev/group: "Infra"
+    gethomepage.dev/icon: "truenas-scale"
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
 spec:
