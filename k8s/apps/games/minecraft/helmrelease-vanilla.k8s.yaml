@@ -131,13 +131,13 @@ spec:
         livenessProbe:
           httpGet:
             path: /
-            port: http
+            port: metrics
           initialDelaySeconds: 30
           timeoutSeconds: 10
         readinessProbe:
           httpGet:
             path: /
-            port: http
+            port: metrics
           initialDelaySeconds: 30
           timeoutSeconds: 10
         resources:
