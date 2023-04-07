@@ -162,7 +162,7 @@ metadata:
   name: vanilla-minecraft-metrics
   namespace: minecraft
   labels:
-    app: vanilla-minecraft
+    app: vanilla-minecraft-metrics
 spec:
   type: ClusterIP
   selector:
@@ -189,4 +189,4 @@ spec:
       - minecraft
   selector:
     matchLabels:
-      app: vanilla-minecraft
+      app: vanilla-minecraft-metrics
