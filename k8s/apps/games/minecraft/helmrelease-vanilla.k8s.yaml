@@ -67,6 +67,7 @@ spec:
           - vane
           - bluemap
           - bbanner
+          - unifiedmetrics
       modUrls:
         - https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
         - https://download.geysermc.org/v2/projects/geyser/versions/2.1.0/builds/42/downloads/spigot
@@ -81,6 +82,14 @@ spec:
           service:
             enabled: true
             port: 19132
+          ingress:
+            enabled: false
+        - name: metrics
+          containterPort: 9970
+          protocol: TCP
+          service:
+            enabled: true
+            port: 9970
           ingress:
             enabled: false
         - name: bluemap
@@ -107,71 +116,6 @@ spec:
         Size: 10Gi
     podAnnotations:
       backup.velero.io/backup-volumes: datadir
-    sidecarContainers:
-      - name: minecraft-exporter 
-        image: ghcr.io/dirien/minecraft-exporter:latest
-        imagePullPolicy: IfNotPresent
-        volumeMounts:
-          - name: datadir
-            mountPath: /server
-        env:
-          - name: MC_WORLD
-            value: /server/world
-          - name: MC_RCON_PASSWORD
-            valueFrom:
-              secretKeyRef:
-                name: vanilla-rcon
-                key: rcon-password
-          - name: MC_MOD_SERVER_STATS
-            value: papermc
-        ports:
-          - name: metrics
-            containerPort: 9150
-            protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /
-            port: metrics
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
-        readinessProbe:
-          httpGet:
-            path: /
-            port: metrics
-          initialDelaySeconds: 30
-          timeoutSeconds: 10
-        resources:
-          limits:
-            cpu: 500m
-            memory: 512Mi
-          requests:
-            cpu: 100m
-            memory: 128Mi
-        securityContext:
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-          runAsGroup: 10003
-          runAsUser: 10003
-          capabilities:
-            drop:
-              - ALL
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: vanilla-minecraft-metrics
-  namespace: minecraft
-  labels:
-    app: vanilla-minecraft-metrics
-spec:
-  type: ClusterIP
-  selector:
-    app: vanilla-minecraft
-  ports:
-    - name: metrics
-      port: 9150
-      targetPort: 9150
-      protocol: TCP
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -182,7 +126,7 @@ metadata:
     release: prometheus
 spec:
   endpoints:
-    - targetPort: 9150
+    - targetPort: 9970
   jobLabel: vanilla-minecraft
   namespaceSelector:
     matchNames:
