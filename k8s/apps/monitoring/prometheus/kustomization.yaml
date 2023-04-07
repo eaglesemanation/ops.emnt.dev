@@ -3,3 +3,11 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
+
+configMapGenerator:
+  - name: minecraft-dashboard
+    options:
+      labels:
+        grafana_dashboard: "1"
+    files:
+      - unifiedmetrics-0-3-x-prometheus_rev11.json
