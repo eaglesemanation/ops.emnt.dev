@@ -42,6 +42,9 @@ spec:
           - name: vanilla-config
             mountPath: /plugins/NoChatReports/config.yml
             subPath: no-chat-reports.yaml
+          - name: vanilla-config
+            mountPath: /plugins/UnifiedMetrics/driver/prometheus.yml
+            subPath: unified-metrics-prometheus.yaml
         volumes:
           - name: vanilla-config
             configMap:

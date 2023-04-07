@@ -16,3 +16,4 @@ configMapGenerator:
       - no-chat-reports.yaml
       - vane-admin.yaml
       - vane-permissions.yaml
+      - unified-metrics-prometheus.yaml
