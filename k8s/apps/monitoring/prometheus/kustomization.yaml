@@ -6,6 +6,7 @@ resources:
 
 configMapGenerator:
   - name: minecraft-dashboard
+    namespace: prometheus
     options:
       labels:
         grafana_dashboard: "1"
