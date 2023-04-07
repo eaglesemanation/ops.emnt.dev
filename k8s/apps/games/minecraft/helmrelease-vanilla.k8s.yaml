@@ -178,6 +178,8 @@ kind: ServiceMonitor
 metadata:
   name: vanilla-minecraft
   namespace: minecraft
+  labels:
+    release: prometheus
 spec:
   endpoints:
     - targetPort: 9150
