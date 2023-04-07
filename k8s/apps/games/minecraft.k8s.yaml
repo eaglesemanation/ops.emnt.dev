@@ -9,6 +9,7 @@ spec:
   path: ./k8s/apps/games/minecraft
   dependsOn:
     - name: democratic-csi
+    - name: prometheus
   prune: true
   sourceRef:
     kind: GitRepository

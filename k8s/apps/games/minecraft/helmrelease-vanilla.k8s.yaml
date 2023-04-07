@@ -125,7 +125,7 @@ spec:
           - name: MC_MOD_SERVER_STATS
             value: papermc
         ports:
-          - name: http
+          - name: metrics
             containerPort: 9150
             protocol: TCP
         livenessProbe:
@@ -155,3 +155,36 @@ spec:
           capabilities:
             drop:
               - ALL
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: vanilla-minecraft-metrics
+  namespace: minecraft
+  labels:
+    app: vanilla-minecraft
+spec:
+  type: ClusterIP
+  selector:
+    app: vanilla-minecraft
+  ports:
+    - name: metrics
+      port: 9150
+      targetPort: 9150
+      protocol: TCP
+---
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: vanilla-minecraft
+  namespace: minecraft
+spec:
+  endpoints:
+    - targetPort: 9150
+  jobLabel: vanilla-minecraft
+  namespaceSelector:
+    matchNames:
+      - minecraft
+  selector:
+    matchLabels:
+      app: vanilla-minecraft
