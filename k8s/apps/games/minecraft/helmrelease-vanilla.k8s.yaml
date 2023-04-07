@@ -85,7 +85,7 @@ spec:
           ingress:
             enabled: false
         - name: metrics
-          containterPort: 9970
+          containerPort: 9970
           protocol: TCP
           service:
             enabled: true
