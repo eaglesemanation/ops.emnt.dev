@@ -30,6 +30,8 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+        labels:
+          release: prometheus
     dashboards:
       enabled: true
     operator:
@@ -37,11 +39,15 @@ spec:
         enabled: true
         serviceMonitor:
           enabled: true
+          labels:
+            release: prometheus
       dashboards:
         enabled: true
     hubble:
       metrics:
         serviceMonitor:
           enabled: true
+          labels:
+            release: prometheus
         dashboards:
           enabled: true
