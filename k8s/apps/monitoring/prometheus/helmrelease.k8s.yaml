@@ -21,7 +21,16 @@ spec:
   values:
     defaultRules:
       rules:
+        # Not used with Cilium
         kubeProxy: false
+    kubeControllerManager:
+      service:
+        selector:
+          k8s-app: kube-controller-manager
+    kubeScheduler:
+      service:
+        selector:
+          k8s-app: kube-scheduler
     grafana:
       ingress:
         enabled: true
