@@ -6,6 +6,8 @@ metadata:
 spec:
   interval: 10m
   path: ./k8s/apps/network/cilium
+  dependsOn:
+    - name: prometheus
   prune: true
   sourceRef:
     kind: GitRepository
