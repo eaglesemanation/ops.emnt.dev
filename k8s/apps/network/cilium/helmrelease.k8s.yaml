@@ -51,3 +51,15 @@ spec:
             release: prometheus
         dashboards:
           enabled: true
+      ui:
+        enabled: true
+        ingress:
+          enabled: true
+          className: internal
+          annotations:
+            gethomepage.dev/enabled: "true"
+            gethomepage.dev/name: "Hubble"
+            gethomepage.dev/group: "Infra"
+            gethomepage.dev/icon: "hubble"
+          hosts:
+            - hubble.emnt.dev
