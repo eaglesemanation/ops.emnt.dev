@@ -26,6 +26,12 @@ spec:
       vpn:
         enabled: true
         type: gluetun
+        securityContext:
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - NET_ADMIN
         env:
           - name: VPN_SERVICE_PROVIDER
             value: mullvad
