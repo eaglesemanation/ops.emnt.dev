@@ -39,7 +39,7 @@ spec:
               - NET_ADMIN
         additionalVolumeMounts:
           - name: tun-device
-            path: /dev/net/tun
+            mountPath: /dev/net/tun
         env:
           - name: VPN_SERVICE_PROVIDER
             value: mullvad
