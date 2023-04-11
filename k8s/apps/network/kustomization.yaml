@@ -9,3 +9,4 @@ resources:
   - kubelet-csr-approver.k8s.yaml
   - metallb.k8s.yaml
   - pihole.k8s.yaml
+  - vpn-egress.k8s.yaml
