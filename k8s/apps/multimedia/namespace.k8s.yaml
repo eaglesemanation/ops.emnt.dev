@@ -4,3 +4,4 @@ metadata:
   name: multimedia
   labels:
     routed-gateway: "true"
+    pod-security.kubernetes.io/enforce: privileged
