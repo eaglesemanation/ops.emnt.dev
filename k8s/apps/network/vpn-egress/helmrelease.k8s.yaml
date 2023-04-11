@@ -22,6 +22,13 @@ spec:
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16"
     routed_namespaces:
       - multimedia
+    persistance:
+      tun-device:
+        enabled: true
+        type: hostPath
+        mountPath: "-"
+        hostPath: /dev/net/tun
+        hostPathType: CharDevice
     addons:
       vpn:
         enabled: true
@@ -30,6 +37,9 @@ spec:
           capabilities:
             add:
               - NET_ADMIN
+        additionalVolumeMounts:
+          - name: tun-device
+            path: /dev/net/tun
         env:
           - name: VPN_SERVICE_PROVIDER
             value: mullvad
