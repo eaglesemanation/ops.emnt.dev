@@ -28,8 +28,6 @@ spec:
         type: gluetun
         securityContext:
           capabilities:
-            drop:
-              - ALL
             add:
               - NET_ADMIN
         env:
