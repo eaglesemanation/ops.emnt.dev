@@ -19,6 +19,9 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    # Not using default port to avoid dropping packages for vpn-egress
+    # Related to CVE-2019-13119
+    tunnelPort: 8473
     ipam:
       mode: kubernetes
     kubeProxyReplacement: strict
