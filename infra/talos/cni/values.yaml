@@ -1,3 +1,4 @@
+tunnelPort: 8473
 ipam:
   mode: kubernetes
 kubeProxyReplacement: strict
