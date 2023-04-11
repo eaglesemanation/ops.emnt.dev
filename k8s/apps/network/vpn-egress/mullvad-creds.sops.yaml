@@ -4,8 +4,8 @@ metadata:
     name: mullvad-creds
     namespace: vpn-egress
 stringData:
-    privateKey: ENC[AES256_GCM,data:t7fwJEFT+VHthKV1MZoLoRa5gyuN3do8l3a3AUGv6CXqbJARxpWkImE421A=,iv:YxS7P2AL6aGAPwWLe9PuwiCZnp1KV9mxto0R9hwQGZc=,tag:a4jQ7ZQbROUQ81P7K+VuXA==,type:str]
-    addresses: ENC[AES256_GCM,data:4+0+WxmcjJbjYes5NDDRXhDRkgGLhEWEBFOxWqMD1LIVytEmRMbHU3KJGSTckMaw,iv:vt8g3gJOgS63yyTfAiclH8+MUlgKAJO/lGcagbAnBy4=,tag:sc5I97ebZTSLqmiRPU0SgA==,type:str]
+    privateKey: ENC[AES256_GCM,data:fAD1vpj53qc/HtXhqcWVtODNJphzBZ/8qPQV5BWOK2Y3heyllN+XlWlNqZ0=,iv:aXM0SpEKUFoSfHFioPW6jZ+goO9KUdtn0yESXl/wJKE=,tag:LPfXJK1dUufyeoQn0MMBlg==,type:str]
+    addresses: ENC[AES256_GCM,data:aA5nPBpqHuBsM/xV1sZh5w==,iv:T7K0/KOJ+Wuz7Tg7+r4DTakkJcTgGzbr7MiR+cGp4l0=,tag:DdJA8LzsZX4js29Apf95HA==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -15,28 +15,28 @@ sops:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYRUdObE1wVjU2ZXNoVjh2
-            SmlEdDY1Zy9KUHVmYzJRUXhnbG5BZUs4YUZRCkM5Z2hkLzFpZnBZVTM3MUFidC9h
-            UktnSWhNVGFUajRvSGVZbjk1T25rZ0UKLS0tIDNXQjA1S1FvaFFaajVFUDROTlBz
-            c2J0MmprVmhOeE9xdERKVlF1blcyQ1UKsUgyypVdD5QXGJP5iZFFSv6/bceBsvxJ
-            xnH6I33gShIahBSE6KBBlRUlPpqdA9Ee/GWKNkXdND2KY4AWVFJiqw==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBmb3ZoeVdQd29ZdlU4RVE0
+            SUFaU3JERjhHa1pYWWtvVU1TaTJ6UmlmbmdRCldIem5Ma3p1bDNaTm13dGNRNTg0
+            cG5tNnJ6Zlo4QTNvRjdWS0lDbENoUEkKLS0tIGJIM2JCVmFaNUJJYlc2RjRlVDdE
+            ay9zZ0grRkFQdElLcHN2aC9CdHlWd2MKL6yxHs3KORu+HC9xVKKPERWXAKCn9bhn
+            vb79oD4OHEGJggewGr1mMbqYC6wpmHWrF97qv8bGMiI8rb+RqjWZbQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-04-11T03:49:26Z"
-    mac: ENC[AES256_GCM,data:Zcynvd6MGoRWlUuS7ZldY1uZNrZj82yogkLrnwgfawxnFGqYqPYXyE936u5ay6EvXOUg62Qc0hVKEjEkQu9XAqZl8Ag415LWu+GD+bkM5prSnISN8GhyGFiTarzHjziW22QYe8601lhJpM2TK5ZkFE9QK1z42kZieHtC4Xghllg=,iv:9e8Ff1b+ANyBxs9T/6A8Ov9KeS5Li5xsKZtTu9QTBUs=,tag:bdu00LvIs6LFH+zkD++zjA==,type:str]
+    lastmodified: "2023-04-11T09:28:33Z"
+    mac: ENC[AES256_GCM,data:Uvvk1FGeMBtXfiV0D5mSKo+TjfL2eiN0fqCuk6j1UM6jCKMrMHcg5b2oSUzHEfdW9sS1ZyuiU/Z/VSuYTk75vgjgfSLR9EDMNtfqQFaJ+Atb/Oi+i1Ijo6ToijsLrArmc+URwvLLHdj2NzS31Q0d17REinv+9+ctbdS5iXfzNbw=,iv:LiZtjP4xw7R8Z63orN8f5gPdxWjzDVFL+mlKIUbthOU=,tag:KG5hYzsUnWFfkTw9sCAZbA==,type:str]
     pgp:
-        - created_at: "2023-04-11T03:49:26Z"
+        - created_at: "2023-04-11T09:28:33Z"
           enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf/eA5MAKNkDy0qTOLrgAYvnall+D2uOKDZpVx/pmUw7Hr6
-            nHy+19FEROaaaDohjl4NUSV1q4fl1moco5I5qrG9HnVuFvs44G7eb0XFSYXlIhhs
-            Uk+rA+dxuz/LA6cOJ9p5Vx9stM0c+FNkUczEUYyCIwZLnFUrogqcJAipvZVPaZby
-            oYpI1F5Crfsmi+1eSkUIFa0+w57EPtgo4/te2j7NQ0NogU7WVNhj6LlcXTfobyuO
-            RYX6wHn/2mu2SIV2ulVDM3IhhSSMy1JUjKbOSbnY+vdfP0WPUO5yiYPj0eu7T6Jd
-            qS+diByxsR7TFH2nqZoB+0Ytq02rINuMqbNvyv2v8tJeAUt0pwjbgRPyUfOT1VxM
-            sg+Xesr+zlJJLS3oRjQqI75dqjihOnDZTIF6zVQ7XPuNq/rjsduju5Jbpt3IYdh6
-            NzOod2O6aNT2+bWMf4Pct/BmgsIRvAL1kdL0Ob8WJg==
-            =EHWw
+            hQEMAzB6fv8Ha/LEAQf+Kgwwd4A89E2ewOxAQGdotK4y5MsWs3KBv6AsXuziBWzY
+            SaZ7NzGn9Mqi0inMyB5/1xASMZK+hpsJwvqVzPh34NVhXDMU7i5GZuvgrQ6pFVg3
+            UjlvVEUxq12jQzeCt02jcuz9ZmQPTivZia06r0hAtoIyuhhirINW5M+AcY1ygowG
+            uTL6kPIkz9b6wwflIMDQu/MLTNJEVJ8XJdR6N0f2SgjanmYIDAIEK4WbSjB/iglq
+            Ts1tO5q3U45FlWZ5HEpYNVvHLW98nnu+sr2+WKR8jblcH0DpnKCT0ebxSc6k3qrg
+            n3DXp4JbbNz7qlE1gFxsjNbZ1cJBJCqwYQhNViDzitJeAez8qM/JHIf74s7Sp4QE
+            bQf8GHTRN2xWElh293m2x158uZpf4zVxj9uu7q6ljVepd3nd+9tPsiZYNu3hgptN
+            BWbBQ3loPuYGUx/ZR7gZwZTbP2VvFFq3A13Lpmw1Ig==
+            =Cxpf
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
     encrypted_regex: ^(data|stringData)$
