@@ -1,7 +1,8 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: 
+  name: pog-gateway
+  namespace: vpn-egress
 spec:
   endpointSelector:
     matchLabels:
