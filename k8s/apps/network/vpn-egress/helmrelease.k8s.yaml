@@ -32,6 +32,9 @@ spec:
       vpn:
         enabled: true
         type: gluetun
+        gluetun:
+          image:
+            tag: v3.33.0
         securityContext:
           capabilities:
             add:
