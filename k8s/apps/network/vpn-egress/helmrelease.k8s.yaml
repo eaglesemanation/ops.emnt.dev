@@ -47,7 +47,7 @@ spec:
             command:
               - sh
               - -c
-              - case "$(curl -s https://am.i.mullvad.net/connected)" in 'You are connected to Mullvad'*) exit 0;; *) exit 1;; esac
+              - case "$(wget -q -O /dev/stdout https://am.i.mullvad.net/connected)" in 'You are connected to Mullvad'*) exit 0;; *) exit 1;; esac
           initialDelaySeconds: 30
           periodSeconds: 60
           failureThreshold: 1
