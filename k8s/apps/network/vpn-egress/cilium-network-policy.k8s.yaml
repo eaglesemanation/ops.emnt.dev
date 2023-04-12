@@ -1,0 +1,29 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: 
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/instance: vpn-egress
+      app.kubernetes.io/name: pod-gateway 
+  egress:
+    # Allow connection to Mullvad Wireguard connections
+    - toCIDR:
+        - 0.0.0.0/0
+      toPorts:
+        - ports:
+            - port: "51820"
+              protocol: UDP
+    # Allow any connections in cluster
+    # TODO: Maybe make this more specific
+    - toCIDR:
+        - 10.0.0.0/8
+    # Allow ping requests for both IPv4 and IPv6
+    - icmps:
+      - fields:
+        - type: 8
+          family: IPv4
+        - type: 128
+          family: IPv6
+
