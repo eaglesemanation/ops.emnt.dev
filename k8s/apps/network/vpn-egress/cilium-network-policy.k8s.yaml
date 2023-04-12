@@ -16,4 +16,12 @@ spec:
             - port: "51820"
               protocol: UDP
     - toEntities:
+        - world
+      icmps:
+        - fields:
+          - type: 8
+            family: IPv4
+          - type: 128
+            family: IPv6
+    - toEntities:
         - cluster
