@@ -8,6 +8,9 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: vpn-egress
       app.kubernetes.io/name: pod-gateway 
+  ingress:
+    - fromEntities:
+        - cluster
   egress:
     - toEntities:
         - world
