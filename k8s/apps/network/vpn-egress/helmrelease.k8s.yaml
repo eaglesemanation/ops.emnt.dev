@@ -16,9 +16,11 @@ spec:
       interval: 30m
   values:
     settings:
+      IPTABLES_NFT: "yes"
       VPN_BLOCK_OTHER_TRAFFIC: true
       VPN_TRAFFIC_PORT: 51820
-      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 192.168.0.0/16"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
+      VPN_LOCAL_CIDRS: "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
     routed_namespaces:
       - multimedia
     persistence:
@@ -42,17 +44,15 @@ spec:
         additionalVolumeMounts:
           - name: tun-device
             mountPath: /dev/net/tun
-        # TODO: Try to reintroduce liveness probe
-        # 
-        #livenessProbe:
-        #  exec:
-        #    command:
-        #      - sh
-        #      - -c
-        #      - case "$(wget -q -O /dev/stdout https://am.i.mullvad.net/connected)" in 'You are connected to Mullvad'*) exit 0;; *) exit 1;; esac
-        #  initialDelaySeconds: 30
-        #  periodSeconds: 60
-        #  failureThreshold: 1
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - case "$(wget -q -O /dev/stdout https://am.i.mullvad.net/connected)" in 'You are connected to Mullvad'*) exit 0;; *) exit 1;; esac
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          failureThreshold: 1
         env:
           - name: VPN_SERVICE_PROVIDER
             value: mullvad
@@ -60,6 +60,10 @@ spec:
             value: wireguard
           - name: SERVER_CITIES
             value: Toronto
+          - name: DOT
+            value: "off"
+          - name: FIREWALL
+            value: "off"
           - name: WIREGUARD_PRIVATE_KEY
             valueFrom:
               secretKeyRef:
@@ -70,3 +74,6 @@ spec:
               secretKeyRef:
                 name: mullvad-creds
                 key: addresses
+        # Using Cilium network policy instead
+        networkPolicy:
+          enabled: false
