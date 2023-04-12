@@ -14,6 +14,7 @@ spec:
       toPorts:
         - ports:
             - port: "51820"
+              protocol: UDP
     - toEntities:
         - world
       icmps:
@@ -22,6 +23,5 @@ spec:
             family: IPv4
           - type: 128
             family: IPv6
-          protocol: UDP
     - toEntities:
         - cluster
