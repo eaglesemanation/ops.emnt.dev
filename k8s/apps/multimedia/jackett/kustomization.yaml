@@ -4,4 +4,5 @@ resources:
   - namespace.k8s.yaml
   - deployment.k8s.yaml
   - service.k8s.yaml
+  - secret.sops.yaml
   - ingress.k8s.yaml
