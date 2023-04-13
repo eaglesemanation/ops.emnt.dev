@@ -34,16 +34,20 @@ spec:
             - name: jackett-data
               mountPath: /data
             - name: jackett-config
+              mountPath: /config
+            - name: jackett-secret
               subPath: ServerConfig.json
               mountPath: /config/Jackett/ServerConfig.json
-            - name: jackett-config
+            - name: jackett-secret
               subPath: nyaasi.json
               mountPath: /config/Jackett/Indexers/nyaasi.json
-            - name: jackett-config
+            - name: jackett-secret
               subPath: rutracker.json
               mountPath: /config/Jackett/Indexers/rutracker.json
       volumes:
         - name: jackett-config
+          emptyDir: {}
+        - name: jackett-secret
           secret:
             secretName: jackett
         - name: jackett-data
