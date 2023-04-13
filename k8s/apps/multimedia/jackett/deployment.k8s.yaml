@@ -4,16 +4,19 @@ metadata:
   name: jackett
   namespace: jackett
   labels:
-    app: jackett
+    app.kubernetes.io/name: jackett
+    app.kubernetes.io/instance: jackett
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: jackett
+      app.kubernetes.io/name: jackett
+      app.kubernetes.io/instance: jackett
   template:
     metadata:
       labels:
-        app: jackett
+        app.kubernetes.io/name: jackett
+        app.kubernetes.io/instance: jackett
     spec:
       containers:
         - name: jackett
