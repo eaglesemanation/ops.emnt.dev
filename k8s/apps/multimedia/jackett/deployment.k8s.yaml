@@ -31,12 +31,20 @@ spec:
               containerPort: 9117
               protocol: TCP
           volumeMounts:
-            - name: jackett-config
-              mountPath: /config
             - name: jackett-data
               mountPath: /data
+            - name: jackett-config
+              subPath: ServerConfig.json
+              mountPath: /config/Jackett/ServerConfig.json
+            - name: jackett-config
+              subPath: nyaasi.json
+              mountPath: /config/Jackett/Indexers/nyaasi.json
+            - name: jackett-config
+              subPath: rutracker.json
+              mountPath: /config/Jackett/Indexers/rutracker.json
       volumes:
         - name: jackett-config
-          emptyDir: {}
+          secret:
+            secretName: jackett
         - name: jackett-data
           emptyDir: {}
