@@ -11,3 +11,21 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: freenas-api-iscsi-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: multimedia
+  namespace: rtorrent-flood
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Ti
+  storageClassName: node-manual
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rtorrent-flood
+      app.kubernetes.io/instance: rtorrent-flood

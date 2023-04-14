@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: multimedia
+  labels:
+    app.kubernetes.io/name: rtorrent-flood
+    app.kubernetes.io/instance: rtorrent-flood
+spec:
+  capacity:
+    storage: 10Ti
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  csi:
+    driver: org.democratic-csi.node-manual
+    readOnly: false
+    fsType: cifs
+    volumeHandle: 8190559e-8b7e-4c4a-939f-9c5f89227ddc
+    nodeStageSecretRef:
+      name: freenas-smb-creds
+      namespace: democratic-csi
+    volumeAttributes:
+      server: ${NAS_ADDR}
+      share: multimedia
+      node_attach_driver: smb
+      provisioner_driver: node-manual

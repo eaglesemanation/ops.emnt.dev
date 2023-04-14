@@ -33,7 +33,7 @@ spec:
             - name: FLOOD_OPTION_auth
               value: "none"
             - name: FLOOD_OPTION_allowedpath
-              value: "/data/sock,/etc/rtorrent,/downloads"
+              value: "/data/sock,/etc/rtorrent,/multimedia/downloads"
             - name: FLOOD_OPTION_rtsocket
               value: "/data/sock/rtorrent.sock"
             - name: FLOOD_OPTION_rtconfig
@@ -49,8 +49,8 @@ spec:
             - name: rtorrent-config
               subPath: rtorrent.rc
               mountPath: /etc/rtorrent/rtorrent.rc
-            - name: downloads
-              mountPath: /downloads
+            - name: multimedia
+              mountPath: /multimedia
         - name: rtorrent
           image: docker.io/jesec/rtorrent:0.9.8-r16
           volumeMounts:
@@ -61,8 +61,8 @@ spec:
             - name: rtorrent-config
               subPath: rtorrent.rc
               mountPath: /etc/rtorrent/rtorrent.rc
-            - name: downloads
-              mountPath: /downloads
+            - name: multimedia
+              mountPath: /multimedia
       volumes:
         - name: rtorrent-sock
           emptyDir:
@@ -73,6 +73,6 @@ spec:
         - name: rtorrent-config
           configMap:
             name: rtorrent-config
-        # TODO: Mount PV shared between other multimedia services
-        - name: downloads
-          emptyDir: {}
+        - name: multimedia
+          persistentVolumeClaim:
+            claimName: multimedia
