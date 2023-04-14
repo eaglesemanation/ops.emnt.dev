@@ -11,12 +11,6 @@ method.insert = cfg.session,  private|const|string, (cat, (cfg.basedir), "sessio
 method.insert = cfg.socket,   private|const|string, (cat, (cfg.basedir), "sock/")
 method.insert = cfg.download, private|const|string, (cat, "/downloads/")
 
-## Create defined directories
-fs.mkdir = (cat, (cfg.basedir))
-fs.mkdir = (cat, (cfg.session))
-fs.mkdir = (cat, (cfg.download))
-fs.mkdir = (cat, (cfg.socket))
-
 ## Set default paths
 system.cwd.set        = (directory.default)
 directory.default.set = (cat, (cfg.download))
@@ -44,7 +38,14 @@ network.http.dns_cache_timeout.set = 25
 network.max_open_files.set         = 600
 network.max_open_sockets.set       = 300
 network.xmlrpc.size_limit.set      = 4M
-network.scgi.open_local            = (cat, (cfg.socket), "rtorrent.sock")
+
+## Setting up as a daemon for Flood UI
+network.scgi.open_local = (cat, (cfg.socket), "rtorrent.sock")
+network.port_range.set  = ${RTORRENT_PORT}-${RTORRENT_PORT}
+session.use_lock.set    = no
+system.daemon.set       = true
+system.umask.set        = 0002
+encoding.add            = utf8
 
 ## Disable tracker-less torrent and UDP tracker support
 dht.mode.set         = disable

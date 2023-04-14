@@ -22,6 +22,12 @@ spec:
       VPN_TRAFFIC_PORT: 51820
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
       VPN_LOCAL_CIDRS: "10.0.0.0/8 172.16.0.0/12 192.168.0.0/16"
+    publicPorts:
+      - hostname: rtorrent-flood
+        IP: 10
+        ports:
+          - type: TCP
+            port: ${RTORRENT_PORT}
     routed_namespaces:
       - jackett
       - rtorrent-flood

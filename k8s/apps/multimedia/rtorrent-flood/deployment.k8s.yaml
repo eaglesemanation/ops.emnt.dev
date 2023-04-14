@@ -20,6 +20,11 @@ spec:
         app.kubernetes.io/name: rtorrent-flood
         app.kubernetes.io/instance: rtorrent-flood
     spec:
+      hostname: rtorrent-flood
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
         - name: flood
           image: docker.io/jesec/flood:master
@@ -27,7 +32,7 @@ spec:
             - name: FLOOD_OPTION_auth
               value: "none"
             - name: FLOOD_OPTION_allowedpath
-              value: "/data/sock,/etc/rtorrent"
+              value: "/data/sock,/etc/rtorrent,/downloads"
             - name: FLOOD_OPTION_rtsocket
               value: "/data/sock/rtorrent.sock"
             - name: FLOOD_OPTION_rtconfig
@@ -37,24 +42,24 @@ spec:
           ports:
             - name: http
               containerPort: 3000
-          securityContext:
-            runAsNonRoot: true
           volumeMounts:
             - name: rtorrent-sock
               mountPath: /data/sock
             - name: rtorrent-config
               subPath: rtorrent.rc
               mountPath: /etc/rtorrent/rtorrent.rc
+            - name: downloads
+              mountPath: /downloads
         - name: rtorrent
           image: docker.io/jesec/rtorrent:0.9.8-r16
-          securityContext:
-            runAsNonRoot: true
           volumeMounts:
             - name: rtorrent-sock
               mountPath: /data/sock
             - name: rtorrent-config
               subPath: rtorrent.rc
               mountPath: /etc/rtorrent/rtorrent.rc
+            - name: downloads
+              mountPath: /downloads
       volumes:
         - name: rtorrent-sock
           emptyDir:
@@ -65,3 +70,6 @@ spec:
         - name: rtorrent-config
           configMap:
             name: rtorrent-config
+        # TODO: Mount PV shared between other multimedia services
+        - name: downloads
+          emptyDir: {}
