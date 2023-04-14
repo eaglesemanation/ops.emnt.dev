@@ -24,7 +24,6 @@ spec:
   resources:
     requests:
       storage: 10Ti
-  storageClassName: node-manual
   selector:
     matchLabels:
       app.kubernetes.io/name: rtorrent-flood
