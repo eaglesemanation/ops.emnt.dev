@@ -10,3 +10,4 @@ resources:
   - smb-driver.sops.yaml
   - smb-creds.sops.yaml
   - smb-storageclass.k8s.yaml
+  - helmrelease-manual.k8s.yaml
