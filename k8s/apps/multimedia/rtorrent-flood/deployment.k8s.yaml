@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rtorrent-flood
+  namespace: rtorrent-flood
+  labels:
+    app.kubernetes.io/name: rtorrent-flood
+    app.kubernetes.io/instance: rtorrent-flood
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rtorrent-flood
+      app.kubernetes.io/instance: rtorrent-flood
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rtorrent-flood
+        app.kubernetes.io/instance: rtorrent-flood
+    spec:
+      containers:
+        - name: flood
+          image: docker.io/jesec/flood:master
+          env:
+            - name: FLOOD_OPTION_auth
+              value: "none"
+            - name: FLOOD_OPTION_allowedpath
+              value: "/data/sock,/etc/rtorrent"
+            - name: FLOOD_OPTION_rtsocket
+              value: "/data/sock/rtorrent.sock"
+            - name: FLOOD_OPTION_rtconfig
+              value: "/etc/rtorrent/rtorrent.rc"
+            - name: FLOOD_OPTION_port
+              value: "3000"
+          ports:
+            - name: http
+              containerPort: 3000
+          securityContext:
+            runAsNonRoot: true
+          volumeMounts:
+            - name: rtorrent-sock
+              mountPath: /data/sock
+            - name: rtorrent-config
+              subPath: rtorrent.rc
+              mountPath: /etc/rtorrent/rtorrent.rc
+        - name: rtorrent
+          image: docker.io/jesec/rtorrent:0.9.8-r16
+          securityContext:
+            runAsNonRoot: true
+          volumeMounts:
+            - name: rtorrent-sock
+              mountPath: /data/sock
+            - name: rtorrent-config
+              subPath: rtorrent.rc
+              mountPath: /etc/rtorrent/rtorrent.rc
+      volumes:
+        - name: rtorrent-sock
+          emptyDir:
+            medium: Memory
+        - name: rtorrent-session
+          persistentVolumeClaim:
+            claimName: rtorrent-session
+        - name: rtorrent-config
+          configMap:
+            name: rtorrent-config

@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rtorrent-flood
+  namespace: rtorrent-flood
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Flood"
+    gethomepage.dev/group: "Multimedia"
+    gethomepage.dev/icon: "flood"
+  labels:
+    app.kubernetes.io/name: rtorrent-flood
+    app.kubernetes.io/instance: rtorrent-flood
+spec:
+  ingressClassName: internal
+  rules:
+    - host: flood.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: flood
+                port:
+                  name: http
