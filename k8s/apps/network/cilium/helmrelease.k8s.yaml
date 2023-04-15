@@ -71,6 +71,6 @@ spec:
             gethomepage.dev/enabled: "true"
             gethomepage.dev/name: "Hubble"
             gethomepage.dev/group: "Infra"
-            gethomepage.dev/icon: "hubble"
+            gethomepage.dev/icon: "cilium"
           hosts:
             - hubble.emnt.dev
