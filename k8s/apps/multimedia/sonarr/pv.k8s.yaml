@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: multimedia-rtorrent-flood
+  name: multimedia-sonarr
   labels:
-    app.kubernetes.io/name: rtorrent-flood
-    app.kubernetes.io/instance: rtorrent-flood
+    app.kubernetes.io/name: sonarr
+    app.kubernetes.io/instance: sonarr
 spec:
   capacity:
     storage: 10Ti
@@ -18,7 +18,7 @@ spec:
     driver: org.democratic-csi.node-manual
     readOnly: false
     fsType: cifs
-    volumeHandle: 8190559e-8b7e-4c4a-939f-9c5f89227ddc
+    volumeHandle: 7c6dedb9-6b0b-49d5-8de2-38eb3b68767a
     nodeStageSecretRef:
       name: freenas-smb-creds
       namespace: democratic-csi
