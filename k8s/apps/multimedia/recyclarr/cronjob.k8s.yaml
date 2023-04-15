@@ -21,7 +21,8 @@ spec:
               args: ["sync"]
               volumeMounts:
                 - name: recyclarr-config
-                  mountPath: /config
+                  mountPath: /config/recyclarr.yml
+                  subPath: settings.yaml
                 - name: recyclarr-secrets
                   mountPath: /config/secrets.yml
                   subPath: secrets.yaml

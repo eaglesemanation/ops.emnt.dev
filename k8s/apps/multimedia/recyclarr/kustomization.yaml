@@ -8,4 +8,4 @@ configMapGenerator:
   - name: recyclarr
     namespace: recyclarr
     files:
-      - recyclarr.yml=settings.yaml
+      - settings.yaml
