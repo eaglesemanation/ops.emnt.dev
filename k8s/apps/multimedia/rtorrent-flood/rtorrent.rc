@@ -11,6 +11,9 @@ method.insert = cfg.session,  private|const|string, (cat, (cfg.basedir), "sessio
 method.insert = cfg.socket,   private|const|string, (cat, (cfg.basedir), "sock/")
 method.insert = cfg.download, private|const|string, (cat, "/multimedia/downloads/")
 
+# multimedia is already mounted, create downloads folder
+fs.mkdir = (cat, (cfg.download))
+
 ## Set default paths
 system.cwd.set        = (directory.default)
 directory.default.set = (cat, (cfg.download))
