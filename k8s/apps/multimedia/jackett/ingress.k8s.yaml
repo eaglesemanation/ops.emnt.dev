@@ -14,7 +14,7 @@ metadata:
 spec:
   ingressClassName: internal
   rules:
-    - host: jacket.emnt.dev
+    - host: jackett.emnt.dev
       http:
         paths:
           - path: /
