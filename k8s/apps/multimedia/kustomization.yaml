@@ -4,4 +4,5 @@ resources:
   - jackett.k8s.yaml
   - sonarr.k8s.yaml
   - radarr.k8s.yaml
+  - recyclarr.k8s.yaml
   - rtorrent-flood.k8s.yaml
