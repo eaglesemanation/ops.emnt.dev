@@ -13,4 +13,5 @@ spec:
   storageClassName: node-manual
   selector:
     matchLabels:
-      share: multimedia
+      app.kubernetes.io/name: sonarr
+      app.kubernetes.io/instance: sonarr
