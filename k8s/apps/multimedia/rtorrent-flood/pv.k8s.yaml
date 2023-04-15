@@ -11,6 +11,9 @@ spec:
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
+  mountOptions:
+    - uid=1000
+    - gid=1000
   csi:
     driver: org.democratic-csi.node-manual
     readOnly: false
