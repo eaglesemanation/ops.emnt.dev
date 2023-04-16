@@ -4,5 +4,6 @@ resources:
   - namespace.k8s.yaml
   - deployment.k8s.yaml
   - service.k8s.yaml
-  - secret.sops.yaml
+  - server-config.sops.yaml
+  - indexers.sops.yaml
   - ingress.k8s.yaml

@@ -33,21 +33,20 @@ spec:
           volumeMounts:
             - name: jackett-data
               mountPath: /data
-            - name: jackett-secret
+            - name: config
               subPath: ServerConfig.json
               mountPath: /config/Jackett/ServerConfig.json
-            - name: jackett-secret
+            - name: config
               subPath: DataProtectionKey.xml
               mountPath: /config/Jackett/DataProtection/key-673e658c-5785-4fe5-9a0a-33244764cda7.xml
-            - name: jackett-secret
-              subPath: nyaasi.json
-              mountPath: /config/Jackett/Indexers/nyaasi.json
-            - name: jackett-secret
-              subPath: rutracker.json
-              mountPath: /config/Jackett/Indexers/rutracker.json
+            - name: indexers
+              mountPath: /config/Jackett/Indexers/
       volumes:
-        - name: jackett-secret
+        - name: config
           secret:
-            secretName: jackett
+            secretName: server-config
+        - name: indexers
+          secret:
+            secretName: indexers
         - name: jackett-data
           emptyDir: {}
