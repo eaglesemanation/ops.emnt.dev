@@ -40,7 +40,7 @@ spec:
             - name: TZ
               value: "Etc/UTC"
             - name: JELLYFIN_PublishedServerUrl
-              value: "jellyfin.emnt.dev"
+              value: "https://jellyfin.emnt.dev/"
           volumeMounts:
             - name: multimedia
               mountPath: /multimedia
