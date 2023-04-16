@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: sonarr
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Sonarr - Anime"
+    gethomepage.dev/group: "Multimedia"
+    gethomepage.dev/icon: "sonarr"
+  labels:
+    app.kubernetes.io/name: sonarr
+spec:
+  ingressClassName: internal
+  rules:
+    - host: sonarr-anime.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: sonarr
+                port:
+                  number: 8989

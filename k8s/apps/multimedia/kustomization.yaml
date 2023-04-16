@@ -3,7 +3,8 @@ kind: Kustomization
 resources:
   - jackett.k8s.yaml
   - jellyfin.k8s.yaml
-  - sonarr.k8s.yaml
+  - sonarr/shows.k8s.yaml
+  - sonarr/anime.k8s.yaml
   - radarr.k8s.yaml
   - recyclarr.k8s.yaml
   - rtorrent-flood.k8s.yaml

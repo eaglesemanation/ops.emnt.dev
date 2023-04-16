@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: multimedia-sonarr
+spec:
+  csi:
+    volumeHandle: 4adfbc77-e57c-435d-8418-e70ae8a51ba7
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: multimedia-sonnar
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: sonarr-anime
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: sonarr
+spec:
+  template:
+    spec:
+      volumes:
+        - name: multimedia
+          persistentVolumeClaim:
+            claimName: multimedia-sonarr-anime

@@ -2,19 +2,17 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: sonarr
-  namespace: sonarr
   annotations:
     gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Sonarr"
+    gethomepage.dev/name: "Sonarr - Shows"
     gethomepage.dev/group: "Multimedia"
     gethomepage.dev/icon: "sonarr"
   labels:
     app.kubernetes.io/name: sonarr
-    app.kubernetes.io/instance: sonarr
 spec:
   ingressClassName: internal
   rules:
-    - host: sonarr.emnt.dev
+    - host: sonarr-shows.emnt.dev
       http:
         paths:
           - path: /
