@@ -31,11 +31,11 @@ spec:
     app.kubernetes.io/name: jellyfin
     app.kubernetes.io/instance: jellyfin
   ports:
-    - name: auto-discovery
+    - name: auto-discovery-1
       port: 1900
       targetPort: 1900
       protocol: UDP
-    - name: auto-discovery
+    - name: auto-discovery-2
       port: 7359
       targetPort: 7359
       protocol: UDP

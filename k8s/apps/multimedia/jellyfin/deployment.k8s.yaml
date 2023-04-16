@@ -52,10 +52,10 @@ spec:
           ports:
             - name: http
               containerPort: 8096
-            - name: auto-discovery
+            - name: auto-discovery-1
               containerPort: 1900
               protocol: UDP
-            - name: auto-discovery
+            - name: auto-discovery-2
               containerPort: 7359
               protocol: UDP
       volumes:
