@@ -53,4 +53,5 @@ spec:
           persistentVolumeClaim:
             claimName: jellyfin-config
         - name: jellyfin-cache
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: jellyfin-cache

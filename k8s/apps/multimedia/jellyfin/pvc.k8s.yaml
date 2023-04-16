@@ -15,6 +15,20 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: jellyfin-cache
+  namespace: jellyfin
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: freenas-api-iscsi-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: multimedia
   namespace: jellyfin
 spec:
