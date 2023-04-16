@@ -42,4 +42,4 @@ spec:
             claimName: multimedia-sonarr
         - name: config
           persistentVolumeClaim:
-            claimName: sonarr-config
+            claimName: config-sonarr
