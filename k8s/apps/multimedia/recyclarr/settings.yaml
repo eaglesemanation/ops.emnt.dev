@@ -23,11 +23,19 @@ sonarr:
           - bb019e1cd00f304f80971c965de064dc # HDR (undefined)
           - 2a7e3be05d3861d6df7171ec74cad727 # PQ
           - 17e889ce13117940092308f48b48b45b # HLG
-          # Unwanted UHD
-          - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
-          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
           # Optional UHD
           - 2016d1676f5ee13a5b7257ff86ac9a93 # SDR
+        quality_profiles:
+          - name: WEB-2160p
+      - trash_ids:
+          # Unwanted HD
+          - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+        quality_profiles:
+          - name: WEB-1080p
+      - trash_ids:
+          # Unwanted
+          - 85c61753df5da1fb2aab6f2a47426b09 # BR-DISK
+          - 9c11cd3f07101cdba90a2d81cf0e56b4 # LQ
           # Misc
           - ec8fa7296b64e8cd390a1600981f3923 # Repack/Proper
           - eb3d5cc0a2be0db205fb823640db6a3c # Repack v2
@@ -58,6 +66,7 @@ sonarr:
           - d0c516558625b04b363fa6c5c2c7cfd4 # WEB Scene
         quality_profiles:
           - name: WEB-2160p
+          - name: WEB-1080p
   anime:
     base_url: https://sonarr-anime.emnt.dev
     api_key: !secret sonarr_anime_apikey
@@ -97,7 +106,6 @@ sonarr:
           - 4fc15eeb8f2f9a749f918217d4234ad8 # v4
           - 44a8ee6403071dd7b8a3a8dd3fe8cb20 # VRV
           - b2550eb333d27b75833e25b8c2557b38 # 10bit
-          - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
           - 9c14d194486c4014d422adc64092d794 # Dubs Only
           - 07a32f77690263bb9fda1842db7e273f # VOSTFR
           - d660701077794679fd59e8bdf4ce3a29 # AMZN
@@ -110,6 +118,11 @@ sonarr:
           - d34870697c9db575f17700212167be23 # NF
         quality_profiles:
           - name: Remux-1080p
+      - trash_ids:
+          - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
+        quality_profiles:
+          - name: Remux-1080p
+            score: 101 # Prefer dual audio over a tier above
 
 radarr:
   movies:
