@@ -122,7 +122,7 @@ sonarr:
           - 418f50b10f1907201b6cfdf881f467b7 # Anime Dual Audio
         quality_profiles:
           - name: Remux-1080p
-            score: 101 # Prefer dual audio over a tier above
+            score: 2000 # Prefer dual audio over any tier
 
 radarr:
   movies:
