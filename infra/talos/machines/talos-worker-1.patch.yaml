@@ -1,4 +1,6 @@
 machine:
+  nodeLabels:
+    emnt.dev/on-nas: "true"
   install:
     disk: /dev/vda
   network:

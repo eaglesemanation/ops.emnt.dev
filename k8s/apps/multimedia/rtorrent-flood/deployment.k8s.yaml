@@ -20,6 +20,13 @@ spec:
         app.kubernetes.io/name: rtorrent-flood
         app.kubernetes.io/instance: rtorrent-flood
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: emnt.dev/on-nas
+                    operator: Exists
       hostname: rtorrent-flood
       securityContext:
         runAsNonRoot: true

@@ -20,6 +20,13 @@ spec:
         app.kubernetes.io/name: jellyfin
         app.kubernetes.io/instance: jellyfin
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: emnt.dev/on-nas
+                    operator: Exists
       securityContext:
         runAsUser: 1000
         runAsGroup: 1000
