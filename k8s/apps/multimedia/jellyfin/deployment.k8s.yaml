@@ -34,7 +34,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: radarr
-          image: docker.io/jellyfin/jellyfin:10.8.9
+          image: docker.io/jellyfin/jellyfin:20230415.11-unstable
           volumeMounts:
             - name: multimedia
               mountPath: /multimedia
