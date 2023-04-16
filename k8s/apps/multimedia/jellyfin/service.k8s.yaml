@@ -16,3 +16,26 @@ spec:
       port: 8096
       targetPort: 8096
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: jellyfin-auto-discovery
+  namespace: jellyfin
+  labels:
+    app.kubernetes.io/name: jellyfin
+    app.kubernetes.io/instance: jellyfin
+spec:
+  type: NodePort
+  selector:
+    app.kubernetes.io/name: jellyfin
+    app.kubernetes.io/instance: jellyfin
+  ports:
+    - name: auto-discovery
+      port: 1900
+      targetPort: 1900
+      protocol: UDP
+    - name: auto-discovery
+      port: 7359
+      targetPort: 7359
+      protocol: UDP

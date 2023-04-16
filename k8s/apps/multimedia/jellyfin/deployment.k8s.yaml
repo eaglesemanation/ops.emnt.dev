@@ -33,18 +33,31 @@ spec:
         runAsNonRoot: true
         fsGroup: 1000
       containers:
-        - name: radarr
-          image: docker.io/jellyfin/jellyfin:10.8.9
+        - name: jellyfin
+          image: docker.io/linuxserver/jellyfin:10.8.9
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Etc/UTC"
+            - name: JELLYFIN_PublishedServerUrl
+              value: "jellyfin.emnt.dev"
           volumeMounts:
             - name: multimedia
               mountPath: /multimedia
             - name: jellyfin-config
               mountPath: /config
-            - name: jellyfin-cache
-              mountPath: /cache
           ports:
             - name: http
               containerPort: 8096
+            - name: auto-discovery
+              containerPort: 1900
+              protocol: UDP
+            - name: auto-discovery
+              containerPort: 7359
+              protocol: UDP
       volumes:
         - name: multimedia
           persistentVolumeClaim:
@@ -52,6 +65,3 @@ spec:
         - name: jellyfin-config
           persistentVolumeClaim:
             claimName: jellyfin-config
-        - name: jellyfin-cache
-          persistentVolumeClaim:
-            claimName: jellyfin-cache
