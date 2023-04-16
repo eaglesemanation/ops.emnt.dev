@@ -40,7 +40,14 @@ spec:
               subPath: DataProtectionKey.xml
               mountPath: /config/Jackett/DataProtection/key-673e658c-5785-4fe5-9a0a-33244764cda7.xml
             - name: indexers
-              mountPath: /config/Jackett/Indexers/
+              subPath: 1337x.json
+              mountPath: /config/Jackett/Indexers/1337x.json
+            - name: indexers
+              subPath: nyaasi.json
+              mountPath: /config/Jackett/Indexers/nyaasi.json
+            - name: indexers
+              subPath: rutracker.json
+              mountPath: /config/Jackett/Indexers/rutracker.json
       volumes:
         - name: config
           secret:
