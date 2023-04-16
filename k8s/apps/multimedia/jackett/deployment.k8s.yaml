@@ -21,6 +21,13 @@ spec:
       containers:
         - name: jackett
           image: ghcr.io/linuxserver/jackett:latest
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 512Mi
           env:
             - name: PUID
               value: "1000"
