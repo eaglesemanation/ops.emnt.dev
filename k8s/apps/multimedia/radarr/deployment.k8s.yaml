@@ -42,6 +42,10 @@ spec:
           volumeMounts:
             - name: multimedia
               mountPath: /multimedia
+            # Separate mount to prevent Radarr from hard linking
+            # FIXME: Figure out why Jellyfin does not like hard links
+            - name: multimedia
+              mountPath: /downloads
             - name: radarr-config
               mountPath: /config
           ports:
