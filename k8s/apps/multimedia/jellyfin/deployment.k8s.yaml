@@ -26,7 +26,9 @@ spec:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: emnt.dev/on-nas
-                    operator: Exists
+                    # Reading hard linked file fails on TrueNAS VM
+                    # FIXME: Replace with Exist when bug is fixed to reduce network load
+                    operator: DoesNotExist
       securityContext:
         fsGroup: 1000
       containers:
