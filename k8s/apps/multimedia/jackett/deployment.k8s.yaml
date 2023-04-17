@@ -50,6 +50,9 @@ spec:
               subPath: 1337x.json
               mountPath: /config/Jackett/Indexers/1337x.json
             - name: indexers
+              subPath: animetosho.json
+              mountPath: /config/Jackett/Indexers/animetosho.json
+            - name: indexers
               subPath: nyaasi.json
               mountPath: /config/Jackett/Indexers/nyaasi.json
             - name: indexers
