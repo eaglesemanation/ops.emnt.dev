@@ -14,7 +14,8 @@ spec:
   mountOptions:
     - uid=1000
     - gid=1000
-    - iocharset=utf8
+    - unix
+    - noserverino
   csi:
     driver: org.democratic-csi.node-manual
     readOnly: false
