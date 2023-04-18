@@ -1,0 +1,49 @@
+apiVersion: acid.zalan.do/v1
+kind: postgresql
+metadata:
+  name: postgres
+  namespace: authentik
+spec:
+  teamId: "emnt"
+  numberOfInstances: 1
+  enableMasterLoadBalancer: false
+  volume:
+    storageClass: freenas-api-iscsi-csi
+    size: 1Gi
+  users:
+    authentik_user: 
+      - superuser
+      - createdb
+  databases:
+    authentik: authentik_user
+  postgresql:
+    version: "15"
+    parameters:
+      password_encryption: scram-sha-256
+  sidecars:
+    - name: exporter
+      image: docker.io/bitnami/postgres_exporter
+      ports:
+        - name: exporter
+          containerPort: 9187
+          protocol: TCP
+      resources:
+        limits:
+          cpu: 500m
+          memory: 256M
+        requests:
+          cpu: 100m
+          memory: 200M
+      env:
+        - name: "DATA_SOURCE_URI"
+          value: "postgres/database?sslmode=disable"
+        - name: "DATA_SOURCE_USER"
+          valueFrom:
+            secretKeyRef:
+              name: postgres.postgres.credentials
+              key: username
+        - name: "DATA_SOURCE_PASS"
+          valueFrom:
+            secretKeyRef:
+              name: postgres.postgres.credentials
+              key: password

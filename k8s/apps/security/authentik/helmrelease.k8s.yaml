@@ -1,0 +1,49 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: authentik
+  namespace: authentik
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: authentik
+      version: 2023.4.1
+      sourceRef:
+        kind: HelmRepository
+        name: goauthentik
+        namespace: flux-system
+      interval: 30m
+  values:
+    authentik:
+      error_reporting:
+        enabled: true
+      postgresql:
+        host: postgres
+    envValueFrom:
+      AUTHENTIK_POSTGRESQL__USER:
+        secretKeyRef:
+          name: postgres.postgres.credentials
+          key: username
+      AUTHENTIK_POSTGRES__PASSWORD:
+        secretKeyRef:
+          name: postgres.postgres.credentials
+          key: password
+    ingress:
+      enabled: true
+      ingressClassName: internal
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Authentik"
+        gethomepage.dev/group: "Infra"
+        gethomepage.dev/icon: "authentik"
+      hosts:
+        - host: authentik.emnt.dev
+          paths:
+            - path: /
+              pathType: Prefix
+    prometheus:
+      serviceMonitor:
+        create: true
+      rules:
+        create: true
