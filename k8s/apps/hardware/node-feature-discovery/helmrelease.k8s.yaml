@@ -14,11 +14,3 @@ spec:
         name: node-feature-discovery
         namespace: flux-system
       interval: 30m
-  install:
-    crds: CreateReplace
-  upgrade:
-    crds: CreateReplace
-  values:
-    topologyUpdater:
-      enable: true
-      createCRDs: true
