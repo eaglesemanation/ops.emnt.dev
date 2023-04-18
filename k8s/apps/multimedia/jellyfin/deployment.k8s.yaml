@@ -51,6 +51,8 @@ spec:
               value: "Etc/UTC"
             - name: JELLYFIN_PublishedServerUrl
               value: "https://jellyfin.emnt.dev/"
+            - name: DOCKER_MODS
+              value: linuxserver/mods:jellyfin-opencl-intel
           volumeMounts:
             - name: multimedia
               mountPath: /multimedia
