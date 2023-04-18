@@ -56,8 +56,14 @@ spec:
               subPath: nyaasi.json
               mountPath: /config/Jackett/Indexers/nyaasi.json
             - name: indexers
+              subPath: rarbg.json
+              mountPath: /config/Jackett/Indexers/rarbg.json
+            - name: indexers
               subPath: rutracker.json
               mountPath: /config/Jackett/Indexers/rutracker.json
+            - name: indexers
+              subPath: torrentgalaxy.json
+              mountPath: /config/Jackett/Indexers/torrentgalaxy.json
       volumes:
         - name: config
           secret:
