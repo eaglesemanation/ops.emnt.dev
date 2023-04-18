@@ -23,11 +23,11 @@ spec:
     envValueFrom:
       AUTHENTIK_POSTGRESQL__USER:
         secretKeyRef:
-          name: postgres.postgres.credentials
+          name: authentik-user.postgres.credentials.postgresql.acid.zalan.do
           key: username
       AUTHENTIK_POSTGRES__PASSWORD:
         secretKeyRef:
-          name: postgres.postgres.credentials
+          name: authentik-user.postgres.credentials.postgresql.acid.zalan.do
           key: password
     ingress:
       enabled: true

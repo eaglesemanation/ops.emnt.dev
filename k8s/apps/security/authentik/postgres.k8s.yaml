@@ -22,7 +22,7 @@ spec:
       password_encryption: scram-sha-256
   sidecars:
     - name: exporter
-      image: docker.io/bitnami/postgres_exporter
+      image: docker.io/bitnami/postgres-exporter
       ports:
         - name: exporter
           containerPort: 9187
