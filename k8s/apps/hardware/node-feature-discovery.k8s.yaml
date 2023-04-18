@@ -1,15 +1,13 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: minecraft
+  name: node-feature-discovery
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./k8s/apps/games/minecraft
-  dependsOn:
-    - name: democratic-csi
-    - name: prometheus
+  path: ./k8s/apps/hardware/node-feature-discovery
   prune: true
   sourceRef:
     kind: GitRepository
     name: emnt-ops
+  wait: true

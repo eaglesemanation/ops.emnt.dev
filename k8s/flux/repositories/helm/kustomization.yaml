@@ -11,6 +11,7 @@ resources:
   - jetstack.k8s.yaml
   - kubelet-csr-approver.k8s.yaml
   - metrics-server.k8s.yaml
+  - node-feature-discovery.k8s.yaml
   - pihole.k8s.yaml
   - piraeus.k8s.yaml
   - postgres-operator.k8s.yaml
