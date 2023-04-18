@@ -9,7 +9,7 @@ spec:
   prune: true
   sourceRef:
     kind: GitRepository
-    name: emnt-dev
+    name: emnt-ops
   dependsOn:
     - name: node-feature-discovery
   wait: true
