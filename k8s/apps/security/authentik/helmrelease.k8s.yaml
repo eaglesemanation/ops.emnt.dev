@@ -21,6 +21,9 @@ spec:
       postgresql:
         host: postgres
         user: null
+    envFrom:
+      - secretKeyRef:
+          name: authentik-env
     envValueFrom:
       AUTHENTIK_POSTGRESQL__USER:
         secretKeyRef:

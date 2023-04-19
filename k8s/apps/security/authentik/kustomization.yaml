@@ -4,3 +4,4 @@ resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
   - postgres.k8s.yaml
+  - secret.sops.yaml
