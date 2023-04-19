@@ -19,7 +19,14 @@ spec:
       redisSecret:
         secretName: redis-creds
         secretKey: password
-    storageSpec: null
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          storageClassName: freenas-api-iscsi-csi
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 1Gi
     serviceMonitor:
       enabled: true
       namespace: authentik
