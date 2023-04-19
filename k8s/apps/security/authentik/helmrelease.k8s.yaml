@@ -21,6 +21,8 @@ spec:
       postgresql:
         host: postgres
         user: null
+      redis:
+        host: redis
     envFrom:
       - secretRef:
           name: authentik-env
