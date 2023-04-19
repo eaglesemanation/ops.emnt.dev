@@ -25,6 +25,10 @@ spec:
       - secretRef:
           name: authentik-env
     envValueFrom:
+      AUTHENTIK_REDIS__PASSWORD:
+        secretKeyRef:
+          name: redis-creds
+          key: password
       AUTHENTIK_POSTGRESQL__USER:
         secretKeyRef:
           name: authentik-user.postgres.credentials.postgresql.acid.zalan.do

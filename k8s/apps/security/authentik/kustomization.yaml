@@ -4,4 +4,6 @@ resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
   - postgres.k8s.yaml
-  - secret.sops.yaml
+  - redis.k8s.yaml
+  - authentik-env.sops.yaml
+  - redis-creds.sops.yaml
