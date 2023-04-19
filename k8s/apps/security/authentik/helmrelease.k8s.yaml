@@ -20,12 +20,13 @@ spec:
         enabled: true
       postgresql:
         host: postgres
+        user: null
     envValueFrom:
       AUTHENTIK_POSTGRESQL__USER:
         secretKeyRef:
           name: authentik-user.postgres.credentials.postgresql.acid.zalan.do
           key: username
-      AUTHENTIK_POSTGRES__PASSWORD:
+      AUTHENTIK_POSTGRESQL__PASSWORD:
         secretKeyRef:
           name: authentik-user.postgres.credentials.postgresql.acid.zalan.do
           key: password
