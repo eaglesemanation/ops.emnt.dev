@@ -19,3 +19,4 @@ resources:
   - postgres-operator.k8s.yaml
   - prometheus-community.k8s.yaml
   - vmware-tanzu.k8s.yaml
+  - weave-gitops.k8s.yaml

@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: cluster-user-auth
+    namespace: weave-gitops
+stringData:
+    username: ENC[AES256_GCM,data:eoeSGCA=,iv:Inw6TXgiw3L3VnXkt8i2HArSai94CqQaknYQLn5UGpo=,tag:OImO+scOq3jhBuzikbdsXQ==,type:str]
+    password: ENC[AES256_GCM,data:h5LgVkuaefwVvZzE9Hvkng76F7nveK1+Ww==,iv:eOIKrqVrQj0qDLK53O2FAue3Q0tdyIvjIAp3B/h56bo=,tag:9SFqKxAnMQp+5lrBAZmaQw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSB5c0hiems5bVZwSUlCOXNB
+            bWFHN1JIcTJVL1VQNjVrTS9nc3JHZ0YxejFnCmtTNFVCdFVIbjY3eWhvSlZYM0RF
+            dGN2OHMxalNxYzRWK3gweGkwZlQwY1kKLS0tIFppd2REK3FDWmdBWEVQd084UDNk
+            dUthYWhjYjhQZkVicWNyUm5DcVBRTGMKwWOkW3Vd52mO+ma+gsdiapTF0E7vVN13
+            QFQ60cVZlvaILg5hkvFHOQ4I3npu6F3omHUNogtN8ITnx2A7R3hoew==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-04-21T06:33:30Z"
+    mac: ENC[AES256_GCM,data:Zq4/1Zmmvfjw9LkdpIGfZgFfAZ+2R0Yr4Oo2ZCJBm36KM85q7AJaYaFg5/yGDUMjLCz3lsv/ir7uh6ObcUqQ5mwh4hZVH1unDM4J9DvMi+pghjifH82+RUuu08FvwS0a8oZ4qudSv9/3DnNcNPXEFs8XIjAT2IvH8uW32Nwr+Q4=,iv:YLuQcOlwfZC36T1L0kWo924Ule2HUZED4q8em6RNIEo=,tag:67Hothl6UZLoZ0N0po1DgA==,type:str]
+    pgp:
+        - created_at: "2023-04-21T06:33:30Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf9H9A4NKiIrxDr5LcbBQ57QsA+AFxiuaNYVB+nUguhrObi
+            wisB9cYTPIeb77lUinayYG06Zw8wWxiVlfjjpZ1asuddiLMmn/kZ/gm2Ww7emxj+
+            rzFfnKlQkzwXXsCRQ7heV+Cvx95SJHIIz9dTWUvACB8RadWkNEh33bTpL7vqYcV0
+            jophKlMSnoh4tM8G2jLJDPTr2MGvDxURMgfUYwEfLckh4xfZwn/B2IJNPpq2Ozpu
+            0KSu/NnTIz25k8nSs+uKYW2RPH1QvzRmQq/a4fZCcGrdwZXrqm9FNLj4B5ADPleT
+            wiQXsFD3hS1Gin4ceS/xffZidUyybCk4YajaVALi7NJcAbremnsvPwF34Vz2C+a7
+            oFJ8uNPFjmu+Ods2WqzCWLbuojAHDvWE7B/U63K8xWK8uPANmP8PBAclFChj1XSk
+            olq63lNZ1AHGvgZbL6+usQwiVY77Bm8frzhX9XM=
+            =SGyc
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

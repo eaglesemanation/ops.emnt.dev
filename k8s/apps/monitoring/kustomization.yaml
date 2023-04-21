@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - metrics-server.k8s.yaml
   - prometheus.k8s.yaml
+  - weave-gitops.k8s.yaml

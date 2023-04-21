@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: weave-gitops
+  namespace: weave-gitops
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: weave-gitops
+      version: 4.0.19
+      sourceRef:
+        kind: HelmRepository
+        name: weave-gitops
+        namespace: flux-system
+      interval: 30m
+  values:
+    rbac:
+      impersonationResourceNames:
+        - admin
+    adminUser:
+      create: true
+      createSecret: false
+    ingress:
+      enabled: true
+      className: internal
+      annotations:
+        gethomepage.dev/enabled: "true"
+        gethomepage.dev/name: "Flux CD"
+        gethomepage.dev/group: "Infra"
+        gethomepage.dev/icon: "flux-cd"
+      hosts:
+        - host: flux.emnt.dev
+          paths:
+            - path: /
+              pathType: Prefix
+    metrics:
+      enabled: true
