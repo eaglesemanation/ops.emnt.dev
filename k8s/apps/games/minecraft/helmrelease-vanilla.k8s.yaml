@@ -15,6 +15,13 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+            - matchExpressions:
+                - key: emnt.dev/on-nas
+                  operator: DoesNotExist
     resources:
       requests:
         memory: 6Gi
