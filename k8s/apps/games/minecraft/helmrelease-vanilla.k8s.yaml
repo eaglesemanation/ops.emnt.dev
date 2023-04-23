@@ -72,7 +72,7 @@ spec:
           - bbanner
           - unifiedmetrics
       modUrls:
-        - https://ci.dmulloy2.net/job/ProtocolLib/606/artifact/target/ProtocolLib.jar
+        - https://ci.dmulloy2.net/job/ProtocolLib-Maven/606/artifact/target/ProtocolLib.jar
         - https://download.geysermc.org/v2/projects/geyser/versions/2.1.0/builds/42/downloads/spigot
         - https://download.geysermc.org/v2/projects/floodgate/versions/2.2.2/builds/31/downloads/spigot
       rcon:
