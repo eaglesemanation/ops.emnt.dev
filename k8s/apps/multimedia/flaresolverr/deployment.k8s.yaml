@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:3.1.2
+          image: ghcr.io/flaresolverr/flaresolverr:v3.1.2
           ports:
             - name: http
               containerPort: 8191
