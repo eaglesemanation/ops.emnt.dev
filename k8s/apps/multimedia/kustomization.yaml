@@ -9,3 +9,4 @@ resources:
   - radarr.k8s.yaml
   - recyclarr.k8s.yaml
   - rtorrent-flood.k8s.yaml
+  - prowlarr.k8s.yaml
