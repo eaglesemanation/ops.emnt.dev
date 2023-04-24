@@ -37,6 +37,7 @@ spec:
             port: ${RTORRENT_PORT}
     routed_namespaces:
       - jackett
+      - prowlarr
       - rtorrent-flood
     persistence:
       tun-device:
