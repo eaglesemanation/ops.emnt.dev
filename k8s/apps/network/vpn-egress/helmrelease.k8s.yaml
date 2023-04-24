@@ -38,6 +38,7 @@ spec:
     routed_namespaces:
       - jackett
       - prowlarr
+      - flaresolverr
       - rtorrent-flood
     persistence:
       tun-device:

@@ -10,3 +10,4 @@ resources:
   - recyclarr.k8s.yaml
   - rtorrent-flood.k8s.yaml
   - prowlarr.k8s.yaml
+  - flaresolverr.k8s.yaml
