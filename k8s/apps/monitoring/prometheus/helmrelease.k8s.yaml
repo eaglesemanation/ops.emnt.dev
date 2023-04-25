@@ -32,6 +32,10 @@ spec:
         selector:
           k8s-app: kube-scheduler
     grafana:
+      admin:
+        existingSecret: grafana-creds
+        userKey: username
+        passwordKey: password
       ingress:
         enabled: true
         ingressClassName: internal
