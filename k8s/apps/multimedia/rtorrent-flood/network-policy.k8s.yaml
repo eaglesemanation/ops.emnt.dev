@@ -1,0 +1,18 @@
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: rtorrent-flood
+  namespace: rtorrent-flood
+spec:
+  endpointSelector:
+    matchLabels:
+      app.kubernetes.io/name: rtorrent-flood
+      app.kubernetes.io/instance: rtorrent-flood
+  ingress:
+    - fromEntities:
+        - cluster
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            app.kubernetes.io/instance: vpn-egress
+            app.kubernetes.io/name: pod-gateway 

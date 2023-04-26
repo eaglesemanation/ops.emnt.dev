@@ -50,9 +50,9 @@ system.daemon.set       = true
 system.umask.set        = 0002
 encoding.add            = utf8
 
-## Disable tracker-less torrent and UDP tracker support
-dht.mode.set         = disable
-protocol.pex.set     = no
+dht.mode.set         = auto
+dht.port.set         = 6881
+protocol.pex.set     = yes
 trackers.use_udp.set = no
 
 ## Log all messages to stdout
