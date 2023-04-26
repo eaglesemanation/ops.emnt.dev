@@ -30,8 +30,6 @@ method.insert = d.session_file, simple, "cat=(session.path), (d.hash), .torrent"
 # Start any magnet torrent from the "load" watch directory (that only loads downloads into rtorrent)
 method.set_key = event.download.inserted_new, auto_start_meta_in_load_dir, "branch=\"and={d.is_meta=,not=$d.state=}\",d.start="
 
-# helper method: checks existence of a directory, file, symlink
-method.insert = check_object.value, simple|private, "execute.capture=bash,-c,\"$cat=\\\"test -\\\",$argument.2=,\\\" \\\\\\\"\\\",$argument.0=,$argument.1=,\\\"\\\\\\\" && echo -n 1 || echo -n\\\"\""
 # helper method: compose the full path of the wrong meta file in "incomplete" dir
 method.insert = d.get_wrong_magnet_meta_file_path,   simple|private, "cat=$cfg.download=,$d.hash=,.meta"
 # helper method: compose the full path of the right torrent file in ".session" dir
@@ -44,6 +42,8 @@ method.insert = d.delete_wrong_magnet_meta_file,     simple|private, "execute.no
 method.insert = d.copy_session_magnet_meta_file,     simple|private, "execute.nothrow={cp,--,$d.get_session_magnet_meta_file_path=,$d.get_new_magnet_meta_file_path=}"
 # helper method: copies right one into its proper place, sets d.tied_to_file property to it, deletes the wrong one, saves session
 method.insert = d.fix_magnet_tied_file, simple|private, "d.copy_session_magnet_meta_file=; d.tied_to_file.set=$d.get_new_magnet_meta_file_path=; d.delete_wrong_magnet_meta_file=; d.save_full_session="
+# helper method: checks existence of a directory, file, symlink
+method.insert = check_object.value, simple|private, "execute.capture=bash,-c,\"$cat=\\\"test -\\\",$argument.2=,\\\" \\\\\\\"\\\",$argument.0=,$argument.1=,\\\"\\\\\\\" && echo -n 1 || echo -n\\\"\""
 
 # Fix tied torrent file of an initially magnet link when its download has been just started: delete the wrong one from "incomplete" dir and copy the right one from ".session" dir if they exist
 method.set_key = event.download.inserted_new, fix_magnet_tied_file, "branch=\"and={\\\"check_object.value=$cat=$d.get_session_magnet_meta_file_path=,,f\\\",\\\"check_object.value=$cat=$d.get_wrong_magnet_meta_file_path=,,f\\\"}\",d.fix_magnet_tied_file="
