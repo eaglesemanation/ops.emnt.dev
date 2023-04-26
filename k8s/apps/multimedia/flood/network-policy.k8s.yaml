@@ -7,8 +7,8 @@ metadata:
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: flood
-      app.kubernetes.io/instance: flood
+      app.kubernetes.io/name: transmission
+      app.kubernetes.io/instance: transmission
   ingress:
     - fromEntities:
         - cluster

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flood
+  namespace: flood
+  labels:
+    app.kubernetes.io/name: flood
+    app.kubernetes.io/instance: flood
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: flood
+      app.kubernetes.io/instance: flood
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: flood
+        app.kubernetes.io/instance: flood
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: emnt.dev/on-nas
+                    operator: Exists
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: flood
+          image: docker.io/jesec/flood:master
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              cpu: 250m
+              memory: 512Mi
+          env:
+            - name: FLOOD_OPTION_auth
+              value: none
+            - name: FLOOD_OPTION_allowedpath
+              value: /multimedia/downloads
+            - name: FLOOD_OPTION_trurl
+              value: http://transmission.transmission.svc.cluster.local:9091
+            - name: FLOOD_OPTION_truser
+              valueFrom:
+                secretKeyRef:
+                  name: transmission-creds
+                  key: username
+            - name: FLOOD_OPTION_trpass
+              valueFrom:
+                secretKeyRef:
+                  name: transmission-creds
+                  key: password
+            - name: FLOOD_OPTION_port
+              value: "3000"
+          ports:
+            - name: http
+              containerPort: 3000
+          volumeMounts:
+            - name: multimedia
+              mountPath: /multimedia
+      volumes:
+        - name: multimedia
+          persistentVolumeClaim:
+            claimName: multimedia

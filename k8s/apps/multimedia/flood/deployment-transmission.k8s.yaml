@@ -1,24 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: flood
+  name: transmission
   namespace: flood
   labels:
-    app.kubernetes.io/name: flood
-    app.kubernetes.io/instance: flood
+    app.kubernetes.io/name: transmission
+    app.kubernetes.io/instance: transmission
 spec:
   replicas: 1
-  strategy:
-    type: Recreate
   selector:
     matchLabels:
-      app.kubernetes.io/name: flood
-      app.kubernetes.io/instance: flood
+      app.kubernetes.io/name: transmission
+      app.kubernetes.io/instance: transmission
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: flood
-        app.kubernetes.io/instance: flood
+        app.kubernetes.io/name: transmission
+        app.kubernetes.io/instance: transmission
     spec:
       affinity:
         nodeAffinity:
@@ -27,48 +25,10 @@ spec:
               - matchExpressions:
                   - key: emnt.dev/on-nas
                     operator: Exists
-      hostname: flood
+      hostname: transmission
       securityContext:
         fsGroup: 1000
       containers:
-        - name: flood
-          image: docker.io/jesec/flood:master
-          securityContext:
-            runAsNonRoot: true
-            runAsUser: 1000
-            runAsGroup: 1000
-          resources:
-            requests:
-              cpu: 100m
-              memory: 128Mi
-            limits:
-              cpu: 250m
-              memory: 512Mi
-          env:
-            - name: FLOOD_OPTION_auth
-              value: "none"
-            - name: FLOOD_OPTION_allowedpath
-              value: "/multimedia/downloads"
-            - name: FLOOD_OPTION_trurl
-              value: "http://transmission:9091"
-            - name: FLOOD_OPTION_truser
-              valueFrom:
-                secretKeyRef:
-                  name: transmission-creds
-                  key: username
-            - name: FLOOD_OPTION_trpass
-              valueFrom:
-                secretKeyRef:
-                  name: transmission-creds
-                  key: password
-            - name: FLOOD_OPTION_port
-              value: "3000"
-          ports:
-            - name: http
-              containerPort: 3000
-          volumeMounts:
-            - name: multimedia
-              mountPath: /multimedia
         - name: transmission
           image: docker.io/linuxserver/transmission:4.0.3
           resources:

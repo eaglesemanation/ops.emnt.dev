@@ -16,3 +16,22 @@ spec:
       port: 3000
       targetPort: 3000
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: transmission
+  namespace: flood
+  labels:
+    app.kubernetes.io/name: transmission
+    app.kubernetes.io/instance: transmission
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: transmission
+    app.kubernetes.io/instance: transmission
+  ports:
+    - name: http
+      port: 9091
+      targetPort: 9091
+      protocol: TCP
