@@ -2,13 +2,13 @@
 apiVersion: cilium.io/v2
 kind: CiliumNetworkPolicy
 metadata:
-  name: rtorrent-flood
-  namespace: rtorrent-flood
+  name: flood
+  namespace: flood
 spec:
   endpointSelector:
     matchLabels:
-      app.kubernetes.io/name: rtorrent-flood
-      app.kubernetes.io/instance: rtorrent-flood
+      app.kubernetes.io/name: flood
+      app.kubernetes.io/instance: flood
   ingress:
     - fromEntities:
         - cluster

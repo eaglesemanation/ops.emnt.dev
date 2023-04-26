@@ -1,8 +1,8 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: rtorrent-session
-  namespace: rtorrent-flood
+  name: transmission
+  namespace: flood
 spec:
   accessModes:
     - ReadWriteOnce
@@ -16,7 +16,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: multimedia
-  namespace: rtorrent-flood
+  namespace: flood
 spec:
   accessModes:
     - ReadWriteMany
@@ -26,5 +26,5 @@ spec:
       storage: 10Ti
   selector:
     matchLabels:
-      app.kubernetes.io/name: rtorrent-flood
-      app.kubernetes.io/instance: rtorrent-flood
+      app.kubernetes.io/name: flood
+      app.kubernetes.io/instance: flood

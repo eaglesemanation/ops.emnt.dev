@@ -1,24 +1,24 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: rtorrent-flood
-  namespace: rtorrent-flood
+  name: flood
+  namespace: flood
   labels:
-    app.kubernetes.io/name: rtorrent-flood
-    app.kubernetes.io/instance: rtorrent-flood
+    app.kubernetes.io/name: flood
+    app.kubernetes.io/instance: flood
 spec:
   replicas: 1
   strategy:
     type: Recreate
   selector:
     matchLabels:
-      app.kubernetes.io/name: rtorrent-flood
-      app.kubernetes.io/instance: rtorrent-flood
+      app.kubernetes.io/name: flood
+      app.kubernetes.io/instance: flood
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: rtorrent-flood
-        app.kubernetes.io/instance: rtorrent-flood
+        app.kubernetes.io/name: flood
+        app.kubernetes.io/instance: flood
     spec:
       affinity:
         nodeAffinity:
@@ -27,15 +27,16 @@ spec:
               - matchExpressions:
                   - key: emnt.dev/on-nas
                     operator: Exists
-      hostname: rtorrent-flood
+      hostname: flood
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
         fsGroup: 1000
       containers:
         - name: flood
           image: docker.io/jesec/flood:master
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000
+            runAsGroup: 1000
           resources:
             requests:
               cpu: 100m
@@ -47,26 +48,19 @@ spec:
             - name: FLOOD_OPTION_auth
               value: "none"
             - name: FLOOD_OPTION_allowedpath
-              value: "/data/sock,/etc/rtorrent,/multimedia/downloads"
-            - name: FLOOD_OPTION_rtsocket
-              value: "/data/sock/rtorrent.sock"
-            - name: FLOOD_OPTION_rtconfig
-              value: "/etc/rtorrent/rtorrent.rc"
+              value: "/multimedia/downloads"
+            - name: FLOOD_OPTION_trurl
+              value: "http://transmission:9091"
             - name: FLOOD_OPTION_port
               value: "3000"
           ports:
             - name: http
               containerPort: 3000
           volumeMounts:
-            - name: rtorrent-sock
-              mountPath: /data/sock
-            - name: rtorrent-config
-              subPath: rtorrent.rc
-              mountPath: /etc/rtorrent/rtorrent.rc
             - name: multimedia
               mountPath: /multimedia
-        - name: rtorrent
-          image: docker.io/jesec/rtorrent:0.9.8-r16
+        - name: transmission
+          image: docker.io/linuxserver/transmission:4.0.3
           resources:
             requests:
               cpu: 100m
@@ -74,26 +68,27 @@ spec:
             limits:
               cpu: 1
               memory: 2Gi
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: Etc/UTC
+            - name: PEERPORT
+              value: ${TORRENT_PORT}
+          ports:
+            - name: http
+              containerPort: 9091
           volumeMounts:
-            - name: rtorrent-sock
-              mountPath: /data/sock
-            - name: rtorrent-session
-              mountPath: /data/session
-            - name: rtorrent-config
-              subPath: rtorrent.rc
-              mountPath: /etc/rtorrent/rtorrent.rc
+            - name: transmission
+              mountPath: /config
             - name: multimedia
               mountPath: /multimedia
       volumes:
-        - name: rtorrent-sock
-          emptyDir:
-            medium: Memory
-        - name: rtorrent-session
+        - name: transmission
           persistentVolumeClaim:
-            claimName: rtorrent-session
-        - name: rtorrent-config
-          configMap:
-            name: rtorrent-config
+            claimName: transmission
         - name: multimedia
           persistentVolumeClaim:
             claimName: multimedia
