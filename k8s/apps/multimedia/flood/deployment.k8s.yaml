@@ -51,6 +51,16 @@ spec:
               value: "/multimedia/downloads"
             - name: FLOOD_OPTION_trurl
               value: "http://transmission:9091"
+            - name: FLOOD_OPTION_truser
+              valueFrom:
+                secretKeyRef:
+                  name: transmission-creds
+                  key: username
+            - name: FLOOD_OPTION_trpass
+              valueFrom:
+                secretKeyRef:
+                  name: transmission-creds
+                  key: password
             - name: FLOOD_OPTION_port
               value: "3000"
           ports:
@@ -75,6 +85,16 @@ spec:
               value: "1000"
             - name: TZ
               value: Etc/UTC
+            - name: USER
+              valueFrom:
+                secretKeyRef:
+                  name: transmission-creds
+                  key: username
+            - name: PASS
+              valueFrom:
+                secretKeyRef:
+                  name: transmission-creds
+                  key: password
             - name: PEERPORT
               value: |
                 ${TORRENT_PORT}
