@@ -76,7 +76,7 @@ spec:
             - name: TZ
               value: Etc/UTC
             - name: PEERPORT
-              value: ${TORRENT_PORT}
+              value: "${TORRENT_PORT}"
           ports:
             - name: http
               containerPort: 9091
