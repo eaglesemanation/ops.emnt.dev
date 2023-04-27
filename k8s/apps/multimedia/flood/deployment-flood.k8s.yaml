@@ -48,7 +48,7 @@ spec:
             - name: FLOOD_OPTION_allowedpath
               value: /multimedia/downloads
             - name: FLOOD_OPTION_trurl
-              value: http://transmission.transmission.svc.cluster.local:9091
+              value: http://transmission.flood.svc.cluster.local:9091/transmission/rpc/
             - name: FLOOD_OPTION_truser
               valueFrom:
                 secretKeyRef:
