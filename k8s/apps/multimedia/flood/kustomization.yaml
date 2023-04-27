@@ -10,3 +10,4 @@ resources:
   - ingress.k8s.yaml
   - network-policy.k8s.yaml
   - transmission-creds.sops.yaml
+  - transmission-settings.k8s.yaml

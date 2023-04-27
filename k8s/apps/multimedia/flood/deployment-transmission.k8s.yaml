@@ -55,21 +55,24 @@ spec:
                 secretKeyRef:
                   name: transmission-creds
                   key: password
-            - name: PEERPORT
-              value: |-
-                ${TORRENT_PORT}
           ports:
             - name: http
               containerPort: 9091
           volumeMounts:
-            - name: transmission
+            - name: data
               mountPath: /config
+            - name: settings
+              mountPath: /defaults/settings.json
+              subPath: settings.json
             - name: multimedia
               mountPath: /multimedia
       volumes:
-        - name: transmission
+        - name: data
           persistentVolumeClaim:
             claimName: transmission
+        - name: settings
+          configMap:
+            name: transmission-settings
         - name: multimedia
           persistentVolumeClaim:
             claimName: multimedia
