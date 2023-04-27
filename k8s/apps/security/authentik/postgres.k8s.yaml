@@ -55,7 +55,7 @@ metadata:
   namespace: authentik
   labels:
     app.kubernetes.io/name: pg-exporter
-    app.kubernetes.io/instance: pg-exporter-authentik
+    app.kubernetes.io/instance: authentik
 spec:
   ports:
     - name: exporter
