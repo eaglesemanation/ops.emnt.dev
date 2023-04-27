@@ -47,3 +47,39 @@ spec:
             secretKeyRef:
               name: postgres.postgres.credentials.postgresql.acid.zalan.do
               key: password
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pg-exporter
+  namespace: authentik
+  labels:
+    app.kubernetes.io/name: pg-exporter
+    app.kubernetes.io/instance: pg-exporter-authentik
+spec:
+  ports:
+    - name: exporter
+      port: 9187
+      targetPort: exporter
+  selector:
+    application: spilo
+    team: emnt
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: pg-exporter
+  namespace: authentik
+  labels:
+    release: prometheus
+spec:
+  endpoints:
+    - targetPort: 9187
+  jobLabel: app.kubernetes.io/instance
+  namespaceSelector:
+    matchNames:
+      - authentik
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pg-exporter
