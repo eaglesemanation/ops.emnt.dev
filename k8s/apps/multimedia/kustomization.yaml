@@ -1,7 +1,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - jackett.k8s.yaml
   - jellyseerr.k8s.yaml
   - jellyfin.k8s.yaml
   - sonarr/shows.k8s.yaml
