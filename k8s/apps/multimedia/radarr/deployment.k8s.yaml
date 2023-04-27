@@ -31,7 +31,7 @@ spec:
               memory: 128Mi
             limits:
               cpu: 250m
-              memory: 512Mi
+              memory: 1Gi
           env:
             - name: PUID
               value: "1000"
