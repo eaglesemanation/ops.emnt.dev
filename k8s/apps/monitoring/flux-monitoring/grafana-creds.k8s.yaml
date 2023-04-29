@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: Secret
-metadata:
-  name: grafana-creds
-  namespace: flux-system
-  labels:
-    reflector.v1.k8s.emberstack.com/reflects: "prometheus/grafana-creds"
