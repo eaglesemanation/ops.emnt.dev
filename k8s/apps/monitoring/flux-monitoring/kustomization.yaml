@@ -4,5 +4,6 @@ namespace: flux-system
 resources:
   - https://github.com/fluxcd/flux2/manifests/monitoring/monitoring-config?ref=v0.41.2
   - notifications.k8s.yaml
+  - grafana-creds.sops.yaml
 patchesStrategicMerge:
   - patches.yaml
