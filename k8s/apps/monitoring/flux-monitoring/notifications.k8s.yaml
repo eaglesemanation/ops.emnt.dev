@@ -1,7 +1,8 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/notification.toolkit.fluxcd.io/alert_v1beta2.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Alert
 metadata:
-  name: grafana
+  name: emnt-ops
   namespace: prometheus
 spec:
   providerRef:
@@ -9,9 +10,10 @@ spec:
   eventSeverity: info
   eventSources:
     - kind: GitRepository
-      name: '*'
+      name: emnt-ops
       namespace: flux-system
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/notification.toolkit.fluxcd.io/provider_v1beta2.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Provider
 metadata:
