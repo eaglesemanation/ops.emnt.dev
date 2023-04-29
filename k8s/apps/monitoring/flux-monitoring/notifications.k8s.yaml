@@ -2,15 +2,14 @@
 apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Alert
 metadata:
-  name: emnt-ops
-  namespace: prometheus
+  name: grafana
 spec:
   providerRef:
     name: grafana
   eventSeverity: info
   eventSources:
     - kind: GitRepository
-      name: emnt-ops
+      name: '*'
       namespace: flux-system
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/notification.toolkit.fluxcd.io/provider_v1beta2.json
@@ -18,7 +17,6 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta2
 kind: Provider
 metadata:
   name: grafana
-  namespace: prometheus
 spec:
   type: grafana
   address: "http://prometheus-grafana.prometheus.svc.cluster.local:80/api/annotations"

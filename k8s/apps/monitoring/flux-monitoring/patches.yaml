@@ -2,6 +2,6 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: flux-system
-  namespace: prometheus
+  namespace: flux-system
   labels:
     release: prometheus

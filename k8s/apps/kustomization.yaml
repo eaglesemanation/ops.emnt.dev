@@ -6,5 +6,6 @@ resources:
   - monitoring
   - multimedia
   - network
-  - storage
+  - operators
   - security
+  - storage
