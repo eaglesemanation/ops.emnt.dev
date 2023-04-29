@@ -28,36 +28,27 @@ spec:
           - mountPath: /target
             name: plugins
     configuration:
-      provider: aws
+      backupSyncPeriod: 15m
+      storeValidationFrequency: 15m
       backupStorageLocation:
-        name: minio
-        bucket: velero
-        config:
-          profile: minio
-          region: us-west-1
-          s3ForcePathStyle: "true"
-          s3Url: https://minio.emnt.dev
-    extraObjects:
-      - apiVersion: velero.io/v1
-        kind: BackupStorageLocation
-        metadata:
-          name: b2
-          namespace: velero
-        spec:
-          validationFrequency: 30m
-          backupSyncPeriod: 1h
-          accessMode: ReadWrite
+        - name: minio
+          provider: aws
+          bucket: velero
+          config:
+            profile: minio
+            region: us-west-1
+            s3ForcePathStyle: "true"
+            s3Url: https://minio.emnt.dev
+        - name: b2
+          provider: aws
+          bucket: talos-cluster-1
           config:
             profile: b2
             region: us-east-005
             s3Url: https://s3.us-east-005.backblazeb2.com
-          objectStorage:
-            bucket: talos-cluster-1
-          provider: aws
     credentials:
       existingSecret: s3-creds
-    # Instead of using velero snapshots for volume backups it's done through
-    # CSI snapshots support and file system backups
+    # Instead of using velero snapshots for volume backups it's done through file system backups
     snapshotsEnabled: false
     deployNodeAgent: true
     schedules:
