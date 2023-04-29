@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: prowlarr
-          image: ghcr.io/linuxserver/prowlarr:1.3.2
+          image: ghcr.io/linuxserver/prowlarr:1.8.1259
           env:
             - name: PUID
               value: "1000"
