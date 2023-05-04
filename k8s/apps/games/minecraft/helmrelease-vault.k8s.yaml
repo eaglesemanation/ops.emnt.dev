@@ -58,6 +58,7 @@ spec:
       modrinth:
         projects:
           - bluemap:wR5j7NpL
+          - kotlin-for-forge:NBn3sEQk
       rcon:
         enabled: true
         existingSecret: vault-rcon
