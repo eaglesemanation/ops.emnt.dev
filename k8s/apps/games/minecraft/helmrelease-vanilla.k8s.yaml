@@ -29,7 +29,6 @@ spec:
         cpu: 2000m
       limits:
         memory: 8Gi
-        cpu: 4000m
     extraVolumes:
       - volumeMounts:
           - name: vanilla-config

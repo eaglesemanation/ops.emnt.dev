@@ -28,12 +28,11 @@ spec:
           containerPort: 9187
           protocol: TCP
       resources:
-        limits:
-          cpu: 500m
-          memory: 256M
         requests:
           cpu: 100m
           memory: 200M
+        limits:
+          memory: 256M
       env:
         - name: "DATA_SOURCE_URI"
           value: "postgres/database?sslmode=disable"
