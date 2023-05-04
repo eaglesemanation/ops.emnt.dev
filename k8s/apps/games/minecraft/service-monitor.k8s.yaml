@@ -9,7 +9,7 @@ metadata:
 spec:
   endpoints:
     - targetPort: 9970
-  jobLabel: meta.helm.sh/release-name
+  jobLabel: release
   namespaceSelector:
     matchNames:
       - minecraft
@@ -28,7 +28,7 @@ metadata:
 spec:
   endpoints:
     - targetPort: 9970
-  jobLabel: meta.helm.sh/release-name
+  jobLabel: release
   namespaceSelector:
     matchNames:
       - minecraft

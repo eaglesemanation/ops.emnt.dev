@@ -33,7 +33,7 @@ spec:
             mountPath: /config/bluemap/core.conf
             subPath: bluemap.conf
           - name: vault-config
-            mountPath: /plugins/UnifiedMetrics/driver/prometheus.yml
+            mountPath: /config/unifiedmetrics/driver/prometheus.yml
             subPath: unified-metrics-prometheus.yaml
         volumes:
           - name: vault-config
