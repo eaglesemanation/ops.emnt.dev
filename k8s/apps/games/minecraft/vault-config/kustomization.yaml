@@ -11,3 +11,4 @@ configMapGenerator:
       disableNameSuffixHash: true
     files:
       - bluemap.conf
+      - unified-metrics-prometheus.yaml
