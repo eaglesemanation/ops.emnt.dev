@@ -62,6 +62,14 @@ spec:
         enabled: true
         existingSecret: vault-rcon
       extraPorts:
+        - name: metrics
+          containerPort: 9970
+          protocol: TCP
+          service:
+            enabled: true
+            port: 9970
+          ingress:
+            enabled: false
         - name: bluemap
           containerPort: 8100
           protocol: TCP

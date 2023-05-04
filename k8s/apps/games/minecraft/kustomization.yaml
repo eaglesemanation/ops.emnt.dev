@@ -10,6 +10,7 @@ resources:
   - vanilla-config
   - helmrelease-vault.k8s.yaml
   - vault-config
+  - service-monitor.k8s.yaml
 
 configMapGenerator:
   - name: minecraft-dashboard

@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: vanilla-minecraft
+  namespace: minecraft
+  labels:
+    release: prometheus
+spec:
+  endpoints:
+    - targetPort: 9970
+  jobLabel: meta.helm.sh/release-name
+  namespaceSelector:
+    matchNames:
+      - minecraft
+  selector:
+    matchLabels:
+      app: vanilla-minecraft-metrics
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/servicemonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: vault-minecraft
+  namespace: minecraft
+  labels:
+    release: prometheus
+spec:
+  endpoints:
+    - targetPort: 9970
+  jobLabel: meta.helm.sh/release-name
+  namespaceSelector:
+    matchNames:
+      - minecraft
+  selector:
+    matchLabels:
+      app: vault-minecraft-metrics
