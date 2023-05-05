@@ -843,7 +843,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "sum(irate(process_cpu_seconds_total{instance=~\"^$instance$\",job=~\"^$job$\"}[$__interval]))",
+          "expr": "sum(irate(process_cpu_seconds_total{instance=~\"^$instance$\",job=~\"^$job$\"}[$__rate_interval]))",
           "instant": false,
           "interval": "",
           "intervalFactor": 1,
@@ -1096,7 +1096,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "irate(minecraft_tick_duration_seconds_count{instance=~\"^$instance$\",job=~\"^$job$\"}[$__interval])",
+          "expr": "irate(minecraft_tick_duration_seconds_count{instance=~\"^$instance$\",job=~\"^$job$\"}[$__rate_interval])",
           "interval": "",
           "legendFormat": "tps: {{job}}",
           "refId": "A"
@@ -1187,7 +1187,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "histogram_quantile(0.5, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__interval])) by (le))",
+          "expr": "histogram_quantile(0.5, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__rate_interval])) by (le))",
           "hide": false,
           "interval": "",
           "legendFormat": "mspt: 0.5 quantile",
@@ -1195,7 +1195,7 @@
         },
         {
           "exemplar": true,
-          "expr": "histogram_quantile(0.75, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__interval])) by (le))",
+          "expr": "histogram_quantile(0.75, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__rate_interval])) by (le))",
           "hide": false,
           "interval": "",
           "legendFormat": "mspt: 0.75 quantile",
@@ -1203,7 +1203,7 @@
         },
         {
           "exemplar": true,
-          "expr": "histogram_quantile(0.95, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__interval])) by (le))",
+          "expr": "histogram_quantile(0.95, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__rate_interval])) by (le))",
           "hide": false,
           "interval": "",
           "legendFormat": "mspt: 0.95 quantile",
@@ -1211,7 +1211,7 @@
         },
         {
           "exemplar": true,
-          "expr": "histogram_quantile(0.99, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__interval])) by (le))",
+          "expr": "histogram_quantile(0.99, sum(rate(minecraft_tick_duration_seconds_bucket{instance=~\"^$instance$\",job=~\"^$job$\"}[$__rate_interval])) by (le))",
           "interval": "",
           "legendFormat": "mspt: 0.99 quantile",
           "refId": "A"

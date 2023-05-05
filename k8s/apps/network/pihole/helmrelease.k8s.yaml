@@ -50,7 +50,7 @@ spec:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "PiHole"
         gethomepage.dev/group: "Infra"
-        gethomepage.dev/icon: "pihole"
+        gethomepage.dev/icon: "pi-hole"
         nginx.ingress.kubernetes.io/app-root: /admin
       path: /
       hosts:
