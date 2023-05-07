@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - env.k8s.yaml
+  - config.k8s.yaml
   - pvc.k8s.yaml
   - svc.k8s.yaml
   - deployment.k8s.yaml
