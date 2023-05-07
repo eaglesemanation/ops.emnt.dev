@@ -6,5 +6,5 @@ metadata:
 spec:
   interval: 30m
   type: oci
-  url: oci://registry.developers.crunchydata.com/crunchydata/pgo
+  url: oci://registry.developers.crunchydata.com/crunchydata
   timeout: 3m
