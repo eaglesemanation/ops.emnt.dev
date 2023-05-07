@@ -94,6 +94,10 @@ spec:
               mountPath: /tmp/docker-mailserver/opendkim/keys/emnt.dev/mail.private
               readOnly: true
             - name: secrets
+              subPath: dkim.txt
+              mountPath: /tmp/docker-mailserver/opendkim/keys/emnt.dev/mail.txt
+              readOnly: true
+            - name: secrets
               subPath: postfix-accounts.cf
               mountPath: /tmp/docker-mailserver/postfix-accounts.cf
               readOnly: true
