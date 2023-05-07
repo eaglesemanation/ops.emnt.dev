@@ -9,6 +9,7 @@ resources:
   - redis-creds.sops.yaml
 configMapGenerator:
   - name: authentik-pg-init
+    namespace: authentik
     files:
       - authentik-pg-init.sql
     options:
