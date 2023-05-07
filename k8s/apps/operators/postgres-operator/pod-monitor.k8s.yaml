@@ -4,6 +4,8 @@ kind: PodMonitor
 metadata:
   name: postgres-clusters
   namespace: postgres-operator
+  labels:
+    release: prometheus
 spec:
   selector:
     matchLabels:
