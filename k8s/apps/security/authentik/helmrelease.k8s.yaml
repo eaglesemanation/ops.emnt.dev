@@ -20,8 +20,10 @@ spec:
       error_reporting:
         enabled: true
       postgresql:
-        host: authentik-pg-primary
+        # Overwritten with env vars
+        host: null
         user: null
+        name: null
       redis:
         host: redis
     envFrom:
@@ -32,6 +34,10 @@ spec:
         secretKeyRef:
           name: redis-creds
           key: password
+      AUTHENTIK_POSTGRESQL__HOST:
+        secretKeyRef:
+          name: authentik-pg-pguser-authentik-pg
+          key: host
       AUTHENTIK_POSTGRESQL__NAME:
         secretKeyRef:
           name: authentik-pg-pguser-authentik-pg
