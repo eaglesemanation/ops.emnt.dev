@@ -4,3 +4,5 @@ resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
   - s3-creds.sops.yaml
+  - pod-monitor.k8s.yaml
+  - dashboards
