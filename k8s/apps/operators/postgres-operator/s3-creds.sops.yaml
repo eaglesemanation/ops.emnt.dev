@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: pgo-s3-creds
+    namespace: postgres-operator
+    annotations:
+        reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+        reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
+        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: authentik
+        reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: authentik
+stringData:
+    s3.conf: ENC[AES256_GCM,data:ge4Ju8INwBEPpt7WTz/NRe4ioxbEJ3BjQKZXQMAIp2BpQN+JTZfO+KqMN4HMp/Yxua0aJMzSiOwPRg1SnnbuQCbiaaMmC7So/g==,iv:N7lUpCSX9ivdM1gLn+kGHLIC/5lG/E4fG2dGAA46Hwg=,tag:y0qmpCTivmq5LpKC/NJSBg==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYWXBaYzM5eHUweVdXdC92
+            YncyTnpqczVTc1ZkU21vNE1KRFZTZ1JVTkhrCnEzOHQ0QU9BSy9WMWtBWjNrbE9T
+            VUkvNW1nOU9CQjR5NG13cjlnaEt1MTAKLS0tIEFDOUlsOFY4emlDM2dORWJGNDll
+            ejJPTllpRVJKNHR1ajd0TkNOcHdEWmMKJ7tLein3ZZKphtHh2U+XctC9e7CSPCGb
+            YLGnkr2O0qJ9BKw3YCU8dHaWO0m3HoGqIQ7xLMVk89EA5R21ofynbQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-05-07T05:26:29Z"
+    mac: ENC[AES256_GCM,data:pjWd66k1aZmI5DSlb9J/77UzvjgcshQFnHpNfh4dQV651mqV2NlLMGQI9joYhmHQDyWzh0aDZq6JbDMv29gkZfzsoMgeLmiLJq7PBqzpwYPpepzHy4rOXguowLqtZViwdqcZGwkxUkLf34kHFESIA9UJu5kuSD7RNKv9KRm2Lyk=,iv:VAddMYmUTiLQu+zt0aXZklWkgKiI/dLHLNcE3yhfNjk=,tag:dONoalOwWqPp/fNfLLTeWg==,type:str]
+    pgp:
+        - created_at: "2023-05-07T05:26:28Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/bPaLukkJdona+VcdxWGlLxrbFqjZ+k6pfrB5JZiJSb9D
+            hXEocAJKeR3qX7GD96zZqKsAg5Wu1WZbFS+D646kRegDzWAb/aI3KCirsuhamK5m
+            3tMcwOrsakAucvlPEPyn+3aD2Llm/uB8BpVoFhgBw6kKNsCOlgKSLQWqXti9tONh
+            YltWRuLeASju8f1AGxWLrRilpxLcaaYogTHq3JAE4Q/WdoRARxK2cLid+/YOhG6B
+            ji4XsHlUB67dBdPAZnIK7VAnjKtOtk8TioqWxZuTL3N8RmKuIJszzaIqS8YTwPzN
+            iMwldPReBjPI36p40275cmeSp5URYxnXykHy2DELY9JcAdqiwRzoQ+iRiP6WcWow
+            JJgRhpyW1MRczhdLQ3jgor7ipgF2HhpyA/fa29YC6K64NNzxJSHbvXubzKl+KMM0
+            nhKmmwHPFaHh6q84FhhRegTTeP+s2ACEBYFg7Ck=
+            =A548
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

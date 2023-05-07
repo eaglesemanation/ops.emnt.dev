@@ -1,84 +1,37 @@
-apiVersion: acid.zalan.do/v1
-kind: postgresql
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
 metadata:
-  name: postgres
+  name: authentik-pg
   namespace: authentik
 spec:
-  teamId: "emnt"
-  numberOfInstances: 1
-  enableMasterLoadBalancer: false
-  volume:
-    storageClass: freenas-api-iscsi-csi
-    size: 1Gi
-  users:
-    authentik_user: 
-      - superuser
-      - createdb
-  databases:
-    authentik: authentik_user
-  postgresql:
-    version: "15"
-    parameters:
-      password_encryption: scram-sha-256
-  sidecars:
-    - name: exporter
-      image: docker.io/bitnami/postgres-exporter
-      ports:
-        - name: exporter
-          containerPort: 9187
-          protocol: TCP
-      resources:
-        requests:
-          cpu: 100m
-          memory: 200M
-        limits:
-          memory: 256M
-      env:
-        - name: "DATA_SOURCE_URI"
-          value: "postgres/database?sslmode=disable"
-        - name: "DATA_SOURCE_USER"
-          valueFrom:
-            secretKeyRef:
-              name: postgres.postgres.credentials.postgresql.acid.zalan.do
-              key: username
-        - name: "DATA_SOURCE_PASS"
-          valueFrom:
-            secretKeyRef:
-              name: postgres.postgres.credentials.postgresql.acid.zalan.do
-              key: password
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: pg-exporter
-  namespace: authentik
-  labels:
-    app.kubernetes.io/name: pg-exporter
-    app.kubernetes.io/instance: authentik
-spec:
-  ports:
-    - name: exporter
-      port: 9187
-      targetPort: exporter
-  selector:
-    application: spilo
-    team: emnt
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/servicemonitor_v1.json
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: pg-exporter
-  namespace: authentik
-  labels:
-    release: prometheus
-spec:
-  endpoints:
-    - targetPort: 9187
-  jobLabel: app.kubernetes.io/instance
-  namespaceSelector:
-    matchNames:
-      - authentik
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: pg-exporter
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-15.2-0
+  postgresVersion: 15
+  instances:
+    - name: instance1
+      dataVolumeClaimSpec:
+        storageClassName: freenas-api-iscsi-csi
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 1Gi
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
+      global:
+        minio-s3-uri-style: path
+        minio-path: /pgbackrest/authentik/authentik-pg/minio
+      config:
+        configuration:
+          - secret:
+              name: pgo-s3-creds
+      repos:
+        - name: minio
+          s3:
+            endpoint: https://minio.emnt.dev
+            region: us-west-1
+            bucket: pgbackrest
+  monitoring:
+    pgmonitor:
+      exporter:
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0

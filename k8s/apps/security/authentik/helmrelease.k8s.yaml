@@ -20,7 +20,7 @@ spec:
       error_reporting:
         enabled: true
       postgresql:
-        host: postgres
+        host: authentik-pg-primary
         user: null
       redis:
         host: redis
@@ -32,13 +32,17 @@ spec:
         secretKeyRef:
           name: redis-creds
           key: password
+      AUTHENTIK_POSTGRESQL__NAME:
+        secretKeyRef:
+          name: authentik-pg-pguser-authentik-pg
+          key: dbname
       AUTHENTIK_POSTGRESQL__USER:
         secretKeyRef:
-          name: authentik-user.postgres.credentials.postgresql.acid.zalan.do
-          key: username
+          name: authentik-pg-pguser-authentik-pg
+          key: user
       AUTHENTIK_POSTGRESQL__PASSWORD:
         secretKeyRef:
-          name: authentik-user.postgres.credentials.postgresql.acid.zalan.do
+          name: authentik-pg-pguser-authentik-pg
           key: password
     ingress:
       enabled: true

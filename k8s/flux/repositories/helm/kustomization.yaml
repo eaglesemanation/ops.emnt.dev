@@ -4,6 +4,7 @@ resources:
   - angelnu.k8s.yaml
   - bitnami.k8s.yaml
   - cilium.k8s.yaml
+  - crunchy-data.k8s.yaml
   - democratic-csi.k8s.yaml
   - emberstack.k8s.yaml
   - goauthentik.k8s.yaml
