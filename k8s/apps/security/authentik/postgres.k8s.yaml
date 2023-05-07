@@ -19,13 +19,13 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
       global:
-        minio-s3-uri-style: path
-        minio-path: /pgbackrest/authentik/authentik-pg/minio
+        repo1-s3-uri-style: path
+        repo1-path: /pgbackrest/authentik/authentik-pg/repo1
       configuration:
         - secret:
             name: pgo-s3-creds
       repos:
-        - name: minio
+        - name: repo1
           s3:
             endpoint: https://minio.emnt.dev
             region: us-west-1
