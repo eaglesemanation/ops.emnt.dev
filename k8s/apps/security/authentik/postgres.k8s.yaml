@@ -6,6 +6,9 @@ metadata:
 spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-15.2-0
   postgresVersion: 15
+  databaseInitSQL:
+    name: authentik-pg-init
+    key: authentik-pg-init.sql
   users:
     - name: authentik
       databases:

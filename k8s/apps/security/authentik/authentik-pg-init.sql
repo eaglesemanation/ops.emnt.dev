@@ -1,0 +1,2 @@
+\c authentik
+CREATE SCHEMA IF NOT EXISTS AUTHORIZATION authentik;
