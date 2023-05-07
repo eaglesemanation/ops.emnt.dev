@@ -1,0 +1,13 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/podmonitor_v1.json
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  name: postgres-clusters
+spec:
+  selector:
+    matchLabels:
+      postgres-operator.crunchydata.com/crunchy-postgres-exporter: "true"
+  podMetricsEndpoints:
+    - port: exporter
+  namespaceSelector:
+    any: true
