@@ -36,19 +36,19 @@ spec:
           key: password
       AUTHENTIK_POSTGRESQL__HOST:
         secretKeyRef:
-          name: authentik-pg-pguser-authentik-pg
+          name: authentik-pg-pguser-authentik
           key: host
       AUTHENTIK_POSTGRESQL__NAME:
         secretKeyRef:
-          name: authentik-pg-pguser-authentik-pg
+          name: authentik-pg-pguser-authentik
           key: dbname
       AUTHENTIK_POSTGRESQL__USER:
         secretKeyRef:
-          name: authentik-pg-pguser-authentik-pg
+          name: authentik-pg-pguser-authentik
           key: user
       AUTHENTIK_POSTGRESQL__PASSWORD:
         secretKeyRef:
-          name: authentik-pg-pguser-authentik-pg
+          name: authentik-pg-pguser-authentik
           key: password
     ingress:
       enabled: true
