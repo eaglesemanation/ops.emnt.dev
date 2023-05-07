@@ -116,10 +116,10 @@ spec:
       volumes:
         - name: data
           persistentVolumeClaim:
-            claimName: data
+            claimName: data-mailserver
         - name: config
           configMap:
-            name: confim-mailserver
+            name: config-mailserver
         - name: certificates-rsa
           secret:
             secretName: wildcard-cert
