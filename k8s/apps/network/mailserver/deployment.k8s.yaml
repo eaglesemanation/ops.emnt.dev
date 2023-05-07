@@ -89,6 +89,10 @@ spec:
               subPath: dovecot.cf
               mountPath: /tmp/docker-mailserver/dovecot.cf
               readOnly: true
+            - name: secrets
+              subPath: dkim.key
+              mountPath: /tmp/docker-mailserver/opendkim/keys/emnt.dev/mail.private
+              readOnly: true
             - name: certificates-rsa
               mountPath: /secrets/ssl/rsa/
               readOnly: true
@@ -118,6 +122,9 @@ spec:
         - name: config
           configMap:
             name: config-mailserver
+        - name: secrets
+          secret:
+            secretName: secrets-mailserver
         - name: certificates-rsa
           secret:
             secretName: wildcard-cert
