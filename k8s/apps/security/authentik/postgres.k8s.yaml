@@ -21,10 +21,9 @@ spec:
       global:
         minio-s3-uri-style: path
         minio-path: /pgbackrest/authentik/authentik-pg/minio
-      config:
-        configuration:
-          - secret:
-              name: pgo-s3-creds
+      configuration:
+        - secret:
+            name: pgo-s3-creds
       repos:
         - name: minio
           s3:
