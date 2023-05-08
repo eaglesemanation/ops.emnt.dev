@@ -41,6 +41,14 @@ spec:
           secret:
             secretName: wireguard-config
     tcp:
+      # ESMTP Transfer Explicit TLS
+      "25": "mailserver/mailserver:25:PROXY:PROXY"
+      # ESMTP Submission Implicit TLS
+      "465": "mailserver/mailserver:465:PROXY:PROXY"
+      # ESMTP Submission Explicit TLS
+      "587": "mailserver/mailserver:587:PROXY:PROXY"
+      # IMAP4 Implicit TLS
+      "993": "mailserver/mailserver:993:PROXY:PROXY"
       # Minecraft Java Edition
       "25565": "minecraft/infrared:25565"
     udp:
