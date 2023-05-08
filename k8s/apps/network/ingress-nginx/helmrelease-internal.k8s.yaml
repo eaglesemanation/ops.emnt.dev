@@ -28,13 +28,13 @@ spec:
         default-backend-service: ingress-nginx/ingress-nginx-external-controller
     tcp:
       # ESMTP Transfer Explicit TLS
-      "25": "mailserver/mailserver:25:PROXY:PROXY"
+      "25": "mailserver/mailserver:25::PROXY"
       # ESMTP Submission Implicit TLS
-      "465": "mailserver/mailserver:465:PROXY:PROXY"
+      "465": "mailserver/mailserver:465::PROXY"
       # ESMTP Submission Explicit TLS
-      "587": "mailserver/mailserver:587:PROXY:PROXY"
+      "587": "mailserver/mailserver:587::PROXY"
       # IMAP4 Implicit TLS
-      "993": "mailserver/mailserver:993:PROXY:PROXY"
+      "993": "mailserver/mailserver:993::PROXY"
       # Minecraft Java Edition
       "25565": "minecraft/infrared:25565"
     udp:
