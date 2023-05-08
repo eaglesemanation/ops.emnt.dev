@@ -25,6 +25,9 @@ spec:
         controllerValue: k8s.io/ingress-nginx-external
       extraArgs:
         default-ssl-certificate: ingress-nginx/wildcard-cert
+      config:
+        use-proxy-protocol: true
+        proxy-real-ip-cidr: 10.50.200.1/32
       extraContainers:
         - name: wireguard-tunnel
           image: alpine:3.17.3
