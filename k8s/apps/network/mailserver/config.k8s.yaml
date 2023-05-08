@@ -9,6 +9,7 @@ metadata:
 data:
   postfix-main.cf: |-
     postscreen_upstream_proxy_protocol = haproxy
+    smtpd_banner = $myhostname Service ready
   postfix-master.cf: |-
     smtp/inet/postscreen_upstream_proxy_protocol=haproxy
     submission/inet/smtpd_upstream_proxy_protocol=haproxy
