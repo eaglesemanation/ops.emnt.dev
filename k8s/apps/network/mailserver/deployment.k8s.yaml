@@ -105,6 +105,10 @@ spec:
               subPath: postfix-accounts.cf
               mountPath: /tmp/docker-mailserver/postfix-accounts.cf
               readOnly: true
+            - name: secrets
+              subPath: postfix-virtual.cf
+              mountPath: /tmp/docker-mailserver/postfix-virtual.cf
+              readOnly: true
             - name: certificates-rsa
               mountPath: /secrets/ssl/rsa/
               readOnly: true
