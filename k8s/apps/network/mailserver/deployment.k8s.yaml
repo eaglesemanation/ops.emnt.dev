@@ -89,13 +89,17 @@ spec:
               subPath: dovecot.cf
               mountPath: /tmp/docker-mailserver/dovecot.cf
               readOnly: true
-            - name: secrets
-              subPath: dkim.key
-              mountPath: /tmp/docker-mailserver/opendkim/keys/emnt.dev/mail.private
+            - name: config
+              subPath: dkim-signing.conf
+              mountPath: /etc/rspamd/local.d/dkim-signing.conf
               readOnly: true
             - name: secrets
-              subPath: dkim.txt
-              mountPath: /tmp/docker-mailserver/opendkim/keys/emnt.dev/mail.txt
+              subPath: emnt.dev.rsa.private
+              mountPath: /tmp/docker-mailserver/rspamd/keys/emnt.dev.rsa.private
+              readOnly: true
+            - name: secrets
+              subPath: emnt.dev.ed25519.private
+              mountPath: /tmp/docker-mailserver/rspamd/keys/emnt.dev.ed25519.private
               readOnly: true
             - name: secrets
               subPath: postfix-accounts.cf
