@@ -27,7 +27,8 @@ spec:
         default-ssl-certificate: ingress-nginx/wildcard-cert
       config:
         use-proxy-protocol: true
-        proxy-real-ip-cidr: 10.50.200.1/32
+        proxy-real-ip-cidr: 10.0.0.0/8
+        enable-real-ip: true
       extraContainers:
         - name: wireguard-tunnel
           image: alpine:3.17.3
