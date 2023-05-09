@@ -9,3 +9,7 @@ resources:
   - svc.k8s.yaml
   - deployment.k8s.yaml
   - wireguard-config.sops.yaml
+configMapGenerator:
+  - name: wireguard-entrypoint
+    files:
+      - wireguard-entrypoint.sh

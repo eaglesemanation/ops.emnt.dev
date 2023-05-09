@@ -12,8 +12,7 @@ metadata:
     ignore-check.kube-linter.io/privileged-ports: >-
       'mailserver' needs privilegdes ports
     ignore-check.kube-linter.io/no-read-only-root-fs: >-
-      There are too many files written to make The
-      root FS read-only
+      There are too many files written to make The root FS read-only
 spec:
   replicas: 1
   selector:
@@ -48,8 +47,8 @@ spec:
                 - SETUID
                 - DAC_OVERRIDE
                 # network capabilities
-                - NET_ADMIN  # needed for F2B
-                - NET_RAW    # needed for F2B
+                - NET_ADMIN # needed for F2B
+                - NET_RAW # needed for F2B
                 - NET_BIND_SERVICE
                 # miscellaneous  capabilities
                 - SYS_CHROOT
@@ -132,10 +131,16 @@ spec:
                 name: env-mailserver
         - name: wireguard-tunnel
           image: alpine:3.17.3
+          env:
+            - name: GATEWAY_IP
+              value: ${GATEWAY_ADDR}
           volumeMounts:
             - name: wireguard-config
               mountPath: /etc/wireguard
-          command: ["sh", "-c", "apk add wireguard-tools; wg-quick up wg0; trap : TERM INT; sleep 9999999999d & wait"]
+            - name: wireguard-entrypoint
+              mountPath: /usr/bin/wireguard-entrypoint.sh
+              subPath: wireguard-entrypoint.sh
+          command: [/usr/bin/wireguard-entrypoint.sh]
           securityContext:
             capabilities:
               add:
@@ -164,3 +169,10 @@ spec:
         - name: wireguard-config
           secret:
             secretName: wireguard-config
+        - name: wireguard-entrypoing
+          configMap:
+            name: wireguard-entrypoint
+            items:
+              - key: wireguard-entrypoint.sh
+                path: wireguard-entrypoint.sh
+                mode: 0755

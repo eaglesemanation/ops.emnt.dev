@@ -1,0 +1,4 @@
+machine:
+  sysctls:
+    # Used for WireGuard client side
+    net.ipv4.conf.all.src_valid_mark: "1"
