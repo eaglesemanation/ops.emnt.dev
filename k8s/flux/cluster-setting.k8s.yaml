@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 data:
   K8S_API_ADDR: 192.168.25.100
-  GATEWAY_ADDR: 159.203.51.26
+  GATEWAY_ADDR: 159.203.59.223
 
   NAS_ADDR: 192.168.25.200
   NAS_URL: emnt-nas.local
