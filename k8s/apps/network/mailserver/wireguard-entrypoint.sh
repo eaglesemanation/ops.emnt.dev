@@ -43,7 +43,7 @@ ping -c 10 "$GATEWAY_IP"
 
 # Create tunnel NIC
 ip link add wg0 type wireguard
-wg setconf /etc/wireguard/wg0.conf
+wg setconf wg0 /etc/wireguard/wg0.conf
 ip link set up dev wg0
 
 echo "Network config after Wireguard setup:"
