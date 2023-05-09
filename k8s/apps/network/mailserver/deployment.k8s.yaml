@@ -134,6 +134,8 @@ spec:
           env:
             - name: GATEWAY_IP
               value: "${GATEWAY_ADDR}"
+            - name: GATEWAY_VPN_IP
+              value: 10.50.200.1
           volumeMounts:
             - name: wireguard-config
               mountPath: /etc/wireguard

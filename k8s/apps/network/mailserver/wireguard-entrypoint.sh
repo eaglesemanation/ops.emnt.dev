@@ -3,6 +3,7 @@
 set -ex
 
 if [ -z "$GATEWAY_IP" ]; then echo "GATEWAY_IP env var is required"; exit 255; fi
+if [ -z "$GATEWAY_VPN_IP" ]; then echo "GATEWAY_VPN_IP env var is required"; exit 255; fi
 if [ ! -f /etc/os-release ]; then echo "Could not identify distribution"; exit 255; fi
 if [ ! -f /etc/wireguard/wg0.conf ]; then echo "/etc/wireguard/wg0.conf is required"; exit 255; fi
 
@@ -43,6 +44,7 @@ ping -c 10 "$GATEWAY_IP"
 
 # Create tunnel NIC
 ip link add wg0 type wireguard
+ip addr add "$GATEWAY_VPN_IP" dev wg0
 wg setconf wg0 /etc/wireguard/wg0.conf
 ip link set up dev wg0
 
