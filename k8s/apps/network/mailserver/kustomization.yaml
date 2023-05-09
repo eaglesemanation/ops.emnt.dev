@@ -8,3 +8,4 @@ resources:
   - pvc.k8s.yaml
   - svc.k8s.yaml
   - deployment.k8s.yaml
+  - wireguard-config.sops.yaml

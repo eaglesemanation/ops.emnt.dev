@@ -130,6 +130,16 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-mailserver
+        - name: wireguard-tunnel
+          image: alpine:3.17.3
+          volumeMounts:
+            - name: wireguard-config
+              mountPath: /etc/wireguard
+          command: ["sh", "-c", "apk add wireguard-tools; wg-quick up wg0; trap : TERM INT; sleep 9999999999d & wait"]
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
       restartPolicy: Always
       volumes:
         - name: data
@@ -151,3 +161,6 @@ spec:
                 path: tls.crt
         - name: tmp-files
           emptyDir: {}
+        - name: wireguard-config
+          secret:
+            secretName: wireguard-config
