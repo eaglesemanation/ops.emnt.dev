@@ -46,8 +46,8 @@ ping -c 10 "$GATEWAY_IP"
 ip link add wg0 type wireguard
 ip addr add "$VPN_CLIENT_IP" dev wg0
 wg setconf wg0 /etc/wireguard/wg0.conf
-ip route add default dev wg0
 ip link set up dev wg0
+ip route add default dev wg0
 
 echo "Network config after Wireguard setup:"
 ip addr
