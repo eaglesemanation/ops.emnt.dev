@@ -13,3 +13,5 @@ configMapGenerator:
   - name: wireguard-entrypoint
     files:
       - wireguard-entrypoint.sh
+    options:
+      disableNameSuffixHash: true

@@ -169,7 +169,7 @@ spec:
         - name: wireguard-config
           secret:
             secretName: wireguard-config
-        - name: wireguard-entrypoing
+        - name: wireguard-entrypoint
           configMap:
             name: wireguard-entrypoint
             items:
