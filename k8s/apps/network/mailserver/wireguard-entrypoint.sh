@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 set -ex
 
@@ -6,10 +6,11 @@ if [ -z "$GATEWAY_IP" ]; then echo "GATEWAY_IP env var is required"; exit 255; f
 if [ ! -f /etc/os-release ]; then echo "Could not identify distribution"; exit 255; fi
 if [ ! -f /etc/wireguard/wg0.conf ]; then echo "/etc/wireguard/wg0.conf is required"; exit 255; fi
 
-source /etc/os-release
+. /etc/os-release
 
 case $ID in
     alpine)
+        apk update
         apk add wireguard-tools curl
         ;;
     *)

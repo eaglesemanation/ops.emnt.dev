@@ -138,9 +138,9 @@ spec:
             - name: wireguard-config
               mountPath: /etc/wireguard
             - name: wireguard-entrypoint
-              mountPath: /usr/bin/wireguard-entrypoint.sh
+              mountPath: /wireguard-entrypoint.sh
               subPath: wireguard-entrypoint.sh
-          command: [/usr/bin/wireguard-entrypoint.sh]
+          command: [sh, /wireguard-entrypoint.sh]
           securityContext:
             capabilities:
               add:
