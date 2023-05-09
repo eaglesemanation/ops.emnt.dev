@@ -23,11 +23,10 @@ if ip addr | grep -q wg0; then
 fi
 
 K8S_GW_IP=$(/sbin/ip route | awk '/default/ { print $3 }')
-LOCAL_CIDRS=("10.0.0.0/8" "172.16.0.0/12" "192.168.0.0/24")
 
 # command might fail if rule already set
 ip route add "$GATEWAY_IP" via "$K8S_GW_IP" || /bin/true
-for local_cidr in "${LOCAL_CIDRS[@]}"; do
+for local_cidr in "10.0.0.0/8" "172.16.0.0/12" "192.168.0.0/24"; do
     ip route add "$local_cidr" via "$K8S_GW_IP" || /bin/true
 done
 
