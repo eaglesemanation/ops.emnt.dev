@@ -133,7 +133,7 @@ spec:
           image: alpine:3.17.3
           env:
             - name: GATEWAY_IP
-              value: ${GATEWAY_ADDR}
+              value: "${GATEWAY_ADDR}"
           volumeMounts:
             - name: wireguard-config
               mountPath: /etc/wireguard
