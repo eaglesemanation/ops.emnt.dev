@@ -3,13 +3,22 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - env.k8s.yaml
-  - config.k8s.yaml
   - secrets.sops.yaml
   - pvc.k8s.yaml
   - svc.k8s.yaml
   - deployment.k8s.yaml
   - wireguard-config.sops.yaml
 configMapGenerator:
+  - name: config-mailserver
+    namespace: mailserver
+    files:
+      - config/dkim-signing.conf
+      - config/dovecot.cf
+      - config/groups.conf
+      - config/postfix-main.cf
+      - config/postfix-master.cf
+      - config/postfix-virtual.cf
+      - config/rspamd.local.lua
   - name: wireguard-entrypoint
     namespace: mailserver
     files:

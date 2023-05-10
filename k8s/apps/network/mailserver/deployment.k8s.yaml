@@ -85,12 +85,24 @@ spec:
               mountPath: /tmp/docker-mailserver/postfix-master.cf
               readOnly: true
             - name: config
+              subPath: postfix-virtual.cf
+              mountPath: /tmp/docker-mailserver/postfix-virtual.cf
+              readOnly: true
+            - name: config
               subPath: dovecot.cf
               mountPath: /tmp/docker-mailserver/dovecot.cf
               readOnly: true
             - name: config
               subPath: dkim-signing.conf
               mountPath: /etc/rspamd/local.d/dkim-signing.conf
+              readOnly: true
+            - name: config
+              subPath: groups.conf
+              mountPath: /etc/rspamd/local.d/groups.conf
+              readOnly: true
+            - name: config
+              subPath: rspamd.local.lua
+              mountPath: /etc/rspamd/rspamd.local.lua
               readOnly: true
             - name: secrets
               subPath: emnt.dev.rsa.private
@@ -104,9 +116,10 @@ spec:
               subPath: postfix-accounts.cf
               mountPath: /tmp/docker-mailserver/postfix-accounts.cf
               readOnly: true
+            #TODO: Figure out how to separate API key from rbl file
             - name: secrets
-              subPath: postfix-virtual.cf
-              mountPath: /tmp/docker-mailserver/postfix-virtual.cf
+              subPath: rbl.conf
+              mountPath: /etc/rspamd/local.d/rbl.conf
               readOnly: true
             - name: certificates-rsa
               mountPath: /secrets/ssl/rsa/
@@ -129,6 +142,12 @@ spec:
           envFrom:
             - configMapRef:
                 name: env-mailserver
+          env:
+            - name: ABUSIX_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: secrets-mailserver
+                  key: ABUSIX_API_KEY
         - name: wireguard-tunnel
           image: alpine:3.17.3
           env:
