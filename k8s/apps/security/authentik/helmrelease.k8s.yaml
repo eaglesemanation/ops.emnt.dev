@@ -35,8 +35,6 @@ spec:
     envFrom:
       - secretRef:
           name: secrets-authentik
-      - configMapRef:
-          name: env-authentik
     envValueFrom:
       AUTHENTIK_REDIS__PASSWORD:
         secretKeyRef:
