@@ -6,7 +6,6 @@ resources:
   - postgres.k8s.yaml
   - redis.k8s.yaml
   - secrets.sops.yaml
-  - env.k8s.yaml
   - redis-creds.sops.yaml
 configMapGenerator:
   - name: authentik-pg-init

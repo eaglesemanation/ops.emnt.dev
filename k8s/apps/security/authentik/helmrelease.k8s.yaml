@@ -26,6 +26,12 @@ spec:
         name: null
       redis:
         host: redis
+      mail:
+        host: mail.emnt.dev
+        port: 587
+        use_tls: true
+        from: authentik@emnt.dev
+        username: authentik@emnt.dev
     envFrom:
       - secretRef:
           name: secrets-authentik
