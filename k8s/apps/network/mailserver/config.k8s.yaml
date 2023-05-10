@@ -1,0 +1,50 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: config-mailserver
+  namespace: mailserver
+  labels:
+    app.kubernetes.io/name: mailserver
+    app.kubernetes.io/instance: mailserver
+data:
+  postfix-main.cf: |-
+    postscreen_upstream_proxy_protocol = haproxy
+    smtpd_banner = $myhostname Service ready
+  postfix-master.cf: |-
+    smtp/inet/postscreen_upstream_proxy_protocol=haproxy
+    submission/inet/smtpd_upstream_proxy_protocol=haproxy
+    smtps/inet/smtpd_upstream_proxy_protocol=haproxy
+  dovecot.cf: |-
+    # Assuming your ingress controller is bound to 10.0.0.0/8
+    haproxy_trusted_networks = 10.0.0.0/8, 127.0.0.0/8
+    service imap-login {
+      inet_listener imap {
+        haproxy = yes
+      }
+      inet_listener imaps {
+        haproxy = yes
+      }
+    }
+  dkim-signing.conf: |-
+    # documentation: https://rspamd.com/doc/modules/dkim_signing.html
+    enabled = true;
+    sign_authenticated = true;
+    sign_local = true;
+    use_domain = "header";
+    use_redis = false; # don't change unless Redis also provides the DKIM keys
+    use_esld = true;
+    check_pubkey = true;
+    domain {
+        emnt.dev {
+            selectors [
+                {
+                    path = "/tmp/docker-mailserver/rspamd/keys/emnt.dev.rsa.private";
+                    selector = "dkim-rsa";
+                },
+                {
+                    path = "/tmp/docker-mailserver/rspamd/keys/emnt.dev.ed25519.private";
+                    selector = "dkim-ed25519";
+                }
+          ]
+        }
+    }
