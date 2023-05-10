@@ -28,7 +28,9 @@ spec:
         host: redis
     envFrom:
       - secretRef:
-          name: authentik-env
+          name: secrets-authentik
+      - configMapRef:
+          name: env-authentik
     envValueFrom:
       AUTHENTIK_REDIS__PASSWORD:
         secretKeyRef:
