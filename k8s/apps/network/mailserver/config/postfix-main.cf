@@ -1,0 +1,2 @@
+postscreen_upstream_proxy_protocol = haproxy
+smtpd_banner = $myhostname Service ready
