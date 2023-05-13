@@ -36,7 +36,6 @@ spec:
           - type: TCP
             port: ${TORRENT_PORT}
     routed_namespaces:
-      - jackett
       - prowlarr
       - flaresolverr
       - flood
