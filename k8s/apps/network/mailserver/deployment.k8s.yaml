@@ -149,7 +149,7 @@ spec:
                   name: secrets-mailserver
                   key: ABUSIX_API_KEY
         - name: wireguard-tunnel
-          image: alpine:3.17.3
+          image: alpine:3.18.0
           env:
             - name: GATEWAY_IP
               value: "${GATEWAY_ADDR}"
