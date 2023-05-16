@@ -80,7 +80,7 @@ spec:
             enabled: true
             port: 8100
           ingress:
-            ingressClassName: external
+            ingressClassName: external-ingress-traefik
             enabled: true
             annotations:
               gethomepage.dev/enabled: "true"

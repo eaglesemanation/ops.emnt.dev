@@ -26,7 +26,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: internal-ingress-traefik
         hosts:
           - host: home.emnt.dev
             paths:

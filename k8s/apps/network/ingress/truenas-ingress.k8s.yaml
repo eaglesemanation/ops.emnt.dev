@@ -20,7 +20,7 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
 spec:
-  ingressClassName: internal
+  ingressClassName: internal-ingress-traefik
   rules:
     - host: nas.emnt.dev
       http:

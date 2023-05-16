@@ -67,7 +67,7 @@ spec:
         enabled: true
         ingress:
           enabled: true
-          className: internal
+          className: internal-ingress-traefik
           annotations:
             gethomepage.dev/enabled: "true"
             gethomepage.dev/name: "Hubble"

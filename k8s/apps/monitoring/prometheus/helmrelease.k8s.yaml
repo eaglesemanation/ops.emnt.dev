@@ -39,7 +39,7 @@ spec:
         passwordKey: password
       ingress:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: internal-ingress-traefik
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Grafana"
@@ -50,7 +50,7 @@ spec:
     prometheus:
       ingress:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: internal-ingress-traefik
         annotations:
           gethomepage.dev/enabled: "true"
           gethomepage.dev/name: "Prometheus"

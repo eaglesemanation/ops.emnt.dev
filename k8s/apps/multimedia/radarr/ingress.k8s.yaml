@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/name: radarr
     app.kubernetes.io/instance: radarr
 spec:
-  ingressClassName: internal
+  ingressClassName: internal-ingress-traefik
   rules:
     - host: radarr.emnt.dev
       http:

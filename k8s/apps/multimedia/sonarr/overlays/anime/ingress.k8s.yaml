@@ -10,7 +10,7 @@ metadata:
   labels:
     app.kubernetes.io/name: sonarr
 spec:
-  ingressClassName: internal
+  ingressClassName: internal-ingress-traefik
   rules:
     - host: sonarr-anime.emnt.dev
       http:
