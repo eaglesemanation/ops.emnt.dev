@@ -45,6 +45,7 @@ spec:
     providers:
       kubernetesCRD:
         allowExternalNameServices: true
+        ingressClass: ingress-external-traefik
       kubernetesIngress:
         allowExternalNameServices: true
     ingressClass:

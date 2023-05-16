@@ -2,8 +2,27 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteTCP
 metadata:
-  name: infrared
+  name: infrared-java-internal
   namespace: minecraft
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+spec:
+  entryPoints:
+    - mc-java
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: infrared
+          port: 25565
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: infrared-java-external
+  namespace: minecraft
+  annotations:
+    kubernetes.io/ingress.class: ingress-external-traefik
 spec:
   entryPoints:
     - mc-java
@@ -17,8 +36,26 @@ spec:
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRouteUDP
 metadata:
-  name: infrared
+  name: infrared-bedrock-internal
   namespace: minecraft
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+spec:
+  entryPoints:
+    - mc-bedrock
+  routes:
+    - services:
+        - name: infrared
+          port: 19132
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressrouteudp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: infrared-bedrock-external
+  namespace: minecraft
+  annotations:
+    kubernetes.io/ingress.class: ingress-external-traefik
 spec:
   entryPoints:
     - mc-bedrock
