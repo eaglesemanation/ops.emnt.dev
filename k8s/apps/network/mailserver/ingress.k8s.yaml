@@ -1,0 +1,29 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mailserver
+  namespace: mailserver
+spec:
+  entryPoints:
+    - internal
+    - external
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: mailserver
+          port: 25
+          proxyProtocol:
+            version: 2
+        - name: mailserver
+          port: 465
+          proxyProtocol:
+            version: 2
+        - name: mailserver
+          port: 587
+          proxyProtocol:
+            version: 2
+        - name: mailserver
+          port: 993
+          proxyProtocol:
+            version: 2

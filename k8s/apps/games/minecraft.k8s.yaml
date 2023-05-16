@@ -10,6 +10,7 @@ spec:
   dependsOn:
     - name: democratic-csi
     - name: prometheus
+    - name: ingress
   prune: true
   sourceRef:
     kind: GitRepository

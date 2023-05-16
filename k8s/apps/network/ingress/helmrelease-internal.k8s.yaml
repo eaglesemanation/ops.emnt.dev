@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ingress-internal
+  namespace: ingress
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: traefik
+      version: 23.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+        namespace: flux-system
+      interval: 30m
+  values:
+    service:
+      spec:
+        loadBalancerIP: "${SVC_INGRESS_INTERNAL_ADDR}"
+        externalTrafficPolicy: Local
+    ingressClass:
+      isDefaultClass: false
+    tlsStore:
+      default:
+        defaultCertificate:
+          secretName: wildcard-cert
+    metrics:
+      prometheus:
+        service:
+          enable: true
+        serviceMonitor:
+          jobLabel: release
+          honorLabels: true
+          additionalLabels:
+            release: prometheus
+    extraObjects:
+      - apiVersion: traefik.io/v1alpha1
+        kind: IngressRoute
+        metadata:
+          name: internal-to-external
+          namespace: ingress
+        spec:
+          entryPoints:
+            - internal
+          routes:
+            - kind: Rule
+              match: Host(`*`)
+              priority: 1
+              services:
+                - kind: Service
+                  name: external
+                  namespace: ingress
+                  port: 443
+                  scheme: https
+    ports:
+      web:
+        redirectTo: websecure
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      webSecure:
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      smtp-transfer:
+        protocol: TCP
+        port: 25
+        expose: true
+        exposedPort: 25
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      smtp-tls:
+        protocol: TCP
+        port: 465
+        expose: true
+        exposedPort: 465
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      smtp-starttls:
+        protocol: TCP
+        port: 587
+        expose: true
+        exposedPort: 587
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      imap:
+        protocol: TCP
+        port: 993
+        expose: true
+        exposedPort: 993
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      minecraft-bedrock:
+        protocol: UDP
+        port: 19132
+        expose: true
+        exposedPort: 19132
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      minecraft-java:
+        protocol: TCP
+        port: 25565
+        expose: true
+        exposedPort: 25565
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]

@@ -8,6 +8,8 @@ spec:
   interval: 10m
   path: ./k8s/apps/network/mailserver
   prune: true
+  dependsOn:
+    - name: ingress
   sourceRef:
     kind: GitRepository
     name: emnt-ops

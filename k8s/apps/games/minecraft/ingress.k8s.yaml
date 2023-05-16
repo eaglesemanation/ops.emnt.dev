@@ -1,0 +1,30 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: infrared
+  namespace: minecraft
+spec:
+  entryPoints:
+    - internal
+    - external
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: infrared
+          port: 25565
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressrouteudp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: infrared
+  namespace: minecraft
+spec:
+  entryPoints:
+    - internal
+    - external
+  routes:
+    - services:
+        - name: infrared
+          port: 19132
