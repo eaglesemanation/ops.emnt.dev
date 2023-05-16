@@ -90,14 +90,14 @@ spec:
         exposedPort: 993
         proxyProtocol:
           trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
-      minecraft-bedrock:
+      mc-bedrock:
         protocol: UDP
         port: 19132
         expose: true
         exposedPort: 19132
         proxyProtocol:
           trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
-      minecraft-java:
+      mc-java:
         protocol: TCP
         port: 25565
         expose: true
