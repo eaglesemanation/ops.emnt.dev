@@ -32,6 +32,11 @@ spec:
         - name: wireguard-config
           secret:
             secretName: wireguard-config
+    securityContext:
+      runAsUser: 0
+      capabilities:
+        add:
+          - NET_BIND_SERVICE
     service:
       spec:
         loadBalancerIP: "${SVC_INGRESS_INTERNAL_ADDR}"
