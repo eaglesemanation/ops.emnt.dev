@@ -46,25 +46,6 @@ spec:
           honorLabels: true
           additionalLabels:
             release: prometheus
-    extraObjects:
-      - apiVersion: traefik.io/v1alpha1
-        kind: IngressRoute
-        metadata:
-          name: internal-to-external
-          namespace: ingress
-        spec:
-          entryPoints:
-            - websecure
-          routes:
-            - kind: Rule
-              match: Host(`*`)
-              priority: 1
-              services:
-                - kind: Service
-                  name: ingress-external-traefik
-                  namespace: ingress
-                  port: 443
-                  scheme: https
     ports:
       web:
         redirectTo: websecure
