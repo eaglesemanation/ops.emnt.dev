@@ -6,8 +6,7 @@ metadata:
   namespace: minecraft
 spec:
   entryPoints:
-    - ingress-internal-traefik
-    - ingress-external-traefik
+    - mc-java
   routes:
     - match: HostSNI(`*`)
       services:
@@ -22,8 +21,7 @@ metadata:
   namespace: minecraft
 spec:
   entryPoints:
-    - ingress-internal-traefik
-    - ingress-external-traefik
+    - mc-bedrock
   routes:
     - services:
         - name: infrared

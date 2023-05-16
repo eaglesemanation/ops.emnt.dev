@@ -6,8 +6,7 @@ metadata:
   namespace: mailserver
 spec:
   entryPoints:
-    - ingress-internal-traefik
-    - ingress-external-traefik
+    - smtp-transfer
   routes:
     - match: HostSNI(`*`)
       services:
@@ -15,14 +14,53 @@ spec:
           port: 25
           proxyProtocol:
             version: 2
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mailserver
+  namespace: mailserver
+spec:
+  entryPoints:
+    - smtp-tls
+  routes:
+    - match: HostSNI(`*`)
+      services:
         - name: mailserver
           port: 465
           proxyProtocol:
             version: 2
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mailserver
+  namespace: mailserver
+spec:
+  entryPoints:
+    - smtp-starttls
+  routes:
+    - match: HostSNI(`*`)
+      services:
         - name: mailserver
           port: 587
           proxyProtocol:
             version: 2
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: mailserver
+  namespace: mailserver
+spec:
+  entryPoints:
+    - smtp-imap
+  routes:
+    - match: HostSNI(`*`)
+      services:
         - name: mailserver
           port: 993
           proxyProtocol:
