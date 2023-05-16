@@ -51,7 +51,7 @@ spec:
         gethomepage.dev/name: "PiHole"
         gethomepage.dev/group: "Infra"
         gethomepage.dev/icon: "pi-hole"
-        nginx.ingress.kubernetes.io/app-root: /admin
+        traefik.ingress.kubernetes.io/router.middlewares: pihole-addprefix@kubernetescrd
       path: /
       hosts:
         - pihole.emnt.dev
