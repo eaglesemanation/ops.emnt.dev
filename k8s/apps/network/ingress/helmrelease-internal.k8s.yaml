@@ -26,6 +26,9 @@ spec:
       spec:
         loadBalancerIP: "${SVC_INGRESS_INTERNAL_ADDR}"
         externalTrafficPolicy: Local
+    providers:
+      kubernetesCRD:
+        allowExternalNameServices: true
     ingressClass:
       isDefaultClass: false
     tlsStore:
