@@ -45,6 +45,8 @@ spec:
     providers:
       kubernetesCRD:
         allowExternalNameServices: true
+      kubernetesIngress:
+        allowExternalNameServices: true
     ingressClass:
       isDefaultClass: false
     tlsStore:
