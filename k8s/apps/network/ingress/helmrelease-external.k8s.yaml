@@ -40,7 +40,7 @@ spec:
           - NET_BIND_SERVICE
     service:
       spec:
-        loadBalancerIP: "${SVC_INGRESS_INTERNAL_ADDR}"
+        loadBalancerIP: "${SVC_INGRESS_EXTERNAL_ADDR}"
         externalTrafficPolicy: Local
     ingressClass:
       isDefaultClass: false
