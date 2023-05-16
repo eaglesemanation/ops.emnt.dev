@@ -6,8 +6,8 @@ metadata:
   namespace: mailserver
 spec:
   entryPoints:
-    - internal-ingress-traefik
-    - external-ingress-traefik
+    - ingress-internal-traefik
+    - ingress-external-traefik
   routes:
     - match: HostSNI(`*`)
       services:

@@ -25,7 +25,7 @@ spec:
       username: admin
     ingress:
       enabled: true
-      className: internal-ingress-traefik
+      className: ingress-internal-traefik
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "Flux CD"

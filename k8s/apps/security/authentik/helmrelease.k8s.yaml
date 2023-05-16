@@ -58,7 +58,7 @@ spec:
           key: password
     ingress:
       enabled: true
-      ingressClassName: external-ingress-traefik
+      ingressClassName: ingress-external-traefik
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "Authentik"

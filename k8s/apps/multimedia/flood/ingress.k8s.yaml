@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/name: flood
     app.kubernetes.io/instance: flood
 spec:
-  ingressClassName: internal-ingress-traefik
+  ingressClassName: ingress-internal-traefik
   rules:
     - host: flood.emnt.dev
       http:

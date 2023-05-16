@@ -13,7 +13,7 @@ metadata:
     nginx.ingress.kubernetes.io/proxy-ssl-verify: "off"
     nginx.ingress.kubernetes.io/proxy-body-size: "0"
 spec:
-  ingressClassName: internal-ingress-traefik
+  ingressClassName: ingress-internal-traefik
   rules:
     - host: minio.emnt.dev
       http:

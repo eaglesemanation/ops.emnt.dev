@@ -49,14 +49,14 @@ spec:
           namespace: ingress
         spec:
           entryPoints:
-            - internal-ingress-traefik
+            - ingress-internal-traefik
           routes:
             - kind: Rule
               match: Host(`*`)
               priority: 1
               services:
                 - kind: Service
-                  name: external-ingress-traefik
+                  name: ingress-external-traefik
                   namespace: ingress
                   port: 443
                   scheme: https

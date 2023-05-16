@@ -45,7 +45,7 @@ spec:
       loadBalancerIP: "${SVC_DHCP_ADDR}"
     ingress:
       enabled: true
-      ingressClassName: internal-ingress-traefik
+      ingressClassName: ingress-internal-traefik
       annotations:
         gethomepage.dev/enabled: "true"
         gethomepage.dev/name: "PiHole"
