@@ -1,0 +1,22 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/middleware_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: add-trailing-slash
+  namespace: ingress
+spec:
+  redirectRegex:
+    regex: ^(https?://[^/]+/[a-z0-9_]+)$$
+    replacement: $${1}/
+    permanent: true
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/middleware_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: strip-prefix
+  namespace: ingress
+spec:
+  stripPrefixRegex:
+    regex: 
+      - /[a-z0-9_]+
