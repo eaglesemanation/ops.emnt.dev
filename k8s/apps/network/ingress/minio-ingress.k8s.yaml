@@ -9,7 +9,6 @@ metadata:
     gethomepage.dev/name: "MinIO"
     gethomepage.dev/group: "Infra"
     gethomepage.dev/icon: "minio"
-    traefik.ingress.kubernetes.io/service.serversscheme: https
 spec:
   ingressClassName: ingress-internal-traefik
   rules:

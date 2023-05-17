@@ -5,6 +5,7 @@ metadata:
   namespace: ingress
   annotations:
     traefik.ingress.kubernetes.io/service.serverstransport: ingress-truenastransport@kubernetescrd
+    traefik.ingress.kubernetes.io/service.serversscheme: https
 spec:
   type: ExternalName
   externalName: ${NAS_URL}
