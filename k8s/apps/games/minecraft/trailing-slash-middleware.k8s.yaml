@@ -3,10 +3,10 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: addtrailingslash
-  namespace: ingress
+  namespace: minecraft
 spec:
   redirectRegex:
-    regex: ^(https?://[^/]+/[a-z0-9_]+)$$
+    regex: ^(https?://[^/]+(/[a-z0-9_]+){2})$$
     replacement: $${1}/
     permanent: true
 ---
@@ -15,8 +15,8 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: stripprefix
-  namespace: ingress
+  namespace: minecraft
 spec:
   stripPrefixRegex:
     regex: 
-      - /[a-z0-9_]+
+      - (/[a-z0-9_]+){2}

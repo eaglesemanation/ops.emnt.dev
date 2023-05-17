@@ -11,4 +11,3 @@ resources:
   - wildcard-cert.k8s.yaml
   - wireguard-config.sops.yaml
   - internal-to-external.k8s.yaml
-  - trailing-slash-middleware.k8s.yaml
