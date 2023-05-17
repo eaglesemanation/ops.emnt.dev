@@ -6,6 +6,8 @@ resources:
   - minio-ingress.k8s.yaml
   - namespace.k8s.yaml
   - truenas-ingress.k8s.yaml
+  - truenas-svc.k8s.yaml
+  - truenas-transport.k8s.yaml
   - wildcard-cert.k8s.yaml
   - wireguard-config.sops.yaml
   - internal-to-external.k8s.yaml

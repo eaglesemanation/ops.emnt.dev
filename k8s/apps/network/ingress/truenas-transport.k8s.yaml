@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/serverstransport_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: truenastransport
+  namespace: ingress
+spec:
+  serverName: emnt-nas.local
+  insecureSkipVerify: true
