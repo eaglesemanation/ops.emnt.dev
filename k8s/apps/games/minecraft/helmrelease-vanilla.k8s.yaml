@@ -117,7 +117,7 @@ spec:
               gethomepage.dev/name: "Vanilla BlueMap"
               gethomepage.dev/group: "Minecraft"
               gethomepage.dev/icon: "https://raw.githubusercontent.com/BlueMap-Minecraft/BlueMap/8a85deb6300ec000c20222c844993b1bcd8d6cf7/BlueMapCommon/webapp/public/assets/logoCircle512.png"
-              traefik.ingress.kubernetes.io/router.middlewares: ingress-add-trailing-slash@kubernetescrd,ingress-strip-prefix@kubernetescrd
+              traefik.ingress.kubernetes.io/router.middlewares: ingress-addtrailingslash@kubernetescrd,ingress-stripprefix@kubernetescrd
             hosts:
               - name: mc.emnt.dev
                 path: /map/vanilla
