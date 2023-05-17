@@ -88,13 +88,9 @@ spec:
               gethomepage.dev/name: "Vault Hunters BlueMap"
               gethomepage.dev/group: "Minecraft"
               gethomepage.dev/icon: "https://raw.githubusercontent.com/BlueMap-Minecraft/BlueMap/8a85deb6300ec000c20222c844993b1bcd8d6cf7/BlueMapCommon/webapp/public/assets/logoCircle512.png"
-              nginx.ingress.kubernetes.io/use-regex: "true"
-              nginx.ingress.kubernetes.io/rewrite-target: /$2
-              nginx.ingress.kubernetes.io/configuration-snippet: |
-                rewrite ^(/map/vault)$ $1/ permanent;
             hosts:
               - name: mc.emnt.dev
-                path: /map/vault(/|$)(.*)
+                path: /map/vault
     extraEnv:
       OVERRIDE_OPS: true
     persistence:
