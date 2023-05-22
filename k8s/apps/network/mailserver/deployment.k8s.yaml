@@ -130,15 +130,14 @@ spec:
           ports:
             - name: transfer
               containerPort: 25
-              protocol: TCP
             - name: esmtp-implicit
               containerPort: 465
-              protocol: TCP
             - name: esmtp-explicit
               containerPort: 587
             - name: imap-implicit
               containerPort: 993
-              protocol: TCP
+            - name: rspamd
+              containerPort: 11334
           envFrom:
             - configMapRef:
                 name: env-mailserver

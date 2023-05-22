@@ -1,153 +1,21 @@
-# TODO: Figure out if this can be simplified with kustomize
-#
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: smtp-transfer-internal
+  name: rspamd
   namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
+  labels:
+    app.kubernetes.io/name: mailserver
+    app.kubernetes.io/instance: mailserver
 spec:
-  entryPoints:
-    - smtp-transfer
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 25
-          proxyProtocol:
-            version: 2
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: smtp-transfer-external
-  namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-external-traefik
-spec:
-  entryPoints:
-    - smtp-transfer
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 25
-          proxyProtocol:
-            version: 2
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: smtp-tls-internal
-  namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
-spec:
-  entryPoints:
-    - smtp-tls
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 465
-          proxyProtocol:
-            version: 2
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: smtp-tls-external
-  namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-external-traefik
-spec:
-  entryPoints:
-    - smtp-tls
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 465
-          proxyProtocol:
-            version: 2
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: smtp-starttls-internal
-  namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
-spec:
-  entryPoints:
-    - smtp-starttls
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 587
-          proxyProtocol:
-            version: 2
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: smtp-starttls-external
-  namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-external-traefik
-spec:
-  entryPoints:
-    - smtp-starttls
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 587
-          proxyProtocol:
-            version: 2
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: imap-internal
-  namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
-spec:
-  entryPoints:
-    - imap
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 993
-          proxyProtocol:
-            version: 2
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
-kind: IngressRouteTCP
-metadata:
-  name: imap-external
-  namespace: mailserver
-  annotations:
-    kubernetes.io/ingress.class: ingress-external-traefik
-spec:
-  entryPoints:
-    - imap
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: mailserver
-          port: 993
-          proxyProtocol:
-            version: 2
+  ingressClassName: ingress-internal-traefik
+  rules:
+    - host: rspamd.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: mailserver
+                port:
+                  name: rspamd
