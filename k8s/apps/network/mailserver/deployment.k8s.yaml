@@ -121,6 +121,10 @@ spec:
               subPath: rbl.conf
               mountPath: /etc/rspamd/local.d/rbl.conf
               readOnly: true
+            - name: secrets
+              subPath: rspamd-password
+              mountPath: /etc/rspamd/local.d/worker-controller.inc
+              readOnly: true
             - name: certificates-rsa
               mountPath: /secrets/ssl/rsa/
               readOnly: true
