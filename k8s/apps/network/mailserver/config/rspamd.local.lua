@@ -58,7 +58,7 @@ local check_shorturls = rspamd_config:register_symbol({
     callback = check_shorturls_cb
 });
 
-local re_disk_urls = rregexp.create_cached('/^(?:drive\\.google\\.com$|yadi\\.sk$|disk\\.yandex\\.)/')
+local re_disk_urls = rregexp.create_cached('/^(?:drive\\\\.google\\\\.com$|yadi\\\\.sk$|disk\\\\.yandex\\\\.)/')
 
 local check_diskurls_cb = function (task)
     -- Disable checks if no DNS namespace is set-up
@@ -168,7 +168,7 @@ local check_diskurls = rspamd_config:register_symbol({
     callback = check_web_submission_ips_cb
 });
 
-local btc_wallet_re = rregexp.create_cached('/(?:^|\\s)((?:[13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34})(?:\\s|$)/')
+local btc_wallet_re = rregexp.create_cached('/(?:^|\\\\s)((?:[13]|bc1)[A-HJ-NP-Za-km-z1-9]{27,34})(?:\\\\s|$)/')
 
 local check_btc_cb = function (task)
     -- Disable checks if no DNS namespace is set-up
