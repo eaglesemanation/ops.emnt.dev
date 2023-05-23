@@ -14,7 +14,7 @@ configMapGenerator:
   - name: config-mailserver
     namespace: mailserver
     files:
-      - config/dkim-signing.conf
+      - config/dkim_signing.conf
       - config/dovecot.cf
       - config/groups.conf
       - config/postfix-main.cf

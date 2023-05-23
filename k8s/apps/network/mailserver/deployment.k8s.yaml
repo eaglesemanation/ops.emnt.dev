@@ -93,8 +93,8 @@ spec:
               mountPath: /tmp/docker-mailserver/dovecot.cf
               readOnly: true
             - name: config
-              subPath: dkim-signing.conf
-              mountPath: /etc/rspamd/local.d/dkim-signing.conf
+              subPath: dkim_signing.conf
+              mountPath: /etc/rspamd/local.d/dkim_signing.conf
               readOnly: true
             - name: config
               subPath: groups.conf
