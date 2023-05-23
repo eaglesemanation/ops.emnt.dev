@@ -18,5 +18,14 @@
         "k8s/apps/.+\\.k8s\\.yaml",
         "k8s/flux/.+\\.k8s\\.yaml"
     ]
-  }
+  },
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "docker.io/linuxserver/jellyfin",
+        "docker.io/linuxserver/transmission"
+      ],
+      "allowedVersions": "<1000"
+    }
+  ]
 }
