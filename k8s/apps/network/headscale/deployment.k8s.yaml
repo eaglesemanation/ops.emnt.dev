@@ -71,4 +71,4 @@ spec:
           ports:
             - name: web
               containerPort: 80
-              hostPort: 8080
+              hostPort: 8081
