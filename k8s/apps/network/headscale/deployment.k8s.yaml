@@ -21,7 +21,7 @@ spec:
       containers:
         - name: headscale
           image: ghcr.io/juanfont/headscale:0.22.3
-          args: ["serve"]
+          args: ["headscale", "serve"]
           ports:
             - name: web
               containerPort: 8080
