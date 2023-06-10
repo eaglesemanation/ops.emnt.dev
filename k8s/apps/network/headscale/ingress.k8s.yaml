@@ -1,0 +1,53 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: headscale
+  namespace: headscale
+  labels:
+    app.kubernetes.io/name: headscale
+    app.kubernetes.io/instance: headscale
+spec:
+  ingressClassName: ingress-external-traefik
+  rules:
+    - host: headscale.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: headscale
+                port:
+                  name: web
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressrouteudp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: headscale-derp-external
+  namespace: headscale
+  annotations:
+    kubernetes.io/ingress.class: ingress-external-traefik
+spec:
+  entryPoints:
+    - derp
+  routes:
+    - services:
+        - name: headscale
+          port: 3478
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressrouteudp_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: headscale-derp-internal
+  namespace: headscale
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+spec:
+  entryPoints:
+    - derp
+  routes:
+    - services:
+        - name: headscale
+          port: 3478
