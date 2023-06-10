@@ -37,6 +37,9 @@ spec:
               mountPath: /etc/headscale
             - name: data
               mountPath: /var/lib/headscale
+          envFrom:
+            - secretRef:
+                name: headscale
       volumes:
         - name: config
           configMap:
