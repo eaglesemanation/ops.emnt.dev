@@ -19,6 +19,13 @@ spec:
                 name: headscale
                 port:
                   name: web
+          - path: /web
+            pathType: Prefix
+            backend:
+              service:
+                name: headscale-ui
+                port:
+                  name: web
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressrouteudp_v1alpha1.json
 apiVersion: traefik.containo.us/v1alpha1
