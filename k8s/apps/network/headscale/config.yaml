@@ -261,7 +261,7 @@ oidc:
   only_start_if_oidc_is_available: true
   issuer: https://authentik.emnt.dev/application/o/headscale/
   client_id: "SZlkZgtylJLH4y3XOUKOd902gnRuhgfMzsmi0mCc"
-  # Will be provided through env var OIDC_CLIENT_SECRET
+  # Will be provided through env var HEADSCALE_OIDC_CLIENT_SECRET
   #client_secret: "your-oidc-client-secret"
 
   # The amount of time from a node is authenticated with OpenID until it
