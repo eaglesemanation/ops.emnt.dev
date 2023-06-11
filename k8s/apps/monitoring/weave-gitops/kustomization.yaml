@@ -4,3 +4,4 @@ resources:
   - admin-creds.sops.yaml
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
+  - oidc-creds.sops.yaml
