@@ -38,10 +38,10 @@ spec:
         GF_AUTH_GENERIC_OAUTH_NAME: authentik
         GF_AUTH_GENERIC_OAUTH_CLIENT_ID: jQ9qSWQebjh5yzXdo1LwjtMDYCrtE63MtIM4wsD7
         GF_AUTH_GENERIC_OAUTH_SCOPES: openid profile email
-        GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://authentik.company/application/o/authorize/
-        GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://authentik.company/application/o/token/
-        GF_AUTH_GENERIC_OAUTH_API_URL: https://authentik.company/application/o/userinfo/
-        GF_AUTH_SIGNOUT_REDIRECT_URL: https://authentik.company/application/o/grafana/end-session/
+        GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://authentik.emnt.dev/application/o/authorize/
+        GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://authentik.emnt.dev/application/o/token/
+        GF_AUTH_GENERIC_OAUTH_API_URL: https://authentik.emnt.dev/application/o/userinfo/
+        GF_AUTH_SIGNOUT_REDIRECT_URL: https://authentik.emnt.dev/application/o/grafana/end-session/
         GF_AUTH_OAUTH_AUTO_LOGIN: "true"
         GF_AUTH_GENERIC_OAUTH_ROLE_ATTRIBUTE_PATH: "contains(groups[*], 'authentik Admins') && 'Admin' || 'Viewer'"
       envFromSecrets:
