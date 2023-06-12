@@ -4,3 +4,4 @@ resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
   - grafana-creds.sops.yaml
+  - grafana-oidc.sops.yaml
