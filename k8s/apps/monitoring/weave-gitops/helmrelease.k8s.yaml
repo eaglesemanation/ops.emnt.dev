@@ -19,10 +19,10 @@ spec:
     additionalArgs:
       - --auth-methods=oidc
     rbac:
-      impersonationResources:
-        - groups
-      impersonationResourceNames:
-        - authentik Admins
+      # FIXME: Restrict to only impersonating groups from static list
+      # Wait until this is resolved: https://github.com/weaveworks/weave-gitops/issues/3485
+      impersonationResources: ["users", "groups"]
+      impersonationResourceNames: []
     ingress:
       enabled: true
       className: ingress-internal-traefik
