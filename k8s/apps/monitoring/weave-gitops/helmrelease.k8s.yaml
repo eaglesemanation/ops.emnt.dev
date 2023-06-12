@@ -16,13 +16,13 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
+    additionalArgs:
+      - --auth-methods=oidc
     rbac:
+      impersonationResources:
+        - groups
       impersonationResourceNames:
-        - admin
-    adminUser:
-      create: true
-      createSecret: false
-      username: admin
+        - authentik Admins
     ingress:
       enabled: true
       className: ingress-internal-traefik
