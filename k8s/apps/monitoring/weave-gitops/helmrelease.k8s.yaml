@@ -22,7 +22,7 @@ spec:
       impersonationResources:
         - groups
       impersonationResourceNames:
-        - wego-admin
+        - authentik Admins
     ingress:
       enabled: true
       className: ingress-internal-traefik
