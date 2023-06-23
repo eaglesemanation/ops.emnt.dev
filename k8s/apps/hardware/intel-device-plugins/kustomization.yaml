@@ -4,4 +4,4 @@ namespace: intel-device-plugins
 resources:
   - namespace.k8s.yaml
   - nodefeaturerule.k8s.yaml
-  - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/monitoring_shared-dev_nfd?ref=v0.27.0
+  - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/monitoring_shared-dev_nfd?ref=v0.27.1
