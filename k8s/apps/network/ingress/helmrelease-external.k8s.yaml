@@ -68,8 +68,10 @@ spec:
             release: prometheus
     logs:
       general:
+        format: json
         level: INFO
       access:
+        format: json
         enabled: true
         fields:
           headers:
