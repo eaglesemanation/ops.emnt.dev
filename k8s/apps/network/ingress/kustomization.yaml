@@ -11,3 +11,4 @@ resources:
   - wildcard-cert.k8s.yaml
   - wireguard-config.sops.yaml
   - internal-to-external.k8s.yaml
+  - network-policy.k8s.yaml
