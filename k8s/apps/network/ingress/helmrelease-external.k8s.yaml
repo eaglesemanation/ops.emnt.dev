@@ -50,6 +50,7 @@ spec:
         ingressClass: ingress-external-traefik
       kubernetesIngress:
         allowExternalNameServices: true
+        ingressClass: ingress-external-traefik
     ingressClass:
       isDefaultClass: false
     tlsStore:

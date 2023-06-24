@@ -32,6 +32,7 @@ spec:
         ingressClass: ingress-internal-traefik
       kubernetesIngress:
         allowExternalNameServices: true
+        ingressClass: ingress-internal-traefik
     ingressClass:
       isDefaultClass: false
     tlsStore:
