@@ -71,6 +71,10 @@ spec:
         level: INFO
       access:
         enabled: true
+        fields:
+          headers:
+            names:
+              RequestHost: keep
     ports:
       web:
         redirectTo: websecure
