@@ -1,0 +1,12 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: internal-to-external
+  namespace: ingress
+spec:
+  ingressClassName: ingress-internal-traefik
+  defaultBackend:
+    service:
+      name: ingress-external-traefik
+      port:
+        number: 443
