@@ -11,4 +11,5 @@ resources:
   - mailserver.k8s.yaml
   - metallb.k8s.yaml
   - pihole.k8s.yaml
+  - tailscale.k8s.yaml
   - vpn-egress.k8s.yaml

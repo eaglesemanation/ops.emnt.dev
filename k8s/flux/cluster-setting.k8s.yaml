@@ -4,6 +4,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  LOCAL_CIDR: 192.168.25.0/24
   K8S_API_ADDR: 192.168.25.100
   GATEWAY_ADDR: 159.203.59.223
 
