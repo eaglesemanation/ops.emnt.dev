@@ -1,0 +1,8 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/serverstransport_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: ServersTransport
+metadata:
+  name: insecure-transport
+  namespace: ingress
+spec:
+  insecureSkipVerify: true

@@ -17,3 +17,6 @@ spec:
         - name: ingress-external-traefik
           namespace: ingress
           port: 443
+          scheme: https
+          passHostHeader: true
+          serversTransport: insecure-transport
