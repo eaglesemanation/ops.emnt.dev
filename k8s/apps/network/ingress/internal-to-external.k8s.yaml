@@ -1,12 +1,19 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: internal-to-external
   namespace: ingress
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
-  ingressClassName: ingress-internal-traefik
-  defaultBackend:
-    service:
-      name: ingress-external-traefik
-      port:
-        number: 443
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: HostRegexp(`{subdomain:.+}.emnt.dev`)
+      priority: 1 # Lower number - lower priority
+      services:
+        - name: ingress-external-traefik
+          namespace: ingress
+          port: 443
