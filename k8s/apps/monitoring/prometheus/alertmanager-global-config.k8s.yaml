@@ -10,10 +10,15 @@ spec:
       - namespace
     groupInterval: 5m
     groupWait: 30s
-    receiver: "telegram"
+    receiver: telegram
     repeatInterval: 12h
+    routes:
+      - receiver: "null"
+        matchers:
+          - alertname =~ "InfoInhibitor|Watchdog"
   receivers:
-    - name: "telegram"
+    - name: "null"
+    - name: telegram
       telegramConfigs:
         - botToken:
             key: botToken
