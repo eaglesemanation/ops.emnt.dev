@@ -80,5 +80,6 @@ spec:
         hosts:
           - prometheus.emnt.dev
     alertmanager:
-      alertmanagerConfiguration:
-        name: alertmanager-global-config
+      alertmanagerSpec:
+        alertmanagerConfiguration:
+          name: alertmanager-global-config
