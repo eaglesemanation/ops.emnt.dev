@@ -18,4 +18,4 @@ spec:
         - botToken:
             key: botToken
             name: telegram-creds
-          chatID: -1866766512
+          chatID: -1001866766512
