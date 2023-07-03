@@ -79,3 +79,6 @@ spec:
           gethomepage.dev/icon: "prometheus"
         hosts:
           - prometheus.emnt.dev
+    alertmanager:
+      alertmanagerConfiguration:
+        name: alertmanager-global-config
