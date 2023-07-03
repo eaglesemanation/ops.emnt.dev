@@ -5,6 +5,39 @@ metadata:
   name: alertmanager-global-config
   namespace: prometheus
 spec:
+  inhibitRules:
+    - sourceMatch:
+        - name: severity
+          matchType: =
+          value: critical
+      targetMatch:
+        - name: severity
+          matchType: =~
+          value: warning|info
+      equal:
+        - 'namespace'
+        - 'alertname'
+    - sourceMatch:
+        - name: severity
+          matchType: =
+          value: warning
+      targetMatch:
+        - name: severity
+          matchType: = 
+          value: info
+      equal:
+        - 'namespace'
+        - 'alertname'
+    - sourceMatch:
+        - name: alertname 
+          matchType: = 
+          value: InfoInhibitor
+      targetMatch:
+        - name: severity 
+          matchType: =
+          value: info
+      equal:
+        - 'namespace'
   route:
     groupBy:
       - namespace
@@ -15,7 +48,9 @@ spec:
     routes:
       - receiver: "null"
         matchers:
-          - alertname =~ "InfoInhibitor|Watchdog"
+          - name: alertname 
+            matchType: =~ 
+            value: InfoInhibitor|Watchdog
   receivers:
     - name: "null"
     - name: telegram
