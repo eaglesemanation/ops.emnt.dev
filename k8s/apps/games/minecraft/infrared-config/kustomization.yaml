@@ -1,7 +1,5 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 configMapGenerator:
   - name: infrared-config
     files:
@@ -17,7 +15,6 @@ configMapGenerator:
     files:
       - proxies/defaults.yaml
       - proxies/gateway.yaml
-      - proxies/vault.yaml
       - proxies/vanilla.yaml
   - name: infrared-icons
     files:
