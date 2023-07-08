@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: redis
-      version: 0.14.2
+      version: 0.15.2
       sourceRef:
         kind: HelmRepository
         name: ot-container-kit
