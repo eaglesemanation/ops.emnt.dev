@@ -2,7 +2,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: vanilla-minecraft
+  name: minecraft
   namespace: minecraft
   labels:
     release: prometheus
@@ -16,22 +16,3 @@ spec:
   selector:
     matchLabels:
       app: vanilla-minecraft-metrics
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/monitoring.coreos.com/servicemonitor_v1.json
-apiVersion: monitoring.coreos.com/v1
-kind: ServiceMonitor
-metadata:
-  name: vault-minecraft
-  namespace: minecraft
-  labels:
-    release: prometheus
-spec:
-  endpoints:
-    - targetPort: 9970
-  jobLabel: release
-  namespaceSelector:
-    matchNames:
-      - minecraft
-  selector:
-    matchLabels:
-      app: vault-minecraft-metrics
