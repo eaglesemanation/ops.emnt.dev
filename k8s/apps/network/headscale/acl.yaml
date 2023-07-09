@@ -1,0 +1,6 @@
+autoApprovers:
+  routes:
+    192.168.25.0/24:
+      - emnt.dev
+  exitNode:
+    - emnt.dev

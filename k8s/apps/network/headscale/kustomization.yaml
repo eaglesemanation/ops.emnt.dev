@@ -12,3 +12,4 @@ configMapGenerator:
     namespace: headscale
     files:
       - config.yaml
+      - acl.yaml
