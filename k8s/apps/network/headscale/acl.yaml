@@ -1,3 +1,11 @@
+acls:
+  - action: accept
+    src:
+      - autogroup:members
+    dst:
+      - autogroup:self:*
+      - group:gateways:*
+      - 192.168.25.0/24:*
 groups:
   group:gateways:
     - emnt.dev
