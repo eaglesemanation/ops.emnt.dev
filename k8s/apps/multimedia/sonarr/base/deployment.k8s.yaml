@@ -18,6 +18,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
+        runAsNonRoot: true
       containers:
         - name: sonarr
           image: docker.io/linuxserver/sonarr:develop-version-4.0.0.445
@@ -27,6 +28,8 @@ spec:
               memory: 128Mi
             limits:
               memory: 1Gi
+          securityContext:
+            readOnlyRootFilesystem: true
           env:
             - name: PUID
               value: "1000"

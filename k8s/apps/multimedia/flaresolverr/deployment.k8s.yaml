@@ -18,9 +18,19 @@ spec:
         app.kubernetes.io/name: flaresolverr
         app.kubernetes.io/instance: flaresolverr
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:v3.2.1
+          securityContext:
+            readOnlyRootFilesystem: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
           ports:
             - name: http
               containerPort: 8191

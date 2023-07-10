@@ -27,7 +27,16 @@ spec:
                 name: tailscale-authkey
             - configMapRef:
                 name: tailscale-config
+          resources:
+            requests:
+              cpu: 50m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
           securityContext:
+            readOnlyRootFilesystem: true
             capabilities:
               add:
                 - NET_ADMIN
+              drop:
+                - ALL

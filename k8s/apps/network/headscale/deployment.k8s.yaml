@@ -18,10 +18,20 @@ spec:
         app.kubernetes.io/name: headscale
         app.kubernetes.io/instance: headscale
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
         - name: headscale
           image: ghcr.io/juanfont/headscale:0.23.0
           args: ["headscale", "serve"]
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          securityContext:
+            readOnlyRootFilesystem: true
           ports:
             - name: web
               containerPort: 8080
@@ -72,9 +82,19 @@ spec:
         app.kubernetes.io/name: headscale-ui
         app.kubernetes.io/instance: headscale-ui
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
         - name: headscale-ui
           image: ghcr.io/gurucomputing/headscale-ui:2023.01.30-beta-1
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 128Mi
+          securityContext:
+            readOnlyRootFilesystem: true
           ports:
             - name: web
               containerPort: 80

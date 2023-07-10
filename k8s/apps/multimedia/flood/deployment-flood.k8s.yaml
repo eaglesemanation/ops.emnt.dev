@@ -41,6 +41,8 @@ spec:
               memory: 128Mi
             limits:
               memory: 512Mi
+          securityContext:
+            readOnlyRootFilesystem: true
           env:
             - name: FLOOD_OPTION_auth
               value: none

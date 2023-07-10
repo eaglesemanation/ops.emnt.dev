@@ -30,6 +30,9 @@ spec:
                     # FIXME: Replace with Exist when bug is fixed to reduce network load
                     operator: DoesNotExist
       securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
         fsGroup: 1000
       containers:
         - name: jellyfin
@@ -42,6 +45,8 @@ spec:
             limits:
               gpu.intel.com/i915: 1
               memory: 12Gi
+          securityContext:
+            readOnlyRootFilesystem: true
           env:
             - name: PUID
               value: "1000"

@@ -18,9 +18,19 @@ spec:
         app.kubernetes.io/name: prowlarr
         app.kubernetes.io/instance: prowlarr
     spec:
+      securityContext:
+        runAsNonRoot: true
       containers:
         - name: prowlarr
           image: ghcr.io/linuxserver/prowlarr:1.8.1259
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 2Gi
+          securityContext:
+            readOnlyRootFilesystem: true
           env:
             - name: PUID
               value: "1000"

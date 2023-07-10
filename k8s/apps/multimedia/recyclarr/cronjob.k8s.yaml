@@ -19,6 +19,14 @@ spec:
               image: ghcr.io/recyclarr/recyclarr:5.1.1
               imagePullPolicy: IfNotPresent
               args: ["sync"]
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 64Mi
+                limits:
+                  memory: 256Mi
+              securityContext:
+                readOnlyRootFilesystem: true
               volumeMounts:
                 - name: recyclarr-config
                   mountPath: /config/recyclarr.yml
