@@ -18,7 +18,7 @@ spec:
     spec:
       securityContext:
         fsGroup: 1000
-        runAsNonRoot: true
+        runAsNonRoot: false # FIXME: Linuxserver images require root for init
       containers:
         - name: sonarr
           image: docker.io/linuxserver/sonarr:develop-version-4.0.0.445
@@ -29,7 +29,7 @@ spec:
             limits:
               memory: 1Gi
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
           env:
             - name: PUID
               value: "1000"

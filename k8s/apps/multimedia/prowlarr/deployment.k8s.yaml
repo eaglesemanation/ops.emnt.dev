@@ -19,7 +19,7 @@ spec:
         app.kubernetes.io/instance: prowlarr
     spec:
       securityContext:
-        runAsNonRoot: true
+        runAsNonRoot: false # FIXME: Linuxserver images require root for init
       containers:
         - name: prowlarr
           image: ghcr.io/linuxserver/prowlarr:1.8.1259
@@ -30,7 +30,7 @@ spec:
             limits:
               memory: 2Gi
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
           env:
             - name: PUID
               value: "1000"

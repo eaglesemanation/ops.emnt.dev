@@ -30,9 +30,7 @@ spec:
                     # FIXME: Replace with Exist when bug is fixed to reduce network load
                     operator: DoesNotExist
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
+        runAsNonRoot: false # FIXME: Linuxserver images require root for init
         fsGroup: 1000
       containers:
         - name: jellyfin
@@ -46,7 +44,7 @@ spec:
               gpu.intel.com/i915: 1
               memory: 12Gi
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: true # FIXME: Linuxserver images require writable root fs
           env:
             - name: PUID
               value: "1000"
