@@ -1,0 +1,18 @@
+apiVersion: nfd.k8s-sigs.io/v1alpha1
+kind: NodeFeatureRule
+metadata:
+  name: zigbee-adapter-sonoff
+  namespace: node-feature-discovery
+spec:
+  rules:
+    - name: "Sonoff Zigbee 3.0 USB Dongle Plus"
+      labels:
+        zigbee-adapter: "true"
+      matchFeatures:
+        - feature: usb.device
+          matchExpressions:
+            vendor: {op: In, value: ["10c4"]}
+            device: {op: In, value: ["ea60"]}
+        - feature: kernel.loadedmodule
+          matchExpressions:
+            cp210x: {op: Exists}

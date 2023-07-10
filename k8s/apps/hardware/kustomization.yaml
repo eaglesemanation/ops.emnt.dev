@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - node-feature-discovery.k8s.yaml
   - intel-device-plugins.k8s.yaml
+  - zigbee-adapter-discovery.k8s.yaml
