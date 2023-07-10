@@ -1,9 +1,3 @@
-acls:
-  - action: accept
-    src:
-      - autogroup:members
-    dst:
-      - group:gateways
 groups:
   group:gateways:
     - emnt.dev
