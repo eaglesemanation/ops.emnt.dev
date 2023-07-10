@@ -27,10 +27,8 @@ spec:
                     operator: Exists
       hostname: transmission
       securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
         fsGroup: 1000
+        runAsNonRoot: false # linuxserver images run as root
       containers:
         - name: transmission
           image: docker.io/linuxserver/transmission:4.0.3
@@ -41,7 +39,7 @@ spec:
             limits:
               memory: 2Gi
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false # linuxserver images need fs access
           env:
             - name: PUID
               value: "1000"

@@ -20,6 +20,9 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
       containers:
         - name: jellyseerr
           image: docker.io/fallenbagel/jellyseerr:1.5.0
@@ -30,7 +33,7 @@ spec:
             limits:
               memory: 512Mi
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false # FIXME: Yarn wants a bunch of writable dirs
           env:
             - name: TZ
               value: Etc/UTC

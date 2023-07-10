@@ -68,7 +68,12 @@ spec:
           volumeMounts:
             - name: multimedia
               mountPath: /multimedia
+            - name: data
+              mountPath: /data
       volumes:
         - name: multimedia
           persistentVolumeClaim:
             claimName: multimedia
+        - name: data
+          persistentVolumeClaim:
+            claimName: flood-data

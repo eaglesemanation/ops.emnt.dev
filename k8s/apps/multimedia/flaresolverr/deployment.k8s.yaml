@@ -20,11 +20,13 @@ spec:
     spec:
       securityContext:
         runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
       containers:
         - name: flaresolverr
           image: ghcr.io/flaresolverr/flaresolverr:v3.2.1
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false # FIXME: Image relies on bunch of writable paths
           resources:
             requests:
               cpu: 100m
