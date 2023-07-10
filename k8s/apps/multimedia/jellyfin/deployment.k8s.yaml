@@ -44,7 +44,7 @@ spec:
               gpu.intel.com/i915: 1
               memory: 12Gi
           securityContext:
-            readOnlyRootFilesystem: true # FIXME: Linuxserver images require writable root fs
+            readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
           env:
             - name: PUID
               value: "1000"
