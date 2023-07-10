@@ -1,6 +1,15 @@
+acls:
+  - action: accept
+    src:
+      - autogroup:members
+    dst:
+      - group:gateways
+groups:
+  group:gateways:
+    - emnt.dev
 autoApprovers:
   routes:
     192.168.25.0/24:
       - emnt.dev
   exitNode:
-    - emnt.dev
+    - group:gateways
