@@ -28,7 +28,7 @@ spec:
       hostname: transmission
       securityContext:
         fsGroup: 1000
-        runAsNonRoot: false # linuxserver images run as root
+        runAsNonRoot: false # FIXME: Linuxserver images require root for init
       containers:
         - name: transmission
           image: docker.io/linuxserver/transmission:4.0.3
@@ -39,7 +39,7 @@ spec:
             limits:
               memory: 2Gi
           securityContext:
-            readOnlyRootFilesystem: false # linuxserver images need fs access
+            readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
           env:
             - name: PUID
               value: "1000"
