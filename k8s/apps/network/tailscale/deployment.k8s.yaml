@@ -37,6 +37,5 @@ spec:
             readOnlyRootFilesystem: true
             capabilities:
               add:
+                # TODO: Figure out which caps are needed and add drop: [ALL]
                 - NET_ADMIN
-              drop:
-                - ALL
