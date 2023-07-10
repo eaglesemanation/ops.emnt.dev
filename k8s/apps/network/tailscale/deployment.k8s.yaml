@@ -39,3 +39,13 @@ spec:
               add:
                 # TODO: Figure out which caps are needed and add drop: [ALL]
                 - NET_ADMIN
+          volumeMounts:
+            - name: root-cache
+              mountPath: /root/.cache
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: root-cache
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
