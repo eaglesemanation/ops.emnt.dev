@@ -103,3 +103,13 @@ spec:
           ports:
             - name: web
               containerPort: 80
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: home-local
+              mountPath: /home/appuser/.local
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: home-local
+          emptyDir: {}
