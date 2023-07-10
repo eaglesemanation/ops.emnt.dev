@@ -42,7 +42,7 @@ spec:
             limits:
               memory: 512Mi
           securityContext:
-            readOnlyRootFilesystem: true
+            readOnlyRootFilesystem: false # FIXME: Figure out path to "runtime directory" which needs to have write permissions
           env:
             - name: FLOOD_OPTION_auth
               value: none
