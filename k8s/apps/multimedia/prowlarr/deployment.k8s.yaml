@@ -22,7 +22,7 @@ spec:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
       containers:
         - name: prowlarr
-          image: ghcr.io/linuxserver/prowlarr:1.8.1259
+          image: ghcr.io/linuxserver/prowlarr:1.6.3.3608-ls24
           resources:
             requests:
               cpu: 100m

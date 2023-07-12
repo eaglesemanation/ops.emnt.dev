@@ -1,31 +1,39 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base"
-  ],
-  "timezone": "America/Toronto",
-  "schedule": ["after 19:00 every friday"],
-  "prHourlyLimit": 5,
-  "rangeStrategy": "bump",
-  "flux": {
-    "fileMatch": [
-        "k8s/apps/.+\\.k8s\\.yaml",
-        "k8s/flux/.+\\.k8s\\.yaml"
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base"
+    ],
+    "timezone": "America/Toronto",
+    "schedule": [
+        "after 19:00 every friday"
+    ],
+    "prHourlyLimit": 5,
+    "rangeStrategy": "bump",
+    "flux": {
+        "fileMatch": [
+            "k8s/apps/.+\\.k8s\\.yaml",
+            "k8s/flux/.+\\.k8s\\.yaml"
+        ]
+    },
+    "kubernetes": {
+        "fileMatch": [
+            "k8s/apps/.+\\.k8s\\.yaml",
+            "k8s/flux/.+\\.k8s\\.yaml"
+        ]
+    },
+    "packageRules": [
+        {
+            "matchPackageNames": [
+                "docker.io/linuxserver/jellyfin",
+                "docker.io/linuxserver/transmission"
+            ],
+            "allowedVersions": "<1000"
+        },
+        {
+            "matchPackageNames": [
+                "ghcr.io/linuxserver/prowlarr"
+            ],
+            "allowedVersions": "<1.7"
+        }
     ]
-  },
-  "kubernetes": {
-    "fileMatch": [
-        "k8s/apps/.+\\.k8s\\.yaml",
-        "k8s/flux/.+\\.k8s\\.yaml"
-    ]
-  },
-  "packageRules": [
-    {
-      "matchPackageNames": [
-        "docker.io/linuxserver/jellyfin",
-        "docker.io/linuxserver/transmission"
-      ],
-      "allowedVersions": "<1000"
-    }
-  ]
 }
