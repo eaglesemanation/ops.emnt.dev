@@ -36,8 +36,6 @@ spec:
           - type: TCP
             port: ${TORRENT_PORT}
     routed_namespaces:
-      - prowlarr
-      - flaresolverr
       - flood
     persistence:
       tun-device:
