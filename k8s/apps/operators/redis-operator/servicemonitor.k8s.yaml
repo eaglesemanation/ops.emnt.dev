@@ -3,6 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: redis-monitoring
+  namespace: redis-operator
   labels:
     app.kubernetes.io/name: redis-operator
 spec:
