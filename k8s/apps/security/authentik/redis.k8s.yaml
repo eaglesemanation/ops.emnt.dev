@@ -1,35 +1,27 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
-kind: HelmRelease
+apiVersion: redis.redis.opstreelabs.in/v1beta1
+kind: Redis
 metadata:
   name: redis
-  namespace: authentik
+  labels:
+    app.kubernetes.io/name: redis
 spec:
-  interval: 30m
-  chart:
-    spec:
-      chart: redis
-      version: 0.15.2
-      sourceRef:
-        kind: HelmRepository
-        name: ot-container-kit
-        namespace: flux-system
-      interval: 30m
-  values:
-    redisStandalone:
-      redisSecret:
-        secretName: redis-creds
-        secretKey: password
-    storageSpec:
-      volumeClaimTemplate:
-        spec:
-          storageClassName: freenas-api-iscsi-csi
-          accessModes: ["ReadWriteOnce"]
-          resources:
-            requests:
-              storage: 1Gi
-    serviceMonitor:
-      enabled: true
-      namespace: authentik
-    redisExporter:
-      enabled: true
+  redisExporter:
+    enabled: true
+    image: quay.io/opstree/redis-exporter:v1.44.0
+  kubernetesConfig:
+    image: quay.io/opstree/redis:v7.0.5
+    redisSecret:
+      name: redis-creds
+      key: password
+  storage:
+    volumeClaimTemplate:
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: freenas-api-iscsi-csi
+  podSecurityContext:
+    fsGroup: 1000
+    runAsUser: 1000
