@@ -7,10 +7,5 @@ configMapGenerator:
       labels:
         grafana_dashboard: "1"
     files:
-      - pgbackrest.json
-      - pod_details.json
-      - postgres_overview.json
-      - postgresql_details.json
-      - postgresql_service_health.json
-      - prometheus_alerts.json
-      - query_statistics.json
+      - PGBackrest.json
+      - PG_Details.json

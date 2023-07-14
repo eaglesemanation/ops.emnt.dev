@@ -26,6 +26,7 @@ spec:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
       global:
+        stanza: authentik
         repo1-s3-uri-style: path
         repo1-path: /pgbackrest/authentik/authentik-pg/repo1
         repo1-retention-full: "30"
