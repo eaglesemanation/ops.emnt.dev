@@ -13,6 +13,3 @@ spec:
           matchExpressions:
             vendor: {op: In, value: ["10c4"]}
             device: {op: In, value: ["ea60"]}
-        - feature: kernel.loadedmodule
-          matchExpressions:
-            cp210x: {op: Exists}
