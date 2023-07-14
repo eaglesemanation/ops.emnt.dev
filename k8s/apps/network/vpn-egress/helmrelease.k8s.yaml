@@ -50,7 +50,7 @@ spec:
         type: gluetun
         gluetun:
           image:
-            tag: v3.33.0
+            tag: v3.35.0
         securityContext:
           capabilities:
             add:
