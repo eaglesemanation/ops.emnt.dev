@@ -28,6 +28,8 @@ spec:
       global:
         repo1-s3-uri-style: path
         repo1-path: /pgbackrest/authentik/authentik-pg/repo1
+        repo1-retention-full: "30"
+        repo1-retention-full-type: time
       configuration:
         - secret:
             name: pgo-s3-creds
@@ -37,6 +39,9 @@ spec:
             endpoint: https://minio.emnt.dev
             region: us-west-1
             bucket: pgbackrest
+          schedules:
+            full: 0 6 * * 0
+            incremental: 0 6 * * 1-6
   monitoring:
     pgmonitor:
       exporter:
