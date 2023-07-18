@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: speedtest
+  namespace: speedtest
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Speedtest"
+    gethomepage.dev/group: "Infra"
+    gethomepage.dev/icon: "librespeed"
+  labels:
+    app.kubernetes.io/name: speedtest
+    app.kubernetes.io/instance: speedtest
+spec:
+  ingressClassName: ingress-internal-traefik
+  rules:
+    - host: speedtest.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: speedtest
+                port:
+                  name: http
