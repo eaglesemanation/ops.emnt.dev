@@ -8,3 +8,4 @@ resources:
   - role.k8s.yaml
   - rolebinding.k8s.yaml
   - serviceaccount.k8s.yaml
+  - svc.k8s.yaml
