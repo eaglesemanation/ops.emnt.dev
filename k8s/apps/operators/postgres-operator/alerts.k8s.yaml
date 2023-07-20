@@ -5,7 +5,7 @@ metadata:
   name: postgres-alert-rules
   namespace: postgres-operator
   labels:
-    prometheus: example
+    release: prometheus
 spec:
   groups:
     - name: alert-rules
