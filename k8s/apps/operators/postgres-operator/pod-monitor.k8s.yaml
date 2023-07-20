@@ -14,3 +14,4 @@ spec:
     - port: exporter
   namespaceSelector:
     any: true
+  jobLabel: postgres-operator.crunchydata.com/cluster

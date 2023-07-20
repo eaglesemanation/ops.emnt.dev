@@ -6,3 +6,4 @@ resources:
   - s3-creds.sops.yaml
   - pod-monitor.k8s.yaml
   - dashboards
+  - alerts.k8s.yaml
