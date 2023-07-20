@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    k8s-app: kube-dns
+  annotations:
+    kustomize.toolkit.fluxcd.io/prune: disabled
+    # Patch preexisting resource in place
+    kustomize.toolkit.fluxcd.io/ssa: merge
+  name: coredns
+  namespace: kube-system
+spec:
+  selector:
+    matchLabels:
+      k8s-app: kube-dns
+  template:
+    metadata:
+      labels:
+        k8s-app: kube-dns
+    spec:
+      containers: []
+      volumes:
+        - name: config-volume
+          configMap:
+            name: coredns
+            items:
+              - key: Corefile
+                path: Corefile
+              - key: emnt.dev.db
+                path: emnt.dev.db

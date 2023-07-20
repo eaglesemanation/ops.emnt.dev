@@ -24,10 +24,24 @@ data:
             ${NAS_ADDR} ${NAS_URL}
             fallthrough
         }
-        forward emnt.dev ${SVC_DNS_ADDR}
+        file /etc/coredns/emnt.dev.db emnt.dev
         forward . /etc/resolv.conf
         cache 30
         loop
         reload
         loadbalance
     }
+  emnt.dev.db: |-
+    $ORIGIN emnt.dev.
+    @   3600 IN SOA edward.ns.cloudflare.com. nia.ns.cloudflare.com. (
+                    2023071923 ; serial
+                    7200       ; refresh (2 hours)
+                    3600       ; retry (1 hour)
+                    1209600    ; expire (2 weeks)
+                    3600       ; minimum (1 hour)
+                    )
+
+        3600 IN NS edward.ns.cloudflare.com.
+        3600 IN NS nia.ns.cloudflare.com.
+
+    *        IN A     ${SVC_INGRESS_INTERNAL_ADDR}
