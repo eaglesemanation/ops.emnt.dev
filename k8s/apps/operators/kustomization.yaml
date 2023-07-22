@@ -4,3 +4,4 @@ resources:
   - postgres-operator.k8s.yaml
   - redis-operator.k8s.yaml
   - reflector.k8s.yaml
+  - rabbitmq-operator.k8s.yaml
