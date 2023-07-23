@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/rabbitmq.com/user_v1beta1.json
+apiVersion: rabbitmq.com/v1beta1
+kind: User
+metadata:
+  name: zigbee2mqtt
+  namespace: zigbee2mqtt
+spec:
+  tags:
+    - management
+  rabbitmqClusterReference:
+    name: zigbee2mqtt
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/rabbitmq.com/permission_v1beta1.json
+apiVersion: rabbitmq.com/v1beta1
+kind: Permission
+metadata:
+  name: zigbee2mqtt
+  namespace: zigbee2mqtt
+spec:
+  vhost: "/"
+  userReference:
+    name: zigbee2mqtt
+  permissions:
+    write: ".*"
+    configure: ".*"
+    read: ".*"
+  rabbitmqClusterReference:
+    name: zigbee2mqtt

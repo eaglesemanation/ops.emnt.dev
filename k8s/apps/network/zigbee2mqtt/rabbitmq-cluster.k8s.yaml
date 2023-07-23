@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/rabbitmq.com/rabbitmqcluster_v1beta1.json
+apiVersion: rabbitmq.com/v1beta1
+kind: RabbitmqCluster
+metadata:
+  name: zigbee2mqtt
+  namespace: zigbee2mqtt
+spec:
+  persistence:
+    storageClassName: freenas-api-iscsi-csi
+    storage: 10Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 100Mi
+    limits:
+      memory: 200Mi
+  rabbitmq:
+    additionalPlugins:
+      - rabbitmq_mqtt
