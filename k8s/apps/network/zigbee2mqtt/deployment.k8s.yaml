@@ -30,7 +30,7 @@ spec:
               value: Etc/UTC
             - name: ZIGBEE2MQTT_CONFIG_SERIAL_PORT
               value: /dev/ttyUSB0
-            - name: ZIGBEE2MQTT_CONFIG_MQTT_HOST
+            - name: ZIGBEE2MQTT_CONFIG_MQTT_SERVER
               value: mqtt://zigbee2mqtt.zigbee2mqtt.svc.cluster.local:1883
             - name: ZIGBEE2MQTT_CONFIG_MQTT_USER
               valueFrom:
