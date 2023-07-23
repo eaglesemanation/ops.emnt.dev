@@ -1,0 +1,26 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: zigbee2mqtt
+  namespace: zigbee2mqtt
+  labels:
+    app.kubernetes.io/name: zigbee2mqtt
+    app.kubernetes.io/instance: zigbee2mqtt
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Zigbee2MQTT"
+    gethomepage.dev/group: "Smart Home"
+    gethomepage.dev/icon: "zigbee2mqtt"
+spec:
+  ingressClassName: ingress-internal-traefik
+  rules:
+    - host: zigbee2mqtt.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: zigbee2mqtt
+                port:
+                  name: http
