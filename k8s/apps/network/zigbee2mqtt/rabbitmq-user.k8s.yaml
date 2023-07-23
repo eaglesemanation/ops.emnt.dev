@@ -8,7 +8,7 @@ spec:
   tags:
     - management
   rabbitmqClusterReference:
-    name: zigbee2mqtt
+    name: zigbee2mqtt-rabbitmq
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/rabbitmq.com/permission_v1beta1.json
 apiVersion: rabbitmq.com/v1beta1
@@ -25,4 +25,4 @@ spec:
     configure: ".*"
     read: ".*"
   rabbitmqClusterReference:
-    name: zigbee2mqtt
+    name: zigbee2mqtt-rabbitmq

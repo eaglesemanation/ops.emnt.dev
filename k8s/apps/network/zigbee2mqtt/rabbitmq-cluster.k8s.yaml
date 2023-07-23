@@ -2,7 +2,7 @@
 apiVersion: rabbitmq.com/v1beta1
 kind: RabbitmqCluster
 metadata:
-  name: zigbee2mqtt
+  name: zigbee2mqtt-rabbitmq
   namespace: zigbee2mqtt
 spec:
   persistence:
