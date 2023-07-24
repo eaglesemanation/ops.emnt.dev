@@ -21,7 +21,7 @@ spec:
       match: Host(`zigbee2mqtt.emnt.dev`)
       middlewares:
         - name: authentik
-          namespace: zigbee2mqtt
+          namespace: authentik
       services:
         - name: zigbee2mqtt
           namespace: zigbee2mqtt
