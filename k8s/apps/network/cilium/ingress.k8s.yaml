@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: hubble-ui
+  namespace: cilium
+  labels:
+    app.kubernetes.io/name: hubble-ui
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: Hubble
+    gethomepage.dev/group: Infra
+    gethomepage.dev/icon: cilium
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`hubble.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: hubble-ui
+          namespace: cilium
+          port: 80
+    - kind: Rule
+      match: "Host(`hubble.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
