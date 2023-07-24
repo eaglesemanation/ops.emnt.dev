@@ -7,7 +7,6 @@ resources:
   - redis.k8s.yaml
   - secrets.sops.yaml
   - redis-creds.sops.yaml
-  - traefik-middleware.k8s.yaml
 configMapGenerator:
   - name: authentik-pg-init
     namespace: authentik

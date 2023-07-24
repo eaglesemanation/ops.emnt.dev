@@ -3,10 +3,10 @@ apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
   name: authentik
-  namespace: authentik
+  namespace: zigbee2mqtt
 spec:
   forwardAuth:
-    address: https://authentik.emnt.dev/outpost.goauthentik.io/auth/traefik
+    address: https://zigbee2mqtt.emnt.dev/outpost.goauthentik.io/auth/traefik
     trustForwardHeader: true
     authResponseHeaders:
       - X-authentik-username
