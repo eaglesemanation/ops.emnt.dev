@@ -70,15 +70,7 @@ spec:
           - grafana.emnt.dev
     prometheus:
       ingress:
-        enabled: true
-        ingressClassName: ingress-internal-traefik
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Prometheus"
-          gethomepage.dev/group: "Infra"
-          gethomepage.dev/icon: "prometheus"
-        hosts:
-          - prometheus.emnt.dev
+        enabled: false # Using traefik IngressRoute
     alertmanager:
       alertmanagerSpec:
         alertmanagerConfiguration:

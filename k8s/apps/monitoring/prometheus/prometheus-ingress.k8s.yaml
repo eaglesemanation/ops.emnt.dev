@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: prometheus-kube-prometheus-prometheus
+  namespace: prometheus
+  labels:
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/name: prometheus
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    release: prometheus
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/group: Infra
+    gethomepage.dev/icon: prometheus
+    gethomepage.dev/name: Prometheus
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`prometheus.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: prometheus-kube-prometheus-prometheus
+          namespace: prometheus
+          port: 9090
+    - kind: Rule
+      match: "Host(`prometheus.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
