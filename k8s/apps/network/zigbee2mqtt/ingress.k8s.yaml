@@ -1,5 +1,6 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: zigbee2mqtt
   namespace: zigbee2mqtt
@@ -7,20 +8,27 @@ metadata:
     app.kubernetes.io/name: zigbee2mqtt
     app.kubernetes.io/instance: zigbee2mqtt
   annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Zigbee2MQTT"
     gethomepage.dev/group: "Smart Home"
     gethomepage.dev/icon: "zigbee2mqtt"
 spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: zigbee2mqtt.emnt.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: zigbee2mqtt
-                port:
-                  name: http
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`zigbee2mqtt.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: zigbee2mqtt
+          namespace: zigbee2mqtt
+          port: 8080
+    - kind: Rule
+      match: "Host(`zigbee2mqtt.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000

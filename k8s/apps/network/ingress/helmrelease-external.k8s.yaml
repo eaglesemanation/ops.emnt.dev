@@ -54,6 +54,7 @@ spec:
         externalTrafficPolicy: Local
     providers:
       kubernetesCRD:
+        allowCrossNamespace: true
         allowExternalNameServices: true
         ingressClass: ingress-external-traefik
       kubernetesIngress:
