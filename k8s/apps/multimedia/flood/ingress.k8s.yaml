@@ -1,26 +1,34 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: flood
   namespace: flood
+  labels:
+    app.kubernetes.io/name: flood
+    app.kubernetes.io/instance: flood
   annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Flood"
     gethomepage.dev/group: "Multimedia"
     gethomepage.dev/icon: "flood"
-  labels:
-    app.kubernetes.io/name: flood
-    app.kubernetes.io/instance: flood
 spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: flood.emnt.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: flood
-                port:
-                  name: http
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`flood.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: flood
+          namespace: flood
+          port: 3000
+    - kind: Rule
+      match: "Host(`flood.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
