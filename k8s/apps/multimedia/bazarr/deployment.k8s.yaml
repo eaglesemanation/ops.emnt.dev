@@ -54,17 +54,17 @@ spec:
             - name: POSTGRES_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-dbname
-                  key: port
+                  name: bazarr-pg-pguser-bazarr
+                  key: dbname
             - name: POSTGRES_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-dbname
+                  name: bazarr-pg-pguser-bazarr
                   key: user
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-dbname
+                  name: bazarr-pg-pguser-bazarr
                   key: password
           volumeMounts:
             - name: multimedia
