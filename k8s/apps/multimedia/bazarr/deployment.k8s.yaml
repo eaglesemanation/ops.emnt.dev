@@ -1,0 +1,78 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bazarr
+  namespace: bazarr
+  labels:
+    app.kubernetes.io/name: bazarr
+    app.kubernetes.io/instance: bazarr
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: bazarr
+      app.kubernetes.io/instance: bazarr
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: bazarr
+        app.kubernetes.io/instance: bazarr
+    spec:
+      securityContext:
+        runAsNonRoot: false # FIXME: Linuxserver images require root for init
+        fsGroup: 1000
+      containers:
+        - name: bazarr
+          image: docker.io/linuxserver/bazarr:1.2.4
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 1Gi
+          securityContext:
+            readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "Etc/UTC"
+            - name: POSTGRES_ENABLED
+              value: "true"
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: bazarr-pg-pguser-bazarr
+                  key: host
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: bazarr-pg-pguser-bazarr
+                  key: port
+            - name: POSTGRES_DATABASE
+              valueFrom:
+                secretKeyRef:
+                  name: bazarr-pg-pguser-dbname
+                  key: port
+            - name: POSTGRES_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: bazarr-pg-pguser-dbname
+                  key: user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: bazarr-pg-pguser-dbname
+                  key: password
+          volumeMounts:
+            - name: multimedia
+              mountPath: /multimedia
+          ports:
+            - name: http
+              containerPort: 6767
+      volumes:
+        - name: multimedia
+          persistentVolumeClaim:
+            claimName: multimedia
