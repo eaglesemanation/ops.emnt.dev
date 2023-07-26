@@ -6,10 +6,10 @@ metadata:
     annotations:
         reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
         reflector.v1.k8s.emberstack.com/reflection-auto-enabled: "true"
-        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: authentik
-        reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: authentik
+        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: authentik,bazarr
+        reflector.v1.k8s.emberstack.com/reflection-auto-namespaces: authentik,bazarr
 stringData:
-    s3.conf: ENC[AES256_GCM,data:ckhKd+MCD/pqtaVsAKxg9gpooUf3X3rmOEW4Bma5Hr3OWUONRsZkp+k+PFnbZHr4RWJbdVIXYMiq7gm1GSsxoJ5ynInsAbygmw==,iv:5tZ8jyQPrGWKw5coWxlsBP+cHyVjjMr0eH41vLpD5Rg=,tag:vQe3DOzYmC1LtHTnlIwxpA==,type:str]
+    s3.conf: ENC[AES256_GCM,data:5aSplQLYYdLsfN0P3v0T7b5GWHnJTSZmfw6s3dt/8sk9NQR/emo5+8cTpn9dAAIsiQXjqi9O/W0ZyFjij5gGKMEa1jrqdUwSxA==,iv:lOd7z4/RlemPAMfpG5sJzWpxql+JHIzGreQQDQK8HiA=,tag:lltKyLObV5Fo50RtSpaRNQ==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -19,28 +19,28 @@ sops:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTWmQrRTcrZ2Y2Y1ZMaXh0
-            Y01MbS9VV0Z4emMyUHIvV1JzNUJFelhaUVY0CmRFVS9iZ3pDY2JMdlhOa0ZCWWRG
-            YlZsaFAzVUs1dnBqZHIvMUZNeFdlekUKLS0tIDBFSW9hZVF0aGtLVXA2M1hDbUJm
-            YnJhR0cwWlNTYkphcVFDczR2Y3NaTGcK3R3V43pT/81lqwrgr2CjVaNZ9p9SwwSB
-            PIIJJ7BUBCj8oKJIUGa6mrTXlsCS5tyontXdnS+sf/MP2CJqKfsxcQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSAxOWw5R0RMRXBnQmJSRHox
+            Tk1nZGRJWXZrRGZLU0xMdGtxbjhqRllmcmljClREeTg1Y2djZ21uaE93Z0c4aWl2
+            NU42TDNDYkc3YndMUkI5WEY4d3NjWjAKLS0tIFZjWUl2ajZYQ3BvVDRpSjdxY29L
+            T2ZHaVFSYUg3dU1TMlhacmZMbFN6b28K5hrNLiO+OpuyUnVVpGG7x1vuV6oham0y
+            IkB08ysiiZbBXeFAGItIoGWB2OCZ08Wu/+6G7V1gJyasXqMfGrIdrQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-05-07T06:04:58Z"
-    mac: ENC[AES256_GCM,data:4qSIR905Y86TdHYgSBnvixB73/egpnJ741Pumrg4g6PMcTYFgbMG5J+vJ+YNXQWzZuq0QLDJmv8X1viF83QPjNJQoVpd3v6ziRrM9vImv1EVu+kKcItXvAnLAphZTF79+bu2R0bXBkOhevrUtAsr2gwiFVN/lp/HPY9Vd/0NRMk=,iv:EMLAWOe5rC6sIIeBWYH6bqGRv3zSLtJQY0Ds23cIm+A=,tag:ATQE2ltTztfxfD01wIfGgA==,type:str]
+    lastmodified: "2023-07-26T22:43:09Z"
+    mac: ENC[AES256_GCM,data:Q20B81UJ9djxnImadzy9kgEp3lOLSyN2i/euVObPz8rNfQ/7gQLbAhQr7jqatY1as0NitZLyLxGNVE0FNxJ1/qW2EeO0Xt2sCssaKC/lfXgyEPEOWuxl8y+74x6+FUZJ/jMcVm8DtucB+nfmCuEVRaly02t0Rtjhmq0pEvNfTbs=,iv:x73NuobWpzhlfKC2LdTTAlN2qcH1mYpYvnaJZkv8XIA=,tag:XClverU4vUVbzY4qSOVUtA==,type:str]
     pgp:
-        - created_at: "2023-05-07T06:04:58Z"
+        - created_at: "2023-07-26T22:43:08Z"
           enc: |
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf/T4YE7sSnwc9+qBsZS2e+zJr3AR3oX6GjwcNcGdhlWpAN
-            BVuyJ1VT8Hf/ocfs1P7u+IEbi9n/IvfM0AD3ADgbNQl92r8/54fGamQ4Hr8Fs+nO
-            Rkrwlv8l0jz+7naPGorhwRWjn86m0vPwDviLhI194ml+OkUGTHtnPYwW2pmEUPMc
-            CJ4YoGyqwDZNJzFKYyrNTbUzAASXFHnhFFXLOVVIFUjXnGom0ghkuKA5uQXDPC22
-            C8aCd9Czwa3LbDI+bUNJWZn65qH5FiWE+GplIGBp/hftSngZrbFo4PawnBubV+NI
-            jK3ZKJKZu9i37op6kynpF46fm/A0cs+uW2mbgBktbNJcAWlNXgzi3SEwachXCpc6
-            FAujtMzuuiyy6RjW5wzmvKnnGIro8U1dZv7RWjN0sZ0Boy8og6FRFm9eK+/gLfnH
-            o2YtCVGFfE7isuaM3TRCcFGQLEma3TIhdcTlkRc=
-            =hLGJ
+            hQEMAzB6fv8Ha/LEAQgAmI5k7Gaqr7n+DhhPxzSSNyIr79tr6GELdRD21vS+Nkv7
+            NiMMk/pAUlhnFgHe5hvyQ3TOgFi+iCxSANuUUKRXYz88WB6OU7qX29QbDDLWaIOr
+            uM1LmKzL6Vv4dK2K+NRz9SnW0YUwTPVGDLOhotg2UH3KlFLCMmBI7mP0RwcC/plH
+            LWXG6OIntPt7eHiZ7dQ/HlgzCLzGGnnCB8X3sQg0zW4z+UHKA3SLBnq0wvj+dO3h
+            kT4FJomcLyGQEe+XfpvNykDA7pnCVx70Keq1ZwJvoQ/Q2UD39mE26640brqFFXo+
+            +Hp7wSXll9WFqbXaPRiNVd2Tvvp0bCfeGViT8RBiodJeAVBboFyXQ8mfM/ZZEV3X
+            FPUC4MgkG4JeD3rJ3rK4CBKPy/OIqepZthQSOj1zQzxaH58lAxBPeQUKeBxyvrRV
+            7IURtiYMePw/OfwR9Q+0z19fqBv8swE2R2lchIR4iA==
+            =4oYF
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
     encrypted_regex: ^(data|stringData)$
