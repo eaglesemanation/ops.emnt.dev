@@ -39,6 +39,10 @@ spec:
               value: "1000"
             - name: TZ
               value: "Etc/UTC"
+            # https://gitlab.alpinelinux.org/alpine/aports/-/issues/14565
+            # Mitigates "Permission denied" errors on startup
+            - name: PGSSLCERT
+              value: /config/.postgresql/postgresql.crt
             - name: POSTGRES_ENABLED
               value: "true"
             - name: POSTGRES_HOST
