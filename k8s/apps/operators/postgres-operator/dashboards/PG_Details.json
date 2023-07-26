@@ -18,7 +18,7 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 45,
+    "id": 6,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -77,7 +77,7 @@
                 "showThresholdMarkers": true,
                 "text": {}
             },
-            "pluginVersion": "9.5.5",
+            "pluginVersion": "10.0.2",
             "targets": [
                 {
                     "datasource": {
@@ -85,7 +85,7 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "ccp_connection_stats_total{namespace=\"$namespace\", pod=\"$pod\"} / ccp_connection_stats_max_connections{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "expr": "ccp_connection_stats_total{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"} / ccp_connection_stats_max_connections{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "interval": "",
                     "legendFormat": "",
                     "range": true,
@@ -151,16 +151,18 @@
                 "showThresholdMarkers": false,
                 "text": {}
             },
-            "pluginVersion": "9.5.5",
+            "pluginVersion": "10.0.2",
             "targets": [
                 {
                     "datasource": {
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "1 - (ccp_connection_stats_idle{namespace=\"$namespace\", pod=\"$pod\"} / ccp_connection_stats_total{namespace=\"$namespace\", pod=\"$pod\"})",
+                    "editorMode": "code",
+                    "expr": "1 - (ccp_connection_stats_idle{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"} / ccp_connection_stats_total{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"})",
                     "interval": "",
                     "legendFormat": "",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -223,16 +225,18 @@
                 "text": {},
                 "textMode": "auto"
             },
-            "pluginVersion": "9.5.5",
+            "pluginVersion": "10.0.2",
             "targets": [
                 {
                     "datasource": {
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_connection_stats_max_idle_in_txn_time{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_connection_stats_max_idle_in_txn_time{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "interval": "",
                     "legendFormat": "",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -295,16 +299,18 @@
                 "showThresholdMarkers": true,
                 "text": {}
             },
-            "pluginVersion": "9.5.5",
+            "pluginVersion": "10.0.2",
             "targets": [
                 {
                     "datasource": {
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_transaction_wraparound_percent_towards_wraparound{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_transaction_wraparound_percent_towards_wraparound{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "interval": "",
                     "legendFormat": "",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -367,16 +373,18 @@
                 "showThresholdMarkers": true,
                 "text": {}
             },
-            "pluginVersion": "9.5.5",
+            "pluginVersion": "10.0.2",
             "targets": [
                 {
                     "datasource": {
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_stat_database_blks_hit{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"})  / sum( ccp_stat_database_blks_hit{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"} + ccp_stat_database_blks_read{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}) * 100",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_stat_database_blks_hit{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"})  / sum( ccp_stat_database_blks_hit{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"} + ccp_stat_database_blks_read{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}) * 100",
                     "interval": "",
                     "legendFormat": "",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -432,7 +440,7 @@
                 "text": {},
                 "valueMode": "color"
             },
-            "pluginVersion": "9.5.5",
+            "pluginVersion": "10.0.2",
             "targets": [
                 {
                     "datasource": {
@@ -440,7 +448,7 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "ccp_replication_lag_size_bytes{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "expr": "ccp_replication_lag_size_bytes{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "interval": "",
                     "legendFormat": "{{replica}}",
                     "range": true,
@@ -537,12 +545,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_connection_stats_max_connections{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_connection_stats_max_connections{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "hide": false,
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Max",
                     "metric": "",
+                    "range": true,
                     "refId": "A",
                     "step": 60
                 },
@@ -551,11 +561,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_connection_stats_active{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_connection_stats_active{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Active",
                     "metric": "",
+                    "range": true,
                     "refId": "B",
                     "step": 60
                 },
@@ -564,11 +576,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_connection_stats_idle_in_txn{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_connection_stats_idle_in_txn{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "IdleTxn",
                     "metric": "",
+                    "range": true,
                     "refId": "C",
                     "step": 60
                 },
@@ -577,11 +591,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_connection_stats_idle{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_connection_stats_idle{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Idle",
                     "metric": "",
+                    "range": true,
                     "refId": "D",
                     "step": 60
                 }
@@ -695,7 +711,7 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{namespace=\"$namespace\", pod=\"$pod\"})",
+                    "expr": "max by (cluster, job, replica) (ccp_replication_lag_size_bytes{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"})",
                     "format": "time_series",
                     "instant": false,
                     "interval": "",
@@ -708,10 +724,12 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_replication_lag_replay_time{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_replication_lag_replay_time{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "hide": false,
                     "interval": "",
-                    "legendFormat": "Time {{job}}",
+                    "legendFormat": "Time $cluster",
+                    "range": true,
                     "refId": "B"
                 }
             ],
@@ -809,7 +827,7 @@
                         "uid": "PROMETHEUS"
                     },
                     "editorMode": "code",
-                    "expr": "sum(ccp_database_size_bytes{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"})",
+                    "expr": "sum(ccp_database_size_bytes{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
@@ -821,11 +839,13 @@
                     "datasource": {
                         "uid": "PROMETHEUS"
                     },
-                    "expr": "ccp_database_size_bytes{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_database_size_bytes{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "{{dbname}}",
+                    "range": true,
                     "refId": "B"
                 }
             ],
@@ -918,11 +938,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(irate(ccp_stat_database_xact_commit{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(irate(ccp_stat_database_xact_commit{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m])) + sum(irate(ccp_stat_database_xact_rollback{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "total",
+                    "range": true,
                     "refId": "A"
                 },
                 {
@@ -930,10 +952,12 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "irate(ccp_stat_database_xact_commit{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]) + irate(ccp_stat_database_xact_rollback{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "irate(ccp_stat_database_xact_commit{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]) + irate(ccp_stat_database_xact_rollback{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m])",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "{{ dbname }}",
+                    "range": true,
                     "refId": "B"
                 }
             ],
@@ -1026,11 +1050,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_transaction_wraparound_percent_towards_wraparound{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_transaction_wraparound_percent_towards_wraparound{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -1122,11 +1148,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_transaction_wraparound_percent_towards_emergency_autovac{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -1229,12 +1257,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(irate(ccp_stat_database_tup_fetched{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(irate(ccp_stat_database_tup_fetched{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Fetched",
                     "metric": "pg_stat_database_tup_fetched",
+                    "range": true,
                     "refId": "A",
                     "step": 240
                 },
@@ -1243,12 +1273,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(irate(ccp_stat_database_tup_inserted{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(irate(ccp_stat_database_tup_inserted{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Inserted",
                     "metric": "pg_stat_database_tup_inserted",
+                    "range": true,
                     "refId": "B",
                     "step": 240
                 },
@@ -1257,12 +1289,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(irate(ccp_stat_database_tup_updated{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(irate(ccp_stat_database_tup_updated{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Updated",
                     "metric": "pg_stat_database_tup_updated",
+                    "range": true,
                     "refId": "C",
                     "step": 240
                 },
@@ -1271,12 +1305,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(irate(ccp_stat_database_tup_deleted{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(irate(ccp_stat_database_tup_deleted{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Deleted",
                     "metric": "pg_stat_database_tup_deleted",
+                    "range": true,
                     "refId": "D",
                     "step": 240
                 },
@@ -1385,11 +1421,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"accessexclusivelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"accessexclusivelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "accessexclusive",
+                    "range": true,
                     "refId": "A",
                     "step": 240
                 },
@@ -1398,11 +1436,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"accesssharelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"accesssharelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "accessshare",
+                    "range": true,
                     "refId": "B",
                     "step": 240
                 },
@@ -1411,11 +1451,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"exclusivelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"exclusivelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "exclusive",
+                    "range": true,
                     "refId": "C",
                     "step": 240
                 },
@@ -1424,11 +1466,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"rowexclusivelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"rowexclusivelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "rowexclusive",
+                    "range": true,
                     "refId": "D",
                     "step": 240
                 },
@@ -1437,11 +1481,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"rowsharelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"rowsharelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "rowshare",
+                    "range": true,
                     "refId": "E",
                     "step": 240
                 },
@@ -1450,11 +1496,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"sharelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"sharelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "share",
+                    "range": true,
                     "refId": "F",
                     "step": 240
                 },
@@ -1463,11 +1511,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"sharerowexclusivelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"sharerowexclusivelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "sharerowexclusive",
+                    "range": true,
                     "refId": "G",
                     "step": 240
                 },
@@ -1476,11 +1526,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", pod=\"$pod\",mode=\"shareupdateexclusivelock\", dbname=~\"$database\"})",
+                    "editorMode": "code",
+                    "expr": "sum(ccp_locks_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", mode=\"shareupdateexclusivelock\", dbname=~\"$database\"})",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "shareupdateexclusive",
+                    "range": true,
                     "refId": "H",
                     "step": 240
                 }
@@ -1503,6 +1555,8 @@
                         "axisColorMode": "text",
                         "axisLabel": "",
                         "axisPlacement": "auto",
+                        "axisSoftMax": 100,
+                        "axisSoftMin": 0,
                         "barAlignment": 0,
                         "drawStyle": "line",
                         "fillOpacity": 10,
@@ -1575,7 +1629,7 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "ccp_stat_database_blks_hit{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}  / ( ccp_stat_database_blks_hit{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"} + ccp_stat_database_blks_read{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}) * 100",
+                    "expr": "ccp_stat_database_blks_hit{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}  / ( ccp_stat_database_blks_hit{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"} + ccp_stat_database_blks_read{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}) * 100",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
@@ -1676,12 +1730,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(irate(ccp_stat_database_xact_commit{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(irate(ccp_stat_database_xact_commit{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "commit",
                     "metric": "pg_stat_database_xact_commit",
+                    "range": true,
                     "refId": "A",
                     "step": 120
                 },
@@ -1690,11 +1746,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(irate(ccp_stat_database_xact_rollback{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(irate(ccp_stat_database_xact_rollback{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "rollback",
+                    "range": true,
                     "refId": "B",
                     "step": 120
                 }
@@ -1747,7 +1805,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1826,12 +1885,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "ccp_wal_activity_total_size_bytes{namespace=\"$namespace\", pod=\"$pod\"}",
+                    "editorMode": "code",
+                    "expr": "ccp_wal_activity_total_size_bytes{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}",
                     "format": "time_series",
                     "hide": false,
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "Total Size",
+                    "range": true,
                     "refId": "A"
                 },
                 {
@@ -1839,10 +1900,12 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "idelta(ccp_archive_command_status_archived_count{namespace=\"$namespace\", pod=\"$pod\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "idelta(ccp_archive_command_status_archived_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m])",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "Archive Rate",
+                    "range": true,
                     "refId": "B"
                 },
                 {
@@ -1850,10 +1913,12 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "idelta(ccp_archive_command_status_failed_count{namespace=\"$namespace\", pod=\"$pod\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "idelta(ccp_archive_command_status_failed_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m])",
                     "hide": false,
                     "interval": "",
                     "legendFormat": "Fail Rate",
+                    "range": true,
                     "refId": "C"
                 }
             ],
@@ -1905,7 +1970,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -1948,12 +2014,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "irate(ccp_stat_bgwriter_buffers_alloc{namespace=\"$namespace\", pod=\"$pod\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "irate(ccp_stat_bgwriter_buffers_alloc{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m])",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Allocated",
                     "metric": "pg_stat_bgwriter_buffers_alloc",
+                    "range": true,
                     "refId": "A",
                     "step": 120
                 },
@@ -1962,12 +2030,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "irate(ccp_stat_bgwriter_buffers_backend{namespace=\"$namespace\", pod=\"$pod\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "irate(ccp_stat_bgwriter_buffers_backend{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m])",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Backend",
                     "metric": "pg_stat_bgwriter_buffers_backend",
+                    "range": true,
                     "refId": "B",
                     "step": 120
                 },
@@ -1976,12 +2046,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{namespace=\"$namespace\", pod=\"$pod\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "irate(ccp_stat_bgwriter_buffers_backend_fsync{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m])",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "FSync",
                     "metric": "pg_stat_bgwriter_buffers_backend_fsync",
+                    "range": true,
                     "refId": "C",
                     "step": 120
                 },
@@ -1990,12 +2062,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{namespace=\"$namespace\", pod=\"$pod\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "irate(ccp_stat_bgwriter_buffers_checkpoint{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m])",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "CheckPoint",
                     "metric": "pg_stat_bgwriter_buffers_checkpoint",
+                    "range": true,
                     "refId": "D",
                     "step": 120
                 },
@@ -2004,12 +2078,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "irate(ccp_stat_bgwriter_buffers_clean{namespace=\"$namespace\", pod=\"$pod\"}[5m])",
+                    "editorMode": "code",
+                    "expr": "irate(ccp_stat_bgwriter_buffers_clean{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m])",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Clean",
                     "metric": "pg_stat_bgwriter_buffers_clean",
+                    "range": true,
                     "refId": "E",
                     "step": 120
                 }
@@ -2062,7 +2138,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -2101,12 +2178,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(rate(ccp_stat_database_deadlocks{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(rate(ccp_stat_database_deadlocks{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Conflicts",
                     "metric": "pg_stat_database_conflicts",
+                    "range": true,
                     "refId": "A",
                     "step": 240
                 },
@@ -2115,12 +2194,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(rate(ccp_stat_database_conflicts{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(rate(ccp_stat_database_conflicts{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "DeadLocks",
                     "metric": "pg_stat_database_deadlocks",
+                    "range": true,
                     "refId": "B",
                     "step": 240
                 }
@@ -2173,7 +2254,8 @@
                         "mode": "absolute",
                         "steps": [
                             {
-                                "color": "green"
+                                "color": "green",
+                                "value": null
                             },
                             {
                                 "color": "red",
@@ -2216,12 +2298,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(rate(ccp_stat_user_tables_autovacuum_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "AutoVacuum",
                     "metric": "ccp_stat_user_tables_autovacuum_count",
+                    "range": true,
                     "refId": "A",
                     "step": 120
                 },
@@ -2231,7 +2315,7 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{namespace=\"$namespace\", pod=\"$pod\", dbname=~\"$database\"}[5m]))",
+                    "expr": "sum(rate(ccp_stat_user_tables_autoanalyze_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\", dbname=~\"$database\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
@@ -2245,11 +2329,13 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
-                    "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{namespace=\"$namespace\", pod=\"$pod\"}[5m]))",
+                    "editorMode": "code",
+                    "expr": "sum(rate(ccp_stat_user_tables_vacuum_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m]))",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
                     "legendFormat": "Vacuum",
+                    "range": true,
                     "refId": "C",
                     "step": 120
                 },
@@ -2259,7 +2345,7 @@
                         "uid": "prometheus"
                     },
                     "editorMode": "code",
-                    "expr": "sum(rate(ccp_stat_user_tables_analyze_count{namespace=\"$namespace\", pod=\"$pod\"}[5m]))",
+                    "expr": "sum(rate(ccp_stat_user_tables_analyze_count{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"}[5m]))",
                     "format": "time_series",
                     "intervalFactor": 2,
                     "legendFormat": "Analyze",
@@ -2283,7 +2369,7 @@
         "list": [
             {
                 "current": {
-                    "selected": false,
+                    "selected": true,
                     "text": "authentik",
                     "value": "authentik"
                 },
@@ -2313,23 +2399,23 @@
             },
             {
                 "current": {
-                    "selected": false,
-                    "text": "authentik-pg-instance1-gn25-0",
-                    "value": "authentik-pg-instance1-gn25-0"
+                    "selected": true,
+                    "text": "authentik-pg",
+                    "value": "authentik-pg"
                 },
                 "datasource": {
                     "type": "prometheus",
                     "uid": "prometheus"
                 },
-                "definition": "label_values(up{job=\"postgres-operator/postgres-clusters\", namespace=\"$namespace\"},pod)",
+                "definition": "label_values(up{job=\"postgres-operator/postgres-clusters\", namespace=\"$namespace\"},postgres_operator_crunchydata_com_cluster)",
                 "hide": 0,
                 "includeAll": true,
-                "label": "Node",
+                "label": "Cluster",
                 "multi": false,
-                "name": "pod",
+                "name": "cluster",
                 "options": [],
                 "query": {
-                    "query": "label_values(up{job=\"postgres-operator/postgres-clusters\", namespace=\"$namespace\"},pod)",
+                    "query": "label_values(up{job=\"postgres-operator/postgres-clusters\", namespace=\"$namespace\"},postgres_operator_crunchydata_com_cluster)",
                     "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,
@@ -2343,7 +2429,7 @@
             },
             {
                 "current": {
-                    "selected": false,
+                    "selected": true,
                     "text": [
                         "authentik"
                     ],
@@ -2355,7 +2441,7 @@
                     "type": "prometheus",
                     "uid": "prometheus"
                 },
-                "definition": "label_values(ccp_database_size_bytes{namespace=\"$namespace\", pod=\"$pod\"},dbname)",
+                "definition": "label_values(ccp_database_size_bytes{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"},dbname)",
                 "hide": 0,
                 "includeAll": true,
                 "label": "Database",
@@ -2363,7 +2449,7 @@
                 "name": "database",
                 "options": [],
                 "query": {
-                    "query": "label_values(ccp_database_size_bytes{namespace=\"$namespace\", pod=\"$pod\"},dbname)",
+                    "query": "label_values(ccp_database_size_bytes{namespace=\"$namespace\", postgres_operator_crunchydata_com_cluster=\"$cluster\"},dbname)",
                     "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,
@@ -2397,6 +2483,6 @@
     "timezone": "browser",
     "title": "PostgreSQL Details",
     "uid": "6jtN_vfiz",
-    "version": 8,
+    "version": 1,
     "weekStart": ""
 }

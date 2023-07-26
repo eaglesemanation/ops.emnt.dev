@@ -18,7 +18,6 @@
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 0,
-    "id": 46,
     "links": [],
     "liveNow": false,
     "panels": [
@@ -75,7 +74,7 @@
                 },
                 "textMode": "auto"
             },
-            "pluginVersion": "9.5.5",
+            "pluginVersion": "10.0.2",
             "targets": [
                 {
                     "datasource": {
@@ -84,7 +83,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": true,
-                    "expr": "time()- ccp_backrest_oldest_full_backup_time_seconds{stanza=\"$backrest_stanza\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+                    "expr": "time()- ccp_backrest_oldest_full_backup_time_seconds{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
                     "interval": "",
                     "legendFormat": "",
                     "range": true,
@@ -182,7 +181,7 @@
                     },
                     "editorMode": "code",
                     "exemplar": true,
-                    "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{stanza=\"$backrest_stanza\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+                    "expr": "ccp_backrest_last_incr_backup_time_since_completion_seconds{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
@@ -195,13 +194,15 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
+                    "editorMode": "code",
                     "exemplar": true,
-                    "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{stanza=\"$backrest_stanza\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+                    "expr": "ccp_backrest_last_diff_backup_time_since_completion_seconds{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
                     "format": "time_series",
                     "hide": false,
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "diff",
+                    "range": true,
                     "refId": "B"
                 },
                 {
@@ -209,13 +210,15 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
+                    "editorMode": "code",
                     "exemplar": true,
-                    "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{stanza=\"$backrest_stanza\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+                    "expr": "ccp_backrest_last_full_backup_time_since_completion_seconds{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
                     "format": "time_series",
                     "hide": false,
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "full",
+                    "range": true,
                     "refId": "C"
                 }
             ],
@@ -308,12 +311,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
+                    "editorMode": "code",
                     "exemplar": true,
-                    "expr": "ccp_backrest_last_info_backup_runtime_seconds{stanza=\"$backrest_stanza\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+                    "expr": "ccp_backrest_last_info_backup_runtime_seconds{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "{{backup_type}}",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -406,12 +411,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
+                    "editorMode": "code",
                     "exemplar": true,
-                    "expr": "ccp_backrest_last_info_repo_total_size_bytes{stanza=\"$backrest_stanza\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+                    "expr": "ccp_backrest_last_info_repo_total_size_bytes{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "{{backup_type}}",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -504,12 +511,14 @@
                         "type": "prometheus",
                         "uid": "prometheus"
                     },
+                    "editorMode": "code",
                     "exemplar": true,
-                    "expr": "ccp_backrest_last_info_repo_backup_size_bytes{stanza=\"$backrest_stanza\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
+                    "expr": "ccp_backrest_last_info_repo_backup_size_bytes{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\", repo=\"$backrest_repo\"} + on(job,instance) group_left() (ccp_is_in_recovery_status == 2)",
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 1,
                     "legendFormat": "{{backup_type}}",
+                    "range": true,
                     "refId": "A"
                 }
             ],
@@ -529,32 +538,25 @@
             {
                 "current": {
                     "selected": false,
-                    "text": "db",
-                    "value": "db"
+                    "text": "authentik-pg",
+                    "value": "authentik-pg"
                 },
-                "datasource": {
-                    "type": "prometheus",
-                    "uid": "prometheus"
-                },
-                "definition": "label_values(ccp_backrest_last_info_backup_runtime_seconds{},stanza)",
+                "definition": "label_values(up{job=\"postgres-operator/postgres-clusters\"},postgres_operator_crunchydata_com_cluster)",
                 "hide": 0,
                 "includeAll": false,
-                "label": "Stanza",
+                "label": "Cluster",
                 "multi": false,
-                "name": "backrest_stanza",
+                "name": "backrest_cluster",
                 "options": [],
                 "query": {
-                    "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{},stanza)",
+                    "query": "label_values(up{job=\"postgres-operator/postgres-clusters\"},postgres_operator_crunchydata_com_cluster)",
                     "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,
                 "regex": "",
                 "skipUrlSync": false,
-                "sort": 1,
-                "tagValuesQuery": "",
-                "tagsQuery": "",
-                "type": "query",
-                "useTags": false
+                "sort": 0,
+                "type": "query"
             },
             {
                 "current": {
@@ -566,7 +568,7 @@
                     "type": "prometheus",
                     "uid": "prometheus"
                 },
-                "definition": "label_values(ccp_backrest_last_info_backup_runtime_seconds{stanza=\"$backrest_stanza\"}, repo)",
+                "definition": "label_values(ccp_backrest_last_info_backup_runtime_seconds{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\"},repo)",
                 "hide": 0,
                 "includeAll": false,
                 "label": "Repo",
@@ -574,8 +576,8 @@
                 "name": "backrest_repo",
                 "options": [],
                 "query": {
-                    "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{stanza=\"$backrest_stanza\"}, repo)",
-                    "refId": "StandardVariableQuery"
+                    "query": "label_values(ccp_backrest_last_info_backup_runtime_seconds{postgres_operator_crunchydata_com_cluster=\"$backrest_cluster\"},repo)",
+                    "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,
                 "regex": "",
