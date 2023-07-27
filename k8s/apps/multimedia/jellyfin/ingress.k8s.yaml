@@ -35,7 +35,7 @@ metadata:
     kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
   entryPoints:
-    - jellyfin-service-disc
+    - jf-svc-disc
   routes:
     - services:
         - name: jellyfin
@@ -51,7 +51,7 @@ metadata:
     kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
   entryPoints:
-    - jellyfin-client-disc
+    - jf-client-disc
   routes:
     - services:
         - name: jellyfin

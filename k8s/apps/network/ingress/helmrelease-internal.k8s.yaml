@@ -112,12 +112,14 @@ spec:
         exposedPort: 25565
         proxyProtocol:
           trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
-      jellyfin-service-disc:
+      # Jellyfin service discovery
+      jf-svc-disc:
         protocol: UDP
         port: 1900
         expose: true
         exposedPort: 1900
-      jellyfin-client-disc:
+      # Jellyfin client discovery
+      jf-client-disc:
         protocol: UDP
         port: 7359
         expose: true
