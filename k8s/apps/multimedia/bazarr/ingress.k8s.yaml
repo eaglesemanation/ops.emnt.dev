@@ -1,21 +1,34 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: bazarr
   namespace: bazarr
   labels:
     app.kubernetes.io/name: bazarr
     app.kubernetes.io/instance: bazarr
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/name: "Bazarr"
+    gethomepage.dev/group: "Multimedia"
+    gethomepage.dev/icon: "bazarr"
 spec:
-  ingressClassName: traefik-internal-ingress
-  rules:
-    - host: bazarr.emnt.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: bazarr
-                port:
-                  name: http
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`bazarr.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: bazarr
+          namespace: bazarr
+          port: 6767
+    - kind: Rule
+      match: "Host(`flood.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
