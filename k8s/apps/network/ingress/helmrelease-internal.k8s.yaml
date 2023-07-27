@@ -98,11 +98,6 @@ spec:
         exposedPort: 993
         proxyProtocol:
           trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
-      derp:
-        protocol: UDP
-        port: 3478
-        expose: true
-        exposedPort: 3478
       mc-bedrock:
         protocol: UDP
         port: 19132
@@ -117,3 +112,13 @@ spec:
         exposedPort: 25565
         proxyProtocol:
           trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+      jellyfin-service-disc:
+        protocol: UDP
+        port: 1900
+        expose: true
+        exposedPort: 1900
+      jellyfin-client-disc:
+        protocol: UDP
+        port: 7359
+        expose: true
+        exposedPort: 7359
