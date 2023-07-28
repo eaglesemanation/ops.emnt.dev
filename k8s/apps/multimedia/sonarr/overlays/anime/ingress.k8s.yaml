@@ -22,7 +22,7 @@ spec:
         - name: authentik
           namespace: authentik
       services:
-        - name: sonarr
+        - name: sonarr-anime
           namespace: sonarr-anime
           port: 8989
     - kind: Rule

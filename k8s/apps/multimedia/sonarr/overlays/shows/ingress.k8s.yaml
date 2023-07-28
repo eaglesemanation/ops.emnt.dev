@@ -22,7 +22,7 @@ spec:
         - name: authentik
           namespace: authentik
       services:
-        - name: sonarr
+        - name: sonarr-shows
           namespace: sonarr-shows
           port: 8989
     - kind: Rule
