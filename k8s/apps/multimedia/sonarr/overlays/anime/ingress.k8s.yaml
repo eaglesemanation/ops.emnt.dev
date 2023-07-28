@@ -1,24 +1,33 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: sonarr
+  labels:
+    app.kubernetes.io/name: sonarr
+    app.kubernetes.io/instance: sonarr-anime
   annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
     gethomepage.dev/enabled: "true"
     gethomepage.dev/name: "Sonarr - Anime"
     gethomepage.dev/group: "Multimedia"
     gethomepage.dev/icon: "sonarr"
-  labels:
-    app.kubernetes.io/name: sonarr
 spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: sonarr-anime.emnt.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: sonarr
-                port:
-                  number: 8989
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`sonarr-anime.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: sonarr
+          namespace: sonarr-anime
+          port: 8989
+    - kind: Rule
+      match: "Host(`sonarr-anime.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
