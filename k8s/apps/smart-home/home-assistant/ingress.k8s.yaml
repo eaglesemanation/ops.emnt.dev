@@ -1,21 +1,30 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: home-assistant
   namespace: home-assistant
   labels:
     app.kubernetes.io/name: home-assistant
     app.kubernetes.io/instance: home-assistant
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: home-assistant.emnt.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: home-assistant
-                port:
-                  name: http
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`home-assistant.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: home-assistant
+          namespace: home-assistant
+          port: 8123
+    - kind: Rule
+      match: "Host(`home-assistant.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
