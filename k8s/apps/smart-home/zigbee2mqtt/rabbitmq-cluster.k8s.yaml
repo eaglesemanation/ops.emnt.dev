@@ -4,6 +4,8 @@ kind: RabbitmqCluster
 metadata:
   name: mqtt
   namespace: zigbee2mqtt
+  annotations:
+    rabbitmq.com/topology-allowed-namespaces: zigbee2mqtt,home-assistant
 spec:
   persistence:
     storageClassName: freenas-api-iscsi-csi
