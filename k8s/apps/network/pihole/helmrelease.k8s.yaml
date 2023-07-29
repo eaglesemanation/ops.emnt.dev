@@ -16,7 +16,6 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
-    hostNetwork: true
     admin:
       existingSecret: pihole-web-password
     serviceDns:

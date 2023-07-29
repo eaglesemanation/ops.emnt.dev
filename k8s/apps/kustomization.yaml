@@ -8,4 +8,5 @@ resources:
   - network
   - operators
   - security
+  - smart-home
   - storage

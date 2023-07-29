@@ -13,4 +13,3 @@ resources:
   - pihole.k8s.yaml
   - speedtest.k8s.yaml
   - vpn-egress.k8s.yaml
-  - zigbee2mqtt.k8s.yaml
