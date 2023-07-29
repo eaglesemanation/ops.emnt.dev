@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: home-assistant
     app.kubernetes.io/instance: home-assistant
   annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
+    kubernetes.io/ingress.class: ingress-external-traefik
 spec:
   entryPoints:
     - websecure
