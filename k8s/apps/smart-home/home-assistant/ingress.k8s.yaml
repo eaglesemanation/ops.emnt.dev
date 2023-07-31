@@ -13,8 +13,9 @@ spec:
   entryPoints:
     - websecure
   routes:
+    # Insert Authentik middleware for Home Assistant Auth API
     - kind: Rule
-      match: Host(`home-assistant.emnt.dev`)
+      match: Host(`home-assistant.emnt.dev`) && PathPrefix(`/auth/`) && !Path(`/auth/token`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -22,8 +23,15 @@ spec:
         - name: home-assistant
           namespace: home-assistant
           port: 8123
+    # No need for middleware, user should already be authenticated
     - kind: Rule
-      match: "Host(`home-assistant.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: Host(`home-assistant.emnt.dev`)
+      services:
+        - name: home-assistant
+          namespace: home-assistant
+          port: 8123
+    - kind: Rule
+      match: Host(`home-assistant.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
         - name: authentik
           namespace: authentik
