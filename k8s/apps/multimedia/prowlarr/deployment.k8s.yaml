@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/name: prowlarr
     app.kubernetes.io/instance: prowlarr
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:

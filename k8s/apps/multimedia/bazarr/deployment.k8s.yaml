@@ -12,6 +12,8 @@ spec:
     matchLabels:
       app.kubernetes.io/name: bazarr
       app.kubernetes.io/instance: bazarr
+  strategy:
+    type: Recreate
   template:
     metadata:
       labels:
