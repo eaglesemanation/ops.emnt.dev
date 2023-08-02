@@ -46,6 +46,7 @@ spec:
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
           startupProbe:
+            failureThreshold: 20
             httpGet:
               path: /health
               port: http
