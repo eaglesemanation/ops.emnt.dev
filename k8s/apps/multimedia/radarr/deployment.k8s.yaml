@@ -34,6 +34,18 @@ spec:
               memory: 1Gi
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
           env:
             - name: PUID
               value: "1000"

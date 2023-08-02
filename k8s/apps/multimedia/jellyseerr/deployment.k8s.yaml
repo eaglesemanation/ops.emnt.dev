@@ -32,6 +32,18 @@ spec:
               memory: 128Mi
             limits:
               memory: 512Mi
+          startupProbe:
+            httpGet:
+              path: /api/v1/status
+              port: http
+          livenessProbe:
+            httpGet:
+              path: /api/v1/status
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /api/v1/status
+              port: http
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Yarn wants a bunch of writable dirs
           env:

@@ -1,26 +1,30 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: prowlarr
   namespace: prowlarr
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Prowlarr"
-    gethomepage.dev/group: "Multimedia"
-    gethomepage.dev/icon: "prowlarr"
   labels:
     app.kubernetes.io/name: prowlarr
     app.kubernetes.io/instance: prowlarr
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: prowlarr.emnt.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: prowlarr
-                port:
-                  name: http
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`prowlarr.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: prowlarr
+          namespace: prowlarr
+          port: 9696
+    - kind: Rule
+      match: "Host(`prowlarr.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000

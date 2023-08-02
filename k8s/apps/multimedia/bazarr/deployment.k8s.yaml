@@ -32,6 +32,37 @@ spec:
               memory: 1Gi
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
+          startupProbe:
+            exec:
+              # Extracts API key from initialize script and gets health status
+              command:
+                - bash
+                - -c
+                - |-
+                  export PORT=6767; curl -H X-API-KEY:"$( \
+                    curl -s localhost:$PORT/initialize.js | \
+                    awk 'match($0, /"apiKey": "[^ ]*", /){print substr($0, RSTART+11, RLENGTH-11-3);}' \
+                  )" localhost:$PORT/api/system/health
+          livenessProbe:
+            exec:
+              command:
+                - bash
+                - -c
+                - |-
+                  export PORT=6767; curl -H X-API-KEY:"$( \
+                    curl -s localhost:$PORT/initialize.js | \
+                    awk 'match($0, /"apiKey": "[^ ]*", /){print substr($0, RSTART+11, RLENGTH-11-3);}' \
+                  )" localhost:$PORT/api/system/health
+          readinessProbe:
+            exec:
+              command:
+                - bash
+                - -c
+                - |-
+                  export PORT=6767; curl -H X-API-KEY:"$( \
+                    curl -s localhost:$PORT/initialize.js | \
+                    awk 'match($0, /"apiKey": "[^ ]*", /){print substr($0, RSTART+11, RLENGTH-11-3);}' \
+                  )" localhost:$PORT/api/system/health
           env:
             - name: PUID
               value: "1000"
