@@ -33,6 +33,18 @@ spec:
               memory: 64Mi
             limits:
               memory: 256Mi
+          startupProbe:
+            httpGet:
+              path: /health
+              port: web
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: web
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: web
           securityContext:
             readOnlyRootFilesystem: true
           ports:
