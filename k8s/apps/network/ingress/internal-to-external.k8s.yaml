@@ -19,4 +19,4 @@ spec:
           port: 443
           scheme: https
           passHostHeader: true
-          serversTransport: ingress-skipverify
+          serversTransport: ingress-skip-verify@kubernetescrd

@@ -21,4 +21,4 @@ spec:
           port: http
           scheme: https
           passHostHeader: true
-          serversTransport: ingress-insecure-transport
+          serversTransport: ingress-skip-verify@kubernetescrd
