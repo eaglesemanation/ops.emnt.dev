@@ -1,0 +1,63 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-controller-tcp
+  namespace: unifi-controller
+  labels:
+    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/instance: unifi-controller
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "true"
+spec:
+  type: LoadBalancer
+  loadBalancerIP: "${SVC_UNIFI_CONTROLLER}"
+  selector:
+    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/instance: unifi-controller
+  ports:
+    - name: http
+      port: 8443
+      targetPort: http
+      protocol: TCP
+    - name: dev-comms
+      port: 8080
+      targetPort: dev-comms
+    - name: speedtest
+      port: 6789
+      targetPort: speedtest
+    - name: guest-http
+      port: 8880
+      targetPort: guest-http
+    - name: guest-https
+      port: 8843
+      targetPort: guest-https
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: unifi-controller-udp
+  namespace: unifi-controller
+  labels:
+    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/instance: unifi-controller
+  annotations:
+    metallb.universe.tf/allow-shared-ip: "true"
+spec:
+  type: LoadBalancer
+  loadBalancerIP: "${SVC_UNIFI_CONTROLLER}"
+  selector:
+    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/instance: unifi-controller
+  ports:
+    - name: stun
+      port: 3478
+      targetPort: stun
+      protocol: UDP
+    - name: ap-discovery
+      port: 10001
+      targetPort: ap-discovery
+      protocol: UDP
+    - name: l2-discovery
+      port: 1900
+      targetPort: ap-discovery
+      protocol: UDP

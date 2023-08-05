@@ -12,4 +12,5 @@ resources:
   - metallb.k8s.yaml
   - pihole.k8s.yaml
   - speedtest.k8s.yaml
+  - unifi-controller.k8s.yaml
   - vpn-egress.k8s.yaml

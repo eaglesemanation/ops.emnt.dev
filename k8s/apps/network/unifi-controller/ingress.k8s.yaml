@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: unifi-controller
+  namespace: unifi-controller
+  labels:
+    app.kubernetes.io/name: unifi-controller
+    app.kubernetes.io/instance: unifi-controller
+spec:
+  ingressClassName: ingress-internal-traefik
+  rules:
+    - host: unifi.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: unifi-controller-tcp
+                port:
+                  name: http
