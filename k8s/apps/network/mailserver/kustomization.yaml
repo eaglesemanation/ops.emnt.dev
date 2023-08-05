@@ -21,6 +21,7 @@ configMapGenerator:
       - config/postfix-master.cf
       - config/postfix-virtual.cf
       - config/rspamd.local.lua
+      - config/healthcheck.sh
   - name: wireguard-entrypoint
     namespace: mailserver
     files:

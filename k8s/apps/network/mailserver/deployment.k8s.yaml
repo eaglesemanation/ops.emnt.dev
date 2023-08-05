@@ -104,6 +104,10 @@ spec:
               subPath: rspamd.local.lua
               mountPath: /etc/rspamd/rspamd.local.lua
               readOnly: true
+            - name: config
+              subPath: healthcheck.sh
+              mountPath: /tmp/healthcheck.sh
+              readOnly: true
             - name: secrets
               subPath: emnt.dev.rsa.private
               mountPath: /tmp/docker-mailserver/rspamd/keys/emnt.dev.rsa.private
@@ -131,6 +135,16 @@ spec:
             - name: tmp-files
               mountPath: /tmp
               readOnly: false
+          startupProbe:
+            initialDelaySeconds: 15
+            exec:
+              command: ["/bin/sh", "/tmp/healthcheck.sh"]
+          livenessProbe:
+            exec:
+              command: ["/bin/sh", "/tmp/healthcheck.sh"]
+          readinessProbe:
+            exec:
+              command: ["/bin/sh", "/tmp/healthcheck.sh"]
           ports:
             - name: transfer
               containerPort: 25
