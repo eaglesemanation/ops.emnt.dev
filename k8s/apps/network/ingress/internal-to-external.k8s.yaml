@@ -19,4 +19,4 @@ spec:
           port: 443
           scheme: https
           passHostHeader: true
-          serversTransport: insecure-transport
+          serversTransport: ingress-skipverify
