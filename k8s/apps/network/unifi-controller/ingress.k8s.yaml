@@ -1,21 +1,24 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
 metadata:
   name: unifi-controller
   namespace: unifi-controller
   labels:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: unifi.emnt.dev
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: unifi-controller-tcp
-                port:
-                  name: http
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`unifi.emnt.dev`)
+      services:
+        - name: unifi-controller-tcp
+          namespace: unifi-controller
+          port: http
+          scheme: https
+          passHostHeader: true
+          serversTransport: ingress-insecure-transport
