@@ -9,6 +9,10 @@ resources:
   - pvc.k8s.yaml
   - postgres.k8s.yaml
 configMapGenerator:
+  - name: bazarr-healthcheck
+    namespace: bazarr
+    files:
+      - healthcheck.sh
   - name: bazarr-pg-init
     namespace: bazarr
     files:
