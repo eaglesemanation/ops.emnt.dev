@@ -6,8 +6,8 @@ metadata:
   namespace: prowlarr
 spec:
   secretStoreRef:
-    kind: ClusterSecretStore
-    name: local-cluster
+    kind: SecretStore
+    name: prowlarr-secrets
   target:
     name: config-prowlarr
     template:
