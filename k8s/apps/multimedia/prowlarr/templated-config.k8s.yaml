@@ -1,0 +1,58 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: config-prowlarr
+  namespace: prowlarr
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: local-cluster
+  target:
+    name: config-prowlarr
+    template:
+      engineVersion: v2
+      data:
+        config.xml: |
+          <Config>
+            <BindAddress>*</BindAddress>
+            <Port>9696</Port>
+            <SslPort>6969</SslPort>
+            <EnableSsl>False</EnableSsl>
+            <LaunchBrowser>True</LaunchBrowser>
+            <ApiKey>{{ api-key }}</ApiKey>
+            <AuthenticationMethod>External</AuthenticationMethod>
+            <AuthenticationRequired>Enabled</AuthenticationRequired>
+            <Branch>master</Branch>
+            <LogLevel>info</LogLevel>
+            <SslCertPath></SslCertPath>
+            <SslCertPassword></SslCertPassword>
+            <UrlBase></UrlBase>
+            <InstanceName>Prowlarr</InstanceName>
+            <UpdateMechanism>Docker</UpdateMechanism>
+            <PostgresUser>{{ postgres-user }}</PostgresUser>
+            <PostgresPassword>{{ postgres-password }}</PostgresPassword>
+            <PostgresPort>{{ postgres-port }}</PostgresPort>
+            <PostgresHost>{{ postgres-host }}</PostgresHost>
+          </Config>
+  data:
+    - secretKey: api-key
+      remoteRef:
+        key: prowlarr-apikey
+        property: key
+    - secretKey: postgres-user
+      remoteRef:
+        key: prowlarr-pg-pguser-prowlarr
+        property: user
+    - secretKey: postgres-password
+      remoteRef:
+        key: prowlarr-pg-pguser-prowlarr
+        property: password
+    - secretKey: postgres-port
+      remoteRef:
+        key: prowlarr-pg-pguser-prowlarr
+        property: port
+    - secretKey: postgres-host
+      remoteRef:
+        key: prowlarr-pg-pguser-prowlarr
+        property: host

@@ -1,0 +1,2 @@
+\c prowlarr
+CREATE SCHEMA IF NOT EXISTS AUTHORIZATION prowlarr;
