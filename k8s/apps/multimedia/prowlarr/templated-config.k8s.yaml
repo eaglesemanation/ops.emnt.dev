@@ -20,7 +20,7 @@ spec:
             <SslPort>6969</SslPort>
             <EnableSsl>False</EnableSsl>
             <LaunchBrowser>True</LaunchBrowser>
-            <ApiKey>{{ api-key }}</ApiKey>
+            <ApiKey>{{ api_key }}</ApiKey>
             <AuthenticationMethod>External</AuthenticationMethod>
             <AuthenticationRequired>Enabled</AuthenticationRequired>
             <Branch>master</Branch>
@@ -30,29 +30,29 @@ spec:
             <UrlBase></UrlBase>
             <InstanceName>Prowlarr</InstanceName>
             <UpdateMechanism>Docker</UpdateMechanism>
-            <PostgresUser>{{ postgres-user }}</PostgresUser>
-            <PostgresPassword>{{ postgres-password }}</PostgresPassword>
-            <PostgresPort>{{ postgres-port }}</PostgresPort>
-            <PostgresHost>{{ postgres-host }}</PostgresHost>
+            <PostgresUser>{{ postgres_user }}</PostgresUser>
+            <PostgresPassword>{{ postgres_password }}</PostgresPassword>
+            <PostgresPort>{{ postgres_port }}</PostgresPort>
+            <PostgresHost>{{ postgres_host }}</PostgresHost>
           </Config>
   data:
-    - secretKey: api-key
+    - secretKey: api_key
       remoteRef:
         key: prowlarr-apikey
         property: key
-    - secretKey: postgres-user
+    - secretKey: postgres_user
       remoteRef:
         key: prowlarr-pg-pguser-prowlarr
         property: user
-    - secretKey: postgres-password
+    - secretKey: postgres_password
       remoteRef:
         key: prowlarr-pg-pguser-prowlarr
         property: password
-    - secretKey: postgres-port
+    - secretKey: postgres_port
       remoteRef:
         key: prowlarr-pg-pguser-prowlarr
         property: port
-    - secretKey: postgres-host
+    - secretKey: postgres_host
       remoteRef:
         key: prowlarr-pg-pguser-prowlarr
         property: host
