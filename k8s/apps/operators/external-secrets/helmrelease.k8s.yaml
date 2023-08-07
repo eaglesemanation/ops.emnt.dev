@@ -26,3 +26,5 @@ spec:
         release: prometheus
     webhook:
       create: false
+    certController:
+      create: false
