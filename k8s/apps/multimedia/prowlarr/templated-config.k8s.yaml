@@ -20,7 +20,7 @@ spec:
             <SslPort>6969</SslPort>
             <EnableSsl>False</EnableSsl>
             <LaunchBrowser>True</LaunchBrowser>
-            <ApiKey>{{ api_key }}</ApiKey>
+            <ApiKey>{{ .api_key }}</ApiKey>
             <AuthenticationMethod>External</AuthenticationMethod>
             <AuthenticationRequired>Enabled</AuthenticationRequired>
             <Branch>master</Branch>
@@ -30,10 +30,10 @@ spec:
             <UrlBase></UrlBase>
             <InstanceName>Prowlarr</InstanceName>
             <UpdateMechanism>Docker</UpdateMechanism>
-            <PostgresUser>{{ postgres_user }}</PostgresUser>
-            <PostgresPassword>{{ postgres_password }}</PostgresPassword>
-            <PostgresPort>{{ postgres_port }}</PostgresPort>
-            <PostgresHost>{{ postgres_host }}</PostgresHost>
+            <PostgresUser>{{ .postgres_user }}</PostgresUser>
+            <PostgresPassword>{{ .postgres_password }}</PostgresPassword>
+            <PostgresPort>{{ .postgres_port }}</PostgresPort>
+            <PostgresHost>{{ .postgres_host }}</PostgresHost>
           </Config>
   data:
     - secretKey: api_key
