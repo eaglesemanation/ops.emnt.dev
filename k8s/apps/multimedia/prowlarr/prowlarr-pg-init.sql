@@ -1,2 +1,2 @@
 \c prowlarr
-CREATE SCHEMA IF NOT EXISTS AUTHORIZATION prowlarr;
+GRANT CREATE ON SCHEMA public TO prowlarr;

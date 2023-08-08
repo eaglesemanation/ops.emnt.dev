@@ -9,6 +9,13 @@ spec:
   databaseInitSQL:
     name: prowlarr-pg-init
     key: prowlarr-pg-init.sql
+  patroni:
+    dynamicConfiguration:
+      postgresql:
+        pg_hba:
+          # Disables requirement for TLS
+          # TODO: Reenable it when Prowlarr supports configuring SSLMODE
+          - hostnossl all all all md5
   users:
     - name: prowlarr
       databases:

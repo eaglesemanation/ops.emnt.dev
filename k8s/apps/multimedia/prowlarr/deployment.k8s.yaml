@@ -56,9 +56,15 @@ spec:
             - name: TZ
               value: Etc/UTC
           volumeMounts:
-            - name: config
+            - name: data
               mountPath: /config
+            - name: config
+              mountPath: /config/config.xml
+              subPath: config.xml
       volumes:
-        - name: config
+        - name: data
           persistentVolumeClaim:
             claimName: config-prowlarr
+        - name: config
+          secret:
+            secretName: config-prowlarr
