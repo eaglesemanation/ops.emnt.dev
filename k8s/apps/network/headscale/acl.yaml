@@ -3,9 +3,12 @@ acls:
     src:
       - "*"
     dst:
-      - tag:shared:*
-      - group:gateways:*
-      - 192.168.25.0/24:*
+      # TODO: Replace with autogroup:internet when available
+      - 0.0.0.0/0:*
+      - "[::]/0:*"
+      #- tag:shared:*
+      #- group:gateways:*
+      #- 192.168.25.0/24:*
 groups:
   group:gateways:
     - emnt.dev
