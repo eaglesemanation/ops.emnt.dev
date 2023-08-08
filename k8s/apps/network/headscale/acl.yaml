@@ -5,7 +5,7 @@ acls:
     dst:
       # TODO: Replace with autogroup:internet when available
       - 0.0.0.0/0:*
-      - "[::]/0:*"
+      - "::/0:*"
       #- tag:shared:*
       #- group:gateways:*
       #- 192.168.25.0/24:*
