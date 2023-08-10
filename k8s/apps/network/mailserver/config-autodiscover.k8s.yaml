@@ -10,9 +10,9 @@ data:
   COMPANY_NAME: emnt.dev
   SUPPORT_URL: https://autodiscover.emnt.dev
   DOMAIN: emnt.dev
-  IMAP_HOST: imap.emnt.dev
+  IMAP_HOST: mail.emnt.dev
   IMAP_PORT: "993"
   IMAP_SOCKET: SSL
-  SMTP_HOST: smtp.emnt.dev
+  SMTP_HOST: mail.emnt.dev
   SMTP_PORT: "587"
   SMTP_SOCKET: STARTTLS
