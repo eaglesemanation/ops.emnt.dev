@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autodiscover-mailserver
+  namespace: mailserver
+  labels:
+    app.kubernetes.io/name: autodiscover-email-settings
+    app.kubernetes.io/instance: autodiscover-email-settings
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: autodiscover-email-settings
+      app.kubernetes.io/instance: autodiscover-email-settings
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: autodiscover-email-settings
+        app.kubernetes.io/instance: autodiscover-email-settings
+    spec:
+      containers:
+        - name: autodiscover
+          image: docker.io/monogramm/autodiscover-email-settings:1.4.0
+          envFrom:
+            - configMapRef:
+                name: autodiscover-mailserver

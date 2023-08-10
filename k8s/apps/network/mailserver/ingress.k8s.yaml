@@ -19,3 +19,35 @@ spec:
                 name: mailserver
                 port:
                   name: rspamd
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: autodiscover-mailserver
+  namespace: mailserver
+  labels:
+    app.kubernetes.io/name: autodiscover-email-settings
+    app.kubernetes.io/instance: autodiscover-email-settings
+spec:
+  ingressClassName: ingress-external-traefik
+  rules:
+    - host: autodiscover.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: autodiscover-mailserver
+                port:
+                  name: http
+    - host: autoconfig.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: autodiscover-mailserver
+                port:
+                  name: http
