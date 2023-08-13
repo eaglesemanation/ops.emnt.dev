@@ -1,0 +1,5 @@
+machine:
+  install:
+    extensions:
+      - image: ghcr.io/siderolabs/i915-ucode:20230625
+      - image: ghcr.io/siderolabs/intel-ucode:20230613
