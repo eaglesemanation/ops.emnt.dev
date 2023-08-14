@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: config-radarr
+  namespace: radarr
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: radarr-secrets
+  target:
+    name: config-radarr
+    template:
+      engineVersion: v2
+      data:
+        config.xml: |
+          <Config>
+            <BindAddress>*</BindAddress>
+            <Port>7878</Port>
+            <SslPort>9898</SslPort>
+            <EnableSsl>False</EnableSsl>
+            <LaunchBrowser>True</LaunchBrowser>
+            <ApiKey>{{ .api_key }}</ApiKey>
+            <AuthenticationMethod>None</AuthenticationMethod>
+            <Branch>master</Branch>
+            <LogLevel>info</LogLevel>
+            <SslCertPath></SslCertPath>
+            <SslCertPassword></SslCertPassword>
+            <UrlBase></UrlBase>
+            <InstanceName>Radarr</InstanceName>
+            <UpdateMechanism>Docker</UpdateMechanism>
+            <PostgresUser>{{ .postgres_user }}</PostgresUser>
+            <PostgresPassword>{{ .postgres_password }}</PostgresPassword>
+            <PostgresPort>{{ .postgres_port }}</PostgresPort>
+            <PostgresHost>{{ .postgres_host }}</PostgresHost>
+          </Config>
+  data:
+    - secretKey: api_key
+      remoteRef:
+        key: radarr-apikey
+        property: key
+    - secretKey: postgres_user
+      remoteRef:
+        key: radarr-pg-pguser-radarr
+        property: user
+    - secretKey: postgres_password
+      remoteRef:
+        key: radarr-pg-pguser-radarr
+        property: password
+    - secretKey: postgres_port
+      remoteRef:
+        key: radarr-pg-pguser-radarr
+        property: port
+    - secretKey: postgres_host
+      remoteRef:
+        key: radarr-pg-pguser-radarr
+        property: host

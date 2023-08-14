@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: radarr-apikey
+    namespace: radarr
+stringData:
+    key: ENC[AES256_GCM,data:XTNmm2sy5Pl9Ovg1/4rE3ryjdzjNiktcyYpUyrwWMr4=,iv:xdO/MJd/q+E7ekfQ3FrYMRkcHM6R7AzfKCtoSOiLnlU=,tag:buB/QBupTZT1fqVcSxtikA==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnczVWTmp5ZkNvNUZWbG9p
+            eXMzcWEvc091RS9BUnJxR0FGaDZaMGtSa2c0ClExSkQ4ZG5laXZpcVg1SVVMSkJ4
+            dHhWVkx3eEpibE5JMnpzeDdUWWhneUUKLS0tIGhUOHFQODA5bitSNlVpRTMxaC8v
+            SGRZbDE4SEtLbHZBSmU4cTVuWkZNRTQK689sSO8iY5GKiFb2FMZqHx0uDw14/X9M
+            kmoT2n2WpdIZJQXxgITesovDyLvo3hSGNm6tgNJnG1G4CnyzJnnXiQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-08-14T06:23:01Z"
+    mac: ENC[AES256_GCM,data:YZzLGkyAs/Ap38p8iMbE76mGG1vvZUm4Jiqm7i/ZzfM98LyWT8jhSWBgaA1bKd/4TzQOJE6kv9elxfeFUmvuEqeHKdi9Ft+vrmDiRheMZWjXy7y6Yzm2WDYHfMjnjeeCbXeNSnDDMptM36MkucycQ1vKRQIuV6G5UYcznqJsr1s=,iv:MzAt9ls3ZhsqHlGS42Zsfq0VotMtKvnnnknGGMjiJ3g=,tag:R6Y44ibsGeqHB8SKJMxruA==,type:str]
+    pgp:
+        - created_at: "2023-08-14T06:23:00Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQgAh4fg78paXds1C6IQbJ6P7KXdzqaE0gcGZln/dNPUujgu
+            aY9z3GduWudEk4B8ZqFNNJNJ/yS4gPeyGwRmXSnFOw57JO6TAr65aNfe/Jlw/kDh
+            o4XrvGZRoWfi7IaBOpZAt/pl7bJOIO0msVwigSS6V8GOSNFu9BlquzXlZa6HorYY
+            P32O6/jjIM+gcjdc0Jc0APjbG06uhzPVAc98FqmSYcXifdHrZZ8kI8Ob27s7wbBO
+            mIb0qRGZcdPZtMvLmvp9Kf8tQzqMTJGrAD8KwAf2fjc/Zf5SNrZYESFPZKNSI7mp
+            pu9jKnS8KbvvNVhqY1KlR1Y61/FFoHCfMroxAl73wNJcAQETfgnBbTKjaSaU2Y/H
+            wuxiSwSrzXdSfuj5U0m7W8skwswnIO1hW9CWXKa4s7CZO2WksODnmXmSfnyrBj6u
+            qET/B/KJ3w2XP05QVjPuu2YN8MxBtcP8/kqdRUg=
+            =YYox
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3
