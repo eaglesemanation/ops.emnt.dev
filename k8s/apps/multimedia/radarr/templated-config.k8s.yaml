@@ -30,7 +30,7 @@ spec:
             <InstanceName>Radarr</InstanceName>
             <UpdateMechanism>Docker</UpdateMechanism>
             <PostgresUser>{{ .postgres_user }}</PostgresUser>
-            <PostgresPassword>{{ .postgres_password }}</PostgresPassword>
+            <PostgresPassword>{{ .postgres_password | replace "&" "&amp;" | replace "'" "&apos;" | replace "<" "&lt;" | replace ">" "&gt;" | replace "\"" "&quot;" }}</PostgresPassword>
             <PostgresPort>{{ .postgres_port }}</PostgresPort>
             <PostgresHost>{{ .postgres_host }}</PostgresHost>
           </Config>
