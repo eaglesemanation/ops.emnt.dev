@@ -29,7 +29,7 @@ spec:
           - "ReadWriteOnce"
         resources:
           requests:
-            storage: 10Gi
+            storage: 20Gi
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
