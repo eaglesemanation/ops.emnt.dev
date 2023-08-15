@@ -33,7 +33,7 @@ spec:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
       global:
         repo1-s3-uri-style: path
-        repo1-path: /pgbackrest/prowlarr/prowlarr-pg/repo1
+        repo1-path: /pgbackrest/radarr/radarr-pg/repo1
         repo1-retention-full: "30"
         repo1-retention-full-type: time
       configuration:
