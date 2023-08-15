@@ -12,6 +12,8 @@ spec:
   patroni:
     dynamicConfiguration:
       postgresql:
+        parameters:
+          max_slot_wal_keep_size: 9GB
         pg_hba:
           # Disables requirement for TLS
           # TODO: Reenable it when Prowlarr supports configuring SSLMODE
@@ -30,11 +32,6 @@ spec:
         resources:
           requests:
             storage: 20Gi
-  patroni:
-    dynamicConfiguration:
-      postgresql:
-        parameters:
-          max_slot_wal_keep_size: 9GB
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
