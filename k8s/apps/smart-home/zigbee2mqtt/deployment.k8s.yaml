@@ -32,6 +32,8 @@ spec:
               value: /dev/ttyUSB0
             - name: ZIGBEE2MQTT_CONFIG_HOMEASSISTANT
               value: "true"
+            - name: ZIGBEE2MQTT_CONFIG_PERMIT_JOIN
+              value: "false"
             - name: ZIGBEE2MQTT_CONFIG_MQTT_SERVER
               value: mqtt://mqtt.zigbee2mqtt.svc.cluster.local:1883
             - name: ZIGBEE2MQTT_CONFIG_MQTT_USER
