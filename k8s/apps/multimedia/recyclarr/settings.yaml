@@ -19,8 +19,8 @@ sonarr:
             qualities:
               - WEBDL-2160p
               - WEBRip-2160p
-          - name: Blueray-2160p Remux
-          - name: Blueray-2160p
+          - name: Bluray-2160p Remux
+          - name: Bluray-2160p
       - name: WEB-1080p
         upgrade:
           allowed: true
@@ -33,8 +33,8 @@ sonarr:
             qualities:
               - WEBDL-1080p
               - WEBRip-1080p
-          - name: Blueray-1080p Remux
-          - name: Blueray-1080p
+          - name: Bluray-1080p Remux
+          - name: Bluray-1080p
     delete_old_custom_formats: true
     replace_existing_custom_formats: true
     custom_formats:
