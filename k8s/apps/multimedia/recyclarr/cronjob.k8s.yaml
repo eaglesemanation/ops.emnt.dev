@@ -29,11 +29,11 @@ spec:
                 readOnlyRootFilesystem: false # FIXME: Figure out which paths are used
               env:
                 - name: SHOWS_BASE_URL
-                  value: http://sonarr-shows.sonarr-shows.svc.cluster.local
+                  value: http://sonarr-shows.sonarr-shows.svc.cluster.local:8989
                 - name: ANIME_BASE_URL
-                  value: https://sonarr-anime.sonarr-anime.svc.cluster.local
+                  value: http://sonarr-anime.sonarr-anime.svc.cluster.local:8989
                 - name: MOVIES_BASE_URL
-                  value: https://radarr.radarr.svc.cluster.local
+                  value: http://radarr.radarr.svc.cluster.local:7878
               envFrom:
                 - secretRef:
                     name: recyclarr

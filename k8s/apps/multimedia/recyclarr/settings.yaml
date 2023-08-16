@@ -3,7 +3,7 @@
 sonarr:
   shows:
     base_url: !env_var SHOWS_BASE_URL
-    api_key: !env_var SHOWS_BASE_URL
+    api_key: !env_var SHOWS_API_KEY
     quality_definition:
       type: series
     quality_profiles:
@@ -95,7 +95,7 @@ sonarr:
           - name: WEB-1080p
   anime:
     base_url: !env_var ANIME_BASE_URL
-    api_key: !env_var ANIME_BASE_URL
+    api_key: !env_var ANIME_API_KEY
     quality_definition:
       type: series
     quality_profiles:
@@ -218,7 +218,7 @@ sonarr:
 radarr:
   movies:
     base_url: !env_var MOVIES_BASE_URL
-    api_key: !env_var MOVIES_BASE_URL
+    api_key: !env_var MOVIES_API_KEY
     quality_definition:
       type: movie
     quality_profiles:
