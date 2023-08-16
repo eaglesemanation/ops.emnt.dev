@@ -5,3 +5,4 @@ resources:
   - web-password.sops.yaml
   - helmrelease.k8s.yaml
   - addprefix.k8s.yaml
+  - unbound-config.k8s.yaml
