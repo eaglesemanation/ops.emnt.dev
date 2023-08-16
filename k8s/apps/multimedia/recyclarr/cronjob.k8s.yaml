@@ -27,17 +27,21 @@ spec:
                   memory: 256Mi
               securityContext:
                 readOnlyRootFilesystem: false # FIXME: Figure out which paths are used
+              env:
+                - name: shows_base_url
+                  value: http://sonarr-shows.sonarr-shows.svc.cluster.local
+                - name: anime_base_url
+                  value: https://sonarr-anime.sonarr-anime.svc.cluster.local
+                - name: movies_base_url
+                  value: https://radarr.radarr.svc.cluster.local
+              envFrom:
+                - secretRef:
+                    name: recyclarr
               volumeMounts:
-                - name: recyclarr-config
+                - name: config
                   mountPath: /config/recyclarr.yml
                   subPath: settings.yaml
-                - name: recyclarr-secrets
-                  mountPath: /config/secrets.yml
-                  subPath: secrets.yaml
           volumes:
-            - name: recyclarr-config
+            - name: config
               configMap:
                 name: recyclarr
-            - name: recyclarr-secrets
-              secret:
-                secretName: recyclarr

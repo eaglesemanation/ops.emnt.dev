@@ -2,8 +2,6 @@
 
 sonarr:
   shows:
-    base_url: https://sonarr-shows.emnt.dev
-    api_key: !secret sonarr_shows_apikey
     quality_definition:
       type: series
     quality_profiles:
@@ -68,8 +66,6 @@ sonarr:
           - name: WEB-2160p
           - name: WEB-1080p
   anime:
-    base_url: https://sonarr-anime.emnt.dev
-    api_key: !secret sonarr_anime_apikey
     quality_definition:
       type: series
     quality_profiles:
@@ -131,8 +127,6 @@ sonarr:
             score: 2000 # Require dual audio
 radarr:
   movies:
-    base_url: https://radarr.emnt.dev
-    api_key: !secret radarr_apikey
     quality_definition:
       type: movie
     quality_profiles:
