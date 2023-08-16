@@ -42,20 +42,3 @@ spec:
     dnsmasq:
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_INTERNAL_ADDR}"
-    extraContainers:
-      - name: unbound
-        image: docker.io/alpinelinux/unbound:latest
-        resources:
-          requests:
-            cpu: 100m
-            memory: 128Mi
-          limits:
-            memory: 256Mi
-        volumeMounts:
-          - name: unbound-config
-            mountPath: /etc/unbound/unbound.conf
-            subPath: pi-hole.conf
-    extraVolumes:
-      unbound-config:
-        configMap:
-          name: unbound-config
