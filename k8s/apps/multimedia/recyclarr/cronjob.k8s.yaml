@@ -28,11 +28,11 @@ spec:
               securityContext:
                 readOnlyRootFilesystem: false # FIXME: Figure out which paths are used
               env:
-                - name: shows_base_url
+                - name: SHOWS_BASE_URL
                   value: http://sonarr-shows.sonarr-shows.svc.cluster.local
-                - name: anime_base_url
+                - name: ANIME_BASE_URL
                   value: https://sonarr-anime.sonarr-anime.svc.cluster.local
-                - name: movies_base_url
+                - name: MOVIES_BASE_URL
                   value: https://radarr.radarr.svc.cluster.local
               envFrom:
                 - secretRef:
