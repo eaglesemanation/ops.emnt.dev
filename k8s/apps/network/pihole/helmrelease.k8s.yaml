@@ -58,6 +58,6 @@ spec:
             mountPath: /etc/unbound/unbound.conf.d/pi-hole.conf
             subPath: pi-hole.conf
     extraVolumes:
-      unbound-conifg:
+      unbound-config:
         configMap:
           name: unbound-config
