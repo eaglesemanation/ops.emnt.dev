@@ -7,7 +7,8 @@ metadata:
     app.kubernetes.io/name: unbound
     app.kubernetes.io/instance: unbound
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  loadBalancerIP: "${SVC_UNBOUND_ADDR}"
   selector:
     app.kubernetes.io/name: unbound
     app.kubernetes.io/instance: unbound

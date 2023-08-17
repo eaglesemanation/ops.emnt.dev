@@ -40,5 +40,8 @@ spec:
       enabled: false
       storageClass: freenas-api-nfs-csi
     dnsmasq:
+      customSettings:
+        - edns-packet-max=1232
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_INTERNAL_ADDR}"
+    DNS1: "${SVC_UNBOUND_ADDR}#5335"
