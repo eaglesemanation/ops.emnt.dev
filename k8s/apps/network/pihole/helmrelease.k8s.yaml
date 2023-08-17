@@ -47,4 +47,4 @@ spec:
     DNS1: "${SVC_UNBOUND_ADDR}#5335"
     DNS2: null
     extraEnvVars:
-      DNSSEC: "true"
+      DNSSEC: "false" # TODO: Figure out why zoom.us does not work with DNSSEC
