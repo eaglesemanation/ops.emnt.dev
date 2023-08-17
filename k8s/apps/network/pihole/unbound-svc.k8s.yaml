@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: unbound
+  namespace: pihole
+  labels:
+    app.kubernetes.io/name: unbound
+    app.kubernetes.io/instance: unbound
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: unbound
+    app.kubernetes.io/instance: unbound
+  ports:
+    - name: dns-tcp
+      port: 5335
+      targetPort: 5335
+      protocol: TCP
+    - name: dns-udp
+      port: 5335
+      targetPort: 5335
+      protocol: UDP

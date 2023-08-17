@@ -7,3 +7,4 @@ resources:
   - addprefix.k8s.yaml
   - unbound-deployment.k8s.yaml
   - unbound-config.k8s.yaml
+  - unbound-svc.k8s.yaml
