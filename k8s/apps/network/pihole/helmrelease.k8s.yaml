@@ -45,3 +45,4 @@ spec:
       customDnsEntries:
         - "address=/emnt.dev/${SVC_INGRESS_INTERNAL_ADDR}"
     DNS1: "${SVC_UNBOUND_ADDR}#5335"
+    DNS2: null
