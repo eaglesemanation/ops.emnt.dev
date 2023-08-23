@@ -7,7 +7,7 @@ commonLabels:
   app.kubernetes.io/instance: sonarr-shows
 resources:
   - ingress.k8s.yaml
-  - apikey.k8s.yaml
+  - apikey.sops.yaml
 patchesStrategicMerge:
   - patches.yaml
 transformers:
