@@ -32,4 +32,4 @@ metadata:
 spec:
   provider:
     kubernetes:
-      remoteNamespace: sonarr-shows
+      remoteNamespace: sonarr-anime
