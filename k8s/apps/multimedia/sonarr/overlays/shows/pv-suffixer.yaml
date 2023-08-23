@@ -1,0 +1,8 @@
+apiVersion: builtin
+kind: PrefixSuffixTransformer
+metadata:
+  name: pv-suffixer
+suffix: "-shows"
+fieldSpecs:
+  - kind: PersistentVolume
+    path: metadata/name

@@ -1,0 +1,41 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: apikey
+stringData:
+    key: ENC[AES256_GCM,data:69iuUrBRQslnsDNrQGfBCzfDmjn2ygIWFmHn5Q8uPCw=,iv:AfCg91vREDKc8Q/6Ye62VObmzKG327N+C96qNvkGkxc=,tag:dExEpfmizeWatlFeB+Lepw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnTnBwQ0NyYVVCRGNuek15
+            YzQwLzRLSjVFaTM1MjByNHowam5KeldlaDJrCjgvUmxWWHc1L1BJUGNKdmhqeGZ1
+            dmlRZ0FJUkFpQUZWN1hLK3lVeGNpbUkKLS0tIHNhU1NxUzE0WC9CWkVka2IyZTUw
+            UlNEdHRUcWVVU05yLzdnUlg5Qk55Tm8K5XzX3ibRbOQ+5vZYYS1tpoplM6szkRTx
+            0ge4LjimS+gdLyAFqrMEkqzRyvxd/FeDw70KopaJsLivhd/6xwl5jQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-08-23T20:47:06Z"
+    mac: ENC[AES256_GCM,data:2MVwu9SGXjJec5zbf0nG0167vOiILx/FuSDgZtZBRtZZojxWtsljwgyk6i/oxc+jEJMgfiCOmLPA9zZ+MLxVl0FFQsC7ej98g0eCZJD577T3DrhJKfPmjTYQmKSiUQt6zdNua299EGbGTcviS16qavu6FoNqjDdwNULLlo2rH38=,iv:8tNa2AFF2K7f8DWic0w21OT+HDUW12hXFkcDdqqohNM=,tag:eKNYx4hv0UYCRSqNn3UiUg==,type:str]
+    pgp:
+        - created_at: "2023-08-23T20:47:05Z"
+          enc: |
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/WuI9mEIIzKvXf2a8C8Q14lZKUjpa9U4m0g+1rTFT6Os8
+            iYs29+PhI6p4UUt0roXkEXbBLZc/2CD0jpsHdK3NnsMhqTUqaAvZEdSpSoWeXV96
+            ZOE1XYeubMRyydKatnNgjfgcFYiRU/IiT1sYU/JYfQdNuKz4GsOfuoXIxCKp+bFg
+            YqemqRDShja3ysiDLShmmv57fWyAlgC41kcIaWks90fNDALmPqRjbzYbvPUh035x
+            rdPJr6jR3rmu+5f66/cSDlv2VHFdT3e+rDW9CGPNWJSKI6ygVv+b+3Vbn1j2N1cG
+            DIyHPqGTXeeSw4yqd2uzh/a7QSQC32WsE0YHzcnX0tJcAc/jJzRbBIyxfasvfzCF
+            hzhoS+/xqxR2/et+4iHG1PusXbvHAj89ANFOsYVtyc+dSAXLnA4lh0tSTghPz/v1
+            Dh5lKnSzTQJTVSWa6WBLoDdHuwmCiKV0rbwAGFk=
+            =c1/o
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.7.3

@@ -1,0 +1,57 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: config-sonarr
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: sonarr-secrets
+  target:
+    name: config-sonarr
+    template:
+      engineVersion: v2
+      data:
+        config.xml: |
+          <Config>
+            <BindAddress>*</BindAddress>
+            <Port>8989</Port>
+            <SslPort>9898</SslPort>
+            <EnableSsl>False</EnableSsl>
+            <LaunchBrowser>True</LaunchBrowser>
+            <ApiKey>{{ .api_key }}</ApiKey>
+            <AuthenticationMethod>External</AuthenticationMethod>
+            <AuthenticationRequired>Enabled</AuthenticationRequired>
+            <Branch>main</Branch>
+            <LogLevel>info</LogLevel>
+            <SslCertPath></SslCertPath>
+            <SslCertPassword></SslCertPassword>
+            <UrlBase></UrlBase>
+            <InstanceName>Sonarr</InstanceName>
+            <UpdateMechanism>Docker</UpdateMechanism>
+            <PostgresUser>{{ .postgres_user }}</PostgresUser>
+            <PostgresPassword>{{ .postgres_password | replace "&" "&amp;" | replace "'" "&apos;" | replace "<" "&lt;" | replace ">" "&gt;" | replace "\"" "&quot;" }}</PostgresPassword>
+            <PostgresPort>{{ .postgres_port }}</PostgresPort>
+            <PostgresHost>{{ .postgres_host }}</PostgresHost>
+          </Config>
+  data:
+    - secretKey: api_key
+      remoteRef:
+        key: sonarr-apikey
+        property: key
+    - secretKey: postgres_user
+      remoteRef:
+        key: sonarr-pg-pguser-sonarr
+        property: user
+    - secretKey: postgres_password
+      remoteRef:
+        key: sonarr-pg-pguser-sonarr
+        property: password
+    - secretKey: postgres_port
+      remoteRef:
+        key: sonarr-pg-pguser-sonarr
+        property: port
+    - secretKey: postgres_host
+      remoteRef:
+        key: sonarr-pg-pguser-sonarr
+        property: host

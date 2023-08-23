@@ -3,10 +3,12 @@ kind: Kustomization
 bases:
   - ../../base
 namespace: sonarr-shows
-nameSuffix: -shows
 commonLabels:
   app.kubernetes.io/instance: sonarr-shows
 resources:
   - ingress.k8s.yaml
+  - apikey.k8s.yaml
 patchesStrategicMerge:
   - patches.yaml
+transformers:
+  - pv-suffixer.yaml

@@ -22,8 +22,8 @@ spec:
         - name: authentik
           namespace: authentik
       services:
-        - name: sonarr-anime
-          namespace: sonarr-anime
+        - name: sonarr
+          namespace: sonarr
           port: 8989
     - kind: Rule
       match: "Host(`sonarr-anime.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"

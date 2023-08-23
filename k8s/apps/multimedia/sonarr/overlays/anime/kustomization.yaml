@@ -3,10 +3,12 @@ kind: Kustomization
 bases:
   - ../../base
 namespace: sonarr-anime
-nameSuffix: -anime
 commonLabels:
   app.kubernetes.io/instance: sonarr-anime
 resources:
   - ingress.k8s.yaml
+  - apikey.sops.yaml
 patchesStrategicMerge:
   - patches.yaml
+transformers:
+  - pv-suffixer.yaml
