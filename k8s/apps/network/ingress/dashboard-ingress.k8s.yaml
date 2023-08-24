@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-internal-dashboard
+  namespace: ingress
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`traefik-internal.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: api@internal
+          kind: TraefikService
+    - kind: Rule
+      match: Host(`traefik-internal.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: traefik-external-dashboard
+  namespace: ingress
+  annotations:
+    kubernetes.io/ingress.class: ingress-external-traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`traefik-external.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: api@internal
+          kind: TraefikService
+    - kind: Rule
+      match: Host(`traefik-external.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000

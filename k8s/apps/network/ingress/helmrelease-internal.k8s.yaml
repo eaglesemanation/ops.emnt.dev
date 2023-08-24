@@ -40,6 +40,9 @@ spec:
       default:
         defaultCertificate:
           secretName: wildcard-cert
+    ingressRoute:
+      dashboard:
+        enabled: false
     metrics:
       prometheus:
         service:

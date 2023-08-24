@@ -12,3 +12,4 @@ resources:
   - wireguard-config.sops.yaml
   - internal-to-external.k8s.yaml
   - servers-transport.k8s.yaml
+  - dashboard-ingress.k8s.yaml
