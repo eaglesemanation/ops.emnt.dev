@@ -25,8 +25,8 @@ spec:
                 port:
                   number: 8096
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressrouteudp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
   name: jellyfin-service-disc
@@ -41,8 +41,8 @@ spec:
         - name: jellyfin
           port: 1900
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressrouteudp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
   name: jellyfin-client-disc

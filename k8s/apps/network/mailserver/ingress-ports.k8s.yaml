@@ -1,7 +1,7 @@
 # TODO: Figure out if this can be simplified with kustomize
 #
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: smtp-transfer-internal
@@ -19,8 +19,8 @@ spec:
           proxyProtocol:
             version: 2
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: smtp-transfer-external
@@ -38,8 +38,8 @@ spec:
           proxyProtocol:
             version: 2
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: smtp-tls-internal
@@ -57,8 +57,8 @@ spec:
           proxyProtocol:
             version: 2
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: smtp-tls-external
@@ -76,8 +76,8 @@ spec:
           proxyProtocol:
             version: 2
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: smtp-starttls-internal
@@ -95,8 +95,8 @@ spec:
           proxyProtocol:
             version: 2
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: smtp-starttls-external
@@ -114,8 +114,8 @@ spec:
           proxyProtocol:
             version: 2
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: imap-internal
@@ -133,8 +133,8 @@ spec:
           proxyProtocol:
             version: 2
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.containo.us/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.containo.us/v1alpha1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP
 metadata:
   name: imap-external
