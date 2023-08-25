@@ -51,3 +51,13 @@ spec:
     pgmonitor:
       exporter:
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0
+  userInterface:
+    pgAdmin:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgadmin4:ubi8-4.30-16
+      dataVolumeClaimSpec:
+        storageClassName: freenas-api-iscsi-csi
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
