@@ -32,3 +32,9 @@ spec:
         - name: authentik
           namespace: authentik
           port: 9000
+    - kind: Rule
+      match: Host(`bazarr-pgadmin.emnt.dev`)
+      services:
+        - name: bazarr-pg-pgadmin
+          namespace: bazarr
+          port: pgadmin
