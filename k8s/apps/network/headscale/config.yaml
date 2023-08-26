@@ -51,9 +51,7 @@ noise:
 # IPv4: https://github.com/tailscale/tailscale/blob/22ebb25e833264f58d7c3f534a8b166894a89536/net/tsaddr/tsaddr.go#L33
 # Any other range is NOT supported, and it will cause unexpected issues.
 ip_prefixes:
-  # TODO: Reenable IPv6 when autogroups supported
-  #
-  #- fd7a:115c:a1e0::/48
+  - fd7a:115c:a1e0::/48
   - 100.64.0.0/10
 # DERP is a relay system that Tailscale uses when a direct
 # connection cannot be established.
@@ -258,4 +256,4 @@ logtail:
 # Enabling this option makes devices prefer a random port for WireGuard traffic over the
 # default static port 41641. This option is intended as a workaround for some buggy
 # firewall devices. See https://tailscale.com/kb/1181/firewalls/ for more information.
-randomize_client_port: false
+randomize_client_port: true
