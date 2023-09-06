@@ -1,4 +1,7 @@
 cluster:
   apiServer:
     extraArgs:
+      oidc-username-claim: preferred_username
       oidc-groups-claim: groups
+      oidc-issuer-url: https://authentik.emnt.dev/application/o/kubectl/
+      oidc-client-id: tregk8FCxg6WqvKgv6SbyxLPyckilt2CzP0m649T
