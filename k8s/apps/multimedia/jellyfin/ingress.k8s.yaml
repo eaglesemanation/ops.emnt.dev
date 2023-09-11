@@ -12,7 +12,7 @@ metadata:
     app.kubernetes.io/name: jellyfin
     app.kubernetes.io/instance: jellyfin
 spec:
-  ingressClassName: ingress-internal-traefik
+  ingressClassName: ingress-external-traefik
   rules:
     - host: jellyfin.emnt.dev
       http:
