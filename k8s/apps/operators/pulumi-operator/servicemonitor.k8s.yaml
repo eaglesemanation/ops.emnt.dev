@@ -2,14 +2,14 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: redis-monitoring
-  namespace: redis-operator
+  name: pulumi-monitoring
+  namespace: pulumi-operator
   labels:
-    app.kubernetes.io/name: redis-operator
+    app.kubernetes.io/name: pulumi-operator
     release: prometheus
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: redis
+      app.kubernetes.io/name: pulumi-operator
   endpoints:
-    - port: redis-exporter
+    - port: metrics

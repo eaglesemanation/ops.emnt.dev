@@ -1,0 +1,22 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pulumi-operator
+  namespace: pulumi-operator
+  labels:
+    app.kubernetes.io/name: pulumi-operator
+    app.kubernetes.io/instance: pulumi-operator
+spec:
+  type: ClusterIP
+  selector:
+    app: pulumi-kubernetes-operator
+    release: pulumi-operator
+  ports:
+    - name: metrics
+      port: 8383
+      targetPort: metrics
+      protocol: TCP
+    - port: 8686
+      targetPort: http
+      protocol: TCP
+      name: cr-metrics
