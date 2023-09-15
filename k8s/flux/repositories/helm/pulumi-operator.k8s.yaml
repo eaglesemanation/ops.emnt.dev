@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 30m
   type: oci
-  url: ghcr.io/pulumi/helm-charts
+  url: oci://ghcr.io/pulumi/helm-charts
   timeout: 3m
