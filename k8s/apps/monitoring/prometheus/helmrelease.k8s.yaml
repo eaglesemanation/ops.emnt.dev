@@ -61,11 +61,6 @@ spec:
       ingress:
         enabled: true
         ingressClassName: ingress-internal-traefik
-        annotations:
-          gethomepage.dev/enabled: "true"
-          gethomepage.dev/name: "Grafana"
-          gethomepage.dev/group: "Infra"
-          gethomepage.dev/icon: "grafana"
         hosts:
           - grafana.emnt.dev
     prometheus:

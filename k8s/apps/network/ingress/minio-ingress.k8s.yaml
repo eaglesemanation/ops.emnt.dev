@@ -3,12 +3,6 @@ kind: Ingress
 metadata:
   name: minio
   namespace: ingress
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/href: "https://minio-console.emnt.dev/"
-    gethomepage.dev/name: "MinIO"
-    gethomepage.dev/group: "Infra"
-    gethomepage.dev/icon: "minio"
 spec:
   ingressClassName: ingress-internal-traefik
   rules:

@@ -11,10 +11,6 @@ metadata:
     release: prometheus
   annotations:
     kubernetes.io/ingress.class: ingress-internal-traefik
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/group: Infra
-    gethomepage.dev/icon: prometheus
-    gethomepage.dev/name: Prometheus
 spec:
   entryPoints:
     - websecure

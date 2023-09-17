@@ -28,10 +28,6 @@ spec:
       enabled: true
       ingressClassName: ingress-internal-traefik
       annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/name: "PiHole"
-        gethomepage.dev/group: "Infra"
-        gethomepage.dev/icon: "pi-hole"
         traefik.ingress.kubernetes.io/router.middlewares: pihole-addprefix@kubernetescrd
       path: /
       hosts:

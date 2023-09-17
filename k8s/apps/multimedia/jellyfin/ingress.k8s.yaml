@@ -3,11 +3,6 @@ kind: Ingress
 metadata:
   name: jellyfin
   namespace: jellyfin
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Jellyfin"
-    gethomepage.dev/group: "Multimedia"
-    gethomepage.dev/icon: "jellyfin"
   labels:
     app.kubernetes.io/name: jellyfin
     app.kubernetes.io/instance: jellyfin

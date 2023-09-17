@@ -8,10 +8,6 @@ metadata:
     app.kubernetes.io/name: hubble-ui
   annotations:
     kubernetes.io/ingress.class: ingress-internal-traefik
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: Hubble
-    gethomepage.dev/group: Infra
-    gethomepage.dev/icon: cilium
 spec:
   entryPoints:
     - websecure

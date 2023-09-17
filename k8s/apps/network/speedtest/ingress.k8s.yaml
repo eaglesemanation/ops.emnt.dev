@@ -3,11 +3,6 @@ kind: Ingress
 metadata:
   name: speedtest
   namespace: speedtest
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Speedtest"
-    gethomepage.dev/group: "Infra"
-    gethomepage.dev/icon: "librespeed"
   labels:
     app.kubernetes.io/name: speedtest
     app.kubernetes.io/instance: speedtest

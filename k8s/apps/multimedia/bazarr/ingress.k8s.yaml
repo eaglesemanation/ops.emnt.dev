@@ -9,10 +9,6 @@ metadata:
     app.kubernetes.io/instance: bazarr
   annotations:
     kubernetes.io/ingress.class: ingress-internal-traefik
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Bazarr"
-    gethomepage.dev/group: "Multimedia"
-    gethomepage.dev/icon: "bazarr"
 spec:
   entryPoints:
     - websecure

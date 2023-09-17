@@ -8,10 +8,6 @@ metadata:
     app.kubernetes.io/instance: sonarr-anime
   annotations:
     kubernetes.io/ingress.class: ingress-internal-traefik
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Sonarr - Anime"
-    gethomepage.dev/group: "Multimedia"
-    gethomepage.dev/icon: "sonarr"
 spec:
   entryPoints:
     - websecure

@@ -59,11 +59,6 @@ spec:
     ingress:
       enabled: true
       ingressClassName: ingress-external-traefik
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/name: "Authentik"
-        gethomepage.dev/group: "Infra"
-        gethomepage.dev/icon: "authentik"
       hosts:
         - host: authentik.emnt.dev
           paths:

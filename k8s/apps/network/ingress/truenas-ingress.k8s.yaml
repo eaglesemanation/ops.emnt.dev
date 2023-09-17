@@ -3,11 +3,6 @@ kind: Ingress
 metadata:
   name: truenas
   namespace: ingress
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "TrueNas"
-    gethomepage.dev/group: "Infra"
-    gethomepage.dev/icon: "truenas-scale"
 spec:
   ingressClassName: ingress-internal-traefik
   rules:

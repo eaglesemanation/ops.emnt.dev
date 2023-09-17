@@ -3,11 +3,6 @@ kind: Ingress
 metadata:
   name: jellyseerr
   namespace: jellyseerr
-  annotations:
-    gethomepage.dev/enabled: "true"
-    gethomepage.dev/name: "Jellyseerr"
-    gethomepage.dev/group: "Multimedia"
-    gethomepage.dev/icon: "jellyseerr"
   labels:
     app.kubernetes.io/name: jellyseerr
     app.kubernetes.io/instance: jellyseerr

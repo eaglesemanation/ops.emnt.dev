@@ -26,11 +26,6 @@ spec:
     ingress:
       enabled: true
       className: ingress-internal-traefik
-      annotations:
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/name: "Flux CD"
-        gethomepage.dev/group: "Infra"
-        gethomepage.dev/icon: "flux-cd"
       hosts:
         - host: flux.emnt.dev
           paths:
