@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: klipper
+  namespace: ingress
+spec:
+  type: ExternalName
+  externalName: ${KLIPPER_URL}
+  ports:
+    - name: http
+      port: 80
+    - name: moonraker
+      port: 7125

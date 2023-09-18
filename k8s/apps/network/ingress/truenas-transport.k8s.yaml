@@ -5,5 +5,5 @@ metadata:
   name: truenastransport
   namespace: ingress
 spec:
-  serverName: emnt-nas.local
+  serverName: ${NAS_URL}
   insecureSkipVerify: true
