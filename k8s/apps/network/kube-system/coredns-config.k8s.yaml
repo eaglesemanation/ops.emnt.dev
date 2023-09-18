@@ -22,6 +22,7 @@ data:
         }
         hosts {
             ${NAS_ADDR} ${NAS_URL}
+            ${KLIPPER_ADDR} ${KLIPPER_URL}
             fallthrough
         }
         file /etc/coredns/emnt.dev.db emnt.dev
