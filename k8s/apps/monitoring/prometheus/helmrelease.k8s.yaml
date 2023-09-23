@@ -32,12 +32,18 @@ spec:
       service:
         selector:
           k8s-app: kube-scheduler
+    kubeEtcd:
+      endpoints:
+        - ${K8S_CONTROLLER_1_ADDR}
     grafana:
       grafana.ini:
         server:
           root_url: https://grafana.emnt.dev/
+        auth.basic:
+          enabled: "false"
         auth.generic_oauth:
           enabled: "true"
+          auto_login: "true"
           name: authentik
           client_id: jQ9qSWQebjh5yzXdo1LwjtMDYCrtE63MtIM4wsD7
           scopes: openid profile email
@@ -52,6 +58,7 @@ spec:
           hide_version: "true"
         auth:
           signout_redirect_url: https://authentik.emnt.dev/application/o/grafana/end-session/
+          disable_signout_menu: "true"
       envFromSecrets:
         - name: grafana-oidc
       admin:
