@@ -12,7 +12,8 @@ sonarr:
           allowed: true
           until_quality: WEB 2160p
           until_score: 10000
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
         quality_sort: top
         qualities:
           - name: WEB 2160p
@@ -26,7 +27,8 @@ sonarr:
           allowed: true
           until_quality: WEB 1080p
           until_score: 10000
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
         quality_sort: top
         qualities:
           - name: WEB 1080p
@@ -106,7 +108,8 @@ sonarr:
           allowed: true
           until_quality: Bluray-1080p
           until_score: 10000
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
         quality_sort: top
         qualities:
           - name: Bluray-1080p
@@ -137,7 +140,8 @@ sonarr:
           allowed: true
           until_quality: Bluray-1080p
           until_score: 10000
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
         quality_sort: top
         qualities:
           - name: Bluray-1080p
@@ -229,7 +233,8 @@ radarr:
           allowed: true
           until_quality: Bluray-2160p
           until_score: 10000
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
         quality_sort: top
         qualities:
           - name: Bluray-2160p
@@ -242,7 +247,8 @@ radarr:
           allowed: true
           until_quality: Bluray-1080p
           until_score: 10000
-        reset_unmatched_scores: true
+        reset_unmatched_scores:
+          enabled: true
         quality_sort: top
         qualities:
           - name: Bluray-1080p
