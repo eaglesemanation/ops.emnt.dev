@@ -1,4 +1,3 @@
----
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
@@ -6,3 +5,4 @@ resources:
   - cluster-setting.k8s.yaml
   - flux.k8s.yaml
   - apps.k8s.yaml
+  - ingress.k8s.yaml

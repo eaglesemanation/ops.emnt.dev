@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: webhook-receiver
+  namespace: flux-system
+  labels:
+    app.kubernetes.io/component: webhook-receiver
+    app.kubernetes.io/instance: flux-system
+spec:
+  ingressClassName: ingress-external-traefik
+  rules:
+    - host: flux-webhooks.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: webhook-receiver
+                port:
+                  name: http
