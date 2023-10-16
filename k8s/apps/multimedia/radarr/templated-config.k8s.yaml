@@ -21,7 +21,8 @@ spec:
             <EnableSsl>False</EnableSsl>
             <LaunchBrowser>True</LaunchBrowser>
             <ApiKey>{{ .api_key }}</ApiKey>
-            <AuthenticationMethod>None</AuthenticationMethod>
+            <AuthenticationMethod>External</AuthenticationMethod>
+            <AuthenticationRequired>Enabled</AuthenticationRequired>
             <Branch>master</Branch>
             <LogLevel>info</LogLevel>
             <SslCertPath></SslCertPath>
