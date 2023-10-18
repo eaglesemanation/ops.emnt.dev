@@ -25,6 +25,8 @@ spec:
             storage: 10Gi
   patroni:
     dynamicConfiguration:
+      # Prevents failovers due to latency issues with etcd, useful for non-HA controlplane
+      failsafe_mode: true
       postgresql:
         parameters:
           max_slot_wal_keep_size: 1GB
