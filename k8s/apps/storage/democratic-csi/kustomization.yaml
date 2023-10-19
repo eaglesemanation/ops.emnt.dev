@@ -6,6 +6,9 @@ resources:
   - iscsi-driver.sops.yaml
   - iscsi-creds.sops.yaml
   - iscsi-storageclass.k8s.yaml
+  - helmrelease-iscsi-s3.k8s.yaml
+  - iscsi-s3-driver.sops.yaml
+  - iscsi-s3-storageclass.k8s.yaml
   - helmrelease-smb.k8s.yaml
   - smb-driver.sops.yaml
   - smb-creds.sops.yaml
