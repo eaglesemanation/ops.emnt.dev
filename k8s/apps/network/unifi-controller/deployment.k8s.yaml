@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: controller
-          image: docker.io/linuxserver/unifi-controller:7.5.176
+          image: docker.io/linuxserver/unifi-controller:7.5.187
           env:
             - name: PUID
               value: "1000"
