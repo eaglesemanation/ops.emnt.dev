@@ -31,7 +31,7 @@ spec:
         iscsiDirHostPath: /usr/local/etc/iscsi
         iscsiDirHostPathType: ""
     csiDriver:
-      name: "org.democratic-csi.freenas-api-iscsi"
+      name: "org.democratic-csi.freenas-api-iscsi-s3"
     volumeSnapshotClasses:
       - name: freenas-iscsi-s3-csi
         labels:
