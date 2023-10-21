@@ -21,7 +21,7 @@ spec:
         - name: authentik
           namespace: authentik
       services:
-        - name: prometheus-kube-prometheus-prometheus
+        - name: prom-prometheus
           namespace: prometheus
           port: 9090
     - kind: Rule
