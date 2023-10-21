@@ -71,6 +71,16 @@ spec:
         hosts:
           - grafana.emnt.dev
     prometheus:
+      prometheusSpec:
+        storageSpec:
+          volumeClaimTemplate:
+            spec:
+              storageClassName: freenas-api-iscsi-csi
+              accessModes:
+                - "ReadWriteOnce"
+              resources:
+                requests:
+                  storage: 50Gi
       ingress:
         enabled: false # Using traefik IngressRoute
     alertmanager:
