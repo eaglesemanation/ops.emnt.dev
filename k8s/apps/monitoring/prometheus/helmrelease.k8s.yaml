@@ -20,6 +20,10 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    # Makes object names less insanely long
+    cleanPrometheusOperatorObjectNames: true
+    # Anything longer prevents CSI from provisioning volumes
+    fullnameOverride: prom
     defaultRules:
       rules:
         # Not used with Cilium
