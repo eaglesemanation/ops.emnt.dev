@@ -20,6 +20,8 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    redisOperator:
+      webhook: true
     resources:
       requests:
         cpu: 100m
