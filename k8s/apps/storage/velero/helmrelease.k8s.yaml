@@ -69,8 +69,6 @@ spec:
     # Mitigation for https://github.com/vmware-tanzu/helm-charts/issues/515
     upgradeJobResources:
       requests:
-        cpu: 50m
         memory: 128Mi
       limits:
-        cpu: 100m
         memory: 256Mi
