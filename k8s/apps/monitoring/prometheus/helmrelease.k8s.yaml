@@ -71,7 +71,7 @@ spec:
         passwordKey: password
       ingress:
         enabled: true
-        ingressClassName: ingress-internal-traefik
+        ingressClassName: ingress-external-traefik
         hosts:
           - grafana.emnt.dev
     prometheus:
