@@ -15,3 +15,5 @@ resources:
   - truenas-transport.k8s.yaml
   - wildcard-cert.k8s.yaml
   - wireguard-config.sops.yaml
+  - opnsense-svc.k8s.yaml
+  - opnsense-ingress.k8s.yaml

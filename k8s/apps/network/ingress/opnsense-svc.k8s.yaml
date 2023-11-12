@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: opnsense
+  namespace: ingress
+  annotations:
+    traefik.ingress.kubernetes.io/service.serverstransport: ingress-skip-verify@kubernetescrd
+    traefik.ingress.kubernetes.io/service.serversscheme: https
+spec:
+  type: ExternalName
+  externalName: ${OPNSENSE_ADDR}
+  ports:
+    - name: http
+      port: 80
+    - name: https
+      port: 443
