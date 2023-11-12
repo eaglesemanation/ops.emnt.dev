@@ -10,6 +10,8 @@ spec:
   type: ExternalName
   externalName: ${OPNSENSE_ADDR}
   ports:
+    - name: ssh
+      port: 22
     - name: http
       port: 80
     - name: https
