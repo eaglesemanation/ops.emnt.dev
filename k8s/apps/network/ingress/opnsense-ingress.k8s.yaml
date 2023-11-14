@@ -24,7 +24,7 @@ metadata:
   name: opnsense-ssh
   namespace: ingress
   annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
+    kubernetes.io/ingress.class: ingress-external-traefik
 spec:
   entryPoints:
     - ssh
