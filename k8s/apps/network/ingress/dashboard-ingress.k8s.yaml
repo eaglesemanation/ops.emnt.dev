@@ -32,7 +32,7 @@ metadata:
   name: traefik-external-dashboard
   namespace: ingress
   annotations:
-    kubernetes.io/ingress.class: ingress-external-traefik
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
   entryPoints:
     - websecure
