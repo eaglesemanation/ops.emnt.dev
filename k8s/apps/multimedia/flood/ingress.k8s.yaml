@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/name: flood
     app.kubernetes.io/instance: flood
   annotations:
-    kubernetes.io/ingress.class: ingress-external-traefik
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
   entryPoints:
     - websecure

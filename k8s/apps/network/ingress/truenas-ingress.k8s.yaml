@@ -4,7 +4,7 @@ metadata:
   name: truenas
   namespace: ingress
 spec:
-  ingressClassName: ingress-external-traefik
+  ingressClassName: ingress-internal-traefik
   rules:
     - host: nas.emnt.dev
       http:
