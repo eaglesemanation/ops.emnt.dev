@@ -4,7 +4,6 @@ resources:
   - external-secrets.k8s.yaml
   - minio-operator.k8s.yaml
   - postgres-operator.k8s.yaml
-  - pulumi-operator.k8s.yaml
   - rabbitmq-operator.k8s.yaml
   - redis-operator.k8s.yaml
   - reflector.k8s.yaml
