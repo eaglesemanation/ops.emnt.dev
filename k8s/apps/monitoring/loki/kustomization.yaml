@@ -5,3 +5,4 @@ resources:
   - minio.k8s.yaml
   - minio-config.sops.yaml
   - loki-minio-creds.sops.yaml
+  - helmrelease.k8s.yaml

@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: loki
+  namespace: loki
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: loki
+      version: 5.36.3
+      sourceRef:
+        kind: HelmRepository
+        name: grafana
+        namespace: flux-system
+      interval: 30m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    loki:
+      storage:
+        s3:
+          s3: minio.loki.svc.cluster.local:443
+          s3ForcePathStyle: true
+          accessKeyId: ${S3_LOKI_ACCESS_KEY_ID}
+          secretAccessKey: ${S3_LOKI_SECRET_ACCESS_KEY}
+    # NOTE: Currently separating access keys into secret is a mess.
+    # Keep track of https://github.com/grafana/loki/issues/8572
+    backend:
+      extraArgs:
+        - "-config.expand-env=true"
+      extraEnv:
+        - name: S3_LOKI_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: loki-minio
+              key: CONSOLE_ACCESS_KEY
+        - name: S3_LOKI_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: loki-minio
+              key: CONSOLE_SECRET_KEY
+    write:
+      extraArgs:
+        - "-config.expand-env=true"
+      extraEnv:
+        - name: S3_LOKI_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: loki-minio
+              key: CONSOLE_ACCESS_KEY
+        - name: S3_LOKI_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: loki-minio
+              key: CONSOLE_SECRET_KEY
+    read:
+      extraArgs:
+        - "-config.expand-env=true"
+      extraEnv:
+        - name: S3_LOKI_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: loki-minio
+              key: CONSOLE_ACCESS_KEY
+        - name: S3_LOKI_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: loki-minio
+              key: CONSOLE_SECRET_KEY
+    monitoring:
+      selfMonitoring:
+        # This is using Grafana Agent, while metrics are already being collected
+        # by serviceMonitor, not sure why I would want to have both
+        enabled: false
+        grafanaAgent:
+          installOperator: false
+    gateway:
+      enabled: false
+    ingress:
+      enabled: true
+      ingressClassName: ingress-internal-traefik
+      hosts:
+        - loki.emnt.dev
