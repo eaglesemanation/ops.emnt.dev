@@ -5,6 +5,8 @@ metadata:
   name: minio
   namespace: loki
 spec:
+  users:
+    - name: loki-minio
   pools:
     - servers: 4
       name: pool-0

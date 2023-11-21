@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: minio-config
+    namespace: loki
+stringData:
+    config.env: ENC[AES256_GCM,data:6gXPxY6Lq5ovvwoAQmfe2xGfBJqglBqeAEGoddfKwaQlLAEC8AdVvOtuU+C6mzRxDxVd99vAhP4TwgpQUc+ubJHMkDBkJ0HlDhu7OGrpln0EH2KbWsM1G5pRtuhZ0D6JtBtsfSeXXCA0M4mnQIJf4LT7dCqY3ScOJB9TP2w64M62AGvDdVDV9abt9gfooqTS7nRLzw==,iv:wpYwBr4/i/5yhOOh9bZ5vEmW1MROC9JkVia2VSh7N5s=,tag:vFIaLs+HLQN1ZbzUSBJG1Q==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTSDNuREhTQklvYjdZdE16
+            Z2ErOWFGd21mOURkR0FEUTZzSktreER3L3pBCmgwOU9mY1h5OEVhWDU1Q1ptSERJ
+            NDVMMVNERldhTVNLQzNjS1l5ZFBiY1UKLS0tIFRPNloxblRDaFBZSDMxaWpCa3A2
+            NEo5SkVPdys3TExBNDdkS2l4ZXVEdDgKULcB/wEjsSq9oFZMP4EAiASZ6W18TMpN
+            Ha4dkKZi3gCMv32ydS809wqWWoSIG1ZPGQDSX5g6+McJhiHr3j4prA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2023-11-21T01:34:29Z"
+    mac: ENC[AES256_GCM,data:ltoW+L4nq+Ep29RkX9jgXdTEBo61oEC5/p5+3J4dNpkYvmBPZWlze8RRu8/WyLHe5UVLvxHCF5skDvO2q/MOZk88HNfTMMUVD3sHkcYJfbFA2wm/qEcB0OWIVyXHtqRDLhegz2MxdH19rFp2RAE0Qp0oAxUhN+5f5KOMh5v6ca0=,iv:9+vkyYP/yd6PnJ7A00A6KbLQ6S4l3ihlnCKznaOrZ10=,tag:40D681uyV+NojPftDFLDxQ==,type:str]
+    pgp:
+        - created_at: "2023-11-21T01:34:29Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQgApMyoWYFyEhbtA6XwUPEgf6hrX94vF3Wyx17fGQUY1luh
+            Xi32YnXdit308KsfiyQXokAU+M2mn9CXXB+M6WYP0wohEAEaqZVeNSkK5zbd7T+D
+            eFW6iUsOr0DALRnrXe9HShxa2rmN4Pl7K0eU8A2D42Daux+UWBA06rJasbsSmhY/
+            Kc1Vn8KJwa4esonGfBEDYYKDXiCPI9sh2R7Enf+Af8CQLiBBC77gT+MuwtMqx+qt
+            EhonTXf5z8HXReIcHGeKzquV0RbfMt/KkTWPpFrh1DzX92C8yRevtNeP2Wrg6RCY
+            EJxU2GqZbpVnXQ+OO4gljcCKH/q6wqpHyB8eFX8z5NJcATMhc4b8A+FV24jjFUgJ
+            HvqfDzhPF1AFYY/4AwYINAe1h+KxhU4t0N1/Oi1gMuhQzpdGdKuPQc/DFdbYsnKM
+            3TAMqyDI1X7b8PVbni51hgQ9XZnVfyWZluc/dTU=
+            =CPir
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.8.1
