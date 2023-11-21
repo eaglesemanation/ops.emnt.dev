@@ -69,6 +69,13 @@ spec:
         existingSecret: grafana-creds
         userKey: username
         passwordKey: password
+      additionalDataSources:
+        - name: Loki
+          type: loki
+          access: proxy
+          url: https://loki.emnt.dev
+          jsonData:
+            maxLines: 1000
       ingress:
         enabled: true
         ingressClassName: ingress-external-traefik
