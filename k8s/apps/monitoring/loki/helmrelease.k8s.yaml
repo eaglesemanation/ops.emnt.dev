@@ -80,6 +80,9 @@ spec:
         enabled: false
         grafanaAgent:
           installOperator: false
+    test:
+      # Depends on selfMonitoring
+      enabled: false
     gateway:
       enabled: false
     ingress:
