@@ -23,6 +23,8 @@ spec:
     crds: CreateReplace
   values:
     loki:
+      # TODO: Enable when ingress supports service auth, not just user auth
+      auth_enabled: false
       storage:
         s3:
           s3: minio.loki.svc.cluster.local:443
