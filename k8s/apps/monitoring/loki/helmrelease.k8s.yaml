@@ -78,6 +78,9 @@ spec:
               name: loki-minio
               key: CONSOLE_SECRET_KEY
     monitoring:
+      serviceMonitor:
+        labels:
+          release: prometheus
       selfMonitoring:
         # This is using Grafana Agent, while metrics are already being collected
         # by serviceMonitor, not sure why I would want to have both
