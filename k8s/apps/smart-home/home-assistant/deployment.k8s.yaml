@@ -41,14 +41,20 @@ spec:
           ports:
             - name: code-server
               containerPort: 8080
+          env:
+            - name: HASS_SERVER
+              value: http://localhost:8123
+          envFrom:
+            - secretRef:
+                name: code-server-token
           command:
             - sh
             - -c
             - |
               mkdir -p /home/coder/.config/code-server && \
-              cp -r /tmp/code-server-config/* /home/coder/.config/code-server/ && \
+              cp /tmp/code-server-config/config.yaml /home/coder/.config/code-server/config.yaml && \
               code-server --install-extension keesschollaart.vscode-home-assistant && \
-              entrypoint.sh --bind-addr 0.0.0.0:8080 ./hass-config
+              entrypoint.sh --bind-addr 0.0.0.0:8080 --disable-telemetry --disable-workspace-trust ./hass-config
           volumeMounts:
             - name: hass-config
               mountPath: /home/coder/hass-config
