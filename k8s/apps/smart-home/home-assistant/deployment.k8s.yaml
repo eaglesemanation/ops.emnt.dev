@@ -46,7 +46,7 @@ spec:
             - -c
             - |
               mkdir -p /home/coder/.config/code-server && \
-              cp -r /tmp/code-server-config /home/coder/.config/code-server && \
+              cp -r /tmp/code-server-config/* /home/coder/.config/code-server/ && \
               code-server --install-extension keesschollaart.vscode-home-assistant && \
               entrypoint.sh --bind-addr 0.0.0.0:8080 ./hass-config
           volumeMounts:
