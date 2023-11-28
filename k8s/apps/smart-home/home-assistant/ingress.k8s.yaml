@@ -22,16 +22,31 @@ spec:
       services:
         - name: home-assistant
           namespace: home-assistant
-          port: 8123
+          port: http
     # No need for middleware, user already authenticated
     - kind: Rule
       match: Host(`home-assistant.emnt.dev`)
       services:
         - name: home-assistant
           namespace: home-assistant
-          port: 8123
+          port: http
     - kind: Rule
       match: Host(`home-assistant.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
+      services:
+        - name: authentik
+          namespace: authentik
+          port: 9000
+    - kind: Rule
+      match: Host(`home-assistant-vscode.emnt.dev`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: home-assistant
+          namespace: home-assistant
+          port: code-server
+    - kind: Rule
+      match: Host(`home-assistant-vscode.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
         - name: authentik
           namespace: authentik

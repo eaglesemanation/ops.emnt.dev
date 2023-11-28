@@ -34,9 +34,28 @@ spec:
             - name: PGID
               value: "1000"
           volumeMounts:
-            - name: config
+            - name: hass-config
               mountPath: /config
+        - name: code-server
+          image: docker.io/codercom/code-server:4.19.0
+          ports:
+            - name: code-server
+              containerPort: 8080
+          command:
+            [
+              "sh",
+              "-c",
+              "/usr/bin/code-server --install-extension keesschollaart.vscode-home-assistant && /usr/bin/entrypoint.sh --bind-addr 0.0.0.0:8080 ./hass-config",
+            ]
+          volumeMounts:
+            - name: hass-config
+              mountPath: /home/coder/hass-config
+            - name: code-server-config
+              mountPath: /home/coder/.config/code-server
       volumes:
-        - name: config
+        - name: hass-config
           persistentVolumeClaim:
             claimName: home-assistant-config
+        - name: code-server-config
+          configMap:
+            name: code-server
