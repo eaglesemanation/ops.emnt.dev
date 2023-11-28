@@ -11,4 +11,4 @@ configMapGenerator:
   - name: code-server
     namespace: home-assistant
     files:
-      - code-server-config.yaml
+      - code-server-config/config.yaml
