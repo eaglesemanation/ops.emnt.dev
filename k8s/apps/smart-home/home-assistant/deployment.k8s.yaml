@@ -42,16 +42,17 @@ spec:
             - name: code-server
               containerPort: 8080
           command:
-            [
-              "sh",
-              "-c",
-              "/usr/bin/code-server --install-extension keesschollaart.vscode-home-assistant && /usr/bin/entrypoint.sh --bind-addr 0.0.0.0:8080 ./hass-config",
-            ]
+            - sh
+            - -c
+            - |
+              cp /tmp/code-server-config /home/coder/.config/code-server && \
+              code-server --install-extension keesschollaart.vscode-home-assistant && \
+              entrypoint.sh --bind-addr 0.0.0.0:8080 ./hass-config
           volumeMounts:
             - name: hass-config
               mountPath: /home/coder/hass-config
             - name: code-server-config
-              mountPath: /home/coder/.config/code-server
+              mountPath: /tmp/code-server-config
       volumes:
         - name: hass-config
           persistentVolumeClaim:
