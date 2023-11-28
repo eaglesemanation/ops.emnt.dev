@@ -9,5 +9,6 @@ resources:
   - rabbitmq-user.k8s.yaml
 configMapGenerator:
   - name: code-server
+    namespace: home-assistant
     files:
       - code-server-config.yaml
