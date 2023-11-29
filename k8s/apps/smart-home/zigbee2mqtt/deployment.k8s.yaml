@@ -32,8 +32,6 @@ spec:
               value: /dev/ttyUSB0
             - name: ZIGBEE2MQTT_CONFIG_AVAILABILITY
               value: "true"
-            - name: ZIGBEE2MQTT_CONFIG_DEVICE_OPTIONS_RETAIN
-              value: "true"
             - name: ZIGBEE2MQTT_CONFIG_HOMEASSISTANT
               value: "true"
             - name: ZIGBEE2MQTT_CONFIG_PERMIT_JOIN
