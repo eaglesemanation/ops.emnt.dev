@@ -12,3 +12,21 @@ spec:
     kind: GitRepository
     name: emnt-ops
   wait: true
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kyverno-policies
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./k8s/apps/monitoring/kyverno/kyverno-policies
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: emnt-ops
+  wait: true
+  postBuild:
+    substitute:
+      REPO_ROOT: https://raw.githubusercontent.com/kyverno/policies/e3f4b89c505745276126861a944a4c146c7a98e3
