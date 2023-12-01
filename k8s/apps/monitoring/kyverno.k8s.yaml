@@ -27,6 +27,3 @@ spec:
     kind: GitRepository
     name: emnt-ops
   wait: true
-  postBuild:
-    substitute:
-      REPO_ROOT: https://raw.githubusercontent.com/kyverno/policies/e3f4b89c505745276126861a944a4c146c7a98e3
