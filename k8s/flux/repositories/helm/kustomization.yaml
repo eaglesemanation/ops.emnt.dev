@@ -15,6 +15,7 @@ resources:
   - jameswynn.k8s.yaml
   - jetstack.k8s.yaml
   - kubelet-csr-approver.k8s.yaml
+  - kyverno.k8s.yaml
   - metrics-server.k8s.yaml
   - minio.k8s.yaml
   - node-feature-discovery.k8s.yaml
