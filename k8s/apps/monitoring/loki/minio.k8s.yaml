@@ -7,6 +7,10 @@ metadata:
 spec:
   users:
     - name: loki-minio
+  buckets:
+    - name: chunks
+    - name: ruler
+    - name: admin
   configuration:
     name: minio-config
   pools:

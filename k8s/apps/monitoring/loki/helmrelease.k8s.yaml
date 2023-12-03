@@ -28,10 +28,12 @@ spec:
       auth_enabled: false
       storage:
         s3:
-          s3: minio.loki.svc.cluster.local:443
+          s3: https://minio.loki.svc.cluster.local.
           s3ForcePathStyle: true
           accessKeyId: ${S3_LOKI_ACCESS_KEY_ID}
           secretAccessKey: ${S3_LOKI_SECRET_ACCESS_KEY}
+          http_config:
+            insecure_skip_verify: true
     # NOTE: Currently separating access keys into secret is a mess.
     # Keep track of https://github.com/grafana/loki/issues/8572
     backend:
