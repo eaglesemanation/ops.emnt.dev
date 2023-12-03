@@ -30,8 +30,8 @@ spec:
           release: prometheus
       container:
         extraArgs:
-          - --clientRateLimitQPS=30
-          - --clientRateLimitBurst=300
+          clientRateLimitQPS: 30
+          clientRateLimitBurst: 300
     backgroundController:
       serviceMonitor:
         enabled: true
