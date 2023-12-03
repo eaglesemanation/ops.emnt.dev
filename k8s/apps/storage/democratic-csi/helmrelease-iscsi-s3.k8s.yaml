@@ -20,9 +20,23 @@ spec:
     - name: snapshot-controller
       namespace: external-snapshotter
   values:
+    controller:
+      driver:
+        resources:
+          requests:
+            cpu: 20m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
     node:
       hostPID: true
       driver:
+        resources:
+          requests:
+            cpu: 20m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
         extraEnv:
           - name: ISCSIADM_HOST_STRATEGY
             value: nsenter

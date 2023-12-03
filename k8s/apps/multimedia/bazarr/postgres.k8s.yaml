@@ -16,6 +16,12 @@ spec:
         - bazarr
   instances:
     - name: instance1
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
       dataVolumeClaimSpec:
         storageClassName: freenas-api-iscsi-csi
         accessModes:
@@ -54,10 +60,22 @@ spec:
   monitoring:
     pgmonitor:
       exporter:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            memory: 64Mi
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0
   userInterface:
     pgAdmin:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgadmin4:ubi8-4.30-16
+      resources:
+        requests:
+          cpu: 100m
+          memory: 64Mi
+        limits:
+          memory: 256Mi
       dataVolumeClaimSpec:
         storageClassName: freenas-api-iscsi-csi
         accessModes:

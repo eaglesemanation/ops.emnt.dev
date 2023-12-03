@@ -17,6 +17,14 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
+    node:
+      driver:
+        resources:
+          requests:
+            cpu: 20m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
     csiDriver:
       name: "org.democratic-csi.node-manual"
       attachRequired: false

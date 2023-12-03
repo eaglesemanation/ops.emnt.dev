@@ -56,6 +56,19 @@ spec:
         secretKeyRef:
           name: authentik-pg-pguser-authentik
           key: password
+    resources:
+      server:
+        requests:
+          cpu: 100m
+          memory: 500Mi
+        limits:
+          memory: 1Gi
+      worker:
+        requests:
+          cpu: 100m
+          memory: 250Mi
+        limits:
+          memory: 500Mi
     ingress:
       enabled: true
       ingressClassName: ingress-external-traefik

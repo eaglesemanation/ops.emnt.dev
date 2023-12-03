@@ -20,6 +20,22 @@ spec:
     - name: snapshot-controller
       namespace: external-snapshotter
   values:
+    controller:
+      driver:
+        resources:
+          requests:
+            cpu: 20m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
+    node:
+      driver:
+        resources:
+          requests:
+            cpu: 20m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
     csiDriver:
       name: "org.democratic-csi.freenas-api-smb"
     volumeSnapshotClasses:
@@ -27,7 +43,7 @@ spec:
         labels:
           velero.io/csi-volumesnapshot-class: "true"
         parameters:
-          # This will consume more space, but at least 
+          # This will consume more space, but at least
           # snapshot is not coupled with original PV
           detachedSnapshots: "true"
     driver:
