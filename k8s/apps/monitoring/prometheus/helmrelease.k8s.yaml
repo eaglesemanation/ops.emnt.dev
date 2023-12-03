@@ -40,6 +40,9 @@ spec:
       endpoints:
         - ${K8S_CONTROLLER_1_ADDR}
     grafana:
+      persistence:
+        enabled: true
+        storageClassName: freenas-api-iscsi-csi
       grafana.ini:
         server:
           root_url: https://grafana.emnt.dev/
@@ -71,6 +74,7 @@ spec:
           url: https://loki.emnt.dev
           jsonData:
             maxLines: 1000
+      defaultDashboardsTimezone: browser
       ingress:
         enabled: true
         ingressClassName: ingress-external-traefik
