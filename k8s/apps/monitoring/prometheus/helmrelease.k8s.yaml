@@ -40,9 +40,6 @@ spec:
       endpoints:
         - ${K8S_CONTROLLER_1_ADDR}
     grafana:
-      persistence:
-        enabled: true
-        storageClassName: freenas-api-iscsi-csi
       grafana.ini:
         server:
           root_url: https://grafana.emnt.dev/
