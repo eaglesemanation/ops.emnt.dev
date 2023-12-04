@@ -20,6 +20,7 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    replicaCount: 3
     serviceMonitor:
       enabled: true
       additionalLabels:
