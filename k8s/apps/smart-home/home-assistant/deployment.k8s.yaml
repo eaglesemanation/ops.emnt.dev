@@ -37,7 +37,7 @@ spec:
             - name: hass-config
               mountPath: /config
         - name: code-server
-          image: docker.io/codercom/code-server:4.19.0
+          image: docker.io/codercom/code-server:4.19.1
           ports:
             - name: code-server
               containerPort: 8080
