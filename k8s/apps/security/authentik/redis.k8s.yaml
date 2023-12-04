@@ -8,7 +8,7 @@ metadata:
 spec:
   redisExporter:
     enabled: true
-    image: quay.io/opstree/redis-exporter:v1.44.0
+    image: quay.io/opstree/redis-exporter:v1.45.0
   kubernetesConfig:
     image: quay.io/opstree/redis:v7.0.12
     redisSecret:
