@@ -21,6 +21,7 @@ spec:
     crds: CreateReplace
   values:
     clusterOperator:
+      replicaCount: 3
       metrics:
         enabled: true
         serviceMonitor:
@@ -28,6 +29,7 @@ spec:
           labels:
             release: prometheus
     msgTopologyOperator:
+      replicaCount: 3
       metrics:
         enabled: true
         serviceMonitor:
