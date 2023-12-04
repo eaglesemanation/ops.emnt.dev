@@ -26,6 +26,6 @@ spec:
       additionalLabels:
         release: prometheus
     webhook:
-      create: false
+      replicaCount: 3
     certController:
-      create: false
+      replicaCount: 3
