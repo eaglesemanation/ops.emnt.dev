@@ -23,6 +23,12 @@ spec:
       containers:
         - name: core
           image: docker.io/linuxserver/homeassistant:2023.11.3
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+            limits:
+              memory: 1Gi
           ports:
             - name: http
               containerPort: 8123
@@ -38,6 +44,12 @@ spec:
               mountPath: /config
         - name: code-server
           image: docker.io/codercom/code-server:4.19.1
+          resources:
+            requests:
+              cpu: 20m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
           ports:
             - name: code-server
               containerPort: 8080

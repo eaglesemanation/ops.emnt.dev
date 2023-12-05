@@ -21,11 +21,29 @@ spec:
     crds: CreateReplace
   values:
     replicaCount: 3
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
     serviceMonitor:
       enabled: true
       additionalLabels:
         release: prometheus
     webhook:
       replicaCount: 3
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
     certController:
       replicaCount: 3
+      resources:
+        requests:
+          cpu: 10m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
