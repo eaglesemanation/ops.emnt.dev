@@ -31,7 +31,7 @@ spec:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
       containers:
         - name: transmission
-          image: docker.io/linuxserver/transmission:4.0.4
+          image: docker.io/linuxserver/transmission:4.0.5
           resources:
             requests:
               cpu: 100m
