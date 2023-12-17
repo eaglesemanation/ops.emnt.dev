@@ -29,6 +29,10 @@ spec:
         - prowlarr-log
   instances:
     - name: instance1
+      metadata:
+        labels:
+          app.kubernetes.io/name: postgresql
+          app.kubernetes.io/instance: prowlarr-pg
       dataVolumeClaimSpec:
         storageClassName: freenas-api-iscsi-csi
         accessModes:

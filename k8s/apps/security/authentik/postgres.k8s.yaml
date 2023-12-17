@@ -16,6 +16,10 @@ spec:
         - authentik
   instances:
     - name: instance1
+      metadata:
+        labels:
+          app.kubernetes.io/name: postgresql
+          app.kubernetes.io/instance: authentik-pg
       resources:
         requests:
           cpu: 100m

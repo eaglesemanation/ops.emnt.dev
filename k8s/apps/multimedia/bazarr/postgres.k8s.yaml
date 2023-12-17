@@ -16,6 +16,10 @@ spec:
         - bazarr
   instances:
     - name: instance1
+      metadata:
+        labels:
+          app.kubernetes.io/name: postgresql
+          app.kubernetes.io/instance: bazarr-pg
       resources:
         requests:
           cpu: 100m
