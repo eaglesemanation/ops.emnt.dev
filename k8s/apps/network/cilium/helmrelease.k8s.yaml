@@ -61,6 +61,7 @@ spec:
           memory: 256Mi
     hubble:
       metrics:
+        enabled: true
         serviceMonitor:
           enabled: true
           labels:
