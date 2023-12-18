@@ -15,4 +15,5 @@ spec:
       - truenas
   selector:
     matchLabels:
-      app: vanilla-minecraft-metrics
+      app.kubernetes.io/name: graphite-exporter
+      app.kubernetes.io/instance: truenas

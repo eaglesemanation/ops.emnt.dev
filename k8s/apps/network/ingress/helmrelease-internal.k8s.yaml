@@ -125,11 +125,11 @@ spec:
       # Graphite for TrueNAS
       grph-tcp-nas:
         protocol: TCP
-        port: 9109
+        port: 2003
         expose: true
-        exposedPort: 9109
+        exposedPort: 2003
       grph-udp-nas:
         protocol: UDP
-        port: 9109
+        port: 2003
         expose: true
-        exposedPort: 9109
+        exposedPort: 2003

@@ -32,7 +32,7 @@ spec:
     - match: HostSNI(`*`)
       services:
         - name: graphite-exporter
-          port: 9109
+          port: graphite-tcp
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
 apiVersion: traefik.io/v1alpha1
@@ -48,4 +48,4 @@ spec:
   routes:
     - services:
         - name: graphite-exporter
-          port: 9109
+          port: graphite-udp
