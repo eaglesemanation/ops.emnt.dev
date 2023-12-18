@@ -1,18 +1,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: truenas
-  namespace: ingress
+  name: opnsense
+  namespace: opnsense
 spec:
   ingressClassName: ingress-internal-traefik
   rules:
-    - host: nas.emnt.dev
+    - host: opnsense.emnt.dev
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: truenas
+                name: opnsense
                 port:
-                  number: 443
+                  name: https
