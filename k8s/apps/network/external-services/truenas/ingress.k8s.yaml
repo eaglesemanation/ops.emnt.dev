@@ -17,35 +17,31 @@ spec:
                 port:
                   number: 443
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
-apiVersion: traefik.io/v1alpha1
-kind: IngressRouteTCP
+apiVersion: networking.k8s.io/v1
+kind: Ingress
 metadata:
-  name: graphite
+  name: minio
   namespace: truenas
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
-  entryPoints:
-    - grph-tcp-nas
-  routes:
-    - match: HostSNI(`*`)
-      services:
-        - name: graphite-exporter
-          port: graphite-tcp
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
-apiVersion: traefik.io/v1alpha1
-kind: IngressRouteUDP
-metadata:
-  name: graphite
-  namespace: truenas
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
-spec:
-  entryPoints:
-    - grph-udp-nas
-  routes:
-    - services:
-        - name: graphite-exporter
-          port: graphite-udp
+  ingressClassName: ingress-internal-traefik
+  rules:
+    - host: minio.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: truenas
+                port:
+                  number: 9000
+    - host: minio-console.emnt.dev
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: truenas
+                port:
+                  number: 9001
