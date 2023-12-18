@@ -35,9 +35,9 @@ spec:
       port: 9109
       targetPort: graphite-tcp
       protocol: TCP
-    - name: graphite-tcp
+    - name: graphite-udp
       port: 9109
-      targetPort: graphite-tcp
+      targetPort: graphite-udp
       protocol: UDP
     - name: prometheus
       port: 9108
