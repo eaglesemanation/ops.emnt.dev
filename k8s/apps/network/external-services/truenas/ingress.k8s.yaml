@@ -34,7 +34,7 @@ spec:
         - name: graphite-exporter
           port: 9109
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroutetcp_v1alpha1.json
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
@@ -46,7 +46,6 @@ spec:
   entryPoints:
     - grph-udp-nas
   routes:
-    - match: HostSNI(`*`)
-      services:
+    - services:
         - name: graphite-exporter
           port: 9109
