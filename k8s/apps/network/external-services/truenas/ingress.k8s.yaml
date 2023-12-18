@@ -27,7 +27,7 @@ metadata:
     kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
   entryPoints:
-    - graphite-tcp-truenas
+    - grph-tcp-nas
   routes:
     - match: HostSNI(`*`)
       services:
@@ -44,7 +44,7 @@ metadata:
     kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
   entryPoints:
-    - graphite-udp-truenas
+    - grph-udp-nas
   routes:
     - match: HostSNI(`*`)
       services:

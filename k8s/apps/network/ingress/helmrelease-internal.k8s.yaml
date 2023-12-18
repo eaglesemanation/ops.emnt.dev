@@ -122,12 +122,13 @@ spec:
         exposedPort: 25565
         proxyProtocol:
           trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
-      graphite-tcp-truenas:
+      # Graphite for TrueNAS
+      grph-tcp-nas:
         protocol: TCP
         port: 9109
         expose: true
         exposedPort: 9109
-      graphite-udp-truenas:
+      grph-udp-nas:
         protocol: UDP
         port: 9109
         expose: true
