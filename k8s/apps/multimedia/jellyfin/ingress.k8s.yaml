@@ -19,35 +19,3 @@ spec:
                 name: jellyfin
                 port:
                   number: 8096
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
-apiVersion: traefik.io/v1alpha1
-kind: IngressRouteUDP
-metadata:
-  name: jellyfin-service-disc
-  namespace: jellyfin
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
-spec:
-  entryPoints:
-    - jf-svc-disc
-  routes:
-    - services:
-        - name: jellyfin
-          port: 1900
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
-apiVersion: traefik.io/v1alpha1
-kind: IngressRouteUDP
-metadata:
-  name: jellyfin-client-disc
-  namespace: jellyfin
-  annotations:
-    kubernetes.io/ingress.class: ingress-internal-traefik
-spec:
-  entryPoints:
-    - jf-client-disc
-  routes:
-    - services:
-        - name: jellyfin
-          port: 7359
