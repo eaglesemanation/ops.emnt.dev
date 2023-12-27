@@ -65,9 +65,10 @@ spec:
             - |
               mkdir -p /home/coder/.config/code-server && \
               cp /tmp/code-server-config/config.yaml /home/coder/.config/code-server/config.yaml && \
-              code-server --install-extension keesschollaart.vscode-home-assistant && \
               entrypoint.sh --bind-addr 0.0.0.0:8080 --disable-telemetry --disable-workspace-trust ./hass-config
           volumeMounts:
+            - name: data
+              mountPath: /home/coder
             - name: hass-config
               mountPath: /home/coder/hass-config
             - name: code-server-config
@@ -79,3 +80,5 @@ spec:
         - name: code-server-config
           configMap:
             name: code-server
+        - name: data
+          emptyDir: {}
