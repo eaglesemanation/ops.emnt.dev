@@ -17,6 +17,12 @@ spec:
     - servers: 4
       name: pool-0
       volumesPerServer: 2
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 1Gi
       volumeClaimTemplate:
         metadata:
           name: data

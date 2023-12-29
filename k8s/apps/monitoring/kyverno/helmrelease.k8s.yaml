@@ -47,3 +47,18 @@ spec:
         enabled: true
         additionalLabels:
           release: prometheus
+    cleanupJobs:
+      admissionReports:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            memory: 64Mi
+      clusterAdmissionReports:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            memory: 64Mi

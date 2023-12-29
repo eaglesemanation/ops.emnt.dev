@@ -21,6 +21,14 @@ spec:
         labels:
           app.kubernetes.io/name: postgresql
           app.kubernetes.io/instance: radarr-pg
+      sidecars:
+        replicaCertCopy:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 2Mi
+            limits:
+              memory: 16Mi
       dataVolumeClaimSpec:
         storageClassName: freenas-api-iscsi-csi
         accessModes:
@@ -44,6 +52,13 @@ spec:
         repo1-path: /pgbackrest/radarr/radarr-pg/repo1
         repo1-retention-full: "30"
         repo1-retention-full-type: time
+      jobs:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
       configuration:
         - secret:
             name: pgo-s3-creds
