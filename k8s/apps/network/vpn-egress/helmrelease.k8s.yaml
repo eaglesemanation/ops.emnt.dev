@@ -23,6 +23,12 @@ spec:
             - matchExpressions:
                 - key: emnt.dev/on-nas
                   operator: Exists
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 64Mi
     settings:
       IPTABLES_NFT: "yes"
       VPN_BLOCK_OTHER_TRAFFIC: true
@@ -48,6 +54,12 @@ spec:
       vpn:
         enabled: true
         type: gluetun
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
         gluetun:
           image:
             tag: v3.35.0

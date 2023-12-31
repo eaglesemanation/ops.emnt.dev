@@ -22,6 +22,12 @@ spec:
   values:
     clusterOperator:
       replicaCount: 3
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          memory: 128Mi
       metrics:
         enabled: true
         serviceMonitor:
@@ -30,6 +36,12 @@ spec:
             release: prometheus
     msgTopologyOperator:
       replicaCount: 3
+      resources:
+        requests:
+          cpu: 10m
+          memory: 64Mi
+        limits:
+          memory: 128Mi
       metrics:
         enabled: true
         serviceMonitor:
