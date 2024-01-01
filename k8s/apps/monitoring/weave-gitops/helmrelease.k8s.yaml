@@ -18,6 +18,12 @@ spec:
   values:
     additionalArgs:
       - --auth-methods=oidc
+    resources:
+      requests:
+        cpu: 50m
+        memory: 128Mi
+      limits:
+        memory: 256Mi
     rbac:
       # FIXME: Restrict to only impersonating groups from static list
       # Wait until this is resolved: https://github.com/weaveworks/weave-gitops/issues/3485

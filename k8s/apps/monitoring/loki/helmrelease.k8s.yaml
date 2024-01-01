@@ -37,6 +37,12 @@ spec:
     # NOTE: Currently separating access keys into secret is a mess.
     # Keep track of https://github.com/grafana/loki/issues/8572
     backend:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
       persistence:
         storageClass: freenas-api-iscsi-csi
       extraArgs:
@@ -53,6 +59,12 @@ spec:
               name: loki-minio
               key: CONSOLE_SECRET_KEY
     write:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 256Mi
+        limits:
+          memory: 1Gi
       persistence:
         storageClass: freenas-api-iscsi-csi
       extraArgs:
@@ -69,6 +81,12 @@ spec:
               name: loki-minio
               key: CONSOLE_SECRET_KEY
     read:
+      resources:
+        requests:
+          cpu: 20m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
       extraArgs:
         - "-config.expand-env=true"
       extraEnv:
@@ -83,6 +101,13 @@ spec:
               name: loki-minio
               key: CONSOLE_SECRET_KEY
     monitoring:
+      lokiCanary:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 64Mi
+          limits:
+            memory: 256Mi
       serviceMonitor:
         labels:
           release: prometheus
