@@ -15,6 +15,17 @@ spec:
         name: angelnu
         namespace: flux-system
       interval: 30m
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              version: v1
+              kind: Deployment
+              name: vpn-egress-pod-gateway-webhook
+            patch: |
+              - op: replace
+                path: /spec/template/spec/containers/0/resources
+                value: {"requests": {"cpu": "10m", "memory": "32Mi"}, "limits": {"memory": "128Mi"}}
   values:
     affinity:
       nodeAffinity:
