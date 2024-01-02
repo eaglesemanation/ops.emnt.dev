@@ -21,6 +21,12 @@ spec:
       containers:
         - name: controller
           image: docker.io/linuxserver/unifi-controller:7.5.187
+          resources:
+            requests:
+              cpu: 10m
+              memory: 1Gi
+            limits:
+              memory: 1.1Gi
           env:
             - name: PUID
               value: "1000"

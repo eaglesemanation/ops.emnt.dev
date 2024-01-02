@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: kube-prometheus-stack
-      version: 55.5.0
+      version: 55.5.1
       sourceRef:
         kind: HelmRepository
         name: prometheus-community
@@ -77,8 +77,41 @@ spec:
         ingressClassName: ingress-external-traefik
         hosts:
           - grafana.emnt.dev
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          memory: 1Gi
+    prometheusOperator:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
+    kube-state-metrics:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 32Mi
+        limits:
+          memory: 128Mi
+    prometheus-node-exporter:
+      resources:
+        requests:
+          cpu: 10m
+          memory: 16Mi
+        limits:
+          memory: 64Mi
     prometheus:
       prometheusSpec:
+        resources:
+          requests:
+            cpu: 200m
+            memory: 3Gi
+          limits:
+            memory: 4Gi
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -92,5 +125,11 @@ spec:
         enabled: false # Using traefik IngressRoute
     alertmanager:
       alertmanagerSpec:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
         alertmanagerConfiguration:
           name: alertmanager-global-config

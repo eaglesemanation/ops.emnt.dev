@@ -35,6 +35,12 @@ spec:
     persistentVolumeClaim:
       enabled: false
       storageClass: freenas-api-nfs-csi
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
     dnsmasq:
       customSettings:
         - edns-packet-max=1232

@@ -20,6 +20,20 @@ spec:
         labels:
           app.kubernetes.io/name: postgresql
           app.kubernetes.io/instance: sonarr-pg
+      resources:
+        requests:
+          cpu: 100m
+          memory: 128Mi
+        limits:
+          memory: 256Mi
+      sidecars:
+        replicaCertCopy:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 2Mi
+            limits:
+              memory: 16Mi
       dataVolumeClaimSpec:
         storageClassName: freenas-api-iscsi-csi
         accessModes:
@@ -42,6 +56,13 @@ spec:
         repo1-s3-uri-style: path
         repo1-retention-full: "30"
         repo1-retention-full-type: time
+      jobs:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
       configuration:
         - secret:
             name: pgo-s3-creds
@@ -57,4 +78,10 @@ spec:
   monitoring:
     pgmonitor:
       exporter:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            memory: 64Mi
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0

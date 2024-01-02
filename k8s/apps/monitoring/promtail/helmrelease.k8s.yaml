@@ -23,6 +23,12 @@ spec:
     config:
       clients:
         - url: https://loki.emnt.dev/loki/api/v1/push
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
     serviceMonitor:
       enabled: true
       labels:

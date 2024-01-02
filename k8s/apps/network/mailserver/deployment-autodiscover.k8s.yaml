@@ -21,6 +21,12 @@ spec:
       containers:
         - name: autodiscover
           image: docker.io/monogramm/autodiscover-email-settings:1.4.0
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
           envFrom:
             - configMapRef:
                 name: autodiscover-mailserver
