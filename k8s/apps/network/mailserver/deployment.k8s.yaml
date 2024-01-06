@@ -14,6 +14,8 @@ metadata:
     ignore-check.kube-linter.io/no-read-only-root-fs: >-
       There are too many files written to make The root FS read-only
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
