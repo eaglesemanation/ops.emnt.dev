@@ -10,7 +10,7 @@ spec:
     enabled: true
     image: quay.io/opstree/redis-exporter:v1.45.0
   kubernetesConfig:
-    image: quay.io/opstree/redis:v7.2.3
+    image: quay.io/opstree/redis:v7.0.12
     redisSecret:
       name: redis-creds
       key: password
