@@ -37,3 +37,26 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         runAsNonRoot: true
+    - servers: 4
+      name: pool-1
+      volumesPerServer: 2
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 1Gi
+      volumeClaimTemplate:
+        metadata:
+          name: data
+        spec:
+          storageClassName: freenas-api-iscsi-s3-csi
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 10Gi
+      containerSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
