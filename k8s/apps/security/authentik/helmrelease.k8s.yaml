@@ -70,13 +70,7 @@ spec:
         limits:
           memory: 500Mi
     ingress:
-      enabled: true
-      ingressClassName: ingress-external-traefik
-      hosts:
-        - host: authentik.emnt.dev
-          paths:
-            - path: /
-              pathType: Prefix
+      enabled: false
     prometheus:
       serviceMonitor:
         create: true
