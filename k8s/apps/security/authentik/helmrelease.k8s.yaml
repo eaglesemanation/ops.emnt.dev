@@ -17,65 +17,88 @@ spec:
       interval: 30m
   values:
     authentik:
+      secret_key: file:///authentik-secrets/secret_key
       error_reporting:
         enabled: true
       postgresql:
-        # Overwritten with env vars
-        host: null
-        user: null
-        name: null
+        host: file:///postgres-creds/host
+        name: file:///postgres-creds/dbname
+        user: file:///postgres-creds/user
+        password: file:///postgres-creds/password
       redis:
         host: redis
+        password: file:///redis-creds/password
       email:
         host: mail.emnt.dev
         port: 587
         use_tls: true
         from: authentik@emnt.dev
         username: authentik@emnt.dev
-    envFrom:
-      - secretRef:
-          name: secrets-authentik
-    envValueFrom:
-      AUTHENTIK_REDIS__PASSWORD:
-        secretKeyRef:
-          name: redis-creds
-          key: password
-      AUTHENTIK_POSTGRESQL__HOST:
-        secretKeyRef:
-          name: authentik-pg-pguser-authentik
-          key: host
-      AUTHENTIK_POSTGRESQL__NAME:
-        secretKeyRef:
-          name: authentik-pg-pguser-authentik
-          key: dbname
-      AUTHENTIK_POSTGRESQL__USER:
-        secretKeyRef:
-          name: authentik-pg-pguser-authentik
-          key: user
-      AUTHENTIK_POSTGRESQL__PASSWORD:
-        secretKeyRef:
-          name: authentik-pg-pguser-authentik
-          key: password
-    resources:
-      server:
+        password: file:///authentik-secrets/email_password
+    server:
+      metrics:
+        serviceMonitor:
+          enabled: true
+          labels:
+            release: prometheus
+      resources:
         requests:
           cpu: 100m
           memory: 500Mi
         limits:
           memory: 1Gi
-      worker:
+      volumes:
+        - name: postgres-creds
+          secret:
+            secretName: authentik-pg-pguser-authentik
+        - name: redis-creds
+          secret:
+            secretName: redis-creds
+        - name: authentik-secrets
+          secret:
+            secretName: secrets-authentik
+      volumeMounts:
+        - name: postgres-creds
+          mountPath: /postgres-creds
+          readOnly: true
+        - name: redis-creds
+          mountPath: /redis-creds
+          readOnly: true
+        - name: authentik-secrets
+          mountPath: /authentik-secrets
+          readOnly: true
+    worker:
+      resources:
         requests:
           cpu: 100m
           memory: 250Mi
         limits:
           memory: 500Mi
-    ingress:
-      enabled: false
+      volumes:
+        - name: postgres-creds
+          secret:
+            secretName: authentik-pg-pguser-authentik
+        - name: redis-creds
+          secret:
+            secretName: redis-creds
+        - name: authentik-secrets
+          secret:
+            secretName: secrets-authentik
+      volumeMounts:
+        - name: postgres-creds
+          mountPath: /postgres-creds
+          readOnly: true
+        - name: redis-creds
+          mountPath: /redis-creds
+          readOnly: true
+        - name: authentik-secrets
+          mountPath: /authentik-secrets
+          readOnly: true
     prometheus:
-      serviceMonitor:
-        create: true
       rules:
-        create: true
+        enabled: true
+        labels:
+          release: prometheus
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
 apiVersion: helm.toolkit.fluxcd.io/v2beta2
