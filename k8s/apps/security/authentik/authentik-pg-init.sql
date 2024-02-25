@@ -1,2 +1,2 @@
 \c authentik
-CREATE SCHEMA IF NOT EXISTS AUTHORIZATION authentik;
+GRANT USAGE, CREATE ON SCHEMA public TO authentik;
