@@ -26,4 +26,4 @@ spec:
       services:
         - name: authentik-server
           namespace: authentik
-          port: 9000
+          port: http

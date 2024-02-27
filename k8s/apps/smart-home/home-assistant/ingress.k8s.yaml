@@ -35,7 +35,7 @@ spec:
       services:
         - name: authentik-server
           namespace: authentik
-          port: 9000
+          port: http
     - kind: Rule
       match: Host(`home-assistant-vscode.emnt.dev`)
       middlewares:
@@ -50,4 +50,4 @@ spec:
       services:
         - name: authentik-server
           namespace: authentik
-          port: 9000
+          port: http
