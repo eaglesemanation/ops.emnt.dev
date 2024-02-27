@@ -25,6 +25,6 @@ spec:
     - kind: Rule
       match: "Host(`prowlarr.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
-        - name: authentik
+        - name: authentik-server
           namespace: authentik
           port: 9000

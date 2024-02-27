@@ -31,7 +31,7 @@ spec:
       metrics:
         # TODO: Remove when this fixed: https://github.com/bitnami/charts/blob/cc227b7663cdbec9667c781262785588eadcdfc0/bitnami/rabbitmq-cluster-operator/templates/cluster-operator/networkpolicy.yaml#L65
         containerPorts:
-          http: 8080
+          http: 80
         service:
           enabled: true
         serviceMonitor:
@@ -49,7 +49,7 @@ spec:
       metrics:
         # TODO: Remove from here when this removes unnecessary first .metrrics https://github.com/bitnami/charts/blame/cc227b7663cdbec9667c781262785588eadcdfc0/bitnami/rabbitmq-cluster-operator/templates/messaging-topology-operator/networkpolicy.yaml#L70
         containerPorts:
-          metrics: 8080
+          metrics: 80
         service:
           enabled: true
         serviceMonitor:

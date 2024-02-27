@@ -33,7 +33,7 @@ spec:
     - kind: Rule
       match: Host(`home-assistant.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
-        - name: authentik
+        - name: authentik-server
           namespace: authentik
           port: 9000
     - kind: Rule
@@ -48,6 +48,6 @@ spec:
     - kind: Rule
       match: Host(`home-assistant-vscode.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
-        - name: authentik
+        - name: authentik-server
           namespace: authentik
           port: 9000

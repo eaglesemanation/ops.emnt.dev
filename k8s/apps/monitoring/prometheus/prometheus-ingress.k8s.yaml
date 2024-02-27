@@ -27,6 +27,6 @@ spec:
     - kind: Rule
       match: "Host(`prometheus.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
-        - name: authentik
+        - name: authentik-server
           namespace: authentik
           port: 9000

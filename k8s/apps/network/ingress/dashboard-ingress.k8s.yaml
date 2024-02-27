@@ -21,7 +21,7 @@ spec:
     - kind: Rule
       match: Host(`traefik-internal.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
-        - name: authentik
+        - name: authentik-server
           namespace: authentik
           port: 9000
 ---
@@ -48,6 +48,6 @@ spec:
     - kind: Rule
       match: Host(`traefik-external.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
-        - name: authentik
+        - name: authentik-server
           namespace: authentik
           port: 9000

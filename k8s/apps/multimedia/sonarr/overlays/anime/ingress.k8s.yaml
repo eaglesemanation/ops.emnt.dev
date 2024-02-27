@@ -24,6 +24,6 @@ spec:
     - kind: Rule
       match: "Host(`sonarr-anime.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
-        - name: authentik
+        - name: authentik-server
           namespace: authentik
           port: 9000
