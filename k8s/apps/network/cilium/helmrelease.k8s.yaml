@@ -99,10 +99,6 @@ spec:
             limits:
               memory: 64Mi
         backend:
-          livenessProbe:
-            enabled: true
-          readinessProbe:
-            enabled: true
           resources:
             requests:
               cpu: 100m
