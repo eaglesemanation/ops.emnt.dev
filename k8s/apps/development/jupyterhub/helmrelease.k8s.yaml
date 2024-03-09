@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: jupyterhub
+  namespace: flux-system
+spec:
+  interval: 30m
+  chart:
+    spec:
+      chart: jupyterhub
+      version: 3.2.1
+      sourceRef:
+        kind: HelmRepository
+        name: jupyterhub
+        namespace: flux-system
+      interval: 30m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    hub:
+      config:
+        GenericOAuthenticator:
+          client_id: os.environ.get("OIDC_CLIENT_ID")
+          client_secret: os.environ.get("OIDC_CLIENT_SECRET")
+          oauth_callback_url: https://jupyterhub.emnt.dev/hub/oauth_callback
+          authorize_url: https://authentik.emnt.dev/application/o/authorize/
+          token_url: https://authentik.emnt.dev/application/o/token/
+          userdata_url: https://authentik.emnt.dev/application/o/userinfo/
+          login_service: Authentik
+          scope:
+            - email
+            - openid
+            - profile
+            - groups
+          username_claim: preferred_username
+          claim_groups_key: groups
+          allowed_groups:
+            - jupyterhub Users
+          admin_groups:
+            - authentik Admins
+        JupyterHub:
+          authenticator_class: generic-oauth
+      extraEnv:
+        PGPASSWORD:
+          valueFrom:
+            secretKeyRef:
+              name: jupyterhub-pg-pguser-jupyterhub
+              key: password
+        OIDC_CLIENT_ID:
+          valueFrom:
+            secretKeyRef:
+              name: authentik-creds
+              key: client_id
+        OIDC_CLIENT_SECRET:
+          valueFrom:
+            secretKeyRef:
+              name: authentik-creds
+              key: client_secret
+      db:
+        type: postgres
+        url: postgresql+psycopg2://jupyterhub@jupyterhub-pg-primary.jupyterhub.svc:5432/jupyterhub"
+    singleuser:
+      storage:
+        dynamic:
+          storageClass: freenas-api-iscsi-csi
+    ingress:
+      enabled: true
+      ingressClassName: ingress-internal-traefik
+      hosts:
+        - jupyterhub.emnt.dev
