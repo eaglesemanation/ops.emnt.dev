@@ -8,7 +8,7 @@ spec:
   endpointSelector:
     matchLabels:
       app.kubernetes.io/instance: vpn-egress
-      app.kubernetes.io/name: pod-gateway 
+      app.kubernetes.io/name: pod-gateway
   ingress:
     - fromEntities:
         - cluster
@@ -17,7 +17,7 @@ spec:
         - world
       toPorts:
         - ports:
-            - port: "51820"
+            - port: "1637"
               protocol: UDP
     - toEntities:
         - cluster
