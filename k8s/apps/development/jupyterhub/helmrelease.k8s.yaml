@@ -22,10 +22,14 @@ spec:
     crds: CreateReplace
   values:
     hub:
+      extraConfig:
+        secretsFromEnv.py: |
+          c.GenericOAuthenticator.client_id = os.environ.get("OIDC_CLIENT_ID")
+          c.GenericOAuthenticator.client_secret = os.environ.get("OIDC_CLIENT_SECRET")
+
+          c.JupyterHub.db_url = os.environ.get("PGURL")
       config:
         GenericOAuthenticator:
-          client_id: os.environ.get("OIDC_CLIENT_ID")
-          client_secret: os.environ.get("OIDC_CLIENT_SECRET")
           oauth_callback_url: https://jupyterhub.emnt.dev/hub/oauth_callback
           authorize_url: https://authentik.emnt.dev/application/o/authorize/
           token_url: https://authentik.emnt.dev/application/o/token/
@@ -44,7 +48,6 @@ spec:
             - authentik Admins
         JupyterHub:
           authenticator_class: generic-oauth
-          db_url: os.environ.get("PGURL")
       extraEnv:
         PGURL:
           valueFrom:
