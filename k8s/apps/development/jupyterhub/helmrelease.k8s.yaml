@@ -6,6 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
+  targetNamespace: jupyterhub
   chart:
     spec:
       chart: jupyterhub
