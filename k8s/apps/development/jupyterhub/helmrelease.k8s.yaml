@@ -39,16 +39,10 @@ spec:
           c.JupyterHub.db_url = os.environ.get("PGURL")
       config:
         GenericOAuthenticator:
-          oauth_callback_url: https://jupyterhub.emnt.dev/hub/oauth_callback
           authorize_url: https://authentik.emnt.dev/application/o/authorize/
           token_url: https://authentik.emnt.dev/application/o/token/
           userdata_url: https://authentik.emnt.dev/application/o/userinfo/
           login_service: Authentik
-          scope:
-            - email
-            - openid
-            - profile
-            - groups
           username_claim: preferred_username
           claim_groups_key: groups
           allowed_groups:
