@@ -44,12 +44,13 @@ spec:
             - authentik Admins
         JupyterHub:
           authenticator_class: generic-oauth
+          db_url: os.environ.get("PGURL")
       extraEnv:
-        PGPASSWORD:
+        PGURL:
           valueFrom:
             secretKeyRef:
               name: jupyterhub-pg-pguser-jupyterhub
-              key: password
+              key: uri
         OIDC_CLIENT_ID:
           valueFrom:
             secretKeyRef:
@@ -62,7 +63,6 @@ spec:
               key: client_secret
       db:
         type: postgres
-        url: postgresql+psycopg2://jupyterhub@jupyterhub-pg-primary.jupyterhub.svc:5432/jupyterhub"
     singleuser:
       storage:
         dynamic:
