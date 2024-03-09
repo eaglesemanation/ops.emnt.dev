@@ -74,8 +74,8 @@ spec:
         dynamic:
           storageClass: freenas-api-iscsi-csi
       image:
-        name: jupyter/julia-notebook
-        tag: julia-1.10.2
+        name: jupyter/datascience-notebook
+        tag: python-3.11.8
       cmd: null
     ingress:
       enabled: true
