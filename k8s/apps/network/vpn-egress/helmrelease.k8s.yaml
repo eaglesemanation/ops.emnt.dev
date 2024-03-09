@@ -64,6 +64,7 @@ spec:
       airvpn-creds:
         enabled: true
         type: secret
+        name: airvpn-creds
         mount: "-"
     addons:
       vpn:
