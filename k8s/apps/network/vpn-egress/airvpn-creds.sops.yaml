@@ -4,9 +4,9 @@ metadata:
     name: airvpn-creds
     namespace: vpn-egress
 stringData:
-    privateKey: ENC[AES256_GCM,data:JTEIxyTFo8/nCMbKzybheQYPrZ9l1UmGYnGmNHO9TmCc58sVn+nkyyBzu6s=,iv:mCbbFGG1EUnvgP8R1sV0D0YsTc/tx7o/dXXcWMXKCBE=,tag:C+/HQ4Q07aTKE6nF/1Juew==,type:str]
-    presharedKey: ENC[AES256_GCM,data:0uRewnPCddm0Kx2DMXKeerBQNAJw4pVeALo4flsxtgPNFJmSFQvmj7d2QzA=,iv:6A6I0oCHRda1k4c5Wzy2pivuZsQdXVvE5nN2HsxChvI=,tag:EYNI+T/X+qRoSh4SX+9FpQ==,type:str]
-    addresses: ENC[AES256_GCM,data:JI6cfcXM5k3TuTtwYKguTqDi0Gng3m6WP8A6yvwpN2hvGS5ELXsSpouWS7kmZcWzAvEmQqSiX1N1R+FfYQ==,iv:EWf+Sv0GBJE0XnoGeiGEcGGdtf3Y3WOgpMWiHGbOLWU=,tag:8wu1z0qnntVwcpyt4UH3fA==,type:str]
+    privateKey: ENC[AES256_GCM,data:pEnGTaTOPRwtOh3HtvVfXpYiptIn9guQMxeBe2Vwvai72z8aFMjVNIqugZM=,iv:UP6pIE2u1pviECmNzuleZoxZcUZSDLy/yKPTZ3a/7wQ=,tag:MlOx+sxoSFjo3Hu1icqIdA==,type:str]
+    presharedKey: ENC[AES256_GCM,data:JeoD1Xteq3k5R5tGiwT3S7Uj+Vy8+Qa9MlVvtsBBtYJyCiVxBmmN7Jh5FR8=,iv:gAatYjfeOdSX3otY/v9W1bTqtq8SivKtQCY95HC4hRI=,tag:NqDh7wWvki9SlOTA8Zmf5Q==,type:str]
+    addresses: ENC[AES256_GCM,data:jXO3cdnhK0a2sGVV4KZe4Uev2daQCp9ag0b1ZkNpdkdfs/MzBo7ggLoDU/ju0r34SmBB7HjQO4ru,iv:mHLgionMA9ZgDPqG4D5h6vsnWZcpbUbp9qC3Zm5N8Oc=,tag:CjaoFfIH8v69hOjDNFjdtg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -16,28 +16,28 @@ sops:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2ckZZamo3ajhvdkhzb2ph
-            OCt4ZXlSNm1KMGloU0w3MFF1dGJ2WVk5aUZFCnJHY1dzWExPL2lGY0MyRGU5b24z
-            TCtMdWFEZWU0WVlwL3h1Ui81ekVxVjAKLS0tIDB2UkZ1UnM0bkNTS21xV1FQaU1R
-            YTUrZGtEVTRTeWlaWDZ3dU00SG1hRjQK+nI4rIUF59zDlH9TRFnZ4VPEpD5NphIK
-            c8/yW0MrfLIQVjYLGyRw9Vn/B1HPsJzGn5sya9k7MBXf/wVzx8wlXg==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBERDRDdEJ1SVNOOWRKOWN5
+            VXl1TUEwazJCNWRmTkJDQ2FxakpjV0VnSVdrCnA2UFZXaVRTWGlXTzg2RFdMRDlQ
+            ZitsZ0lPOUxoTDhndHpRUFRFV3piYTgKLS0tIExoTVc1WW5MeC81UnlqZytqYU1l
+            U0NoaTA0Z3h2VnIreGFJdWJ2Vi9rZFUKBDV1D5uZ/FEDW1D9mIWgXIRJ77UiWpSI
+            WJR8pDR6HxudPa2wJn04UeEDKJSdDzKjRcqyO0Yd7DzAlAdPiTyj+g==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2024-03-09T01:34:28Z"
-    mac: ENC[AES256_GCM,data:0n1QWhxXSO01nOrxR9DYFoLYu5NTOWOtRsl8gxSBHr+WPsQznxLvTb1BJswQybZtbSoOAI+6avbdY8DcGeoPTn/swXAPTwTtTkqTQ+WopomEM2CAwVhAmxnJI0ez6JSylLcWNRFfrHry7dy76ZguWx83Cp1L8p87+zGpU7j2Wd0=,iv:llbAT6+Yg5fRZLJGQvEm18paSnFF0EqQM5VD+ucbIN8=,tag:c3V6mpunAQrqzRhRwOHUQg==,type:str]
+    lastmodified: "2024-03-09T03:24:20Z"
+    mac: ENC[AES256_GCM,data:34PQVVYuXbYcEOSgb+nauYnaRbaBS5FPcnTxfTM05hj7GIrX83H5MpMhWg+pAEGWHMByaMpvJ5Vg/d5U/KN3JE9CZfQRo5hHP1kfIz5Ld2++pSmk4eVpI4vqzr2+cDJPJEfBvP0pU1FxXB7kdP/OUcxfCYeoA2FtF0uEANXt+yI=,iv:DRrH+LrxXdItv4W26KGny3l4QH10sD5yVPUNO1FL+L0=,tag:o1s+lVf5tJ5ruRIIsTxBwA==,type:str]
     pgp:
-        - created_at: "2024-03-09T01:34:28Z"
+        - created_at: "2024-03-09T03:24:20Z"
           enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf+N4zFand6XyRj286N6x8iLw0l9KZ185iH0tUNopB2W6QM
-            6SSYKsa/o9UNgWiaBl4S9DRFdKTmMUv21AymT3ppgAIkNtaA5RFru5w1ZCQUORoe
-            fCj08sQHCiMqoMp6yhqDTj8FbUIgC1IraRBL2LQjIsI6nemE6mMrg+ofgkudlm3A
-            cU3Eak7qtG/0LRQSDEho4XVqIm6BKnm2uOfiakpSdWQWzlt6A1Xjze596bUzN1i1
-            8IpX0wuVCrPz6oDHgMd61Ayx2TExxd9OzfuqjPzd2pJ2DsbFAnsNMVQMZSNFMPG0
-            a2UBAmSz1558gHyAKC0lvX+rY/xR7+IvxcO2TJ0aJdJeAflfpT4J+F1c4tCmz+bF
-            qMu+pjnB6EuAwtRhDLw6T4hcJNm9MBpIg+AhXcHisqsEe+uxFl+yZa9h0AJYeLV0
-            1s+AbH3L6RoP1sFffZpMv9wNJeinxgccmm17socsIQ==
-            =FwK5
+            hQEMAzB6fv8Ha/LEAQf8DYrNVactgcgZgFet86MRTe33TzmENC/tMoJr53716S22
+            Ocm2UEraDFeElgk4NBbbVc1f6oOEqsQgUJsif0eMeKGeBj9m0heG1C83aIG3rBal
+            tKbMQ0cO9TcOBihParPgOgheTxuxUOet7ydWJY/HzmHV1PCLFlyS6kTDqNEJBao1
+            h9U8WcjqPrv+tv8/aAxvGmbApM743DjL0gmsVdSEtBsfyRmlm1C7PwktU+0LqUkm
+            z+7HphXwDPzOTCgXEFZSxxXaTG56EEGoVjzXQrQUr1NZE3ADNQGdXgSYFCUFa8Gs
+            ibeg37VcEUlIi4gXUquxPIoJ4xQtDrbH6FLg56jQKdJeAeL64gC35nYIXsvZlFMG
+            2Z1Eg2CQ6ajScD71HxBObDpc6GYHtv1W/Kntc/yAYFi5v6ADE8219+mrRTOYoRMx
+            6ep7n0TwnqKJ+/sIW/lDG73kF60Fqi1Qccxjl94rmQ==
+            =3/tF
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
     encrypted_regex: ^(data|stringData)$
