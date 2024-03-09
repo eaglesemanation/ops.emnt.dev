@@ -73,7 +73,7 @@ spec:
             memory: 256Mi
         gluetun:
           image:
-            tag: v3.37.0
+            tag: v3.35.0
         securityContext:
           capabilities:
             add:
@@ -93,22 +93,29 @@ spec:
         env:
           - name: VPN_SERVICE_PROVIDER
             value: airvpn
+          - name: VPN_TYPE
+            value: wireguard
           - name: SERVER_COUNTRIES
             value: Canada
           - name: DOT
             value: "off"
           - name: FIREWALL
             value: "off"
-          - name: OPENVPN_KEY
+          - name: WIREGUARD_PRIVATE_KEY
             valueFrom:
               secretKeyRef:
                 name: airvpn-creds
-                key: key
-          - name: OPENVPN_CERT
+                key: privateKey
+          - name: WIREGUARD_PRESHARED_KEY
             valueFrom:
               secretKeyRef:
                 name: airvpn-creds
-                key: cert
+                key: presharedKey
+          - name: WIREGUARD_ADDRESSES
+            valueFrom:
+              secretKeyRef:
+                name: airvpn-creds
+                key: addresses
         # Using Cilium network policy instead
         networkPolicy:
           enabled: false
