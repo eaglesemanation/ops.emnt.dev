@@ -61,11 +61,6 @@ spec:
         mountPath: "-"
         hostPath: /dev/net/tun
         hostPathType: CharDevice
-      airvpn-creds:
-        enabled: true
-        type: secret
-        name: airvpn-creds
-        mount: "-"
     addons:
       vpn:
         enabled: true
@@ -86,8 +81,6 @@ spec:
         additionalVolumeMounts:
           - name: tun-device
             mountPath: /dev/net/tun
-          - name: airvpn-creds
-            mountPath: /gluetun
         livenessProbe:
           exec:
             command:
@@ -106,6 +99,16 @@ spec:
             value: "off"
           - name: FIREWALL
             value: "off"
+          - name: OPENVPN_KEY
+            valueFrom:
+              secretKeyRef:
+                name: airvpn-creds
+                key: key
+          - name: OPENVPN_CERT
+            valueFrom:
+              secretKeyRef:
+                name: airvpn-creds
+                key: cert
         # Using Cilium network policy instead
         networkPolicy:
           enabled: false
