@@ -23,29 +23,7 @@ spec:
   values:
     hub:
       networkPolicy:
-        egress:
-          - to:
-              - podSelector:
-                  matchLabels:
-                    app.kubernetes.io/name: postgresql
-            ports:
-              - protocol: TCP
-                port: 5432
-          - to:
-              - namespaceSelector:
-                  matchLabels:
-                    kubernetes.io/metadata.name: ingress
-            ports:
-              - protocol: TCP
-                port: 443
-          - to:
-              - podSelector:
-                  matchLabels:
-                    k8s-app: kube-dns
-            ports:
-              - protocol: TCP
-                port: 443
-
+        enabled: false
       extraConfig:
         secretsFromEnv.py: |
           c.GenericOAuthenticator.client_id = os.environ.get("OIDC_CLIENT_ID")
