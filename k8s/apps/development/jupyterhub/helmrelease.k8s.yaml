@@ -31,6 +31,10 @@ spec:
             ports:
               - protocol: TCP
                 port: 5432
+          - to:
+              - namespaceSelector:
+                  matchLabels:
+                    kubernetes.io/metadata.name: ingress
       extraConfig:
         secretsFromEnv.py: |
           c.GenericOAuthenticator.client_id = os.environ.get("OIDC_CLIENT_ID")
@@ -46,6 +50,12 @@ spec:
           login_service: Authentik
           username_claim: preferred_username
           claim_groups_key: groups
+          scope:
+            - email
+            - openid
+            - profile
+            - groups
+            - offline_access
           allowed_groups:
             - jupyterhub Users
           admin_groups:
