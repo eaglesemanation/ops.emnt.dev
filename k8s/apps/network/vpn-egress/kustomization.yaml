@@ -4,4 +4,4 @@ resources:
   - cilium-network-policy.k8s.yaml
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
-  - mullvad-creds.sops.yaml
+  - airvpn-creds.sops.yaml

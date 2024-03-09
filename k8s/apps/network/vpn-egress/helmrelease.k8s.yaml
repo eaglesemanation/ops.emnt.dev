@@ -92,11 +92,11 @@ spec:
           failureThreshold: 1
         env:
           - name: VPN_SERVICE_PROVIDER
-            value: mullvad
+            value: airvpn
           - name: VPN_TYPE
             value: wireguard
-          - name: SERVER_CITIES
-            value: Toronto
+          - name: SERVER_COUNTRIES
+            value: Canada
           - name: DOT
             value: "off"
           - name: FIREWALL
@@ -104,12 +104,17 @@ spec:
           - name: WIREGUARD_PRIVATE_KEY
             valueFrom:
               secretKeyRef:
-                name: mullvad-creds
+                name: airvpn-creds
                 key: privateKey
+          - name: WIREGUARD_PRESHARED_KEY
+            valueFrom:
+              secretKeyRef:
+                name: airvpn-creds
+                key: presharedKey
           - name: WIREGUARD_ADDRESSES
             valueFrom:
               secretKeyRef:
-                name: mullvad-creds
+                name: airvpn-creds
                 key: addresses
         # Using Cilium network policy instead
         networkPolicy:
