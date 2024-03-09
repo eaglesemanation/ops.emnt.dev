@@ -22,12 +22,21 @@ spec:
     crds: CreateReplace
   values:
     hub:
+      networkPolicy:
+        egress:
+          - to:
+              - podSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: postgresql
+            ports:
+              - protocol: TCP
+                port: 5432
       extraConfig:
         secretsFromEnv.py: |
           c.GenericOAuthenticator.client_id = os.environ.get("OIDC_CLIENT_ID")
           c.GenericOAuthenticator.client_secret = os.environ.get("OIDC_CLIENT_SECRET")
 
-          c.JupyterHub.db_url = os.environ.get("PGURL").replace("postgresql", "postgresql+psycopg2")
+          c.JupyterHub.db_url = os.environ.get("PGURL")
       config:
         GenericOAuthenticator:
           oauth_callback_url: https://jupyterhub.emnt.dev/hub/oauth_callback
