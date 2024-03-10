@@ -12,3 +12,10 @@ configMapGenerator:
       - jupyterhub-pg-init.sql
     options:
       disableNameSuffixHash: true
+  - name: jupyterhub-extra-config
+    namespace: jupyterhub
+    files:
+      - collabProjects.py
+      - projects.yaml
+    options:
+      disableNameSuffixHash: true

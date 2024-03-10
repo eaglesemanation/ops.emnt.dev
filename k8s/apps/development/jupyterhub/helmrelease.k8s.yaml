@@ -24,8 +24,15 @@ spec:
     hub:
       networkPolicy:
         enabled: false
+      extraVolumes:
+        - name: extra-config
+          configMap:
+            name: jupyterhub-extra-config
+      extraVolumeMounts:
+        - name: extra-config
+          mountPath: /usr/local/etc/jupyterhub/jupyterhub_config.d
       extraConfig:
-        secretsFromEnv.py: |
+        secretsFromEnv: |
           c.GenericOAuthenticator.client_id = os.environ.get("OIDC_CLIENT_ID")
           c.GenericOAuthenticator.client_secret = os.environ.get("OIDC_CLIENT_SECRET")
 
@@ -79,6 +86,6 @@ spec:
       cmd: null
     ingress:
       enabled: true
-      ingressClassName: ingress-internal-traefik
+      ingressClassName: ingress-external-traefik
       hosts:
         - jupyterhub.emnt.dev
