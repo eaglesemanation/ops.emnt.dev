@@ -58,6 +58,8 @@ spec:
             - authentik Admins
         JupyterHub:
           authenticator_class: generic-oauth
+          allow_named_servers: true
+          named_server_limit_per_user: 1
       extraEnv:
         PGURL:
           valueFrom:
