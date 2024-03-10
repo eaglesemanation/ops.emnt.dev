@@ -74,7 +74,7 @@ spec:
         dynamic:
           storageClass: freenas-api-iscsi-csi
       image:
-        name: jupyter/datascience-notebook
+        name: quay.io/jupyter/datascience-notebook
         tag: python-3.11.8
       cmd: null
     ingress:
