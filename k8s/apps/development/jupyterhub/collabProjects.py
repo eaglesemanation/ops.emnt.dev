@@ -2,7 +2,7 @@ from pathlib import Path
 import yaml
 
 # Group for users that will be used as collaborative space
-c.JupyterHub.load_groups["collaborative"] = []
+c.JupyterHub.load_groups = {"collaborative": []}
 
 # Default to home instead of spawning to choose project
 c.JupyterHub.default_url = "/hub/home"
