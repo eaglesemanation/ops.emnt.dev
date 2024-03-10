@@ -1,15 +1,13 @@
 from pathlib import Path
 import yaml
 
-c = get_config()
-
 # Group for users that will be used as collaborative space
 c.JupyterHub.load_groups["collaborative"] = []
 
 # Default to home instead of spawning to choose project
 c.JupyterHub.default_url = "/hub/home"
 
-projects_yaml = Path(__file__).parent.resolve().joinpath("projects.yaml")
+projects_yaml = Path(__file__).parent.resolve().joinpath("jupyterhub_config.d/projects.yaml")
 with projects_yaml.open() as f:
     project_config = yaml.safe_load(f)
 
