@@ -42,7 +42,7 @@ spec:
     grafana:
       grafana.ini:
         server:
-          root_url: https://grafana.emnt.dev/
+          root_url: https://grafana.${CLUSTER_DOMAIN}/
         auth.basic:
           enabled: "false"
         auth.generic_oauth:
@@ -51,12 +51,12 @@ spec:
           name: authentik
           client_id: jQ9qSWQebjh5yzXdo1LwjtMDYCrtE63MtIM4wsD7
           scopes: openid profile email
-          auth_url: https://authentik.emnt.dev/application/o/authorize/
-          token_url: https://authentik.emnt.dev/application/o/token/
-          api_url: https://authentik.emnt.dev/application/o/userinfo/
+          auth_url: https://authentik.${CLUSTER_DOMAIN}/application/o/authorize/
+          token_url: https://authentik.${CLUSTER_DOMAIN}/application/o/token/
+          api_url: https://authentik.${CLUSTER_DOMAIN}/application/o/userinfo/
           role_attribute_path: "contains(groups[*], 'authentik Admins') && 'Admin' || 'Viewer'"
         auth:
-          signout_redirect_url: https://authentik.emnt.dev/application/o/grafana/end-session/
+          signout_redirect_url: https://authentik.${CLUSTER_DOMAIN}/application/o/grafana/end-session/
           disable_signout_menu: "true"
       envFromSecrets:
         - name: grafana-oidc
@@ -68,7 +68,7 @@ spec:
         - name: Loki
           type: loki
           access: proxy
-          url: https://loki.emnt.dev
+          url: https://loki.${CLUSTER_DOMAIN}
           jsonData:
             maxLines: 1000
       defaultDashboardsTimezone: browser
@@ -76,7 +76,7 @@ spec:
         enabled: true
         ingressClassName: ingress-external-traefik
         hosts:
-          - grafana.emnt.dev
+          - grafana.${CLUSTER_DOMAIN}
       resources:
         requests:
           cpu: 100m

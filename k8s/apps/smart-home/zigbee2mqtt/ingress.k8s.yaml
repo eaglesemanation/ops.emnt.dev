@@ -14,7 +14,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`zigbee2mqtt.emnt.dev`)
+      match: Host(`zigbee2mqtt.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -23,7 +23,7 @@ spec:
           namespace: zigbee2mqtt
           port: 8080
     - kind: Rule
-      match: "Host(`zigbee2mqtt.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`zigbee2mqtt.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

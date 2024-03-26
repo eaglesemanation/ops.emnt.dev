@@ -15,7 +15,7 @@ spec:
   routes:
     # Insert Authentik middleware for Home Assistant auth API and authentik callback
     - kind: Rule
-      match: Host(`home-assistant.emnt.dev`) && (PathPrefix(`/auth/`) || PathPrefix(`/outpost.goauthentik.io/callback`)) && !PathPrefix(`/auth/token`)
+      match: Host(`home-assistant.${CLUSTER_DOMAIN}`) && (PathPrefix(`/auth/`) || PathPrefix(`/outpost.goauthentik.io/callback`)) && !PathPrefix(`/auth/token`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -25,19 +25,19 @@ spec:
           port: http
     # No need for middleware, user already authenticated
     - kind: Rule
-      match: Host(`home-assistant.emnt.dev`)
+      match: Host(`home-assistant.${CLUSTER_DOMAIN}`)
       services:
         - name: home-assistant
           namespace: home-assistant
           port: http
     - kind: Rule
-      match: Host(`home-assistant.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
+      match: Host(`home-assistant.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
         - name: authentik-server
           namespace: authentik
           port: http
     - kind: Rule
-      match: Host(`home-assistant-vscode.emnt.dev`)
+      match: Host(`home-assistant-vscode.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -46,7 +46,7 @@ spec:
           namespace: home-assistant
           port: code-server
     - kind: Rule
-      match: Host(`home-assistant-vscode.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
+      match: Host(`home-assistant-vscode.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
         - name: authentik-server
           namespace: authentik

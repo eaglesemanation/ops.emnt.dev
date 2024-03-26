@@ -4,7 +4,7 @@ java:
       gateways:
         - default
       domains:
-        - vanilla.mc.emnt.dev
+        - vanilla.mc.${CLUSTER_DOMAIN}
       address: vanilla-minecraft.minecraft.svc.cluster.local:25565
 bedrock:
   servers:
@@ -12,6 +12,5 @@ bedrock:
       gateways:
         - default
       domains:
-        - vanilla.mc.emnt.dev
+        - vanilla.mc.${CLUSTER_DOMAIN}
       address: vanilla-minecraft-bedrock.minecraft.svc.cluster.local:19132
-

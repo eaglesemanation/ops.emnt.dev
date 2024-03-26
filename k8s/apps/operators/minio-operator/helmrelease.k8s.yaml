@@ -24,4 +24,4 @@ spec:
       ingress:
         enabled: true
         ingressClassName: ingress-internal-traefik
-        host: minio-op-console.emnt.dev
+        host: minio-op-console.${CLUSTER_DOMAIN}

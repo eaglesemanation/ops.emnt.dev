@@ -39,10 +39,10 @@ spec:
           c.JupyterHub.db_url = os.environ.get("PGURL")
       config:
         GenericOAuthenticator:
-          oauth_callback_url: https://jupyterhub.emnt.dev/hub/oauth_callback
-          authorize_url: https://authentik.emnt.dev/application/o/authorize/
-          token_url: https://authentik.emnt.dev/application/o/token/
-          userdata_url: https://authentik.emnt.dev/application/o/userinfo/
+          oauth_callback_url: https://jupyterhub.${CLUSTER_DOMAIN}/hub/oauth_callback
+          authorize_url: https://authentik.${CLUSTER_DOMAIN}/application/o/authorize/
+          token_url: https://authentik.${CLUSTER_DOMAIN}/application/o/token/
+          userdata_url: https://authentik.${CLUSTER_DOMAIN}/application/o/userinfo/
           login_service: Authentik
           username_claim: preferred_username
           claim_groups_key: groups
@@ -88,4 +88,4 @@ spec:
       enabled: true
       ingressClassName: ingress-external-traefik
       hosts:
-        - jupyterhub.emnt.dev
+        - jupyterhub.${CLUSTER_DOMAIN}

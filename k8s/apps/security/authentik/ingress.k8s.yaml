@@ -13,7 +13,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`authentik.emnt.dev`)
+      match: Host(`authentik.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: embed-frame
           namespace: authentik

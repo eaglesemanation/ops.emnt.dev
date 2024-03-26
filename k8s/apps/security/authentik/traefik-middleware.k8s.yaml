@@ -29,4 +29,4 @@ metadata:
   namespace: authentik
 spec:
   headers:
-    contentSecurityPolicy: frame-ancestors 'self' https://home-assistant.emnt.dev
+    contentSecurityPolicy: frame-ancestors 'self' https://home-assistant.${CLUSTER_DOMAIN}

@@ -16,7 +16,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`prometheus.emnt.dev`)
+      match: Host(`prometheus.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -25,7 +25,7 @@ spec:
           namespace: prometheus
           port: 9090
     - kind: Rule
-      match: "Host(`prometheus.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`prometheus.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

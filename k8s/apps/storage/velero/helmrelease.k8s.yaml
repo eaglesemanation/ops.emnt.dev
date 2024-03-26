@@ -53,7 +53,7 @@ spec:
             profile: minio
             region: us-west-1
             s3ForcePathStyle: "true"
-            s3Url: https://minio.emnt.dev
+            s3Url: https://minio.${CLUSTER_DOMAIN}
         - name: b2
           provider: aws
           bucket: talos-cluster-1

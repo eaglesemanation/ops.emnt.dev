@@ -134,4 +134,4 @@ spec:
       enabled: true
       ingressClassName: ingress-internal-traefik
       hosts:
-        - loki.emnt.dev
+        - loki.${CLUSTER_DOMAIN}

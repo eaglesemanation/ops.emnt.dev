@@ -22,7 +22,7 @@ spec:
   values:
     config:
       clients:
-        - url: https://loki.emnt.dev/loki/api/v1/push
+        - url: https://loki.${CLUSTER_DOMAIN}/loki/api/v1/push
     resources:
       requests:
         cpu: 100m

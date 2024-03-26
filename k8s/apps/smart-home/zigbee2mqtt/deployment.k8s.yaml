@@ -57,7 +57,7 @@ spec:
                   name: zigbee2mqtt-user-credentials
                   key: password
             - name: ZIGBEE2MQTT_CONFIG_FRONTEND_URL
-              value: https://zigbee2mqtt.emnt.dev
+              value: https://zigbee2mqtt.${CLUSTER_DOMAIN}
           volumeMounts:
             - name: zigbee-dongle
               mountPath: /dev/ttyUSB0

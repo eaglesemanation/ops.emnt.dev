@@ -29,11 +29,11 @@ spec:
         host: redis
         password: file:///redis-creds/password
       email:
-        host: mail.emnt.dev
+        host: mail.${CLUSTER_DOMAIN}
         port: 587
         use_tls: true
-        from: authentik@emnt.dev
-        username: authentik@emnt.dev
+        from: authentik@${CLUSTER_DOMAIN}
+        username: authentik@${CLUSTER_DOMAIN}
         password: file:///authentik-secrets/email_password
     server:
       metrics:
