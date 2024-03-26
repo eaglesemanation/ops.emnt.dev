@@ -25,15 +25,15 @@ data:
             ${KLIPPER_ADDR} ${KLIPPER_URL}
             fallthrough
         }
-        file /etc/coredns/emnt.dev.db emnt.dev
+        file /etc/coredns/cluster_domain.db ${CLUSTER_DOMAIN}
         forward . /etc/resolv.conf
         cache 30
         loop
         reload
         loadbalance
     }
-  emnt.dev.db: |-
-    $ORIGIN emnt.dev.
+  cluster_domain.db: |-
+    $ORIGIN ${CLUSTER_DOMAIN}.
     @   3600 IN SOA edward.ns.cloudflare.com. nia.ns.cloudflare.com. (
                     2023071923 ; serial
                     7200       ; refresh (2 hours)

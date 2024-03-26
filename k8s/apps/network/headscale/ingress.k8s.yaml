@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: ingress-external-traefik
   rules:
-    - host: headscale.emnt.dev
+    - host: headscale.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /

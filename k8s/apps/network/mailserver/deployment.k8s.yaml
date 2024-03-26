@@ -111,12 +111,12 @@ spec:
               mountPath: /tmp/healthcheck.sh
               readOnly: true
             - name: secrets
-              subPath: emnt.dev.rsa.private
-              mountPath: /tmp/docker-mailserver/rspamd/keys/emnt.dev.rsa.private
+              subPath: cluster_domain.rsa.private
+              mountPath: /tmp/docker-mailserver/rspamd/keys/cluster_domain.rsa.private
               readOnly: true
             - name: secrets
-              subPath: emnt.dev.ed25519.private
-              mountPath: /tmp/docker-mailserver/rspamd/keys/emnt.dev.ed25519.private
+              subPath: cluster_domain.ed25519.private
+              mountPath: /tmp/docker-mailserver/rspamd/keys/cluster_domain.ed25519.private
               readOnly: true
             - name: secrets
               subPath: postfix-accounts.cf

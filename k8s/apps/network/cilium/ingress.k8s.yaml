@@ -13,7 +13,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`hubble.emnt.dev`)
+      match: Host(`hubble.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -22,7 +22,7 @@ spec:
           namespace: cilium
           port: 80
     - kind: Rule
-      match: "Host(`hubble.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`hubble.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

@@ -14,7 +14,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`mainsail.emnt.dev`)
+      match: Host(`mainsail.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -23,7 +23,7 @@ spec:
           namespace: klipper
           port: http
     - kind: Rule
-      match: "Host(`mainsail.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`mainsail.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

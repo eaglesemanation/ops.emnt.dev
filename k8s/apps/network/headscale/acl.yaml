@@ -55,14 +55,14 @@ acls:
       ]
 groups:
   group:gateways:
-    - emnt.dev
+    - ${CLUSTER_DOMAIN}
 tagOwners:
   tag:shared:
     - eaglesemanation # TODO: Replace with autogroup:members when possible
 autoApprovers:
   routes:
     192.168.25.0/24:
-      - emnt.dev
+      - ${CLUSTER_DOMAIN}
   exitNode:
     - group:gateways
 randomizeClientPort: true

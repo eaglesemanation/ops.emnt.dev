@@ -11,7 +11,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`traefik-internal.emnt.dev`)
+      match: Host(`traefik-internal.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -19,7 +19,7 @@ spec:
         - name: api@internal
           kind: TraefikService
     - kind: Rule
-      match: Host(`traefik-internal.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
+      match: Host(`traefik-internal.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
         - name: authentik-server
           namespace: authentik
@@ -38,7 +38,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`traefik-external.emnt.dev`)
+      match: Host(`traefik-external.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -46,7 +46,7 @@ spec:
         - name: api@internal
           kind: TraefikService
     - kind: Rule
-      match: Host(`traefik-external.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)
+      match: Host(`traefik-external.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
       services:
         - name: authentik-server
           namespace: authentik

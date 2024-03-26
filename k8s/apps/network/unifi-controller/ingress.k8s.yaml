@@ -14,7 +14,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`unifi.emnt.dev`)
+      match: Host(`unifi.${CLUSTER_DOMAIN}`)
       services:
         - name: unifi-controller-tcp
           namespace: unifi-controller

@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: ingress-internal-traefik
   rules:
-    - host: rspamd.emnt.dev
+    - host: rspamd.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /
@@ -31,7 +31,7 @@ metadata:
 spec:
   ingressClassName: ingress-external-traefik
   rules:
-    - host: autodiscover.emnt.dev
+    - host: autodiscover.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /
@@ -41,7 +41,7 @@ spec:
                 name: autodiscover-mailserver
                 port:
                   name: http
-    - host: autoconfig.emnt.dev
+    - host: autoconfig.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /

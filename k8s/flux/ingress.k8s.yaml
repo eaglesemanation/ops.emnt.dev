@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: ingress-external-traefik
   rules:
-    - host: flux-webhooks.emnt.dev
+    - host: flux-webhooks.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /

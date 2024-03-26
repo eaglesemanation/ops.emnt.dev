@@ -31,7 +31,7 @@ spec:
         traefik.ingress.kubernetes.io/router.middlewares: pihole-addprefix@kubernetescrd
       path: /
       hosts:
-        - pihole.emnt.dev
+        - pihole.${CLUSTER_DOMAIN}
     persistentVolumeClaim:
       enabled: false
       storageClass: freenas-api-nfs-csi
@@ -45,7 +45,7 @@ spec:
       customSettings:
         - edns-packet-max=1232
       customDnsEntries:
-        - "address=/emnt.dev/${SVC_INGRESS_INTERNAL_ADDR}"
+        - "address=/${CLUSTER_DOMAIN}/${SVC_INGRESS_INTERNAL_ADDR}"
     DNS1: "${SVC_UNBOUND_ADDR}#5335"
     DNS2: null
     extraEnvVars:

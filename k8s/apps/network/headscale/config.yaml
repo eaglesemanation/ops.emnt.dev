@@ -3,7 +3,7 @@
 #
 # https://myheadscale.example.com:443
 #
-server_url: https://headscale.emnt.dev
+server_url: https://headscale.${CLUSTER_DOMAIN}
 # Address to listen to / bind to on the server
 #
 # For production:
@@ -187,7 +187,7 @@ dns_config:
   # list of search domains and the DNS to query for each one.
   #
   restricted_nameservers:
-    emnt.dev:
+    ${CLUSTER_DOMAIN}:
       - ${SVC_DNS_ADDR}
   # Search domains to inject.
   domains: []
@@ -209,7 +209,7 @@ dns_config:
   # `base_domain` must be a FQDNs, without the trailing dot.
   # The FQDN of the hosts will be
   # `hostname.user.base_domain` (e.g., _myhost.myuser.example.com_).
-  base_domain: ts.emnt.dev
+  base_domain: ts.${CLUSTER_DOMAIN}
 # Unix socket used for the CLI to connect without authentication
 # Note: for production you will want to set this to something like:
 unix_socket: /var/run/headscale/headscale.sock
@@ -221,7 +221,7 @@ unix_socket_permission: "0770"
 # OpenID Connect
 oidc:
   only_start_if_oidc_is_available: true
-  issuer: https://authentik.emnt.dev/application/o/headscale/
+  issuer: https://authentik.${CLUSTER_DOMAIN}/application/o/headscale/
   client_id: "SZlkZgtylJLH4y3XOUKOd902gnRuhgfMzsmi0mCc"
   # Will be provided through env var HEADSCALE_OIDC_CLIENT_SECRET
   #client_secret: "your-oidc-client-secret"

@@ -26,5 +26,5 @@ spec:
             items:
               - key: Corefile
                 path: Corefile
-              - key: emnt.dev.db
-                path: emnt.dev.db
+              - key: cluster_domain.db
+                path: cluster_domain.db

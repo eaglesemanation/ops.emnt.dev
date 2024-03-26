@@ -1,1 +1,1 @@
-postmaster@emnt.dev dmarc.report@emnt.dev
+postmaster@${CLUSTER_DOMAIN} dmarc.report@${CLUSTER_DOMAIN}

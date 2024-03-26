@@ -7,12 +7,12 @@ metadata:
     app.kubernetes.io/name: autodiscover-email-settings
     app.kubernetes.io/instance: autodiscover-email-settings
 data:
-  COMPANY_NAME: emnt.dev
-  SUPPORT_URL: https://autodiscover.emnt.dev
-  DOMAIN: emnt.dev
-  IMAP_HOST: mail.emnt.dev
+  COMPANY_NAME: ${CLUSTER_DOMAIN}
+  SUPPORT_URL: https://autodiscover.${CLUSTER_DOMAIN}
+  DOMAIN: ${CLUSTER_DOMAIN}
+  IMAP_HOST: mail.${CLUSTER_DOMAIN}
   IMAP_PORT: "993"
   IMAP_SOCKET: SSL
-  SMTP_HOST: mail.emnt.dev
+  SMTP_HOST: mail.${CLUSTER_DOMAIN}
   SMTP_PORT: "587"
   SMTP_SOCKET: STARTTLS
