@@ -13,7 +13,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`sonarr-anime.emnt.dev`)
+      match: Host(`sonarr-anime.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -22,7 +22,7 @@ spec:
           namespace: sonarr-anime
           port: 8989
     - kind: Rule
-      match: "Host(`sonarr-anime.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`sonarr-anime.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

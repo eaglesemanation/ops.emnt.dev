@@ -75,7 +75,7 @@ spec:
       repos:
         - name: repo1
           s3:
-            endpoint: https://minio.emnt.dev
+            endpoint: https://minio.${CLUSTER_DOMAIN}
             region: us-west-1
             bucket: pgbackrest
           schedules:

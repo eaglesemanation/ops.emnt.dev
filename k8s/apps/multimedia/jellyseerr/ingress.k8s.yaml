@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: ingress-external-traefik
   rules:
-    - host: jellyseerr.emnt.dev
+    - host: jellyseerr.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /

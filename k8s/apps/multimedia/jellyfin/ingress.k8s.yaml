@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: ingress-external-traefik
   rules:
-    - host: jellyfin.emnt.dev
+    - host: jellyfin.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /

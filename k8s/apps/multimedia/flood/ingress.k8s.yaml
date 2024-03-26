@@ -14,7 +14,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`flood.emnt.dev`)
+      match: Host(`flood.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -23,7 +23,7 @@ spec:
           namespace: flood
           port: 3000
     - kind: Rule
-      match: "Host(`flood.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`flood.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

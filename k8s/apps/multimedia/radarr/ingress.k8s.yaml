@@ -14,7 +14,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`radarr.emnt.dev`)
+      match: Host(`radarr.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -23,7 +23,7 @@ spec:
           namespace: radarr
           port: 7878
     - kind: Rule
-      match: "Host(`radarr.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`radarr.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

@@ -14,7 +14,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`bazarr.emnt.dev`)
+      match: Host(`bazarr.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
@@ -23,13 +23,13 @@ spec:
           namespace: bazarr
           port: 6767
     - kind: Rule
-      match: "Host(`flood.emnt.dev`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`flood.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik
           port: http
     - kind: Rule
-      match: Host(`bazarr-pgadmin.emnt.dev`)
+      match: Host(`bazarr-pgadmin.${CLUSTER_DOMAIN}`)
       services:
         - name: bazarr-pg-pgadmin
           namespace: bazarr
