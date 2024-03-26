@@ -4,8 +4,6 @@ kind: HelmRelease
 metadata:
   name: loki
   namespace: loki
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
 spec:
   interval: 2h
   timeout: 30m
@@ -38,8 +36,8 @@ spec:
         s3:
           s3: https://minio.loki.svc.cluster.local.
           s3ForcePathStyle: true
-          accessKeyId: ${S3_LOKI_ACCESS_KEY_ID}
-          secretAccessKey: ${S3_LOKI_SECRET_ACCESS_KEY}
+          accessKeyId: $${S3_LOKI_ACCESS_KEY_ID}
+          secretAccessKey: $${S3_LOKI_SECRET_ACCESS_KEY}
           http_config:
             insecure_skip_verify: true
     # NOTE: Currently separating access keys into secret is a mess.
