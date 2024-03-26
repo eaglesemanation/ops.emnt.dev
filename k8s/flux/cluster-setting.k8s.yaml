@@ -4,6 +4,7 @@ metadata:
   name: cluster-settings
   namespace: flux-system
 data:
+  CLUSTER_DOMAIN: emnt.dev
   LOCAL_CIDR: 192.168.25.0/24
   K8S_API_ADDR: 192.168.25.100
   K8S_CONTROLLER_1_ADDR: 192.168.25.101

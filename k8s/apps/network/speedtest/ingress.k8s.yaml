@@ -9,7 +9,7 @@ metadata:
 spec:
   ingressClassName: ingress-internal-traefik
   rules:
-    - host: speedtest.emnt.dev
+    - host: speedtest.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /
