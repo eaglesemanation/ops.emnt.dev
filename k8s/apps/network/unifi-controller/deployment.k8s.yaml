@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
