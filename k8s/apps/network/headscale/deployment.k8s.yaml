@@ -7,6 +7,8 @@ metadata:
     app.kubernetes.io/name: headscale
     app.kubernetes.io/instance: headscale
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
