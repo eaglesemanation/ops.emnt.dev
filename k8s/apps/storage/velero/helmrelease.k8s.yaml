@@ -46,7 +46,7 @@ spec:
       backupSyncPeriod: 15m
       storeValidationFrequency: 15m
       backupStorageLocation:
-        - name: minio
+        - name: default
           provider: aws
           bucket: velero
           config:
