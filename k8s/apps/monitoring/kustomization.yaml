@@ -6,5 +6,4 @@ resources:
   - weave-gitops.k8s.yaml
   - flux-monitoring.k8s.yaml
   - loki.k8s.yaml
-  - kyverno.k8s.yaml
   - promtail.k8s.yaml
