@@ -5,3 +5,5 @@ resources:
   - rbac.k8s.yaml
   - deployment.k8s.yaml
   - secret.sops.yaml
+  - svc.k8s.yaml
+  - ingress.k8s.yaml
