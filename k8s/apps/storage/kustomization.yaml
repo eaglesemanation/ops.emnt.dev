@@ -4,3 +4,4 @@ resources:
   - democratic-csi.k8s.yaml
   - external-snapshotter.k8s.yaml
   - velero.k8s.yaml
+  - k8s-csi-restarter.k8s.yaml
