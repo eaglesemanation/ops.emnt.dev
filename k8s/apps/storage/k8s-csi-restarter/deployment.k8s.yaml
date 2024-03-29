@@ -27,8 +27,6 @@ spec:
               value: info
             - name: RESTARTER_STORAGE_CLASS
               value: freenas-api-iscsi-csi,freenas-api-iscsi-s3-csi
-            - name: RESTARTER_DRY_RUN
-              value: "true"
           envFrom:
             - secretRef:
                 name: k8s-csi-restarter-secrets
