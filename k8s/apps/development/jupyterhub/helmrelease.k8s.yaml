@@ -84,6 +84,8 @@ spec:
         name: quay.io/jupyter/datascience-notebook
         tag: python-3.11.8
       cmd: null
+    cull:
+      timeout: 604800 # 1 week
     ingress:
       enabled: true
       ingressClassName: ingress-external-traefik
