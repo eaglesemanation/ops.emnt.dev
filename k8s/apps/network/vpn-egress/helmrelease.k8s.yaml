@@ -76,6 +76,10 @@ spec:
         gluetun:
           image:
             tag: v3.37.0
+        scripts:
+          up: |-
+            #!/bin/sh
+            wget -q -O /dev/stdout --header='Cookie: mam_id=$MAM_ID' https://t.myanonamouse.net/json/dynamicSeedbox.php
         securityContext:
           capabilities:
             add:
@@ -91,7 +95,7 @@ spec:
               - case "$(wget -q -O /dev/stdout https://airvpn.org/api/whatismyip/ | grep airvpn)" in *'true'*) exit 0;; *) exit 1;; esac
           initialDelaySeconds: 30
           periodSeconds: 60
-          failureThreshold: 1
+          failureThreshold: 3
         env:
           - name: VPN_SERVICE_PROVIDER
             value: airvpn
@@ -118,6 +122,11 @@ spec:
               secretKeyRef:
                 name: airvpn-creds
                 key: addresses
+          - name: MAM_ID
+            valueFrom:
+              secretKeyRef:
+                name: mam-creds
+                key: id
         # Using Cilium network policy instead
         networkPolicy:
           enabled: false

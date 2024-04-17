@@ -5,3 +5,4 @@ resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
   - airvpn-creds.sops.yaml
+  - mam-creds.sops.yaml
