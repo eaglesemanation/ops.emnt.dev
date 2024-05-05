@@ -36,11 +36,6 @@ spec:
               - namespaceSelector:
                   - matchLabels:
                       kubernetes.io/metadata.name: prometheus
-            to:
-              - podSelector:
-                  - matchLabels:
-                      app.kubernetes.io/component: rabbitmq-operator
-                      app.kubernetes.io/name: rabbitmq-cluster-operator 
       metrics:
         service:
           enabled: true
@@ -64,11 +59,6 @@ spec:
               - namespaceSelector:
                   - matchLabels:
                       kubernetes.io/metadata.name: prometheus
-            to:
-              - podSelector:
-                  - matchLabels:
-                      app.kubernetes.io/component: messaging-topology-operator
-                      app.kubernetes.io/name: rabbitmq-cluster-operator 
       metrics:
         service:
           enabled: true
