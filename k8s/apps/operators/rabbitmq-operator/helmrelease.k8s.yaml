@@ -28,13 +28,22 @@ spec:
           memory: 64Mi
         limits:
           memory: 128Mi
+      networkPolicy:
+        extraIngress:
+          - ports:
+              - port: 9782
+            from:
+              - namespaceSelector:
+                  - matchLabels:
+                      kubernetes.io/metadata.name: prometheus
+            to:
+              - podSelector:
+                  - matchLabels:
+                      app.kubernetes.io/component: rabbitmq-operator
+                      app.kubernetes.io/name: rabbitmq-cluster-operator 
       metrics:
         service:
           enabled: true
-          # serviceMonitor gets confused if ports on svc do not match ports on pods
-          # overwrite with hardcoded default port for metrics
-          ports:
-            http: 9782
         serviceMonitor:
           enabled: true
           labels:
@@ -47,11 +56,22 @@ spec:
           memory: 64Mi
         limits:
           memory: 128Mi
+      networkPolicy:
+        extraIngress:
+          - ports:
+              - port: 8080
+            from:
+              - namespaceSelector:
+                  - matchLabels:
+                      kubernetes.io/metadata.name: prometheus
+            to:
+              - podSelector:
+                  - matchLabels:
+                      app.kubernetes.io/component: messaging-topology-operator
+                      app.kubernetes.io/name: rabbitmq-cluster-operator 
       metrics:
         service:
           enabled: true
-          ports:
-            http: 8080
         serviceMonitor:
           enabled: true
           labels:
