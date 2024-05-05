@@ -37,6 +37,15 @@ spec:
           chunks: chunks
           admin: admin
           ruler: ruler
+        schemaConfig:
+          configs:
+            - from: "2023-01-01"
+              store: tsdb
+              object_store: s3
+              schema: v13
+              index:
+                period: 24h
+                prefix: index_
         s3:
           s3: https://minio.loki.svc.cluster.local.
           s3ForcePathStyle: true
