@@ -33,6 +33,10 @@ spec:
         compaction_interval: 10m
         retention_delete_delay: 2h
       storage:
+        bucketNames:
+          chunks: chunks
+          admin: admin
+          ruler: ruler
         s3:
           s3: https://minio.loki.svc.cluster.local.
           s3ForcePathStyle: true
