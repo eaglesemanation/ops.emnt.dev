@@ -31,6 +31,10 @@ spec:
       metrics:
         service:
           enabled: true
+          # serviceMonitor gets confused if ports on svc do not match ports on pods
+          # overwrite with hardcoded default port for metrics
+          ports:
+            - 9782
         serviceMonitor:
           enabled: true
           labels:
@@ -46,6 +50,8 @@ spec:
       metrics:
         service:
           enabled: true
+          ports:
+            - 8080
         serviceMonitor:
           enabled: true
           labels:
