@@ -32,20 +32,20 @@ spec:
         retention_enabled: true
         compaction_interval: 10m
         retention_delete_delay: 2h
+      schemaConfig:
+        configs:
+          - from: "2023-01-01"
+            store: tsdb
+            object_store: s3
+            schema: v13
+            index:
+              period: 24h
+              prefix: index_
       storage:
         bucketNames:
           chunks: chunks
           admin: admin
           ruler: ruler
-        schemaConfig:
-          configs:
-            - from: "2023-01-01"
-              store: tsdb
-              object_store: s3
-              schema: v13
-              index:
-                period: 24h
-                prefix: index_
         s3:
           s3: https://minio.loki.svc.cluster.local.
           s3ForcePathStyle: true
