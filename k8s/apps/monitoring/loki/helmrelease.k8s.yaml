@@ -28,7 +28,6 @@ spec:
         retention_period: 744h # 31 days
       compactor:
         working_directory: /var/loki/compactor
-        shared_store: s3
         retention_enabled: true
         compaction_interval: 10m
         retention_delete_delay: 2h
