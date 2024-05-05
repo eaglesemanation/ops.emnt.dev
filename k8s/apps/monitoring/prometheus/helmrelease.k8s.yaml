@@ -69,6 +69,8 @@ spec:
           type: loki
           access: proxy
           url: https://loki.${CLUSTER_DOMAIN}
+          # TODO: Look into enabling Loki ruler component
+          manageAlerts: false
           jsonData:
             maxLines: 1000
       defaultDashboardsTimezone: browser
