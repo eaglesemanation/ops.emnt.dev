@@ -11,7 +11,7 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: HostRegexp(`{subdomain:.+}.${CLUSTER_DOMAIN}`)
+      match: HostRegexp(`^.+\.${CLUSTER_DOMAIN_REGEXP}$`)
       priority: 1 # Lower number - lower priority
       services:
         - name: ingress-external-traefik
