@@ -24,7 +24,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: flaresolverr
-          image: ghcr.io/flaresolverr/flaresolverr:v3.3.16
+          image: ghcr.io/flaresolverr/flaresolverr:v3.3.17
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Image relies on bunch of writable paths
           resources:
