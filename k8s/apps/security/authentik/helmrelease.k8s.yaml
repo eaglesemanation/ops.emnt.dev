@@ -26,7 +26,7 @@ spec:
         user: file:///postgres-creds/user
         password: file:///postgres-creds/password
       redis:
-        host: redis
+        host: keydb
         password: file:///redis-creds/password
       email:
         host: mail.${CLUSTER_DOMAIN}
