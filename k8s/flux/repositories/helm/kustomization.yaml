@@ -7,6 +7,7 @@ resources:
   - crunchy-data.k8s.yaml
   - democratic-csi.k8s.yaml
   - emberstack.k8s.yaml
+  - enapter.k8s.yaml
   - external-secrets.k8s.yaml
   - goauthentik.k8s.yaml
   - grafana.k8s.yaml
