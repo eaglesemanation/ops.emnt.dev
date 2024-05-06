@@ -14,5 +14,4 @@ spec:
   dependsOn:
     - name: postgres-operator
     - name: prometheus
-    - name: redis-operator
   wait: true
