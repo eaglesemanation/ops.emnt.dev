@@ -541,7 +541,7 @@
                     "text": "authentik-pg",
                     "value": "authentik-pg"
                 },
-                "definition": "label_values(up{job=\"postgres-operator/postgres-clusters\"},postgres_operator_crunchydata_com_cluster)",
+                "definition": "label_values(up{job=\"crunchy-operator/postgres-clusters\"},postgres_operator_crunchydata_com_cluster)",
                 "hide": 0,
                 "includeAll": false,
                 "label": "Cluster",
@@ -549,7 +549,7 @@
                 "name": "backrest_cluster",
                 "options": [],
                 "query": {
-                    "query": "label_values(up{job=\"postgres-operator/postgres-clusters\"},postgres_operator_crunchydata_com_cluster)",
+                    "query": "label_values(up{job=\"crunchy-operator/postgres-clusters\"},postgres_operator_crunchydata_com_cluster)",
                     "refId": "PrometheusVariableQueryEditor-VariableQuery"
                 },
                 "refresh": 1,

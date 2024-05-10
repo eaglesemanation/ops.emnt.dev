@@ -2,7 +2,7 @@ kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 configMapGenerator:
   - name: grafana-dashboards
-    namespace: postgres-operator
+    namespace: crunchy-operator
     options:
       labels:
         grafana_dashboard: "1"

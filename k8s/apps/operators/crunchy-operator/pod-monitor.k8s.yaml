@@ -3,7 +3,7 @@ apiVersion: monitoring.coreos.com/v1
 kind: PodMonitor
 metadata:
   name: postgres-clusters
-  namespace: postgres-operator
+  namespace: crunchy-operator
   labels:
     release: prometheus
 spec:

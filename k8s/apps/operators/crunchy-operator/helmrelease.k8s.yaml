@@ -3,7 +3,7 @@ apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: postgres-operator
-  namespace: postgres-operator
+  namespace: crunchy-operator
 spec:
   interval: 30m
   chart:
