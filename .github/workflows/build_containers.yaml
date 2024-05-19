@@ -49,17 +49,17 @@ jobs:
           IMAGE_FILENAME="${IMAGE_PATH##*/}"
           IMAGE_NAME="${IMAGE_FILENAME%.Dockerfile}"
           if [ "${IMAGE_FILENAME}" -eq "${IMAGE_NAME}" ]; then
-            echo "${IMAGE_PATH} does not end with .Dockerfile"
+            echo "\`${IMAGE_PATH}\` does not end with .Dockerfile"
             exit 1
           fi
-          echo "- Image name `${IMAGE_NAME}`" >> "${GITHUB_STEP_SUMMARY}"
+          echo "- Image name \`${IMAGE_NAME}\`" >> "${GITHUB_STEP_SUMMARY}"
           IMAGE_BASE_TAG="$(cat "${IMAGE_PATH}" | gawk 'match($0, /^FROM [^ ]+:([^ ]+)$/, a) {print a[1]; exit;}')"
           if [ "${IMAGE_BASE_TAG}" -z ]; then
             echo "Image base tag is not found or not specified"
             exit 1
           fi
-          IMAGE_TAG="${IMAGE_BASE_TAG}_b${{ github.run_attempt }}"
-          echo "- New image tag `${IMAGE_TAG}`" >> "${GITHUB_STEP_SUMMARY}"
+          IMAGE_TAG="${IMAGE_BASE_TAG}_b${{ github.github.run_number }}-${{ github.run_attempt }}"
+          echo "- New image tag \`${IMAGE_TAG}\`" >> "${GITHUB_STEP_SUMMARY}"
           echo "IMAGE_NAME=${IMAGE_NAME}" >> "${GITHUB_OUTPUT}"
           echo "IMAGE_TAG=${IMAGE_TAG}" >> "${GITHUB_OUTPUT}"
       - name: Log in to the Container registry
@@ -75,16 +75,14 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ steps.info.outputs.IMAGE_NAME }}
           tags: |
             type=raw,value=${{ steps.info.outputs.IMAGE_TAG }}
-      - name: Print metadata
-        run: |
-          echo "Tags: ${{ steps.meta.outputs.tags }}"
-          echo "Labels: ${{ steps.meta.outputs.labels }}"
+          labels: |
+            org.opencontainers.image.title=${{ steps.info.outputs.IMAGE_NAME }}
 
-#      - name: Build and push Docker image
-#        uses: docker/build-push-action@v5
-#        with:
-#          context: "{{defaultContext}}:containers"
-#          file: "${{ matrix.image }}"
-#          push: true
-#          tags: ${{ steps.meta.outputs.tags }}
-#          labels: ${{ steps.meta.outputs.labels }}
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: "{{defaultContext}}:containers"
+          file: "${{ matrix.image }}"
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
