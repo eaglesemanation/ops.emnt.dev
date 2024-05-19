@@ -58,6 +58,10 @@ spec:
             - authentik Admins
         JupyterHub:
           authenticator_class: generic-oauth
+        ContentsManager:
+          allow_hidden: true
+        Completer:
+          use_jedi: false
       extraEnv:
         PGURL:
           valueFrom:

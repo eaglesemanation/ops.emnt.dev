@@ -17,7 +17,7 @@ RUN pip install --no-cache-dir \
         jupyterlab-spreadsheet-editor
 
 # Symlink for LSP to properly work with system wide packages
-RUN ln -s / .lsp_symlink
+RUN ln -s / /home/jovyan/.lsp_symlink
 
 LABEL org.opencontainers.image.authors="Vladimir Romashchenko <eaglesemanation@gmail.com>"
 LABEL org.opencontainers.image.source="https://github.com/eaglesemanation/ops.emnt.dev"
