@@ -14,7 +14,7 @@ RUN pip install --no-cache-dir \
         # Autocomplete support
         jupyterlab-lsp 'python-lsp-server[all]' \
         # Editing CSV directly from UI
-        jupyterlab-spreadsheet-editor \
+        jupyterlab-spreadsheet-editor
 
 # Symlink for LSP to properly work with system wide packages
 RUN ln -s / .lsp_symlink
