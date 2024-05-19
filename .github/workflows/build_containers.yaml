@@ -58,7 +58,7 @@ jobs:
             echo "Image base tag is not found or not specified"
             exit 1
           fi
-          IMAGE_TAG="${IMAGE_BASE_TAG}_b${{ github.github.run_number }}-${{ github.run_attempt }}"
+          IMAGE_TAG="${IMAGE_BASE_TAG}_b${{ github.run_number }}-${{ github.run_attempt }}"
           echo "- New image tag \`${IMAGE_TAG}\`" >> "${GITHUB_STEP_SUMMARY}"
           echo "IMAGE_NAME=${IMAGE_NAME}" >> "${GITHUB_OUTPUT}"
           echo "IMAGE_TAG=${IMAGE_TAG}" >> "${GITHUB_OUTPUT}"
@@ -81,7 +81,7 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
-          context: "{{defaultContext}}:containers"
+          context: ./containers
           file: "${{ matrix.image }}"
           push: true
           tags: ${{ steps.meta.outputs.tags }}
