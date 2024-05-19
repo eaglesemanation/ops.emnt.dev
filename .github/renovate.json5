@@ -15,6 +15,11 @@
             "k8s/flux/.+\\.k8s\\.yaml"
         ]
     },
+    "dockerfile": {
+        "fileMatch": [
+            "containers/.+\\.Dockerfile"
+        ]
+    },
     "kubernetes": {
         "fileMatch": [
             "k8s/apps/.+\\.k8s\\.yaml",
