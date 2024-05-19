@@ -15,13 +15,14 @@ jobs:
       id-token: write
       contents: read
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Get list of changed container files
         run: |
           IMAGE_LIST="$(git diff --name-only ${{ github.event.before }} HEAD -- 'containers/*.Dockerfile' | jq -R -c --slurp 'split("\n") | map(select(length > 0))')"
-          echo "IMAGE_LIST=${IMAGE_LIST}" >> $GITHUB_OUTPUT
+          echo "${IMAGE_LIST}" >> "${GITHUB_STEP_SUMMARY}"
+          echo "IMAGE_LIST=${IMAGE_LIST}" >> "${GITHUB_OUTPUT}"
 
   build_changed_images:
     name: "Build image: ${{ matrix.image }}"
