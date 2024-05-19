@@ -25,7 +25,7 @@ jobs:
         run: |
           IMAGE_LIST="$(git diff --name-only ${{ github.event.before }} HEAD -- 'containers/*.Dockerfile' | jq -R -c --slurp 'split("\n") | map(select(length > 0))')"
           echo "List of changed docker files:" >> "${GITHUB_STEP_SUMMARY}"
-          echo "${IMAGE_LIST}" | jq -r '.[]' >> "${GITHUB_STEP_SUMMARY}"
+          echo "${IMAGE_LIST}" | jq -r '.[] | "- " + .' >> "${GITHUB_STEP_SUMMARY}"
           echo "IMAGE_LIST=${IMAGE_LIST}" >> "${GITHUB_OUTPUT}"
 
   build_changed_images:
@@ -35,8 +35,55 @@ jobs:
     strategy:
       matrix:
         image: ${{ fromJson( needs.get_changed_dockerfiles.outputs.IMAGE_LIST ) }}
-
+    permissions:
+      contents: read
+      packages: write
     steps:
-      - name: Print image name from matrix
+      - uses: actions/checkout@v4
+      - name: Extract image info
+        id: info
         run: |
-          echo "${{ matrix.image }}"
+          echo "Extracted info:" >> "${GITHUB_STEP_SUMMARY}"
+          IMAGE_PATH="${{ matrix.image }}"
+          IMAGE_FILENAME="${IMAGE_PATH##*/}"
+          IMAGE_NAME="${IMAGE_FILENAME%.Dockerfile}"
+          if [ "${IMAGE_FILENAME}" -eq "${IMAGE_NAME}" ]; then
+            echo "${IMAGE_PATH} does not end with .Dockerfile"
+            exit 1
+          fi
+          echo "- Image name `${IMAGE_NAME}`" >> "${GITHUB_STEP_SUMMARY}"
+          IMAGE_BASE_TAG="$(cat "${IMAGE_PATH}" | gawk 'match($0, /^FROM [^ ]+:([^ ]+)$/, a) {print a[1]; exit;}')"
+          if [ "${IMAGE_BASE_TAG}" -z ]; then
+            echo "Image base tag is not found or not specified"
+            exit 1
+          fi
+          IMAGE_TAG="${IMAGE_BASE_TAG}_b${{ github.run_attempt }}"
+          echo "- New image tag `${IMAGE_TAG}`" >> "${GITHUB_STEP_SUMMARY}"
+          echo "IMAGE_NAME=${IMAGE_NAME}" >> "${GITHUB_OUTPUT}"
+          echo "IMAGE_TAG=${IMAGE_TAG}" >> "${GITHUB_OUTPUT}"
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.REGISTRY }}/${{ github.repository }}/${{ steps.info.outputs.IMAGE_NAME }}
+          tags: |
+            type=raw,value=${{ steps.info.outputs.IMAGE_TAG }}
+      - name: Print metadata
+        run: |
+          echo "Tags: ${{ steps.meta.outputs.tags }}"
+          echo "Labels: ${{ steps.meta.outputs.labels }}"
+
+#      - name: Build and push Docker image
+#        uses: docker/build-push-action@v5
+#        with:
+#          context: "{{defaultContext}}:containers"
+#          file: "${{ matrix.image }}"
+#          push: true
+#          tags: ${{ steps.meta.outputs.tags }}
+#          labels: ${{ steps.meta.outputs.labels }}
