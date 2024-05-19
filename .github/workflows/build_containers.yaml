@@ -14,14 +14,18 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    outputs:
+      IMAGE_LIST: ${{ steps.set_images.outputs.IMAGE_LIST }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
       - name: Get list of changed container files
+        id: set_images
         run: |
           IMAGE_LIST="$(git diff --name-only ${{ github.event.before }} HEAD -- 'containers/*.Dockerfile' | jq -R -c --slurp 'split("\n") | map(select(length > 0))')"
-          echo "${IMAGE_LIST}" >> "${GITHUB_STEP_SUMMARY}"
+          echo "List of changed docker files:" >> "${GITHUB_STEP_SUMMARY}"
+          echo "${IMAGE_LIST}" | jq -r '.[]' >> "${GITHUB_STEP_SUMMARY}"
           echo "IMAGE_LIST=${IMAGE_LIST}" >> "${GITHUB_OUTPUT}"
 
   build_changed_images:
