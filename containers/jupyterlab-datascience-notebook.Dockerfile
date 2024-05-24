@@ -2,7 +2,8 @@ FROM quay.io/jupyter/datascience-notebook:python-3.11.8
 
 RUN pip install --no-cache-dir \
         # Visualisation
-        hvplot panel jupyter_bokeh shapely \
+        # NOTE: Panel v1.4.3 fixes issue with Jupyter triggering shortcuts on entry
+        hvplot 'panel>=1.4.3' jupyter_bokeh shapely \
         # Markdown parser
         jupyterlab_myst myst_parser \
         # Panel UI support
