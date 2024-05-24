@@ -4,7 +4,7 @@ metadata:
   name: opnsense
   namespace: opnsense
 spec:
-  ingressClassName: ingress-internal-traefik
+  ingressClassName: ingress-external-traefik
   rules:
     - host: opnsense.${CLUSTER_DOMAIN}
       http:
