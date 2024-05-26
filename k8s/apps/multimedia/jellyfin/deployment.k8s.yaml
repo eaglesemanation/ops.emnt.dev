@@ -26,7 +26,7 @@ spec:
             nodeSelectorTerms:
               - matchExpressions:
                   - key: emnt.dev/on-nas
-                    operator: Exists
+                    operator: DoesNotExist
       securityContext:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
         fsGroup: 1000
@@ -36,6 +36,11 @@ spec:
           resources:
             requests:
               cpu: 100m
+              gpu.intel.com/i915: 1
+              memory: 1536Mi
+            limits:
+              gpu.intel.com/i915: 1
+              memory: 12Gi
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
           startupProbe:
@@ -60,6 +65,8 @@ spec:
               value: "Etc/UTC"
             - name: JELLYFIN_PublishedServerUrl
               value: "https://jellyfin.emnt.dev/"
+            - name: DOCKER_MODS
+              value: linuxserver/mods:jellyfin-opencl-intel
           volumeMounts:
             - name: multimedia
               mountPath: /multimedia
