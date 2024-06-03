@@ -22,7 +22,7 @@ spec:
   values:
     controller:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.9.0
+        image: docker.io/democraticcsi/democratic-csi:v1.9.3
         resources:
           requests:
             cpu: 20m
@@ -32,7 +32,7 @@ spec:
     node:
       hostPID: true
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.9.0
+        image: docker.io/democraticcsi/democratic-csi:v1.9.3
         resources:
           requests:
             cpu: 20m
