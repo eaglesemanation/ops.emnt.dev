@@ -2,8 +2,10 @@
 apiVersion: traefik.io/v1alpha1
 kind: Middleware
 metadata:
-  name: addprefix
+  name: admin-redirect
   namespace: pihole
 spec:
-  addPrefix:
-    prefix: /admin
+  redirectRegex:
+    regex: "^https?://pihole.${CLUSTER_DOMAIN}/$"
+    replacement: "https://pihole.${CLUSTER_DOMAIN}/admin/"
+    permanent: true

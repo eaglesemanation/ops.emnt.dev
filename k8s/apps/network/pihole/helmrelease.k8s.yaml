@@ -28,7 +28,7 @@ spec:
       enabled: true
       ingressClassName: ingress-internal-traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.middlewares: pihole-addprefix@kubernetescrd
+        traefik.ingress.kubernetes.io/router.middlewares: pihole-admin-redirect@kubernetescrd
       path: /
       hosts:
         - pihole.${CLUSTER_DOMAIN}

@@ -4,7 +4,7 @@ resources:
   - namespace.k8s.yaml
   - web-password.sops.yaml
   - helmrelease.k8s.yaml
-  - addprefix.k8s.yaml
+  - admin-redirect.k8s.yaml
   - unbound-deployment.k8s.yaml
   - unbound-config.k8s.yaml
   - unbound-svc.k8s.yaml
