@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: unbound
-          image: docker.io/alpinelinux/unbound:latest
+          image: docker.io/mailcow/unbound:1.21
           resources:
             requests:
               cpu: 100m
