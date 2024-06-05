@@ -119,6 +119,10 @@ spec:
             secretKeyRef:
               name: loki-minio
               key: CONSOLE_SECRET_KEY
+    chunksCache:
+      allocatedMemory: 512 # MB
+    resultsCache:
+      allocatedMemory: 128 # MB
     monitoring:
       lokiCanary:
         resources:
