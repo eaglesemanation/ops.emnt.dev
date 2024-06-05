@@ -9,7 +9,7 @@
 
 ## Steps
 
-1. Generate default machine configs with `./gen-config.sh -c talos-cluster-1 -e https://192.168.25.100:6443`
+1. Generate default machine configs with `./gen-config.sh -c talos-cluster-1 -e https://192.168.25.100:6443 -v <Talos version, e.g. v1.7.4>`
 2. Apply config to controlplane machines with `talosctl -n <Node IP> apply-config --insecure --file controlplane.yaml --config-patch @machines/talos-controlplane-<NODE NUM>.patch.yaml`
 3. Apply config to worker machines with `talosctl -n <Node IP> apply-config --insecure --file worker.yaml --config-patch @machines/talos-worker-<NODE NUM>.patch.yaml`
 4. Update talosconfig endpoint with virtual IP `talosctl --talosconfig ./talosconfig config endpoints 192.168.25.100`

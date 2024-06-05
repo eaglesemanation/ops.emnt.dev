@@ -1,4 +1,0 @@
-machine:
-  install:
-    extensions:
-      - image: ghcr.io/siderolabs/nut-client:2.8.0-v1.4.6
