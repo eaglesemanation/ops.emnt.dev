@@ -27,6 +27,7 @@ spec:
       xmpp:
         enabled: true
     publicURL: "https://jitsi.${CLUSTER_DOMAIN}/"
+    enableAuth: true
     web:
       ingress:
         enabled: true
