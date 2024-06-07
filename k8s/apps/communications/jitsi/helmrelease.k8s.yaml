@@ -30,11 +30,13 @@ spec:
     enableAuth: true
     enableGuests: true
     extraCommonEnvs:
-      AUTH_TYPE: jwt
-      JWT_ACCEPTED_ISSUERS: jitsi
-      JWT_ACCEPTED_AUDIENCES: jitsi
-      JWT_APP_ID: jitsi.${CLUSTER_DOMAIN}
-      TOKEN_AUTH_URL: "https://jitsi-auth.${CLUSTER_DOMAIN}/room/{room}"
+      AUTH_TYPE: ldap
+      LDAP_BASE: dc=jitsi-ldap,dc=goauthentik,dc=io
+      LDAP_URL: ldaps://ak-outpost-authentik-ldap-outpost.authentik.svc.cluster.local
+      LDAP_BINDDN: cn=ak-service-ldap,ou=users,dc=jitsi-ldap,dc=goauthentik,dc=io
+      LDAP_FILTER: memberOf=CN=authentik Users,OU=groups,DC=jitsi-ldap,DC=goauthentik,DC=io
+      # TODO: Verify certificate. Maybe figureout self-sign through cert-manager
+      LDAP_TLS_CHECK_PEER: "0"
     tz: America/Toronto
     web:
       ingress:
@@ -42,7 +44,7 @@ spec:
         ingressClassName: ingress-external-traefik
         hosts:
           - host: jitsi.${CLUSTER_DOMAIN}
-            paths: ['/']
+            paths: ["/"]
     jvb:
       service:
         enabled: false
@@ -50,10 +52,10 @@ spec:
         - ${SVC_INGRESS_EXTERNAL_ADDR}
     prosody:
       extraEnvs:
-        - name: JWT_APP_SECRET
+        - name: LDAP_BINDPW
           valueFrom:
             secretKeyRef:
-              key: JITSI_SECRET
-              name: jitsi-openid
+              key: LDAP_BINDPW
+              name: authentik-creds
       persistence:
         storageClassName: freenas-api-iscsi-csi
