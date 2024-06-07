@@ -28,6 +28,14 @@ spec:
         enabled: true
     publicURL: "https://jitsi.${CLUSTER_DOMAIN}/"
     enableAuth: true
+    enableGuests: true
+    extraCommonEnvs:
+      AUTH_TYPE: jwt
+      JWT_ACCEPTED_ISSUERS: jitsi
+      JWT_ACCEPTED_AUDIENCES: jitsi
+      JWT_APP_ID: jitsi.${CLUSTER_DOMAIN}
+      TOKEN_AUTH_URL: "https://jitsi-auth.${CLUSTER_DOMAIN}/room/{room}"
+    tz: America/Toronto
     web:
       ingress:
         enabled: true
@@ -41,5 +49,11 @@ spec:
       publicIPs:
         - ${SVC_INGRESS_EXTERNAL_ADDR}
     prosody:
+      extraEnvs:
+        - name: JWT_APP_SECRET
+          valueFrom:
+            secretKeyRef:
+              key: JITSI_SECRET
+              name: jitsi-openid
       persistence:
         storageClassName: freenas-api-iscsi-csi
