@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: actual
+  namespace: actual
+  labels:
+    app.kubernetes.io/name: actual
+    app.kubernetes.io/instance: actual
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: actual
+    app.kubernetes.io/instance: actual
+  ports:
+    - name: http
+      port: 5006
+      targetPort: http
+      protocol: TCP
