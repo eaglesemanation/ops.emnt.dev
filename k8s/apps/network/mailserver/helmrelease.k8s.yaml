@@ -1,0 +1,216 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
+kind: HelmRelease
+metadata:
+  name: mailserver
+  namespace: flux-system
+spec:
+  interval: 30m
+  targetNamespace: mailserver
+  chart:
+    spec:
+      chart: docker-mailserver
+      version: 3.0.13
+      sourceRef:
+        kind: HelmRepository
+        name: docker-mailserver
+        namespace: flux-system
+      interval: 30m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              version: v1
+              kind: Deployment
+              name: mailserver
+            patch: |-
+              kind: Deployment
+              metadata:
+                name: mailserver
+                namespace: mailserver
+              spec:
+                template:
+                  spec:
+                    volumes:
+                      - name: wireguard-config
+                        secret:
+                          secretName: wireguard-config
+                      - name: wireguard-entrypoint
+                        configMap:
+                          name: wireguard-entrypoint
+                    containers:
+                      - name: wireguard-tunnel
+                        image: alpine:3.20.0
+                        env:
+                          - name: GATEWAY_IP
+                            value: "${GATEWAY_ADDR}"
+                          - name: VPN_CLIENT_IP
+                            value: 10.50.200.11/24
+                        volumeMounts:
+                          - name: wireguard-config
+                            mountPath: /etc/wireguard
+                          - name: wireguard-entrypoint
+                            mountPath: /wireguard-entrypoint.sh
+                            subPath: wireguard-entrypoint.sh
+                        command: [sh, /wireguard-entrypoint.sh]
+                        securityContext:
+                          capabilities:
+                            add:
+                              - NET_ADMIN
+  values:
+    fullnameOverride: mailserver
+    certificate: wildcard-cert
+    deployment:
+      env:
+        # Required section
+        OVERRIDE_HOSTNAME: mail.${CLUSTER_DOMAIN}
+        # General section
+        SUPERVISOR_LOGLEVEL: warn
+        TLS_LEVEL: modern
+        SPOOF_PROTECTION: 1
+        POSTMASTER_ADDRESS: postmaster@${CLUSTER_DOMAIN}
+        ENABLE_CLAMAV: 1
+        ENABLE_RSPAMD: 1
+        ENABLE_RSPAMD_REDIS: 1
+        ENABLE_FAIL2BAN: 1
+    rspamd:
+      ingress:
+        enabled: true
+        ingressClassName: ingress-internal-traefik
+        host: rspamd.${CLUSTER_DOMAIN}
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true
+    service:
+      type: ClusterIP
+    persistence:
+      mail-config:
+        storageClass: freenas-api-smb-csi
+      mail-data:
+        storageClass: freenas-api-iscsi-csi
+      mail-state:
+        storageClass: freenas-api-iscsi-csi
+      mail-log:
+        storageClass: freenas-api-iscsi-csi
+    configMaps:
+      # Configuring PROXY protocol
+      dovecot.cf:
+        data: |
+          {{- if .Values.proxyProtocol.enabled }}
+            haproxy_trusted_networks = {{ .Values.proxyProtocol.trustedNetworks }}
+
+            {{- if and (.Values.deployment.env.ENABLE_IMAP) (not .Values.deployment.env.SMTP_ONLY) }}
+            service imap-login {
+                inet_listener imap {
+                    haproxy = yes
+                    port = 143
+                }
+              
+                inet_listener imaps {
+                    haproxy = yes
+                    port = 993
+                    ssl = yes
+                }
+            }    
+            {{- end -}}
+
+            {{- if and (.Values.deployment.env.ENABLE_POP3) (not .Values.deployment.env.SMTP_ONLY) }}
+            service pop3-login {
+                inet_listener pop3 {
+                    haproxy = yes
+                    port = 110
+                }
+              
+                inet_listener pop3s {
+                    haproxy = yes
+                    port = 995
+                    ssl = yes
+                }
+            }
+            {{- end -}}
+          {{- end -}}
+      postfix-main.cf:
+        create: true
+        path: postfix-main.cf
+        data: |
+          {{- if .Values.proxyProtocol.enabled }}
+          postscreen_upstream_proxy_protocol = haproxy
+          {{- end -}}
+          smtpd_banner = $myhostname Service ready
+      postfix-master.cf:
+        create: true
+        path: postfix-master.cf
+        data: |
+          {{- if .Values.proxyProtocol.enabled }}
+          smtp/inet/postscreen_upstream_proxy_protocol=haproxy
+          submission/inet/smtpd_upstream_proxy_protocol=haproxy
+          submissions/inet/smtpd_upstream_proxy_protocol=haproxy
+          {{- end -}}
+      # Configuring DKIM on RSPAMD side
+      dkim-signing.conf:
+        create: true
+        path: /etc/rspamd/local.d/dkim_signing.conf
+        data: |
+          # documentation: https://rspamd.com/doc/modules/dkim_signing.html
+          enabled = true;
+          sign_authenticated = true;
+          sign_local = true;
+          use_domain = "header";
+          use_redis = false; # don't change unless Redis also provides the DKIM keys
+          use_esld = true;
+          check_pubkey = true;
+          domain {
+              ${CLUSTER_DOMAIN} {
+                  selectors [
+                      {
+                          path = "/tmp/docker-mailserver/rspamd/keys/cluster_domain.rsa.private";
+                          selector = "dkim-rsa";
+                      },
+                      {
+                          path = "/tmp/docker-mailserver/rspamd/keys/cluster_domain.ed25519.private";
+                          selector = "dkim-ed25519";
+                      }
+                ]
+              }
+          }
+      # Abusix group config
+      groups.conf:
+        create: false
+        path: /etc/rspamd/local.d/groups.conf
+      # Defining virual addresses
+      postfix-virtual.cf:
+        create: true
+        path: postfix-virtual.cf
+        data: |
+          postmaster@${CLUSTER_DOMAIN} dmarc.report@${CLUSTER_DOMAIN}
+    secrets:
+      dkim-rsa:
+        create: false
+        key: cluster_domain.rsa.private
+        path: /tmp/docker-mailserver/rspamd/keys/cluster_domain.rsa.private
+      dkim-ed25519:
+        create: false
+        key: cluster_domain.ed25519.private
+        path: /tmp/docker-mailserver/rspamd/keys/cluster_domain.ed25519.private
+      # Abusix config
+      rspamd.local.lua:
+        create: false
+        path: /etc/rspamd/rspamd.local.lua
+      # Abusix config
+      rbl.conf:
+        create: false
+        path: /etc/rspamd/local.d/rbl.conf
+      # RSPAMD UI config
+      rspamd-controller:
+        create: false
+        key: worker-controller.inc
+        path: /etc/rspamd/local.d/worker-controller.inc
+      # Hardcoded accounts
+      postfix-accounts.cf:
+        create: false
+        path: postfix-accounts.cf

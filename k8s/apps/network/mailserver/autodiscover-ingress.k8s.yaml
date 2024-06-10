@@ -1,28 +1,6 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: rspamd
-  namespace: mailserver
-  labels:
-    app.kubernetes.io/name: mailserver
-    app.kubernetes.io/instance: mailserver
-spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: rspamd.${CLUSTER_DOMAIN}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: mailserver
-                port:
-                  name: rspamd
----
-apiVersion: networking.k8s.io/v1
-kind: Ingress
-metadata:
   name: autodiscover-mailserver
   namespace: mailserver
   labels:

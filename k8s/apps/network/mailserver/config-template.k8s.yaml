@@ -1,0 +1,53 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: rbl-conf-template
+  namespace: mailserver
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: mailserver-secrets
+  target:
+    name: rbl-conf
+    template:
+      engineVersion: v2
+      templateFrom:
+        - target: Data
+          configMap:
+            name: templates-mailserver
+            items:
+              - key: rbl.conf
+                templateAs: Values
+  data:
+    - secretKey: abusixApiKey
+      remoteRef:
+        key: abusix
+        property: ABUSIX_API_KEY
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: rspamd-local-lua-template
+  namespace: mailserver
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: mailserver-secrets
+  target:
+    name: rspamd-local-lua
+    template:
+      engineVersion: v2
+      templateFrom:
+        - target: Data
+          configMap:
+            name: templates-mailserver
+            items:
+              - key: rspamd.local.lua
+                templateAs: Values
+  data:
+    - secretKey: abusixApiKey
+      remoteRef:
+        key: abusix
+        property: ABUSIX_API_KEY

@@ -1,1 +1,0 @@
-postmaster@${CLUSTER_DOMAIN} dmarc.report@${CLUSTER_DOMAIN}

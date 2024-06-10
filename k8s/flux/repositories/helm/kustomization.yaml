@@ -6,6 +6,7 @@ resources:
   - cilium.k8s.yaml
   - crunchy-data.k8s.yaml
   - democratic-csi.k8s.yaml
+  - docker-mailserver.k8s.yaml
   - emberstack.k8s.yaml
   - enapter.k8s.yaml
   - external-secrets.k8s.yaml
