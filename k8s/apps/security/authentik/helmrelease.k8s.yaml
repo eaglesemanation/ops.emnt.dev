@@ -30,8 +30,8 @@ spec:
         password: file:///redis-creds/password
       email:
         host: mail.${CLUSTER_DOMAIN}
-        port: 587
-        use_tls: true
+        port: 465
+        use_ssl: true
         from: authentik@${CLUSTER_DOMAIN}
         username: authentik@${CLUSTER_DOMAIN}
         password: file:///authentik-secrets/email_password
