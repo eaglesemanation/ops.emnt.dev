@@ -46,4 +46,3 @@ data:
         3600 IN NS nia.ns.cloudflare.com.
 
     *        IN A     ${SVC_INGRESS_INTERNAL_ADDR}
-    *        IN AAAA  ${SVC_INGRESS_INTERNAL_ADDR_IPV6}

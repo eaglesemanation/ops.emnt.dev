@@ -29,13 +29,8 @@ spec:
         add:
           - NET_BIND_SERVICE
     service:
-      annotations:
-        metallb.universe.tf/loadBalancerIPs: "${SVC_INGRESS_INTERNAL_ADDR},${SVC_INGRESS_INTERNAL_ADDR_IPV6}"
       spec:
-        ipFamilyPolicy: PreferDualStack
-        ipFamilies:
-          - IPv4
-          - IPv6
+        loadBalancerIP: "${SVC_INGRESS_INTERNAL_ADDR}"
         externalTrafficPolicy: Local
     providers:
       kubernetesCRD:

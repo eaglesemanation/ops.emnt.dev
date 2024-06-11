@@ -7,14 +7,10 @@ metadata:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
   annotations:
-    metallb.universe.tf/loadBalancerIPs: "${SVC_UNIFI_CONTROLLER},${SVC_UNIFI_CONTROLLER_IPV6}"
-    metallb.universe.tf/allow-shared-ip: "unifi-controller-svc"
+    metallb.universe.tf/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
-  ipFamilyPolicy: PreferDualStack
-  ipFamilies:
-    - IPv4
-    - IPv6
+  loadBalancerIP: "${SVC_UNIFI_CONTROLLER}"
   selector:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
@@ -45,14 +41,10 @@ metadata:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
   annotations:
-    metallb.universe.tf/loadBalancerIPs: "${SVC_UNIFI_CONTROLLER},${SVC_UNIFI_CONTROLLER_IPV6}"
-    metallb.universe.tf/allow-shared-ip: "unifi-controller-svc"
+    metallb.universe.tf/allow-shared-ip: "true"
 spec:
   type: LoadBalancer
-  ipFamilyPolicy: PreferDualStack
-  ipFamilies:
-    - IPv4
-    - IPv6
+  loadBalancerIP: "${SVC_UNIFI_CONTROLLER}"
   selector:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
