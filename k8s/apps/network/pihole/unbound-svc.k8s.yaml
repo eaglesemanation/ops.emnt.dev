@@ -6,9 +6,14 @@ metadata:
   labels:
     app.kubernetes.io/name: unbound
     app.kubernetes.io/instance: unbound
+  annotations:
+    metallb.universe.tf/loadBalancerIPs: "${SVC_UNBOUND_ADDR},${SVC_UNBOUND_ADDR_IPV6}"
 spec:
   type: LoadBalancer
-  loadBalancerIP: "${SVC_UNBOUND_ADDR}"
+  ipFamilyPolicy: PreferDualStack
+  ipFamilies:
+    - IPv4
+    - IPv6
   selector:
     app.kubernetes.io/name: unbound
     app.kubernetes.io/instance: unbound

@@ -1,4 +1,5 @@
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/metallb.io/ipaddresspool_v1beta1.json
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
@@ -7,7 +8,9 @@ metadata:
 spec:
   addresses:
     - 192.168.25.2-192.168.25.9
+    - 2001:470:c059:1::/64
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/metallb.io/l2advertisement_v1beta1.json
 apiVersion: metallb.io/v1beta1
 kind: L2Advertisement
 metadata:

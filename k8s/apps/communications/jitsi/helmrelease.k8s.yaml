@@ -50,6 +50,7 @@ spec:
         enabled: false
       publicIPs:
         - ${SVC_INGRESS_EXTERNAL_ADDR}
+        - ${SVC_INGRESS_EXTERNAL_ADDR_IPV6}
     prosody:
       extraEnvs:
         - name: LDAP_BINDPW

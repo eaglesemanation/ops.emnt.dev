@@ -19,9 +19,12 @@ spec:
     hostNetwork: true
     admin:
       existingSecret: pihole-web-password
+    dualStack:
+      enabled: true
     serviceDns:
       type: LoadBalancer
       loadBalancerIP: "${SVC_DNS_ADDR}"
+      loadBalancerIPv6: "${SVC_DNS_ADDR_IPV6}"
       annotations:
         metallb.universe.tf/allow-shared-ip: pihole-dns-svc
     ingress:
@@ -46,6 +49,7 @@ spec:
         - edns-packet-max=1232
       customDnsEntries:
         - "address=/${CLUSTER_DOMAIN}/${SVC_INGRESS_INTERNAL_ADDR}"
+        - "address=/${CLUSTER_DOMAIN}/${SVC_INGRESS_INTERNAL_ADDR_IPV6}"
     DNS1: "${SVC_UNBOUND_ADDR}#5335"
     DNS2: null
     extraEnvVars:

@@ -25,6 +25,8 @@ spec:
     tunnelPort: 8473
     ipam:
       mode: kubernetes
+    ipv6:
+      enabled: true
     kubeProxyReplacement: strict
     k8sServiceHost: ${K8S_API_ADDR}
     k8sServicePort: 6443
