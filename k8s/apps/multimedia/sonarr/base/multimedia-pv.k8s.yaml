@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: sonarr
 spec:
   capacity:
-    storage: 10Ti
+    storage: 15Ti
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain

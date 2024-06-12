@@ -23,7 +23,7 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 10Ti
+      storage: 15Ti
   selector:
     matchLabels:
       app.kubernetes.io/name: radarr

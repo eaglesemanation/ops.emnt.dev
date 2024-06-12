@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/instance: flood
 spec:
   capacity:
-    storage: 10Ti
+    storage: 15Ti
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
