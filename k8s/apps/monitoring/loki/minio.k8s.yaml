@@ -5,6 +5,7 @@ metadata:
   name: minio
   namespace: loki
 spec:
+  image: quay.io/minio/minio:RELEASE.2024-06-11T03-13-30Z
   users:
     - name: loki-minio
   buckets:

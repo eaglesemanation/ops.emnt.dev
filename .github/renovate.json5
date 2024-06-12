@@ -11,8 +11,7 @@
     "rangeStrategy": "bump",
     "flux": {
         "fileMatch": [
-            "k8s/apps/.+\\.k8s\\.yaml",
-            "k8s/flux/.+\\.k8s\\.yaml"
+            "k8s/.+\\.k8s\\.yaml"
         ]
     },
     "dockerfile": {
@@ -22,10 +21,22 @@
     },
     "kubernetes": {
         "fileMatch": [
-            "k8s/apps/.+\\.k8s\\.yaml",
-            "k8s/flux/.+\\.k8s\\.yaml"
+            "k8s/.+\\.k8s\\.yaml"
         ]
     },
+    "customManagers": [
+        {
+            "customType": "regex",
+            "description": "Update container images in CRDs",
+            "datasourceTemplate": "docker",
+            "fileMatch": [
+                "k8s/.+\\.k8s\\.yaml"
+            ],
+            "matchStrings": [
+                "apiVersion:\\s+minio.min.io\\/v\\d+.*\\nkind:\\s+Tenant\\s*\\n(?:.*\\n)*?\\s*image:\\s*(?<depName>[\\w\\.\\/\\-]+):(?<currentValue>[\\w+\\.\\-]*)"
+            ]
+        }
+    ],
     "packageRules": [
         {
             "matchPackageNames": [
