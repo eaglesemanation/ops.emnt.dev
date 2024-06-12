@@ -13,9 +13,17 @@ spec:
       labels:
         app.kubernetes.io/name: intel-gpu-exporter
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: intel.feature.node.kubernetes.io/gpu
+                    operator: In
+                    values: ["true"]
       containers:
         - name: exporter
-          image: ghcr.io/xingoxu/intel-gpu-exporter:latest
+          image: docker.io/rhysbailey/prometheus-igpu-exporter:latest
           resources:
             limits:
               memory: 200Mi
@@ -24,3 +32,7 @@ spec:
               cpu: 10m
               memory: 100Mi
               gpu.intel.com/i915_monitoring: 1
+          securityContext:
+            capabilities:
+              add:
+                - PERFMON
