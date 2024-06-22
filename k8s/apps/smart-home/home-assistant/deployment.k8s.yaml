@@ -26,7 +26,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: core
-          image: docker.io/linuxserver/homeassistant:2024.6.3
+          image: docker.io/linuxserver/homeassistant:2024.6.4
           resources:
             requests:
               cpu: 100m
