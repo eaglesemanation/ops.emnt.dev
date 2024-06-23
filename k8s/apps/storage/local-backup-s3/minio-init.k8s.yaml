@@ -25,44 +25,46 @@ metadata:
 data:
   init.sh: |-
     mc admin policy create local-backup-s3 velero-rw /tmp/velero-policy.json
-    mc admin policy attack local-backup-s3 velero-rw --user velero
+    mc admin policy attach local-backup-s3 velero-rw --user velero
 ---
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
   name: minio-init-job
   namespace: local-backup-s3
 spec:
-  template:
+  schedule: "0 * * * *" # Defined as cronjob only because job is immutable
+  jobTemplate:
     spec:
-      restartPolicy: Never
-      serviceAccountName: mc-job-sa
-      containers:
-        - name: mc
-          image: docker.io/minio/mc:RELEASE.2024-06-20T14-50-54Z
-          command: ["sh", "/tmp/init.sh"]
-          env:
-            - name: MC_HOST_local-backup-s3
-              value: https://minio.local-backup-s3.svc.cluster.local
-            - name: MC_STS_ENDPOINT_local-backup-s3
-              value: https://sts.minio-operator.svc.cluster.local:4223/sts/local-backup-s3
-            - name: MC_WEB_IDENTITY_TOKEN_FILE_local-backup-s3
-              value: /var/run/secrets/kubernetes.io/serviceaccount/token
-          volumeMounts:
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: mc-job-sa
+          containers:
+            - name: mc
+              image: docker.io/minio/mc:RELEASE.2024-06-20T14-50-54Z
+              command: ["sh", "/tmp/init.sh"]
+              env:
+                - name: MC_HOST_local-backup-s3
+                  value: https://minio.local-backup-s3.svc.cluster.local
+                - name: MC_STS_ENDPOINT_local-backup-s3
+                  value: https://sts.minio-operator.svc.cluster.local:4223/sts/local-backup-s3
+                - name: MC_WEB_IDENTITY_TOKEN_FILE_local-backup-s3
+                  value: /var/run/secrets/kubernetes.io/serviceaccount/token
+              volumeMounts:
+                - name: init-script
+                  mountPath: /tmp/init.sh
+                  subPath: init.sh
+                - name: velero-policy
+                  mountPath: /tmp/velero-policy.json
+                  subPath: policy.json
+          volumes:
             - name: init-script
-              mountPath: /tmp/init.sh
-              subPath: init.sh
+              configMap:
+                name: minio-init-script
             - name: velero-policy
-              mountPath: /tmp/velero-policy.json
-              subPath: policy.json
-      volumes:
-        - name: init-script
-          configMap:
-            name: minio-init-script
-        - name: velero-policy
-          configMap:
-            name: velero-policy
-
+              configMap:
+                name: velero-policy
 # TODO: Use this when next operator version gets released (probably v5.0.16)
 #
 ## yaml-language-server: $schema=https://raw.githubusercontent.com/eaglesemanation/CRDs-catalog/minio/job.min.io/miniojob_v1alpha1.json
