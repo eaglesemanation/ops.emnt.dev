@@ -1,0 +1,37 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/eaglesemanation/CRDs-catalog/minio/minio.min.io/tenant_v2.json
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  name: minio
+  namespace: local-backup-s3
+spec:
+  image: quay.io/minio/minio:RELEASE.2024-06-11T03-13-30Z
+  buckets:
+    - name: pgbackrest
+    - name: velero
+  configuration:
+    name: minio-config
+  pools:
+    - servers: 4
+      name: pool-0
+      volumesPerServer: 2
+      resources:
+        requests:
+          cpu: 100m
+          memory: 512Mi
+        limits:
+          memory: 2Gi
+      volumeClaimTemplate:
+        metadata:
+          name: data
+        spec:
+          storageClassName: freenas-api-iscsi-s3-csi
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 25Gi
+      containerSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true

@@ -5,3 +5,4 @@ resources:
   - external-snapshotter.k8s.yaml
   - velero.k8s.yaml
   - k8s-csi-restarter.k8s.yaml
+  - local-backup-s3.k8s.yaml

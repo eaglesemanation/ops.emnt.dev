@@ -20,6 +20,9 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    serviceAccount:
+      server:
+        name: velero-sa
     resources:
       requests:
         cpu: 100m
@@ -53,16 +56,7 @@ spec:
             profile: minio
             region: us-west-1
             s3ForcePathStyle: "true"
-            s3Url: https://minio.${CLUSTER_DOMAIN}
-        - name: b2
-          provider: aws
-          bucket: talos-cluster-1
-          config:
-            profile: b2
-            region: us-east-005
-            s3Url: https://s3.us-east-005.backblazeb2.com
-    credentials:
-      existingSecret: s3-creds
+            s3Url: https://minio.local-backup-s3.svc.cluster.local
     # Instead of using velero snapshots for volume backups it's done through file system backups
     snapshotsEnabled: false
     deployNodeAgent: true
@@ -78,7 +72,7 @@ spec:
             - pvc
             # For some reason not provisioned by CSI, include explicitly
             - pv
-          storageLocation: minio
+          storageLocation: default
           ttl: 168h # 7 days
           defaultVolumesToFsBackup: false # Opt-in FS backup
     # Mitigation for https://github.com/vmware-tanzu/helm-charts/issues/515
