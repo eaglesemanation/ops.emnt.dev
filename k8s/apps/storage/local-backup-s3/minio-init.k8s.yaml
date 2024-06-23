@@ -17,6 +17,16 @@ spec:
   policies:
     - consoleAdmin
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minio-init-script
+  namespace: local-backup-s3
+data:
+  init.sh: |-
+    mc admin policy create local-backup-s3 velero-rw /tmp/velero-policy.json
+    mc admin policy attack local-backup-s3 velero-rw --user velero
+---
 apiVersion: batch/v1
 kind: Job
 metadata:
@@ -30,7 +40,7 @@ spec:
       containers:
         - name: mc
           image: docker.io/minio/mc:RELEASE.2024-06-20T14-50-54Z
-          args: ["admin", "policy", "create", "local-backup-s3", "velero-rw", "/tmp/velero-policy.json"]
+          command: ["sh", "/tmp/init.sh"]
           env:
             - name: MC_HOST_local-backup-s3
               value: https://minio.local-backup-s3.svc.cluster.local
@@ -39,10 +49,16 @@ spec:
             - name: MC_WEB_IDENTITY_TOKEN_FILE_local-backup-s3
               value: /var/run/secrets/kubernetes.io/serviceaccount/token
           volumeMounts:
+            - name: init-script
+              mountPath: /tmp/init.sh
+              subPath: init.sh
             - name: velero-policy
               mountPath: /tmp/velero-policy.json
               subPath: policy.json
       volumes:
+        - name: init-script
+          configMap:
+            name: minio-init-script
         - name: velero-policy
           configMap:
             name: velero-policy

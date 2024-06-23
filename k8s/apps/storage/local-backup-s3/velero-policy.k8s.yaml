@@ -1,16 +1,3 @@
-# yaml-language-server: $schema=https://raw.githubusercontent.com/eaglesemanation/CRDs-catalog/minio/sts.min.io/policybinding_v1alpha1.json
-apiVersion: sts.min.io/v1alpha1
-kind: PolicyBinding
-metadata:
-  name: velero
-  namespace: local-backup-s3
-spec:
-  application:
-    namespace: velero
-    serviceaccount: velero-sa
-  policies:
-    - velero-rw
----
 apiVersion: v1
 kind: ConfigMap
 metadata:

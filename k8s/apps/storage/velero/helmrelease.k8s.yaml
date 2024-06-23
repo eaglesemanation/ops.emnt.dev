@@ -58,7 +58,7 @@ spec:
             s3ForcePathStyle: "true"
             s3Url: https://minio.local-backup-s3.svc.cluster.local
     credentials:
-      useSecret: false
+      existingSecret: s3-creds
     # Instead of using velero snapshots for volume backups it's done through file system backups
     snapshotsEnabled: false
     deployNodeAgent: true

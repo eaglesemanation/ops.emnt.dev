@@ -6,6 +6,8 @@ metadata:
   namespace: local-backup-s3
 spec:
   image: quay.io/minio/minio:RELEASE.2024-06-11T03-13-30Z
+  users:
+    - name: velero
   buckets:
     - name: pgbackrest
     - name: velero

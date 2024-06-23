@@ -6,3 +6,4 @@ resources:
   - minio-config.sops.yaml
   - minio-init.k8s.yaml
   - velero-policy.k8s.yaml
+  - velero-creds.sops.yaml
