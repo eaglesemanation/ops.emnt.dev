@@ -17,27 +17,59 @@ spec:
   policies:
     - consoleAdmin
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/eaglesemanation/CRDs-catalog/minio/job.min.io/miniojob_v1alpha1.json
-apiVersion: job.min.io/v1alpha1
-kind: MinIOJob
+apiVersion: batch/v1
+kind: Job
 metadata:
   name: minio-init-job
-  namespace: minio-operator
+  namespace: local-backup-s3
 spec:
-  serviceAccountName: mc-job-sa
-  tenant:
-    name: minio
-    namespace: local-backup-s3
-  commands:
-    - name: velero-policy
-      op: admin/policy/create
-      args:
-        name: velero-rw
-        policy: /temp/policy.json
-      volumeMounts:
-        - name: policy
-          mountPath: /temp
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: mc-job-sa
+      containers:
+        - name: mc
+          image: docker.io/minio/mc:RELEASE.2024-06-20T14-50-54Z
+          args: ["admin", "policy", "create", "local-backup-s3", "velero-rw", "/tmp/velero-policy.json"]
+          env:
+            - name: MC_HOST_local-backup-s3
+              value: https://minio.local-backup-s3.svc.cluster.local
+            - name: MC_STS_ENDPOINT_local-backup-s3
+              value: https://sts.minio-operator.svc.cluster.local:4223/sts/local-backup-s3
+            - name: MC_WEB_IDENTITY_TOKEN_FILE_local-backup-s3
+              value: /var/run/secrets/kubernetes.io/serviceaccount/token
+          volumeMounts:
+            - name: velero-policy
+              mountPath: /tmp/velero-policy.json
+              subPath: policy.json
       volumes:
-        - name: policy
+        - name: velero-policy
           configMap:
             name: velero-policy
+
+# TODO: Use this when next operator version gets released (probably v5.0.16)
+#
+## yaml-language-server: $schema=https://raw.githubusercontent.com/eaglesemanation/CRDs-catalog/minio/job.min.io/miniojob_v1alpha1.json
+#apiVersion: job.min.io/v1alpha1
+#kind: MinIOJob
+#metadata:
+#  name: minio-init-job
+#  namespace: minio-operator
+#spec:
+#  serviceAccountName: mc-job-sa
+#  tenant:
+#    name: minio
+#    namespace: local-backup-s3
+#  commands:
+#    - name: velero-policy
+#      op: admin/policy/create
+#      args:
+#        name: velero-rw
+#        policy: /temp/policy.json
+#      volumeMounts:
+#        - name: policy
+#          mountPath: /temp
+#      volumes:
+#        - name: policy
+#          configMap:
+#            name: velero-policy
