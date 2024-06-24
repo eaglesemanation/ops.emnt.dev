@@ -1,0 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: tls-ca-template
+  namespace: local-backup-s3
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: local-backup-s3-secrets
+  target:
+    name: minio-ca
+    template:
+      engineVersion: v2
+      data:
+        ca.crt: "{{ .ca_cert }}"
+  data:
+    - secretKey: ca_cert
+      remoteRef:
+        key: minio-tls
+        property: public.crt

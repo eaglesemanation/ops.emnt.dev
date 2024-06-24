@@ -1,0 +1,41 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/serverstransport_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: minio-ca
+  namespace: local-backup-s3
+spec:
+  rootCAsSecrets:
+    - minio-ca
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: local-backup-s3
+  namespace: local-backup-s3
+  labels:
+    app.kubernetes.io/name: minio
+    app.kubernetes.io/instance: local-backup-s3
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`backup-s3.${CLUSTER_DOMAIN}`)
+      services:
+        - name: minio
+          namespace: local-backup-s3
+          port: 443
+          scheme: https
+          serversTransport: local-backup-s3-minio-ca@kubernetescrd
+    - kind: Rule
+      match: Host(`backup-s3-console.${CLUSTER_DOMAIN}`)
+      services:
+        - name: minio-console
+          namespace: local-backup-s3
+          port: 9443
+          scheme: https
+          serversTransport: local-backup-s3-minio-ca@kubernetescrd

@@ -7,3 +7,6 @@ resources:
   - minio-init.k8s.yaml
   - velero-policy.k8s.yaml
   - velero-creds.sops.yaml
+  - ingress.k8s.yaml
+  - secretstore.k8s.yaml
+  - tls-ca-template.k8s.yaml
