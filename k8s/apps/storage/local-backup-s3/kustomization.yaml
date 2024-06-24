@@ -4,9 +4,14 @@ resources:
   - namespace.k8s.yaml
   - minio.k8s.yaml
   - minio-config.sops.yaml
+  - mc-job-sa.k8s.yaml
   - minio-init.k8s.yaml
-  - velero-policy.k8s.yaml
-  - velero-creds.sops.yaml
   - ingress.k8s.yaml
   - secretstore.k8s.yaml
   - tls-ca-template.k8s.yaml
+
+  - velero-policy.k8s.yaml
+  - velero-creds.sops.yaml
+
+  - pgbackrest-policy.k8s.yaml
+  - pgbackrest-bazarr-creds.sops.yaml

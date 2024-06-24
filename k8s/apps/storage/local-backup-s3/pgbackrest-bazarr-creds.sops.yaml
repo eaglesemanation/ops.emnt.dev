@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: pgbackrest-bazarr-creds
+    namespace: local-backup-s3
+    annotations:
+        reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: bazarr
+stringData:
+    CONSOLE_ACCESS_KEY: ENC[AES256_GCM,data:OTxxpjSAOt99VsGBkwFef04=,iv:CUHrYqjigmnQUqKzJX5ms1ElO5GhVpYE9A0ne6n4wsg=,tag:PCzsgf9c/+H6PHuV4d0xgg==,type:str]
+    CONSOLE_SECRET_KEY: ENC[AES256_GCM,data:rRBCZPpU+wUHh0388yqWCfrqbQRpVFMuJMDWTLz40eE=,iv:wESEfTcf7GTU4fSW4ZsKQoT+Z9yR+RDvfiArbfSgCdQ=,tag:7G5TtzF7vKzqBPA5pVnG3A==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYb0dwYXNrQmF5aU8vU216
+            L3ZpdElTeVpJN0Q5QkRZcHpWeWlIeWJIQ3lZClRZUGdsemxRY0c4dmJtcncveHRt
+            Q1hHdVZ1YnpnQzYzQ0lVMU92Vmo0VVkKLS0tIHUzUmhUY1hoZ1VkM0t2L1Q4OHNj
+            dVRuUUUvbEdBbE9nR2dPQ1hSY3FqaFEKr9WeEtTveH4QtQuN2PE46VVqNu7rSe1L
+            hrlsr5jHhu7BQU6/1oHqSnXfkYSbXGMAp+Ne1e01GIE6i+ffbSuUnQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-06-24T07:34:52Z"
+    mac: ENC[AES256_GCM,data:IRCpDWZWJ1SfizBYBboF4k8Eq5LFl9NklME+ddMrjboyF5jJNMwo/AKuqiQSKmnnwoUDKMPKZZTyxZUBJe0Yh0JqbXnw7RRbRB3WveiPKbpgCbn/KMndNtcbjfoAjRjD96yE83JmI66CpLXnXdj9/cEZe2u37USAcP/ZfHsJ5vg=,iv:zFNi+7XNhEiVHb/74vQjO+vXQoeS90uIkKzZd5W4JQ0=,tag:ukbM9UtdUFRlNmjYltcfgw==,type:str]
+    pgp:
+        - created_at: "2024-06-24T07:34:52Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQgAgFei4msbogWFINKsIoro4uuEpyI3PmraeEIROgcoRPPq
+            7q2H70BCsjMcbne+h55w8cpFLqS2W6BeeILqLnqamDpy8J1+ksGDmYtb1K+amxXA
+            4Y5heiLaK89iX1HJ8A0rDfHyND7SxRI3/54bDsOxQQqHEW+qk6TRoGbSzlFCS0pp
+            Gk6eez/O3/W6pB+byVC8amMILb69iW+3XntWvauRZuU5l6RgO/DuCT4900JXs/H6
+            nifVOOqXDS3/Fp8jo+AEgSfObCnfcI1iuPdo2l8rLsSokCaerPFpWxExq2VVJGby
+            sx8/Q72uZltUXXlSzj9b5dj9525ABL/Tge3uom9CBNJeAeLVHfPhMqoBBmXysPfW
+            0uvXgMZgZ8CDtjNAHKA73J/pjxctm+TinWogl/tazmZ9+LyM8Vv7Be/edCCTNeOp
+            VtS5eKVfa2/ax/4eOKoxstFk7hP/kpFCqZ7Xog4jDQ==
+            =GUhO
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.8.1
