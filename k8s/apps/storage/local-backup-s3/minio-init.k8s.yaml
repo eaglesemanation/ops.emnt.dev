@@ -24,8 +24,9 @@ metadata:
   namespace: local-backup-s3
 data:
   init.sh: |-
+    mc admin user add local-backup-s3 "$VELERO_ACCESS_KEY" "$VELERO_SECRET_KEY"
     mc admin policy create local-backup-s3 velero-rw /tmp/velero-policy.json
-    mc admin policy attach local-backup-s3 velero-rw --user velero
+    mc admin policy attach local-backup-s3 velero-rw --user velero || true
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -51,6 +52,16 @@ spec:
                   value: https://sts.minio-operator.svc.cluster.local:4223/sts/local-backup-s3
                 - name: MC_WEB_IDENTITY_TOKEN_FILE_local-backup-s3
                   value: /var/run/secrets/kubernetes.io/serviceaccount/token
+                - name: VELERO_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: velero
+                      key: CONSOLE_ACCESS_KEY
+                - name: VELERO_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: velero
+                      key: CONSOLE_SECRET_KEY
               volumeMounts:
                 - name: init-script
                   mountPath: /tmp/init.sh

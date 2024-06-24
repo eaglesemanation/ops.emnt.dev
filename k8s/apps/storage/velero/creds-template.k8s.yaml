@@ -14,7 +14,7 @@ spec:
       engineVersion: v2
       data:
         cloud: |-
-          [default]
+          [local_minio]
           aws_access_key_id={{ .local_minio_access_key }}
           aws_secret_access_key={{ .local_minio_secret_key }}
   data:

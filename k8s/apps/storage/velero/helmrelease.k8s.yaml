@@ -49,11 +49,15 @@ spec:
       backupSyncPeriod: 15m
       storeValidationFrequency: 15m
       backupStorageLocation:
-        - name: default
+        - name: local_minio
+          default: true
           provider: aws
           bucket: velero
+          # TODO: Make a PR to velero to support getting CA from secret
+          caCert: |-
+            LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUN4VENDQW1xZ0F3SUJBZ0lRSjBRckFESUphdUFGOStMQ2dBOTRXREFLQmdncWhrak9QUVFEQWpBVk1STXcKRVFZRFZRUUtFd3ByZFdKbGNtNWxkR1Z6TUI0WERUSTBNRFl5TXpBMk5URXdPRm9YRFRJMU1EWXlNekEyTlRFdwpPRm93V2pFVk1CTUdBMVVFQ2hNTWMzbHpkR1Z0T201dlpHVnpNVUV3UHdZRFZRUURERGh6ZVhOMFpXMDZibTlrClpUb3FMbTFwYm1sdkxXaHNMbXh2WTJGc0xXSmhZMnQxY0Mxek15NXpkbU11WTJ4MWMzUmxjaTVzYjJOaGJEQloKTUJNR0J5cUdTTTQ5QWdFR0NDcUdTTTQ5QXdFSEEwSUFCT0s3cXJDeTUrck9NTGNQNWN2T2dqQ0xNZ1NEcEVsQwpLWHhhdlo5eHgrd0hQdG1BVWNBbjFiNXh6eGkrdEZmaU9oRnhIazZuTTFXR1JVNyszK2FqZXpLamdnRlZNSUlCClVUQU9CZ05WSFE4QkFmOEVCQU1DQmFBd0V3WURWUjBsQkF3d0NnWUlLd1lCQlFVSEF3RXdEQVlEVlIwVEFRSC8KQkFJd0FEQWZCZ05WSFNNRUdEQVdnQlFiemFSSWZNRXNVeEZJRkdBSWdmQUQxSXNHb3pDQitnWURWUjBSQklIeQpNSUh2Z2o5dGFXNXBieTF3YjI5c0xUQXRlekF1TGk0emZTNXRhVzVwYnkxb2JDNXNiMk5oYkMxaVlXTnJkWEF0CmN6TXVjM1pqTG1Oc2RYTjBaWEl1Ykc5allXeUNKMjFwYm1sdkxteHZZMkZzTFdKaFkydDFjQzF6TXk1emRtTXUKWTJ4MWMzUmxjaTVzYjJOaGJJSVZiV2x1YVc4dWJHOWpZV3d0WW1GamEzVndMWE16Z2hsdGFXNXBieTVzYjJOaApiQzFpWVdOcmRYQXRjek11YzNaamdpd3FMbTFwYm1sdkxXaHNMbXh2WTJGc0xXSmhZMnQxY0Mxek15NXpkbU11ClkyeDFjM1JsY2k1c2IyTmhiSUlqS2k1c2IyTmhiQzFpWVdOcmRYQXRjek11YzNaakxtTnNkWE4wWlhJdWJHOWoKWVd3d0NnWUlLb1pJemowRUF3SURTUUF3UmdJaEFNZzVRV1Q4OWZhaHFOL1c4c2ZCT0VOSHQ3YVJoMEZhckRUUgpjRkUxRnpNU0FpRUEwWlpiZHo3RU9pMWJKaWJxOU1Tb0p1STJuYVdXQ204TWhPcGxSQ3UzN0pNPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
           config:
-            profile: minio
+            profile: local_minio
             region: us-west-1
             s3ForcePathStyle: "true"
             s3Url: https://minio.local-backup-s3.svc.cluster.local
