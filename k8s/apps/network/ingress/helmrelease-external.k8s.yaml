@@ -92,7 +92,7 @@ spec:
     logs:
       general:
         format: json
-        level: INFO
+        level: DEBUG
       access:
         format: json
         enabled: true
