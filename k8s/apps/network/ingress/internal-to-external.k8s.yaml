@@ -1,3 +1,12 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/serverstransport_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: tls-verify
+  namespace: ingress
+spec:
+  serverName: "*.${CLUSTER_DOMAIN}"
+---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
@@ -19,4 +28,4 @@ spec:
           port: 443
           scheme: https
           passHostHeader: true
-          serversTransport: ingress-skip-verify@kubernetescrd
+          serversTransport: ingress-tls-verify@kubernetescrd

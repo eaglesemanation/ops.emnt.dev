@@ -6,6 +6,5 @@ resources:
   - helmrelease-internal.k8s.yaml
   - internal-to-external.k8s.yaml
   - namespace.k8s.yaml
-  - servers-transport.k8s.yaml
   - wildcard-cert.k8s.yaml
   - wireguard-config.sops.yaml

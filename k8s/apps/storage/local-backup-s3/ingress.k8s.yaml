@@ -5,6 +5,7 @@ metadata:
   name: minio-ca
   namespace: local-backup-s3
 spec:
+  serverName: minio.local-backup-s3.svc.cluster.local
   rootCAsSecrets:
     - minio-ca
 ---
