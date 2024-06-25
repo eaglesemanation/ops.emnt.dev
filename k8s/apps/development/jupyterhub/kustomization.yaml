@@ -5,6 +5,9 @@ resources:
   - helmrelease.k8s.yaml
   - postgres.k8s.yaml
   - authentik-creds.sops.yaml
+  - secretstore.k8s.yaml
+  - s3-creds-template.k8s.yaml
+  - local-minio-creds.k8s.yaml
 configMapGenerator:
   - name: jupyterhub-pg-init
     namespace: jupyterhub
