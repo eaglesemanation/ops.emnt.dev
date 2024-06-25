@@ -6,22 +6,18 @@ metadata:
 data:
   init.sh: |-
     # Velero
-    mc admin user rm local-backup-s3 "$VELERO_ACCESS_KEY"
-
-    mc admin policy rm local-backup-s3 velero-rw
     mc admin policy create local-backup-s3 velero-rw /tmp/velero-policy.json
 
     mc admin user add local-backup-s3 "$VELERO_ACCESS_KEY" "$VELERO_SECRET_KEY"
     mc admin policy attach local-backup-s3 velero-rw --user velero
 
     # PGBackRest
-    mc admin user rm local-backup-s3 "$BAZARR_ACCESS_KEY"
-
-    mc admin policy rm local-backup-s3 pgbackrest-rw
     mc admin policy create local-backup-s3 pgbackrest-rw /tmp/pgbackrest-policy.json
 
+    mc admin user add local-backup-s3 "$AUTHENTIK_ACCESS_KEY" "$AUTHENTIK_SECRET_KEY"
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$AUTHENTIK_ACCESS_KEY"
     mc admin user add local-backup-s3 "$BAZARR_ACCESS_KEY" "$BAZARR_SECRET_KEY"
-    mc admin policy attach local-backup-s3 pgbackrest-rw --user pgbackrest-bazarr
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$BAZARR_ACCESS_KEY"
 
     exit 0
 ---
@@ -68,6 +64,16 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: pgbackrest-bazarr-creds
+                      key: CONSOLE_SECRET_KEY
+                - name: AUTHENTIK_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: pgbackrest-authentik-creds
+                      key: CONSOLE_ACCESS_KEY
+                - name: AUTHENTIK_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: pgbackrest-authentik-creds
                       key: CONSOLE_SECRET_KEY
               volumeMounts:
                 - name: init-script
