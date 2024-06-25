@@ -22,6 +22,8 @@ data:
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$JUPYTERHUB_ACCESS_KEY"
     mc admin user add local-backup-s3 "$PROWLARR_ACCESS_KEY" "$PROWLARR_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$PROWLARR_ACCESS_KEY"
+    mc admin user add local-backup-s3 "$RADARR_ACCESS_KEY" "$RADARR_SECRET_KEY"
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$RADARR_ACCESS_KEY"
 
     exit 0
 ---
@@ -59,46 +61,17 @@ spec:
                     secretKeyRef:
                       name: velero
                       key: CONSOLE_SECRET_KEY
-                - name: BAZARR_ACCESS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-bazarr-creds
-                      key: CONSOLE_ACCESS_KEY
-                - name: BAZARR_SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-bazarr-creds
-                      key: CONSOLE_SECRET_KEY
-                - name: AUTHENTIK_ACCESS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-authentik-creds
-                      key: CONSOLE_ACCESS_KEY
-                - name: AUTHENTIK_SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-authentik-creds
-                      key: CONSOLE_SECRET_KEY
-                - name: JUPYTERHUB_ACCESS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-jupyterhub-creds
-                      key: CONSOLE_ACCESS_KEY
-                - name: JUPYTERHUB_SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-jupyterhub-creds
-                      key: CONSOLE_SECRET_KEY
-                - name: PROWLARR_ACCESS_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-prowlarr-creds
-                      key: CONSOLE_ACCESS_KEY
-                - name: PROWLARR_SECRET_KEY
-                  valueFrom:
-                    secretKeyRef:
-                      name: pgbackrest-prowlarr-creds
-                      key: CONSOLE_SECRET_KEY
+              envFrom:
+                - secretRef:
+                    name: pgbackrest-bazarr-creds
+                - secretRef:
+                    name: pgbackrest-authentik-creds
+                - secretRef:
+                    name: pgbackrest-jupyterhub-creds
+                - secretRef:
+                    name: pgbackrest-prowlarr-creds
+                - secretRef:
+                    name: pgbackrest-radarr-creds
               volumeMounts:
                 - name: init-script
                   mountPath: /tmp/init.sh

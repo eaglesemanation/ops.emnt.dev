@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: pgbackrest-radarr-creds
+    namespace: local-backup-s3
+    annotations:
+        reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: radarr
+stringData:
+    RADARR_ACCESS_KEY: ENC[AES256_GCM,data:7h5q7KG/nk6xA1FhHmP++Es=,iv:7nI93IAG3x7ngqflEskJtpd3JKgmGSpjBweawmz1XZw=,tag:PR/Tve7TNvjtQsPdgZerHw==,type:str]
+    RADARR_SECRET_KEY: ENC[AES256_GCM,data:mEuGWX8ZIw2Dgmt9XCvf3osLzzxog6WgGUFq1pnNMqE=,iv:wj6bUqrIl9LqbPJBqcfDyUKH+2qFxKs4cKQa1l3ycVg=,tag:oyuLIJvwNBvJW2EAeiydnw==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBhQ0w5c1MzVmZWT0JsQ1ll
+            OFU0MC9md1p5S1U2dEVVMWdpNHZaQTNqYjNFCmRJQkYzYXdaZmlLb2t1a1M3UlVs
+            RG5XVGdvTVpoUWM3RTNVc0dBMmhKLzQKLS0tIHNEamNveFpZT2tTT2Y4KzBpblVh
+            QTNyTGwyT2RDOS8zbG1rVTM3dlRQZXcKWycemS4n7I5dARy41SYpGIkbt0IZV1Cu
+            zX/NO/3s2o0SKTioY9JPEqPsPT7gvy3b63UBdeU05L1jsunz962/Zg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-06-25T06:43:25Z"
+    mac: ENC[AES256_GCM,data:jxWCWFQ1cAr56u87YB9+mRCB4J/rMe/vRSvUyDq+L/r+RLGrSFTIwJhB78C+kAHjBMMHFYY5M+B05qmZfSqaIR0vLty7FP/NvZG9rj5te3ay277jFqx5Lop6lORb1nElRxPKPAR2d5JErj26gdG/j3S5j85IlGnThaKU444qV8I=,iv:AaMmJdGmRd1TZc2iXFRJPQPaGPoB86UnTY3CcnMQApk=,tag:bvSP7MLzhluOCHtJ/KHxfA==,type:str]
+    pgp:
+        - created_at: "2024-06-25T06:43:25Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/Tf9tczA8iojqaPz+tM5cFpAA2S19xmnNLeMsIkuiJpFY
+            2FZRWYO0EJ4gf6w1nofm/oXdqZCEBWUzEPg511IT7+n6KhlkvQv8Ldbcd0HS56Us
+            E7+eoLbkwXQurMLni9FsZbtY9AWK9pNLZWKyp7LV0UQTxtH4anTTfn1XYxyv8tnb
+            4aeD+87269q8V69OiiLWRqaM0B3m7TyhKlKvrbgYUJvqafMi2VedlUHJd95RmUoG
+            cTZDrtFPeERCUfYjJS/dKmdPZRX6N8KuGy0AYDP4XmHvekQ94mWhkdh0ZtkOfvbY
+            +BdR0FC2ZyH2oIjMf0eFEznonPS6Ms9Gqmgb9/Au6tJeARN4AiLEQiJIOiEwitHO
+            k22eivuTjmewp1ON6rQr7VHewErM234mjCbyF55FxDMymazo38zHUblVHq4Fqd4+
+            O6cek8omzLC7jv5KndTHUqzQ6JbRAAXTIiRhQ6dtCw==
+            =siRS
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.8.1

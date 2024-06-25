@@ -30,8 +30,8 @@ spec:
     - secretKey: local_minio_access_key
       remoteRef:
         key: local-minio-creds
-        property: CONSOLE_ACCESS_KEY
+        property: AUTHENTIK_ACCESS_KEY
     - secretKey: local_minio_secret_key
       remoteRef:
         key: local-minio-creds
-        property: CONSOLE_SECRET_KEY
+        property: AUTHENTIK_SECRET_KEY

@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: local-minio-creds
-  namespace: prowlarr
+  namespace: radarr
   annotations:
-    reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-prowlarr-creds"
+    reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-radarr-creds"
 data: {}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
@@ -12,11 +12,11 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: s3-creds-template
-  namespace: prowlarr
+  namespace: radarr
 spec:
   secretStoreRef:
     kind: SecretStore
-    name: prowlarr-secrets
+    name: radarr-secrets
   target:
     name: s3-creds
     template:
@@ -30,8 +30,8 @@ spec:
     - secretKey: local_minio_access_key
       remoteRef:
         key: local-minio-creds
-        property: PROWLARR_ACCESS_KEY
+        property: RADARR_ACCESS_KEY
     - secretKey: local_minio_secret_key
       remoteRef:
         key: local-minio-creds
-        property: PROWLARR_SECRET_KEY
+        property: RADARR_SECRET_KEY
