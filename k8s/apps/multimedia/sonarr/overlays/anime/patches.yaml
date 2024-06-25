@@ -23,7 +23,7 @@ spec:
   backups:
     pgbackrest:
       global:
-        repo1-path: /pgbackrest/sonarr-anime/sonarr-pg/repo1
+        repo1-path: /pgbackrest-sonarr/sonarr-anime-pg/repo1
 ---
 apiVersion: external-secrets.io/v1beta1
 kind: SecretStore

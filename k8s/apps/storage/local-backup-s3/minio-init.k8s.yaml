@@ -24,6 +24,8 @@ data:
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$PROWLARR_ACCESS_KEY"
     mc admin user add local-backup-s3 "$RADARR_ACCESS_KEY" "$RADARR_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$RADARR_ACCESS_KEY"
+    mc admin user add local-backup-s3 "$SONARR_ACCESS_KEY" "$SONARR_SECRET_KEY"
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$SONARR_ACCESS_KEY"
 
     exit 0
 ---
@@ -72,6 +74,8 @@ spec:
                     name: pgbackrest-prowlarr-creds
                 - secretRef:
                     name: pgbackrest-radarr-creds
+                - secretRef:
+                    name: pgbackrest-sonarr-creds
               volumeMounts:
                 - name: init-script
                   mountPath: /tmp/init.sh

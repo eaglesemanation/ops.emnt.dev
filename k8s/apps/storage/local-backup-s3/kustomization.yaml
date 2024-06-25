@@ -19,3 +19,4 @@ resources:
   - pgbackrest-jupyterhub-creds.sops.yaml
   - pgbackrest-prowlarr-creds.sops.yaml
   - pgbackrest-radarr-creds.sops.yaml
+  - pgbackrest-sonarr-creds.sops.yaml

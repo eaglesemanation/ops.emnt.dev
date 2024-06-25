@@ -10,6 +10,7 @@ resources:
   - postgres.k8s.yaml
   - templated-config.k8s.yaml
   - secretstore.k8s.yaml
+  - s3-creds-template.k8s.yaml
 configMapGenerator:
   - name: sonarr-pg-init
     files:
