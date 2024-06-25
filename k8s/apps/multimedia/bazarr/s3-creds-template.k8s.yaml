@@ -2,9 +2,9 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: local-minio-creds
-  namespace: jupyterhub
+  namespace: bazarr
   annotations:
-    reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-jupyterhub-creds"
+    reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-bazarr-creds"
 data: {}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
@@ -12,11 +12,11 @@ apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: s3-creds-template
-  namespace: jupyterhub
+  namespace: bazarr
 spec:
   secretStoreRef:
     kind: SecretStore
-    name: jupyterhub-secrets
+    name: bazarr-secrets
   target:
     name: s3-creds
     template:

@@ -17,3 +17,4 @@ resources:
   - pgbackrest-bazarr-creds.sops.yaml
   - pgbackrest-authentik-creds.sops.yaml
   - pgbackrest-jupyterhub-creds.sops.yaml
+  - pgbackrest-prowlarr-creds.sops.yaml

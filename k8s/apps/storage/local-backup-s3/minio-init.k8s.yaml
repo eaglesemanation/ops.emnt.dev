@@ -20,6 +20,8 @@ data:
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$BAZARR_ACCESS_KEY"
     mc admin user add local-backup-s3 "$JUPYTERHUB_ACCESS_KEY" "$JUPYTERHUB_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$JUPYTERHUB_ACCESS_KEY"
+    mc admin user add local-backup-s3 "$PROWLARR_ACCESS_KEY" "$PROWLARR_SECRET_KEY"
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$PROWLARR_ACCESS_KEY"
 
     exit 0
 ---
@@ -86,6 +88,16 @@ spec:
                   valueFrom:
                     secretKeyRef:
                       name: pgbackrest-jupyterhub-creds
+                      key: CONSOLE_SECRET_KEY
+                - name: PROWLARR_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: pgbackrest-prowlarr-creds
+                      key: CONSOLE_ACCESS_KEY
+                - name: PROWLARR_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: pgbackrest-prowlarr-creds
                       key: CONSOLE_SECRET_KEY
               volumeMounts:
                 - name: init-script

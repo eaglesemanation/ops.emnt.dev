@@ -59,7 +59,7 @@ spec:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.47-1
       global:
         repo1-s3-uri-style: path
-        repo1-path: /pgbackrest/prowlarr/prowlarr-pg/repo1
+        repo1-path: /pgbackrest-prowlarr/prowlarr-pg/repo1
         repo1-retention-full: "30"
         repo1-retention-full-type: time
       jobs:
@@ -71,11 +71,11 @@ spec:
             memory: 128Mi
       configuration:
         - secret:
-            name: pgo-s3-creds
+            name: s3-creds
       repos:
         - name: repo1
           s3:
-            endpoint: https://minio.${CLUSTER_DOMAIN}
+            endpoint: https://backup-s3.${CLUSTER_DOMAIN}
             region: us-west-1
             bucket: pgbackrest
           schedules:
