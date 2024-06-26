@@ -1,0 +1,78 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+  namespace: flux-system
+spec:
+  interval: 30m
+  targetNamespace: immich
+  chart:
+    spec:
+      chart: immich
+      version: 0.7.0
+      sourceRef:
+        kind: HelmRepository
+        name: immich
+        namespace: flux-system
+      interval: 30m
+  values:
+    image:
+      # datasource=github-releases depName=immich-app/immich
+      tag: "v1.106.4"
+    immich:
+      metrics:
+        enabled: true
+      persistence:
+        library:
+          existingClaim: immich-data
+    env:
+      REDIS_HOSTNAME: immich-immich-keydb.immich.svc.cluster.local
+      REDIS_PASSWORD:
+        valueFrom:
+          secretKeyRef:
+            name: keydb-creds
+            key: password
+      DB_HOSTNAME: null
+      DB_USERNAME: null
+      DB_DATABASE_NAME: null
+      DB_PASSWORD: null
+      DB_URL:
+        valueFrom:
+          secretKeyRef:
+            name: pg-url
+            key: PG_URL
+      DB_VECTOR_EXTENSION: pgvector
+    persistence:
+      pg-certs:
+        name: immich-pg-cluster-cert
+        enabled: true
+        type: secret
+        globalMounts:
+          - path: /pg_certs
+    server:
+      probes:
+        liveness:
+          spec:
+            initialDelaySeconds: 120
+        readiness:
+          spec:
+            initialDelaySeconds: 120
+      resources:
+        requests:
+          cpu: 500m
+          memory: 500Mi
+        limits:
+          memory: 3Gi
+      ingress:
+        main:
+          enabled: true
+          className: ingress-external-traefik
+          annotations:
+            nginx.ingress.kubernetes.io/proxy-body-size: null
+          hosts:
+            - host: immich.${CLUSTER_DOMAIN}
+              paths:
+                - path: "/"
+      podAnnotations:
+        backup.velero.io/backup-volumes: library

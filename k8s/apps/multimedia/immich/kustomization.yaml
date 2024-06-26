@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.k8s.yaml
+  - helmrelease.k8s.yaml
+  - pvc.k8s.yaml
+  - postgres.k8s.yaml
+  - secretstore.k8s.yaml
+  - s3-creds-template.k8s.yaml
+  - pg-url-template.k8s.yaml
+  - keydb-helmrelease.k8s.yaml
+  - keydb-creds.sops.yaml
+configMapGenerator:
+  - name: immich-pg-init
+    namespace: immich
+    files:
+      - immich-pg-init.sql
+    options:
+      disableNameSuffixHash: true

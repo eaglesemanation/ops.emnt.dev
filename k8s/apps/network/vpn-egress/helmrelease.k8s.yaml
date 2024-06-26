@@ -75,7 +75,8 @@ spec:
             memory: 256Mi
         gluetun:
           image:
-            tag: v3.37.0
+            # datasource=github-releases depName=qdm12/gluetun
+            tag: "v3.38.0"
         scripts:
           up: |-
             #!/bin/sh

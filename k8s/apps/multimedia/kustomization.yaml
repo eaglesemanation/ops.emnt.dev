@@ -11,3 +11,4 @@ resources:
   - flood.k8s.yaml
   - prowlarr.k8s.yaml
   - flaresolverr.k8s.yaml
+  - immich.k8s.yaml

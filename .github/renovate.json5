@@ -30,11 +30,23 @@
             "description": "Update container images in CRDs",
             "datasourceTemplate": "docker",
             "fileMatch": [
-                "k8s/.+\\.k8s\\.yaml"
+                "k8s/.+\\.k8s\\.yaml$"
             ],
             "matchStrings": [
                 "apiVersion:\\s+minio.min.io\\/v\\d+.*\\nkind:\\s+Tenant\\s*\\n(?:.*\\n)*?\\s*image:\\s*(?<depName>[\\w\\.\\/\\-]+):(?<currentValue>[\\w+\\.\\-]*)"
             ]
+        },
+        {
+            "customType": "regex",
+            "description": "Process custom dependencies",
+            "fileMatch": [
+                "k8s/.+\\.k8s\\.yaml$"
+            ],
+            "matchStrings": [
+                "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
+            ],
+            "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+            "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
         }
     ],
     "packageRules": [

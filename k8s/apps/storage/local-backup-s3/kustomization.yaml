@@ -20,3 +20,4 @@ resources:
   - pgbackrest-prowlarr-creds.sops.yaml
   - pgbackrest-radarr-creds.sops.yaml
   - pgbackrest-sonarr-creds.sops.yaml
+  - pgbackrest-immich-creds.sops.yaml

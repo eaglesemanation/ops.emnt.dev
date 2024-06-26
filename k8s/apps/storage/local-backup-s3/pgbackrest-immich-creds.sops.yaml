@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: pgbackrest-immich-creds
+    namespace: local-backup-s3
+    annotations:
+        reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: immich
+stringData:
+    IMMICH_ACCESS_KEY: ENC[AES256_GCM,data:YIknwfpTtB14h3Y9NtecF/k=,iv:TtBap6FwXZuwcj2yShhLq26hv3jTpj2RheXvNC/9vYg=,tag:PyhNWEP6ODpzq48JjV/hBw==,type:str]
+    IMMICH_SECRET_KEY: ENC[AES256_GCM,data:YEOOFCzRj+NrwM+/9Wai9NgvSBrYhvqErAmFUVmB1sc=,iv:c0F2X3r9oGUsLM4HZDh3U/PkQf59aYmEh+v2RY//baI=,tag:HY84BiL+I1/cV6Jpglo3OQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBBZW1sSWVRUTltM2Y3NXZU
+            WmlDdDBsYXkzOXlIdmFzNHNVZFBnZkUwVlFJCkcvcitFQ0txdDUxVWZLT09Nd25W
+            NmtGeEhBWkxxZlQ3ZHlrYVdWbW45THcKLS0tIGZMUzRJSGduM0NWY3RHVnNsQlcr
+            Lzlsc2EvZjlnNUI1R3VaNDgrOWpNZnMKMn0pAKVCJ6U+nZcwvMS+t6vk5mnm/FY9
+            0eZ51ZHlXAu2pZpO/AFArMeYvlDxRSPKPQLKvuWK57veZDePt0xP9Q==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-06-26T01:26:48Z"
+    mac: ENC[AES256_GCM,data:Pq9qNnWcybft7uICbWhtaA+aWLWztjFL+gcPG0QARsX7xUaG0Y3E3TvXgdSLFXHgXB4ZPPiozqzoeDSdhQfdJpYcbutYUYTmt65Q9sZazEKKCNk29MoF4CWCF0LcBDq+BnVFZPAhtP399X1DZvthSEe0ak3Rmmyo+z/ALxmWPro=,iv:UyJzg4J3O++aXSnKX5oK9JinSWiWXMVStAXk+sPsdzY=,tag:2EEytGux6oCfefqNK5cqjA==,type:str]
+    pgp:
+        - created_at: "2024-06-26T01:26:48Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf5AfKbBupO2xxAb0HvCWbE32gz9qBbvtJUoqFyoq89oS2r
+            cPOdZ67MeU2GuuJuEX4xmx0Q74o8K2JgGtOlqIn/8iJM95QzG1mR/EatKbjjUWZG
+            dDXuMui9llp+FG54GvAJmKKyAyPgfS8dySkVwHM/tFuqwcUlZzBJunsyor2PweXT
+            r4SjZhUX0ae2i/4dxowy2hVAhCEh5P+oS40SiAKFfoEwqrklHzgZNDW1bG247oSV
+            58ZOBgApKLRw+w6RgCagL3I+1RRmctwwnos1qU/IXhF27lVcjFODYrYhdJK0cg3w
+            5R08ZYRSXFAEZXhlPrvfjbEWmRdnT+2TSso+vkNWC9JcAfHD3l7tu3nDYaUwda53
+            4e1fef0sx+s5KrziJfa+yYnbWwLy5M/54dss79xPm+RPTI7acBvdhjCffpxu/44O
+            id8+b13WCcgPKeCCb7XeHfiO43sLhksZmOBT98w=
+            =/qgr
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.8.1
