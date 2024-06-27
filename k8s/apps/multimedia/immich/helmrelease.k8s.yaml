@@ -54,10 +54,10 @@ spec:
       probes:
         liveness:
           spec:
-            initialDelaySeconds: 120
+            initialDelaySeconds: 15
         readiness:
           spec:
-            initialDelaySeconds: 120
+            initialDelaySeconds: 15
       resources:
         requests:
           cpu: 500m
