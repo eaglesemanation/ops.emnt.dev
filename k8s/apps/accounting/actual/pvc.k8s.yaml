@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: actual-data
   namespace: actual
+  labels:
+    emnt.dev/velero-backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce

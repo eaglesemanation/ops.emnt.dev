@@ -19,6 +19,7 @@ spec:
       labels:
         app.kubernetes.io/name: home-assistant
         app.kubernetes.io/instance: home-assistant
+        emnt.dev/velero-backup: "true"
       annotations:
         backup.velero.io/backup-volumes: hass-config
     spec:

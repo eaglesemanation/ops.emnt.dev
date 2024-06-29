@@ -3,6 +3,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: immich-data
   namespace: immich
+  labels:
+    emnt.dev/velero-backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce

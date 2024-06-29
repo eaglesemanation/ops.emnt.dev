@@ -17,6 +17,7 @@ spec:
       labels:
         app.kubernetes.io/name: actual
         app.kubernetes.io/instance: actual
+        emnt.dev/velero-backup: "true"
       annotations:
         backup.velero.io/backup-volumes: data
     spec:

@@ -75,6 +75,9 @@ spec:
             - pvc
             # For some reason not provisioned by CSI, include explicitly
             - pv
+          labelSelector:
+            matchLabels:
+              emnt.dev/velero-backup: "true"
           storageLocation: default
           ttl: 168h # 7 days
           defaultVolumesToFsBackup: false # Opt-in FS backup
