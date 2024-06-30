@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: minio-backup-script
+  namespace: local-backup-s3
+data:
+  backup.sh: |-
+    mc mirror local-backup-s3/pgbackrest b2-pgbackrest/emnt-dev-pgbackrest
+
+    exit 0
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: b2-backup-job
+  namespace: local-backup-s3
+spec:
+  schedule: "0 3 * * 1,4" # Run at 3 in the morning every Monday and Thursday
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          serviceAccountName: mc-job-sa
+          containers:
+            - name: mc
+              image: docker.io/minio/mc:RELEASE.2024-06-20T14-50-54Z
+              command: ["sh", "/tmp/backup.sh"]
+              env:
+                - name: MC_HOST_local-backup-s3
+                  value: https://minio.local-backup-s3.svc.cluster.local
+                - name: MC_STS_ENDPOINT_local-backup-s3
+                  value: https://sts.minio-operator.svc.cluster.local:4223/sts/local-backup-s3
+                - name: MC_WEB_IDENTITY_TOKEN_FILE_local-backup-s3
+                  value: /var/run/secrets/kubernetes.io/serviceaccount/token
+              envFrom:
+                - secretRef:
+                    name: b2-creds
+              volumeMounts:
+                - name: backup-script
+                  mountPath: /tmp/backup.sh
+                  subPath: backup.sh
+          volumes:
+            - name: backup-script
+              configMap:
+                name: minio-backup-script

@@ -9,6 +9,8 @@ resources:
   - ingress.k8s.yaml
   - secretstore.k8s.yaml
   - tls-ca-template.k8s.yaml
+  - b2-creds.sops.yaml
+  - b2-backup.k8s.yaml
 
   - velero-policy.k8s.yaml
   - velero-creds.sops.yaml
