@@ -57,7 +57,7 @@ spec:
             initialDelaySeconds: 15
         readiness:
           spec:
-            initialDelaySeconds: 15
+            initialDelaySeconds: 60
       resources:
         requests:
           cpu: 500m
