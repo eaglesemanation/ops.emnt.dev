@@ -5,7 +5,8 @@ metadata:
   name: immich
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 2h
+  timeout: 30m
   targetNamespace: immich
   chart:
     spec:
@@ -43,6 +44,7 @@ spec:
             name: pg-url
             key: PG_URL
       DB_VECTOR_EXTENSION: pgvector
+      IMMICH_LOG_LEVEL: debug
     persistence:
       pg-certs:
         name: immich-pg-cluster-cert
@@ -54,10 +56,10 @@ spec:
       probes:
         liveness:
           spec:
-            initialDelaySeconds: 30
+            initialDelaySeconds: 300
         readiness:
           spec:
-            initialDelaySeconds: 120
+            failureThreshold: 30
       resources:
         requests:
           cpu: 500m
