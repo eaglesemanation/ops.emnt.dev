@@ -19,7 +19,7 @@ spec:
   values:
     image:
       # datasource=github-releases depName=immich-app/immich
-      tag: "v1.106.4"
+      tag: "v1.107.2"
     immich:
       metrics:
         enabled: true
