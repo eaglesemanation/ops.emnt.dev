@@ -24,7 +24,7 @@ spec:
         feature.node.kubernetes.io/zigbee-adapter: "true"
       containers:
         - name: zigbee2mqtt
-          image: docker.io/koenkk/zigbee2mqtt:1.38.0
+          image: docker.io/koenkk/zigbee2mqtt:1.39.0
           securityContext:
             privileged: true
           resources:
