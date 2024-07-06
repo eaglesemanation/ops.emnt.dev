@@ -19,7 +19,7 @@ spec:
     deployment:
       additionalContainers:
         - name: wireguard-tunnel
-          image: alpine:3.20.0
+          image: alpine:3.20.1
           volumeMounts:
             - name: wireguard-config
               mountPath: /etc/wireguard
