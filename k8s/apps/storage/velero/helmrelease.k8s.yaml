@@ -58,6 +58,13 @@ spec:
             region: us-west-1
             s3ForcePathStyle: "true"
             s3Url: https://backup-s3.${CLUSTER_DOMAIN}
+        - name: b2
+          provider: aws
+          bucket: emnt-dev-velero
+          config:
+            profile: b2
+            region: us-east-005
+            s3Url: https://s3.us-east-005.backblazeb2.com
     credentials:
       existingSecret: s3-creds
     # Instead of using velero snapshots for volume backups it's done through file system backups
@@ -80,6 +87,23 @@ spec:
               emnt.dev/velero-backup: "true"
           storageLocation: default
           ttl: 168h # 7 days
+          defaultVolumesToFsBackup: false # Opt-in FS backup
+      off-site:
+        disabled: false
+        # At 4:00 every Sunday and Wednesday
+        schedule: 0 4 * * 0,3
+        template:
+          includedResources:
+            # Used for fs backup by injecting sidecar
+            - pod
+            - pvc
+            # For some reason not provisioned by CSI, include explicitly
+            - pv
+          labelSelector:
+            matchLabels:
+              emnt.dev/velero-backup: "true"
+          storageLocation: b2
+          ttl: 720h # 30 days
           defaultVolumesToFsBackup: false # Opt-in FS backup
     # Mitigation for https://github.com/vmware-tanzu/helm-charts/issues/515
     upgradeJobResources:

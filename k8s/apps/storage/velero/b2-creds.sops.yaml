@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: b2-creds
+    namespace: velero
+stringData:
+    keyID: ENC[AES256_GCM,data:VCbXaiBPZnJUIjxD2i5DNvay8laCUO5XAA==,iv:f7TKlfeDD6aZQ1r1VmbbP/EsrHH0DWUluUwH5S5z4y8=,tag:G5lChmbhqgmc0rCP8AKZig==,type:str]
+    applicationKey: ENC[AES256_GCM,data:UjOw6tZAXnmEG9qW+t+X8//+756j+jPvNTcb9Fzq8g==,iv:N577oZ80bA2xn3UaPH9Zh9rVsCYI31I2I+9C+yHvhdM=,tag:f42CatuWXjpa1Y0sA8+axQ==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBaM0lIYWxLdmtzTWJtRTRW
+            VHVpSzFzbjlyUGJESzhnai9WMVRBK05nRjA0CnFNMTUxSEJBSzVYSEs0N29RS3E1
+            akt4ekhGNDUwMHpPWGI1bHN4WEJOaDQKLS0tIFhSQkUvZHFCNjlxUGVsMHFuQlUv
+            dVRxa1JrdDllYWxFMVhmbEpGRmxFVmcKABVOdaTqSnb1iTiCI76ixWngiQR8VWou
+            FXIt1tTf4ezc6MCotXDAe4RMPpW+Q/aYbt7/BNoxjFCjAQqSJ/7edQ==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-07-08T04:58:59Z"
+    mac: ENC[AES256_GCM,data:NyuBAY+wQekz11QJtBfZ8YzhLvV3FHDt2pwJulKtfccFUDeMxM5uCpBIvvaZRnpXMTZYnOUfYBJz7JxPauikl8OvZq5wA8f1sOn8W+otUd7Mt+6OaxAXCCmOmKCjmlFbWoNha6J8cXRMscDnaKKUBOkfgLifWqW8lHw1GwFO9Mg=,iv:c8SEpjvfvexvZ/8YIEIHMLcMjijy/d3l4cFiEquXU0U=,tag:j1EIpYCjgjBc+89oQCv8nQ==,type:str]
+    pgp:
+        - created_at: "2024-07-08T04:58:59Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/eDmILSwvYppO+XXFUJFf33KOJzhVyPRpNSDfRhBqXe2+
+            U7m8kZNmwIuNkjUX+D3sbOHJiqnB0s3YS77XyJnegLo1rELL40zXHwuj7EjS1cPW
+            laBC73lMN/rSS9gBTRfKncMhaaZp1/bDesGwOjWWJ9hbpGLtIXAko/aood88FPc/
+            icUSztr8cmVeBYJoXVtx7ntoYKJk1EMXkygOkdxmp39+URg/J7APlub1kRwuuhso
+            18amRwOdmmzrucZdaG+ULv86tdcfWoxIrOlyLIv/zeu/7zu2FZOf0EF6E/hGSXiR
+            Py1BhfZnKlt4LBFN9rCF1M/1i9fG+gg4A9tC1/VFbNJcAcT6y4zcXx/oitXnjqca
+            8R8BkDWqA5eL4vPkDHhGxDQMAvAXjPb5lT15YS5Ytt6x6y962DrUJlZ9x+BJOPhI
+            HrOVAubYGtOz+WV9ZnEotofHaRv5NUYJTI68iUQ=
+            =8IFN
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.8.1
