@@ -66,3 +66,4 @@ spec:
           enabled: true
           labels:
             release: prometheus
+    useCertManager: true
