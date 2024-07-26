@@ -4,7 +4,6 @@ metadata:
   name: opnsense
   namespace: opnsense
   annotations:
-    traefik.ingress.kubernetes.io/service.serverstransport: ingress-skip-verify@kubernetescrd
     traefik.ingress.kubernetes.io/service.serversscheme: https
 spec:
   type: ExternalName
