@@ -10,6 +10,7 @@ resources:
   - emberstack.k8s.yaml
   - enapter.k8s.yaml
   - external-secrets.k8s.yaml
+  - gitea.k8s.yaml
   - goauthentik.k8s.yaml
   - grafana.k8s.yaml
   - immich.k8s.yaml

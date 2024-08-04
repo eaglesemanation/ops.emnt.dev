@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitea-keydb
+  namespace: flux-system
+spec:
+  interval: 30m
+  targetNamespace: gitea
+  chart:
+    spec:
+      chart: keydb
+      version: 0.48.0
+      sourceRef:
+        kind: HelmRepository
+        name: enapter
+        namespace: flux-system
+      interval: 30m
+  values:
+    existingSecret: keydb-creds
+    existingSecretKey: password
+    readinessProbeRandomUuid: 6b08744f-d1cb-46dc-a057-cf88897b4a98
+    persistentVolume:
+      storageClass: freenas-api-iscsi-csi
+    serviceMonitor:
+      enabled: true
+      labels:
+        release: prometheus
+    exporter:
+      enabled: true
+    scripts:
+      enabled: true

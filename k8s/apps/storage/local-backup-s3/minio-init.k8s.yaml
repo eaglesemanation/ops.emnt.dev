@@ -28,6 +28,8 @@ data:
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$SONARR_ACCESS_KEY"
     mc admin user add local-backup-s3 "$IMMICH_ACCESS_KEY" "$IMMICH_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$IMMICH_ACCESS_KEY"
+    mc admin user add local-backup-s3 "$GITEA_ACCESS_KEY" "$GITEA_SECRET_KEY"
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$GITEA_ACCESS_KEY"
 
     exit 0
 ---
@@ -80,6 +82,8 @@ spec:
                     name: pgbackrest-sonarr-creds
                 - secretRef:
                     name: pgbackrest-immich-creds
+                - secretRef:
+                    name: pgbackrest-gitea-creds
               volumeMounts:
                 - name: init-script
                   mountPath: /tmp/init.sh

@@ -1,0 +1,104 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2beta1.json
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: gitea
+  namespace: flux-system
+spec:
+  interval: 30m
+  targetNamespace: gitea
+  chart:
+    spec:
+      chart: gitea
+      version: 10.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: gitea
+        namespace: flux-system
+      interval: 30m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    strategy:
+      type: Recreate
+    ingress:
+      enabled: true
+      className: ingress-external-traefik
+      hosts:
+        - host: gitea.${CLUSTER_DOMAIN}
+          paths:
+            - path: /
+              pathType: Prefix
+    persistence:
+      enabled: true
+      size: 50Gi
+      storageClass: freenas-api-iscsi-csi
+      labels:
+        emnt.dev/velero-backup: "true"
+    extraVolumes:
+      - name: pg-certs
+        secret:
+          secretName: gitea-pg-cluster-cert
+      - name: pgo-cacert
+        secret:
+          secretName: pgo-root-cacert
+    extraVolumeMounts:
+      - name: pg-certs
+        readOnly: true
+        mountPath: /pg-certs
+      - name: pgo-cacert
+        readOnly: true
+        subPath: root.crt
+        mountPath: /etc/ssl/certs/pgo-cachain.crt
+    initPreScript: |
+      mkdir -p /data/git/.postgresql
+      cp /pg-certs/ca.crt /data/git/.postgresql/root.crt
+      cp /pg-certs/tls.crt /data/git/.postgresql/postgresql.crt
+      cp /pg-certs/tls.key /data/git/.postgresql/postgresql.key
+      chown -R git:git /data/git/.postgresql/
+      chmod 400 /data/git/.postgresql/postgresql.key
+    redis-cluster:
+      enabled: false
+    postgresql-ha:
+      enabled: false
+    gitea:
+      admin:
+        email: gitea@emnt.dev
+        existingSecret: admin-creds
+      ldap:
+        - name: Authentik LDAP
+          securityProtocol: ldaps
+          host: ak-outpost-authentik-ldap-outpost.authentik.svc.cluster.local
+          port: "636"
+          skipTlsVerify: true
+          synchronizeUsers: true
+          userSearchBase: DC=gitea-ldap,DC=goauthentik,DC=io
+          userFilter: (&(memberOf=CN=gitea Users,OU=groups,DC=gitea-ldap,DC=goauthentik,DC=io)(|(uid=%[1]s)(mail=%[1]s)))
+          adminFilter: (memberOf=CN=authentik Admins,OU=groups,DC=gitea-ldap,DC=goauthentik,DC=io)
+          existingSecret: authentik-ldap
+          emailAttribute: mail
+          usernameAttribute: cn
+      oauth:
+        - name: Authentik
+          provider: openidConnect
+          existingSecret: authentik-oauth
+          autoDiscoverUrl: https://authentik.emnt.dev/application/o/gitea/.well-known/openid-configuration
+          iconUrl: https://authentik.emnt.dev/static/dist/assets/icons/icon.svg
+          scopes: email profile
+      config:
+        ssh.minimum_key_sizes:
+          RSA: 2048
+        server:
+          ROOT_URL: https://gitea.${CLUSTER_DOMAIN}/
+          SSH_SERVER_USE_PROXY_PROTOCOL: true
+          LFS_START_SERVER: true
+        oauth2_client:
+          ACCOUNT_LINKING: auto
+        service:
+          REQUIRE_SIGNIN_VIEW: true
+          DISABLE_REGISTRATION: true
+      additionalConfigSources:
+        - secret:
+            secretName: db-creds

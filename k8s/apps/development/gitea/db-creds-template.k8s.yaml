@@ -1,0 +1,51 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: db-creds-template
+  namespace: gitea
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: gitea-secrets
+  target:
+    name: db-creds
+    template:
+      engineVersion: v2
+      data:
+        database: |
+          DB_TYPE=postgres
+          SCHEMA=public
+          SSL_MODE=verify-full
+          HOST={{ .pg_host }}:{{ .pg_port }}
+          NAME={{ .pg_dbname }}
+          USER={{ .pg_user }}
+          PASSWD={{ .pg_pass }}
+        cache: |
+          ADAPTER=redis-cluster
+          HOST=redis+cluster://:{{ .keydb_pass }}@gitea-gitea-keydb.gitea.svc.cluster.local:6379/0?pool_size=100&idle_timeout=180s
+  data:
+    - secretKey: pg_host
+      remoteRef:
+        key: gitea-pg-pguser-gitea
+        property: host
+    - secretKey: pg_port
+      remoteRef:
+        key: gitea-pg-pguser-gitea
+        property: port
+    - secretKey: pg_dbname
+      remoteRef:
+        key: gitea-pg-pguser-gitea
+        property: dbname
+    - secretKey: pg_user
+      remoteRef:
+        key: gitea-pg-pguser-gitea
+        property: user
+    - secretKey: pg_pass
+      remoteRef:
+        key: gitea-pg-pguser-gitea
+        property: password
+    - secretKey: keydb_pass
+      remoteRef:
+        key: keydb-creds
+        property: password

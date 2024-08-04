@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: pgbackrest-gitea-creds
+    namespace: local-backup-s3
+    annotations:
+        reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+        reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: gitea
+stringData:
+    GITEA_ACCESS_KEY: ENC[AES256_GCM,data:x5h2b3825fkoXBjdJh8MPg==,iv:VnU0JCtG1rX9aaw4Y3mJuA4n0yVyZqjJcg9+XAtloKQ=,tag:ZRCT7b/gBHnq412sNPcdBQ==,type:str]
+    GITEA_SECRET_KEY: ENC[AES256_GCM,data:v1rVZyfhhKJ91GEHdncVcnSfFyfGvNViUqNs0He9OnHPkMIrs0RNr7DTFl912uc2EH7hTQe17MQUVAs1H6bcpQ==,iv:VqijicnDrDC4y4t8T02Qy9Jm7RwHi4v5Z52kuSbuFP0=,tag:dtzt64X5El1SMLCKgZO9Ew==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBYL1FwQkhpRUFLWkVwMy9M
+            ejMvZ3B0VDR1Umd5aEtKT2MralZjYXJwNkRFCnE4RTRqMnlMYlIwTTdwc3d5aFdr
+            dUNqRS9BeXgyTDVyeUxqV2MvNXJmVjgKLS0tIHdVTnU1b2w4MG94Si9IZjIvajBn
+            emdOdVFncVROTWVFcDdTSnNZNzlYL2MKl8zbp5t6wg5OqORCKuTBpp5wh+AtXMS/
+            a2LejngOQcd0gbwL8GZFG90/xL9BfmZYvN32t5lhtQy941uA1zg5eA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-08-04T22:23:28Z"
+    mac: ENC[AES256_GCM,data:sed/rRm0UxX6M9Mseb2aSP1OtBd32fPc2/7oKIxfacj1IBn2tA1yd6qpW6C6tRDWl+11Oh6nCj68aS6nLTR7ioYJGtaRCB2ARot6mOXF3/AhXYqYkCn4cfcT56Re7lVWdM3XmJFYiOodfEh8oaXTy/sZFbeAIf18pzDz0eIRJmc=,iv:Z9vLuO2wGACdmmpjgGqt9Re9jHjrScrzWYXz9puYN/0=,tag:tMdr0W+wegjCYOTFjvLtlw==,type:str]
+    pgp:
+        - created_at: "2024-08-04T22:23:28Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf+PF/Q53Uo8ufzJLtvCulX500MvozWVXZJybGcHKPtSj/c
+            avvIXr5HWH4y1P6Xi1bAPzEuMzHTPm56qDko50XIZr2uZsEj9GV27GdLx2NyMhCY
+            A5kmRWuKj7w1uBzEBAS/tA4t02Y2qFcxCvzbuQMtBcPptxn7Us2e6EXrw+qCZq1e
+            dgtbpAoztOiGSQl7lp7K2aTTgpxcgzG6DtmaOWzjAamDuuTN8YKxVGAq37P7X0GW
+            XsPajiY5UyB38IwrlakcXADvfeb91OIzhOHCKquudZdi5bagTg5pFWsgCbFaiL94
+            XoFTrRuIeXehpcGOnABSDKln9jr5UsuMa4XsxzxYX9JeAXdkIcvcKYPH6Kw+t1Xk
+            OxNEhl8kQqML8X+ipolG9lKnMepBgx4a0zy36PZ0tJYIkaYIxUPQqisBfwQD8GXb
+            L+OXsxTvrDU1RL+RwcU0XM3PlGVyZDuf9fo8ly4Giw==
+            =QMOL
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.8.1

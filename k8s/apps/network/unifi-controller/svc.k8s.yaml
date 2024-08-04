@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
   annotations:
-    metallb.universe.tf/allow-shared-ip: "true"
+    metallb.universe.tf/allow-shared-ip: unifi-controller-svc
 spec:
   type: LoadBalancer
   loadBalancerIP: "${SVC_UNIFI_CONTROLLER}"
@@ -41,7 +41,7 @@ metadata:
     app.kubernetes.io/name: unifi-controller
     app.kubernetes.io/instance: unifi-controller
   annotations:
-    metallb.universe.tf/allow-shared-ip: "true"
+    metallb.universe.tf/allow-shared-ip: unifi-controller-svc
 spec:
   type: LoadBalancer
   loadBalancerIP: "${SVC_UNIFI_CONTROLLER}"
