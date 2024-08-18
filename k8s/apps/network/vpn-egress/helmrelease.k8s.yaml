@@ -76,7 +76,7 @@ spec:
         gluetun:
           image:
             # datasource=github-releases depName=qdm12/gluetun
-            tag: "v3.38.0"
+            tag: "v3.39.0"
         scripts:
           up: |-
             #!/bin/sh
