@@ -99,6 +99,15 @@ spec:
         service:
           REQUIRE_SIGNIN_VIEW: true
           DISABLE_REGISTRATION: true
+        mailer:
+          ENABLED: true
+          FROM: gitea@${CLUSTER_DOMAIN}
+          PROTOCOL: smtps
+          SMTP_ADDR: mail.${CLUSTER_DOMAIN}
+          SMTP_PORT: 465
+          USER: gitea@${CLUSTER_DOMAIN}
       additionalConfigSources:
         - secret:
             secretName: db-creds
+        - secret:
+            secretName: email-creds

@@ -10,6 +10,7 @@ resources:
   - secretstore.k8s.yaml
   - s3-creds-template.k8s.yaml
   - db-creds-template.k8s.yaml
+  - email-creds.sops.yaml
 configMapGenerator:
   - name: gitea-pg-init
     namespace: gitea
