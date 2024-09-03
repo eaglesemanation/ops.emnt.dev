@@ -1,8 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - cilium-network-policy.k8s.yaml
-  - namespace.k8s.yaml
-  - helmrelease.k8s.yaml
-  - airvpn-creds.sops.yaml
-  - mam-creds.sops.yaml

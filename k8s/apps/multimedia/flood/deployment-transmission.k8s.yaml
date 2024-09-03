@@ -31,6 +31,79 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
+      initContainers:
+        - name: gluetun
+          image: docker.io/qmcgaw/gluetun:v3.39.0
+          restartPolicy: Always
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+          startupProbe:
+            exec:
+              command:
+                - sh
+                - -c
+                - case "$(wget -q -O /dev/stdout https://airvpn.org/api/whatismyip/ | grep airvpn)" in *'true'*) exit 0;; *) exit 1;; esac
+            initialDelaySeconds: 30
+            periodSeconds: 60
+            failureThreshold: 3
+          volumeMounts:
+            - name: tun-device
+              mountPath: /dev/net/tun
+          env:
+            - name: DNS_KEEP_NAMESERVER
+              value: "on"
+            - name: DOT
+              value: "off"
+            - name: FIREWALL_INPUT_PORTS
+              value: "9091"
+            - name: FIREWALL_VPN_INPUT_PORTS
+              value: ${v="${TORRENT_PORT}"}
+            - name: FIREWALL_OUTBOUND_SUBNETS
+              value: "10.0.0.0/8"
+            - name: VERSION_INFORMATION
+              value: "off"
+            - name: VPN_SERVICE_PROVIDER
+              value: airvpn
+            - name: VPN_TYPE
+              value: wireguard
+            - name: SERVER_COUNTRIES
+              value: Canada
+            - name: WIREGUARD_PRIVATE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airvpn-creds
+                  key: privateKey
+            - name: WIREGUARD_PRESHARED_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: airvpn-creds
+                  key: presharedKey
+            - name: WIREGUARD_ADDRESSES
+              valueFrom:
+                secretKeyRef:
+                  name: airvpn-creds
+                  key: addresses
+        - name: mam-init
+          image: docker.io/curlimages/curl:8.9.1
+          args:
+            - -w 
+            - "\nResponse code: %{http_code}\n"
+            - -c
+            - /mam-cookie/mam.cookies
+            - -b
+            - /mam-cookie/mam.cookies
+            - https://t.myanonamouse.net/json/dynamicSeedbox.php
+          volumeMounts:
+            - name: mam-cookie
+              mountPath: /mam-cookie
       containers:
         - name: transmission
           image: docker.io/linuxserver/transmission:4.0.6
@@ -70,6 +143,9 @@ spec:
               subPath: settings.json
             - name: multimedia
               mountPath: /multimedia
+            # Attached so that first api call can be done manually
+            - name: mam-cookie
+              mountPath: /mam-cookie
       volumes:
         - name: data
           persistentVolumeClaim:
@@ -80,3 +156,10 @@ spec:
         - name: multimedia
           persistentVolumeClaim:
             claimName: multimedia
+        - name: mam-cookie
+          persistentVolumeClaim:
+            claimName: mam-cookie
+        - name: tun-device
+          hostPath:
+            path: /dev/net/tun
+            type: CharDevice

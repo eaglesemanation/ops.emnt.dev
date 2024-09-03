@@ -1,0 +1,44 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: airvpn-creds
+    namespace: flood
+stringData:
+    privateKey: ENC[AES256_GCM,data:wNAvOQ/EaCLaoGNX1Rv1SDlC/7nCe2plIh44MA81xehwg7FyXuFZgyAA+nc=,iv:vscLQw3YeSLSJnb4VFCOLHF3zPJ3HI+iIajgxtTVCmc=,tag:WL6bQ6eh3tEp9tuYclZwyA==,type:str]
+    presharedKey: ENC[AES256_GCM,data:eDYf1swIwBpDacjioUL7jqfpFLLFGL6P1fvafwlbWe5UX7BJ6j/lgEOIRbU=,iv:g2lZpgvfNRbXjVWloqgLXfMZTwZFtvU5upted++0gRo=,tag:eoELokE1/XR/84OcaqeiSg==,type:str]
+    addresses: ENC[AES256_GCM,data:Qp4zCDW81g5smPgYRhk=,iv:Q+aJYw8ZGqKkyjru2hrpCmSrKrmNBu/D2OmjrVddkiA=,tag:50J36tD94beLudMWMXDE2w==,type:str]
+sops:
+    kms: []
+    gcp_kms: []
+    azure_kv: []
+    hc_vault: []
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2aTE3aXJDblVsTTVFMmhl
+            SU80MFNFTk8vQ2xWMDRady9qanRCQ2NvYWpFClgyODl0MEpFYVNMZWpRSmpBVGpz
+            cEZEYndjU0MrZG95blp2MER0ckhtNk0KLS0tIGJ5TEJtakJFOXpDOUhVUVdhTk5n
+            YTBGSlZDVGVONW12N05RSi9BelJQZTAKPb66omqApow3fDtrGHO+FUqNb6vaBNvc
+            +bJF0T0oh9wtM54KqMlKpgTnqppBUtsjAcYkeZn+8ED/9+QqVxtihw==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2024-09-03T07:40:54Z"
+    mac: ENC[AES256_GCM,data:8qFWO4whsZMI5JseDTpbkBuU7fFiwEE9IggPWpACmwSctHMY0+nkxPlA0etIuIPes+BRzASVwbfsN/UnbWHiK6OD/UTF/QZfosOTVvNVETKQYkjoozPFjHiZ4vW4ycPxIWgcprBzZIZ9IDqYpbly//dYuQFNgWInDxN3sMgHS4U=,iv:mr912oX7nhOjmpikJi+t4NAIg3Asm86Na3UckGPOEa8=,tag:/oU67krWBgtu0QUz+Opc9g==,type:str]
+    pgp:
+        - created_at: "2024-09-03T07:40:54Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf+Nlv4CeBJdhH1C2e0d9cshk4y67Mll0X/l9FMrsB5UkBc
+            C7CSVtg4eNt8ujcjAC5Y5XUd2OZKndaTprGCVv0ge8gf7vibQiTlkDg29PTTbuSL
+            AiBxxj0vC4piYIATo2fIbu/8LdYZgX5XVHf5JTCIUn2sfffYASDmalqMxBW/729L
+            JEuPPl2FtPKKoh2yQ5pRbu3BcgDk+Zx1ngBm6DPrJBMoihvNGsQLINSOV3wtbc5O
+            6TsHZm6VfJgmDMDKCrJleAXYwqUoHohERe36pe9pdS6AyMdirlDjNfi9TiXKNcfC
+            zSTL7B1NNqNl+/8Xo/lhdyjTflReKvan5NWgOXs6WNJeAacvOlUdT4jmixlG+p3e
+            Xty2quFLW9lcIiYi5tq74SaWlfTdzr7u6cy0JD9F+gngJIbwfE32ZGeO71XN7C7g
+            hw/h2pAMu6m1E+IsBaey7u2vTG8zZIJ3Eypg6Z3OQg==
+            =s3co
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData)$
+    version: 3.9.0
