@@ -86,7 +86,7 @@ spec:
           storageClass: freenas-api-iscsi-csi
       image:
         name: ghcr.io/eaglesemanation/ops.emnt.dev/jupyterlab-datascience-notebook
-        tag: python-3.11.8_b106-1
+        tag: python-3.11.10_b395-1
       cmd: null
     cull:
       timeout: 604800 # 1 week
