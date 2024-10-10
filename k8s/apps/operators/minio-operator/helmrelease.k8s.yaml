@@ -19,9 +19,3 @@ spec:
     crds: CreateReplace
   upgrade:
     crds: CreateReplace
-  values:
-    console:
-      ingress:
-        enabled: true
-        ingressClassName: ingress-internal-traefik
-        host: minio-op-console.${CLUSTER_DOMAIN}
