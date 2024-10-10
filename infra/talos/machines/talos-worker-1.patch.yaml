@@ -1,6 +1,8 @@
 machine:
   nodeLabels:
     emnt.dev/on-nas: "true"
+  nodeTaints:
+    emnt/on-nas: true:NoSchedule
   install:
     disk: /dev/vda
   network:
