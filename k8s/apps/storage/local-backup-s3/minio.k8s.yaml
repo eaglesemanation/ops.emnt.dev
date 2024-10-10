@@ -38,6 +38,11 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
     - servers: 4
       name: pool-1
       volumesPerServer: 2
@@ -62,6 +67,11 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
     - servers: 4
       name: pool-2
       volumesPerServer: 2
@@ -86,3 +96,8 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
