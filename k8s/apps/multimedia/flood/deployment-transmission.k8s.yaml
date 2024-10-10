@@ -33,7 +33,7 @@ spec:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
       initContainers:
         - name: gluetun
-          image: docker.io/qmcgaw/gluetun:v3.39.0
+          image: docker.io/qmcgaw/gluetun:v3.39.1
           restartPolicy: Always
           securityContext:
             capabilities:
