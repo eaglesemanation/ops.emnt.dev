@@ -41,7 +41,7 @@ spec:
           - "ReadWriteOnce"
         resources:
           requests:
-            storage: 10Gi
+            storage: 11Gi
   patroni:
     dynamicConfiguration:
       # Prevents failovers due to latency issues with etcd, useful for non-HA controlplane
