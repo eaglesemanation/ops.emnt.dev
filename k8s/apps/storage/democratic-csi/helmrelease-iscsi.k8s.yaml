@@ -30,6 +30,10 @@ spec:
           limits:
             memory: 512Mi
     node:
+      tolerations:
+        - key: emnt.dev/on-nas
+          operator: Exists
+          effect: NoSchedule
       hostPID: true
       driver:
         image: docker.io/democraticcsi/democratic-csi:v1.9.3

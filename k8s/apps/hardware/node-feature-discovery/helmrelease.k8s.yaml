@@ -29,6 +29,10 @@ spec:
         limits:
           memory: 64Mi
     worker:
+      tolerations:
+        - key: emnt.dev/on-nas
+          operator: Exists
+          effect: NoSchedule
       resources:
         requests:
           cpu: 10m

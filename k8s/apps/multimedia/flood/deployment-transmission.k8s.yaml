@@ -21,9 +21,9 @@ spec:
         app.kubernetes.io/instance: transmission
     spec:
       tolerations:
-        - key: "emnt.dev/on-nas"
-          operator: "Exists"
-          effect: "NoSchedule"
+        - key: emnt.dev/on-nas
+          operator: Exists
+          effect: NoSchedule
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:

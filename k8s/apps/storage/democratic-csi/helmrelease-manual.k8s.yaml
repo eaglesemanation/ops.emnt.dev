@@ -18,6 +18,10 @@ spec:
       interval: 30m
   values:
     node:
+      tolerations:
+        - key: emnt.dev/on-nas
+          operator: Exists
+          effect: NoSchedule
       driver:
         image: docker.io/democraticcsi/democratic-csi:v1.9.3
         resources:

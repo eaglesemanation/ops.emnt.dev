@@ -6,6 +6,10 @@ metadata:
 spec:
   template:
     spec:
+      tolerations:
+        - key: emnt.dev/on-nas
+          operator: Exists
+          effect: NoSchedule
       containers:
         - name: speaker
           resources:
