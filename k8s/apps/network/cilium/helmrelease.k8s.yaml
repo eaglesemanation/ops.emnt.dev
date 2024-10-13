@@ -48,6 +48,11 @@ spec:
           release: prometheus
     dashboards:
       enabled: true
+    envoy:
+      tolerations:
+        - key: emnt.dev/on-nas
+          operator: Exists
+          effect: NoSchedule
     operator:
       prometheus:
         enabled: true

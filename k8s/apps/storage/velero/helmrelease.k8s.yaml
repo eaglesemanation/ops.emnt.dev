@@ -31,6 +31,10 @@ spec:
         cpu: null
         memory: 512Mi
     nodeAgent:
+      tolerations:
+        - key: emnt.dev/on-nas
+          operator: Exists
+          effect: NoSchedule
       resources:
         requests:
           cpu: 10m
