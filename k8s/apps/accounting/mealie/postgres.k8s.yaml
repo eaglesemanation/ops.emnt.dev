@@ -60,6 +60,10 @@ spec:
         parameters:
           max_slot_wal_keep_size: 1GB
           max_wal_size: 1GB
+        pg_hba:
+          # Disables requirement for TLS
+          # TODO: Reenable it when Prowlarr supports configuring SSLMODE
+          - hostnossl all all all md5
   backups:
     pgbackrest:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.47-1
