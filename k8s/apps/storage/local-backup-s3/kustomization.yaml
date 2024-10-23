@@ -24,3 +24,5 @@ resources:
   - pgbackrest-sonarr-creds.sops.yaml
   - pgbackrest-immich-creds.sops.yaml
   - pgbackrest-gitea-creds.sops.yaml
+  - pgbackrest-mealie-creds.sops.yaml
+  - pgbackrest-mealie-s3conf-template.k8s.yaml
