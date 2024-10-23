@@ -22,6 +22,8 @@ metadata:
     app.kubernetes.io/instance: mealie
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: mealie
