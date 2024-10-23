@@ -88,6 +88,9 @@ spec:
               value: Authentik
             - name: OIDC_REMEMBER_ME
               value: "True"
+          envFrom:
+            - secretRef:
+                name: mealie-secrets
           volumeMounts:
             - name: data
               mountPath: /app/data
