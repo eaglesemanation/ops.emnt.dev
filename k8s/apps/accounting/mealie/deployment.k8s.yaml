@@ -88,6 +88,10 @@ spec:
               value: Authentik
             - name: OIDC_REMEMBER_ME
               value: "True"
+            - name: SMTP_HOST
+              value: mail.${CLUSTER_DOMAIN}
+            - name: SMTP_FROM_EMAIL
+              value: mealie@${CLUSTER_DOMAIN}
           envFrom:
             - secretRef:
                 name: mealie-secrets
