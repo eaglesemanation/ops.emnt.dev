@@ -26,7 +26,7 @@ metadata:
     app.kubernetes.io/name: mealie
     app.kubernetes.io/instance: mealie
 spec:
-  ingressClassName: ingress-internal-traefik
+  ingressClassName: ingress-external-traefik
   rules:
     - host: mealie.${CLUSTER_DOMAIN}
       http:
