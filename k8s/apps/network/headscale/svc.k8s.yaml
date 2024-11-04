@@ -21,7 +21,7 @@ spec:
     - name: grpc
       port: 50443
       targetPort: 50443
-    - name: derp
+    - name: stun
       port: 3478
       targetPort: 3478
       protocol: UDP

@@ -27,8 +27,8 @@ spec:
         fsGroup: 1000
       containers:
         - name: headscale
-          image: ghcr.io/juanfont/headscale:0.22.3
-          args: ["headscale", "serve"]
+          image: ghcr.io/juanfont/headscale:0.23.0
+          args: ["serve"]
           resources:
             requests:
               cpu: 100m
@@ -56,7 +56,7 @@ spec:
               containerPort: 9090
             - name: grpc
               containerPort: 50443
-            - name: derp
+            - name: stun
               protocol: UDP
               containerPort: 3478
           volumeMounts:
@@ -66,9 +66,9 @@ spec:
               mountPath: /var/lib/headscale
             - name: run-path
               mountPath: /var/run/headscale
-          envFrom:
-            - secretRef:
-                name: headscale
+            - name: secrets
+              readOnly: true
+              mountPath: /etc/headscale-secrets
       volumes:
         - name: config
           configMap:
@@ -76,6 +76,9 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: headscale-data
+        - name: secrets
+          secret:
+            secretName: headscale
         - name: run-path
           emptyDir: {}
 ---
@@ -105,7 +108,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: headscale-ui
-          image: ghcr.io/gurucomputing/headscale-ui:2023.01.30-beta-1
+          image: ghcr.io/gurucomputing/headscale-ui:2024.10.10
           resources:
             requests:
               cpu: 10m

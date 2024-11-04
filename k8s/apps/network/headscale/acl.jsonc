@@ -1,0 +1,15 @@
+{
+  "groups": {
+    "group:admin": ["eaglesemanation"],
+  },
+  "tagOwners": {
+    "tag:exit-nodes": ["group:admin"],
+  },
+  "acls": [
+    {
+      "action": "accept",
+      "src": ["*"],
+      "dst": ["tag:exit-nodes:0", "autogroup:internet:*"],
+    },
+  ],
+}
