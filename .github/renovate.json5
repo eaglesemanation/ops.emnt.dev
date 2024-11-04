@@ -43,9 +43,5 @@
             ],
             allowedVersions: "<1000",
         },
-        {
-            matchPackageNames: ["ghcr.io/linuxserver/prowlarr"],
-            allowedVersions: "<1.7",
-        },
     ],
 }
