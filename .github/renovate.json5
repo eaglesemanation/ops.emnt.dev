@@ -1,67 +1,51 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-    "extends": [
-        "config:base"
-    ],
-    "timezone": "America/Toronto",
-    "schedule": [
-        "after 19:00 every friday"
-    ],
-    "prHourlyLimit": 5,
-    "rangeStrategy": "bump",
-    "flux": {
-        "fileMatch": [
-            "k8s/.+\\.k8s\\.yaml"
-        ]
+    $schema: "https://docs.renovatebot.com/renovate-schema.json",
+    extends: ["config:recommended"],
+    timezone: "America/Toronto",
+    schedule: ["after 19:00 on friday"],
+    prHourlyLimit: 5,
+    rangeStrategy: "bump",
+    flux: {
+        fileMatch: ["k8s/.+\\.k8s\\.yaml"],
     },
-    "dockerfile": {
-        "fileMatch": [
-            "containers/.+\\.Dockerfile"
-        ]
+    dockerfile: {
+        fileMatch: ["containers/.+\\.Dockerfile"],
     },
-    "kubernetes": {
-        "fileMatch": [
-            "k8s/.+\\.k8s\\.yaml"
-        ]
+    kubernetes: {
+        fileMatch: ["k8s/.+\\.k8s\\.yaml"],
     },
-    "customManagers": [
+    customManagers: [
         {
-            "customType": "regex",
-            "description": "Update container images in CRDs",
-            "datasourceTemplate": "docker",
-            "fileMatch": [
-                "k8s/.+\\.k8s\\.yaml$"
+            customType: "regex",
+            description: "Update container images in CRDs",
+            datasourceTemplate: "docker",
+            fileMatch: ["k8s/.+\\.k8s\\.yaml$"],
+            matchStrings: [
+                "apiVersion:\\s+minio.min.io\\/v\\d+.*\\nkind:\\s+Tenant\\s*\\n(?:.*\\n)*?\\s*image:\\s*(?<depName>[\\w\\.\\/\\-]+):(?<currentValue>[\\w+\\.\\-]*)",
             ],
-            "matchStrings": [
-                "apiVersion:\\s+minio.min.io\\/v\\d+.*\\nkind:\\s+Tenant\\s*\\n(?:.*\\n)*?\\s*image:\\s*(?<depName>[\\w\\.\\/\\-]+):(?<currentValue>[\\w+\\.\\-]*)"
-            ]
         },
         {
-            "customType": "regex",
-            "description": "Process custom dependencies",
-            "fileMatch": [
-                "k8s/.+\\.k8s\\.yaml$"
+            customType: "regex",
+            description: "Process custom dependencies",
+            fileMatch: ["k8s/.+\\.k8s\\.yaml$"],
+            matchStrings: [
+                'datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?"(?<currentValue>.*)"\n',
             ],
-            "matchStrings": [
-                "datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?\"(?<currentValue>.*)\"\n"
-            ],
-            "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-            "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-        }
+            datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+            versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+        },
     ],
-    "packageRules": [
+    packageRules: [
         {
-            "matchPackageNames": [
+            matchPackageNames: [
                 "docker.io/linuxserver/jellyfin",
-                "docker.io/linuxserver/transmission"
+                "docker.io/linuxserver/transmission",
             ],
-            "allowedVersions": "<1000"
+            allowedVersions: "<1000",
         },
         {
-            "matchPackageNames": [
-                "ghcr.io/linuxserver/prowlarr"
-            ],
-            "allowedVersions": "<1.7"
-        }
-    ]
+            matchPackageNames: ["ghcr.io/linuxserver/prowlarr"],
+            allowedVersions: "<1.7",
+        },
+    ],
 }
