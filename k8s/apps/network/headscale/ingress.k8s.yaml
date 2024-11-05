@@ -31,10 +31,26 @@ spec:
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
-  name: headscale-stun
+  name: headscale-stun-external
   namespace: headscale
   annotations:
     kubernetes.io/ingress.class: ingress-external-traefik
+spec:
+  entryPoints:
+    - stun
+  routes:
+    - services:
+        - name: headscale
+          port: stun
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressrouteudp_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: headscale-stun-internal
+  namespace: headscale
+  annotations:
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
   entryPoints:
     - stun
