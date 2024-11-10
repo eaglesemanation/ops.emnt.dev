@@ -5,13 +5,14 @@
   "tagOwners": {
     "tag:exit-node": ["group:admin"],
   },
+  "autoApprovers": {
+    "exitNode": ["tag:exit-node"],
+  },
   "acls": [
     {
       "action": "accept",
       "src": ["*"],
-      // TODO: figure out proper ACLs
-      "dst": ["*:*"]
-      // "dst": ["tag:exit-node:0", "autogroup:internet:*"],
+      "dst": ["tag:exit-node:0", "autogroup:internet:*"],
     },
   ],
 }
