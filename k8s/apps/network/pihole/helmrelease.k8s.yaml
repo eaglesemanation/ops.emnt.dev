@@ -50,3 +50,11 @@ spec:
     DNS2: null
     extraEnvVars:
       DNSSEC: "false" # TODO: Figure out why zoom.us does not work with DNSSEC
+    extraVolumes:
+      whitelist:
+        configMap:
+          name: pihole-whitelist
+    extraVolumeMounts:
+      whitelist:
+        mountPath: /etc/pihole/whitelist.txt
+        subPath: whitelist.txt

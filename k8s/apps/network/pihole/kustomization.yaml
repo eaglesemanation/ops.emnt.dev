@@ -8,3 +8,10 @@ resources:
   - unbound-deployment.k8s.yaml
   - unbound-config.k8s.yaml
   - unbound-svc.k8s.yaml
+configMapGenerator:
+  - name: pihole-whitelist
+    namespace: pihole
+    files:
+      - whitelist.txt
+    options:
+      disableNameSuffixHash: true
