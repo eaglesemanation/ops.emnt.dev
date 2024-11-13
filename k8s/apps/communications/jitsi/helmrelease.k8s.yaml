@@ -29,14 +29,6 @@ spec:
     publicURL: "https://jitsi.${CLUSTER_DOMAIN}/"
     enableAuth: true
     enableGuests: true
-    extraCommonEnvs:
-      AUTH_TYPE: ldap
-      LDAP_BASE: dc=jitsi-ldap,dc=goauthentik,dc=io
-      LDAP_URL: ldaps://ak-outpost-authentik-ldap-outpost.authentik.svc.cluster.local
-      LDAP_BINDDN: cn=ak-service-ldap,ou=users,dc=jitsi-ldap,dc=goauthentik,dc=io
-      LDAP_FILTER: memberOf=CN=authentik Users,OU=groups,DC=jitsi-ldap,DC=goauthentik,DC=io
-      # TODO: Verify certificate. Maybe figureout self-sign through cert-manager
-      LDAP_TLS_CHECK_PEER: "0"
     tz: America/Toronto
     web:
       ingress:
@@ -51,6 +43,16 @@ spec:
       publicIPs:
         - ${SVC_INGRESS_EXTERNAL_ADDR}
     prosody:
+      env:
+        AUTH_TYPE: ldap
+        LDAP_AUTH_METHOD: bind
+        LDAP_BASE: dc=jitsi-ldap,dc=goauthentik,dc=io
+        # TODO: Verify certificate. Maybe figureout self-sign through cert-manager
+        LDAP_TLS_CHECK_PEER: "0"
+        LDAP_URL: ldap://ak-outpost-authentik-ldap-outpost.authentik.svc.cluster.local
+        LDAP_FILTER: (&(cn=%u)(memberOf=CN=authentik Users,OU=groups,DC=jitsi-ldap,DC=goauthentik,DC=io))
+        LDAP_BINDDN: cn=ak-service-ldap,ou=users,dc=jitsi-ldap,dc=goauthentik,dc=io
+        LDAP_VERSION: "3"
       extraEnvs:
         - name: LDAP_BINDPW
           valueFrom:
