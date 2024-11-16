@@ -154,6 +154,8 @@ spec:
         app.kubernetes.io/instance: tailscale-exit-node
     spec:
       serviceAccountName: tailscale-exit-node
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: tailscale
           image: ghcr.io/tailscale/tailscale:v1.76.6
