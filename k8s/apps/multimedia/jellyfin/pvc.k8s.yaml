@@ -23,7 +23,7 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 15Ti
+      storage: 20Ti
   selector:
     matchLabels:
       app.kubernetes.io/name: jellyfin
