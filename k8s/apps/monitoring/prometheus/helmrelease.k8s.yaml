@@ -64,6 +64,13 @@ spec:
         existingSecret: grafana-creds
         userKey: username
         passwordKey: password
+      sidecar:
+        dashboards:
+          # Workaround for Basic Auth requirement
+          skipReload: true
+        datasources:
+          # Workaround for Basic Auth requirement
+          skipReload: true
       additionalDataSources:
         - name: Loki
           type: loki
