@@ -121,8 +121,20 @@ spec:
               key: CONSOLE_SECRET_KEY
     chunksCache:
       allocatedMemory: 512 # MB
+      resources:
+        requests:
+          cpu: 50m
+          memory: 615Mi # allocatedMemory * 1.2
+        limits:
+          memory: 615Mi # allocatedMemory * 1.2
     resultsCache:
       allocatedMemory: 128 # MB
+      resources:
+        requests:
+          cpu: 50m
+          memory: 154Mi # allocatedMemory * 1.2
+        limits:
+          memory: 154Mi # allocatedMemory * 1.2
     monitoring:
       lokiCanary:
         resources:

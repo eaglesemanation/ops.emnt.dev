@@ -22,7 +22,7 @@ spec:
           app.kubernetes.io/instance: sonarr-pg
       resources:
         requests:
-          cpu: 100m
+          cpu: 50m
           memory: 128Mi
         limits:
           memory: 256Mi
