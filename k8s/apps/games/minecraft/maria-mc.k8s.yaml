@@ -25,16 +25,39 @@ spec:
       requests:
         memory: 4Gi
         cpu: 1
+    podSecurityContext: null
+    securityContext: null
+    extraEnv:
+      UID: 0 # Running as root to make smb volumes happy
+      GID: 0
     persistence:
       storageClass: freenas-api-iscsi-csi
+      dataDir:
+        enabled: true
+        Size: 50Gi
     extraVolumes:
       - volumeMounts:
           - name: config
             mountPath: /data/config
+          - name: plugins
+            mountPath: /data/plugins
         volumes:
           - name: config
             persistentVolumeClaim:
               claimName: maria-mc-config
+          - name: plugins
+            persistentVolumeClaim:
+              claimName: maria-mc-plugins
+    livenessProbe:
+      command:
+        - sh
+        - -c
+        - mc-monitor status --host localhost --port 25565 --use-proxy
+    readinessProbe:
+      command:
+        - sh
+        - -c
+        - mc-monitor status --host localhost --port 25565 --use-proxy
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: maria-mc.${CLUSTER_DOMAIN}
     minecraftServer:
@@ -43,8 +66,23 @@ spec:
       version: "1.21.1"
       memory: 4096M
       difficulty: normal
+      enforceSecureProfile: false
       motd: "Welcome to Maria's Minecraft server!"
       icon: https://avatars.githubusercontent.com/u/65277548?v=4
+      pluginUrls:
+        - https://github.com/dmulloy2/ProtocolLib/releases/download/5.3.0/ProtocolLib.jar
+        - https://github.com/oddlama/vane/releases/download/v1.15.0/vane-core-1.15.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.15.0/vane-admin-1.15.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.15.0/vane-bedtime-1.15.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.15.0/vane-enchantments-1.15.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.15.0/vane-portals-1.15.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.15.0/vane-regions-1.15.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.15.0/vane-trifles-1.15.0.jar
+      spigetResources:
+        - 103782 # https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-no-chat-reports-and-popup-%E2%9C%A8.103782/?ref=spiget
+        - 28140 # https://www.spigotmc.org/resources/luckperms.28140/?ref=spiget
+        - 34315 # https://www.spigotmc.org/resources/vault.34315/
+        - 49016 # https://www.spigotmc.org/resources/vaultchatformatter.49016/
       modrinth:
         projects:
           - discordsrv # https://modrinth.com/plugin/discordsrv
@@ -68,4 +106,18 @@ spec:
   resources:
     requests:
       storage: 1Gi
+  storageClassName: freenas-api-smb-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: maria-mc-plugins
+  namespace: minecraft
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
   storageClassName: freenas-api-smb-csi

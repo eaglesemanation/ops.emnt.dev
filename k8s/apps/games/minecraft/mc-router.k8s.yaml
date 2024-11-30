@@ -21,6 +21,9 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    image:
+      repository: docker.io/itzg/mc-router
+      tag: "1.24.0"
     resources:
       requests:
         memory: 50Mi
@@ -29,3 +32,5 @@ spec:
         memory: 100Mi
     minecraftRouter:
       useProxyProtocol: true
+    extraEnv:
+      RECEIVE_PROXY_PROTOCOL: "true"
