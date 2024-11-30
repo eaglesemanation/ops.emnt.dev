@@ -40,6 +40,7 @@ spec:
             memory: 256Mi
     csiDriver:
       name: "org.democratic-csi.freenas-api-smb"
+      fsGroupPolicy: File
     volumeSnapshotClasses:
       - name: freenas-smb-csi
         labels:

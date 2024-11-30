@@ -35,10 +35,6 @@ spec:
           - name: config
             persistentVolumeClaim:
               claimName: maria-mc-config
-    securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: maria-mc.${CLUSTER_DOMAIN}
     minecraftServer:
