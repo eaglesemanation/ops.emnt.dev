@@ -1,0 +1,72 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: maria-mc
+  namespace: flux-system
+spec:
+  interval: 30m
+  targetNamespace: minecraft
+  chart:
+    spec:
+      chart: minecraft
+      version: 4.23.2
+      sourceRef:
+        kind: HelmRepository
+        name: itzg-minecraft
+        namespace: flux-system
+      interval: 30m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    resources:
+      requests:
+        memory: 4Gi
+        cpu: 1
+    persistence:
+      storageClass: freenas-api-iscsi-csi
+    extraVolumes:
+      - volumeMounts:
+          - name: config
+            mountPath: /data/config
+        volumes:
+          - name: config
+            persistentVolumeClaim:
+              claimName: maria-mc-config
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: maria-mc.${CLUSTER_DOMAIN}
+    minecraftServer:
+      eula: "TRUE"
+      type: "PAPER"
+      version: "1.21.1"
+      difficulty: normal
+      motd: "Welcome to Maria's Minecraft server!"
+      icon: https://avatars.githubusercontent.com/u/65277548?v=4
+      modrinth:
+        projects:
+          - Vebnzrzj # https://modrinth.com/plugin/luckperms
+          - UmLGoGij # https://modrinth.com/plugin/discordsrv
+          - pZ2wrerK # https://modrinth.com/plugin/emotecraft
+          - fALzjamp # https://modrinth.com/plugin/chunky
+          - P1OZGk5p # https://modrinth.com/plugin/viaversion
+          - NpvuJQoq # https://modrinth.com/plugin/viabackwards
+          - DzD7S3mv # https://modrinth.com/plugin/bending
+          - evkiwA7V # https://modrinth.com/plugin/axiom-paper-plugin
+          - tFLdoQMh # https://modrinth.com/plugin/stairsit
+          - fD1X4Kwd # https://modrinth.com/plugin/lagfixer
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: maria-mc-config
+  namespace: minecraft
+spec:
+  accessModes:
+    - ReadWriteMany
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: freenas-api-smb-csi
