@@ -63,7 +63,7 @@ metadata:
   namespace: minecraft
 spec:
   accessModes:
-    - ReadWriteMany
+    - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
