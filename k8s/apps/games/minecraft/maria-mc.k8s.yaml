@@ -35,27 +35,30 @@ spec:
           - name: config
             persistentVolumeClaim:
               claimName: maria-mc-config
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: maria-mc.${CLUSTER_DOMAIN}
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
       version: "1.21.1"
+      memory: 4096M
       difficulty: normal
       motd: "Welcome to Maria's Minecraft server!"
       icon: https://avatars.githubusercontent.com/u/65277548?v=4
       modrinth:
         projects:
-          - Vebnzrzj # https://modrinth.com/plugin/luckperms
-          - UmLGoGij # https://modrinth.com/plugin/discordsrv
-          - pZ2wrerK # https://modrinth.com/plugin/emotecraft
-          - fALzjamp # https://modrinth.com/plugin/chunky
-          - P1OZGk5p # https://modrinth.com/plugin/viaversion
-          - NpvuJQoq # https://modrinth.com/plugin/viabackwards
-          - DzD7S3mv # https://modrinth.com/plugin/bending
-          - evkiwA7V # https://modrinth.com/plugin/axiom-paper-plugin
-          - tFLdoQMh # https://modrinth.com/plugin/stairsit
-          - fD1X4Kwd # https://modrinth.com/plugin/lagfixer
+          - discordsrv # https://modrinth.com/plugin/discordsrv
+          - chunky # https://modrinth.com/plugin/chunky
+          - viaversion # https://modrinth.com/plugin/viaversion
+          - viabackwards # https://modrinth.com/plugin/viabackwards
+          - bending # https://modrinth.com/plugin/bending
+          - axiom-paper-plugin # https://modrinth.com/plugin/axiom-paper-plugin
+          - stairsit # https://modrinth.com/plugin/stairsit
+          - lagfixer # https://modrinth.com/plugin/lagfixer
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
