@@ -93,6 +93,19 @@ spec:
           - axiom-paper-plugin # https://modrinth.com/plugin/axiom-paper-plugin
           - stairsit # https://modrinth.com/plugin/stairsit
           - lagfixer # https://modrinth.com/plugin/lagfixer
+          - bluemap # https://modrinth.com/plugin/bluemap
+          - bbanner # https://modrinth.com/plugin/bbanner
+      extraPorts:
+        - name: bluemap
+          containerPort: 8100
+          service:
+            enabled: true
+            port: 8100
+          ingress:
+            enabled: true
+            ingressClassName: ingress-external-traefik
+            hosts:
+              - name: maria-mc.${CLUSTER_DOMAIN}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
