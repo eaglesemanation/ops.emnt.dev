@@ -56,7 +56,7 @@ spec:
               cpu: 20m
               memory: 64Mi
             limits:
-              memory: 256Mi
+              memory: 512Mi
           ports:
             - name: code-server
               containerPort: 8080
@@ -72,6 +72,7 @@ spec:
             - |
               mkdir -p /home/coder/.config/code-server && \
               cp /tmp/code-server-config/config.yaml /home/coder/.config/code-server/config.yaml && \
+              code-server --install-extension keesschollaart.vscode-home-assistant && \
               entrypoint.sh --bind-addr 0.0.0.0:8080 --disable-telemetry --disable-workspace-trust ./hass-config
           volumeMounts:
             - name: data
@@ -88,4 +89,5 @@ spec:
           configMap:
             name: code-server
         - name: data
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: code-server-data
