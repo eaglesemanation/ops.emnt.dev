@@ -133,7 +133,7 @@ spec:
                 - "ReadWriteOnce"
               resources:
                 requests:
-                  storage: 50Gi
+                  storage: 75Gi
       ingress:
         enabled: false # Using traefik IngressRoute
     alertmanager:
