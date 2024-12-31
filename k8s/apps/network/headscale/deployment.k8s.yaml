@@ -169,15 +169,13 @@ spec:
           envFrom:
             - secretRef:
                 name: tailscale-exit-node
-          volumeMounts:
-            - name: tun-device
-              mountPath: /dev/net/tun
           securityContext:
+            allowPrivilegeEscalation: false
             capabilities:
+              drop:
+                - ALL
               add:
                 - NET_ADMIN
-      volumes:
-        - name: tun-device
-          hostPath:
-            path: /dev/net/tun
-            type: CharDevice
+          resources:
+            limits:
+              squat.ai/tun: 1

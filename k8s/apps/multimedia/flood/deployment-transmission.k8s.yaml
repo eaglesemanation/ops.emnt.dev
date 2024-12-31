@@ -41,6 +41,9 @@ spec:
           restartPolicy: Always
           securityContext:
             capabilities:
+              allowPrivilegeEscalation: false
+              drop:
+                - ALL
               add:
                 - NET_ADMIN
           resources:
@@ -49,6 +52,7 @@ spec:
               memory: 64Mi
             limits:
               memory: 256Mi
+              squat.ai/tun: 1
           startupProbe:
             exec:
               command:
@@ -58,9 +62,6 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 60
             failureThreshold: 3
-          volumeMounts:
-            - name: tun-device
-              mountPath: /dev/net/tun
           env:
             - name: DNS_KEEP_NAMESERVER
               value: "on"
@@ -163,7 +164,3 @@ spec:
         - name: mam-cookie
           persistentVolumeClaim:
             claimName: mam-cookie
-        - name: tun-device
-          hostPath:
-            path: /dev/net/tun
-            type: CharDevice
