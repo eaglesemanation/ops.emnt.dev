@@ -170,10 +170,7 @@ spec:
             - secretRef:
                 name: tailscale-exit-node
           securityContext:
-            allowPrivilegeEscalation: false
             capabilities:
-              drop:
-                - ALL
               add:
                 - NET_ADMIN
           resources:
