@@ -25,7 +25,7 @@ spec:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
       containers:
         - name: radarr
-          image: docker.io/linuxserver/radarr:5.15.1
+          image: docker.io/linuxserver/radarr:5.16.3
           resources:
             requests:
               cpu: 100m
