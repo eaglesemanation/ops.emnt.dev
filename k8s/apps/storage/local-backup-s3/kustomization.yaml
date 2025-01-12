@@ -26,3 +26,5 @@ resources:
   - pgbackrest-gitea-creds.sops.yaml
   - pgbackrest-mealie-creds.sops.yaml
   - pgbackrest-mealie-s3conf-template.k8s.yaml
+  - pgbackrest-unifi-controller-creds.sops.yaml
+  - pgbackrest-unifi-controller-s3conf-template.k8s.yaml

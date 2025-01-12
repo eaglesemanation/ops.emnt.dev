@@ -32,6 +32,8 @@ data:
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$GITEA_ACCESS_KEY"
     mc admin user add local-backup-s3 "$MEALIE_ACCESS_KEY" "$MEALIE_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$MEALIE_ACCESS_KEY"
+    mc admin user add local-backup-s3 "$UNIFI_CONTROLLER_ACCESS_KEY" "$UNIFI_CONTROLLER_SECRET_KEY"
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$UNIFI_CONTROLLER_ACCESS_KEY"
 
     exit 0
 ---
@@ -88,6 +90,8 @@ spec:
                     name: pgbackrest-gitea-creds
                 - secretRef:
                     name: pgbackrest-mealie-creds
+                - secretRef:
+                    name: pgbackrest-unifi-controller-creds
               volumeMounts:
                 - name: init-script
                   mountPath: /tmp/init.sh
