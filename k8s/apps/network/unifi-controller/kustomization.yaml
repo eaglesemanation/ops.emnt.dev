@@ -7,3 +7,10 @@ resources:
   - ingress.k8s.yaml
   - pvc.k8s.yaml
   - postgres.k8s.yaml
+configMapGenerator:
+  - name: unifi-pg-init
+    namespace: unifi-controller
+    files:
+      - unifi-pg-init.sql
+    options:
+      disableNameSuffixHash: true

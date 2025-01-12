@@ -11,26 +11,24 @@ data: {}
 apiVersion: postgres-operator.crunchydata.com/v1beta1
 kind: PostgresCluster
 metadata:
-  name: unifi-controller-pg
+  name: unifi-pg
   namespace: unifi-controller
 spec:
   image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-15.7-1
   postgresVersion: 15
   databaseInitSQL:
-    name: unifi-controller-pg-init
-    key: unifi-controller-pg-init.sql
+    name: unifi-pg-init
+    key: unifi-pg-init.sql
   users:
-    - name: unifi-controller
-      password:
-        type: AlphaNumeric
+    - name: unifi
       databases:
-        - unifi-controller
+        - unifi
   instances:
     - name: instance1
       metadata:
         labels:
           app.kubernetes.io/name: postgresql
-          app.kubernetes.io/instance: unifi-controller-pg
+          app.kubernetes.io/instance: unifi-pg
       resources:
         requests:
           cpu: 50m
@@ -69,7 +67,7 @@ spec:
       image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.47-1
       global:
         repo1-s3-uri-style: path
-        repo1-path: /pgbackrest-unifi-controller/unifi-controller-pg/repo1
+        repo1-path: /pgbackrest-unifi-controller/unifi-pg/repo1
         repo1-retention-full: "30"
         repo1-retention-full-type: time
       jobs:
