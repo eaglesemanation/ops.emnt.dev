@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ferretdb
+  namespace: unifi-controller
+  labels:
+    app.kubernetes.io/name: ferretdb
+    app.kubernetes.io/instance: ferretdb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ferretdb
+      app.kubernetes.io/instance: ferretdb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ferretdb
+        app.kubernetes.io/instance: ferretdb
+    spec:
+      containers:
+        - name: ferretdb
+          image: ghcr.io/ferretdb/ferretdb:1.24.0
+          ports:
+            - name: mongo
+              protocol: TCP
+              containerPort: 27017
+          env:
+            - name: FERRETDB_POSTGRESQL_URL
+              valueFrom:
+                secretKeyRef:
+                  name: unifi-pg-pguser-unifi
+                  key: uri
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ferretdb
+  namespace: unifi-controller
+  labels:
+    app.kubernetes.io/name: ferretdb
+    app.kubernetes.io/instance: ferretdb
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: ferretdb
+    app.kubernetes.io/instance: ferretdb
+  ports:
+    - name: mongo
+      port: 27017
+      targetPort: 27017
+      protocol: TCP
