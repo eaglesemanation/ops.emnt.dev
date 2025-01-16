@@ -1,9 +1,21 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/serverstransport_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: truenas-ca
+  namespace: truenas
+spec:
+  serverName: ${NAS_URL}
+  rootCAsSecrets:
+    - truenas-ca
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: truenas
   namespace: truenas
   annotations:
+    traefik.ingress.kubernetes.io/service.serverstransport: truenas-truenas-ca@kubernetescrd
     traefik.ingress.kubernetes.io/service.serversscheme: https
 spec:
   type: ExternalName
