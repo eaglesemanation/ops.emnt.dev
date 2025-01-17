@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: controller
-          image: docker.io/linuxserver/unifi-controller:8.0.24
+          image: ghcr.io/linuxserver/unifi-network-application:9.0.108
           resources:
             requests:
               cpu: 10m
@@ -36,6 +36,25 @@ spec:
               value: "1000"
             - name: TZ
               value: Etc/UTC
+            - name: MONGO_HOST
+              value: ferretdb.unifi-controller.svc.cluster.local
+            - name: MONGO_PORT
+              value: "27017"
+            - name: MONGO_USER
+              value: unifi
+            - name: MONGO_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: unifi-pg-pguser-unifi
+                  key: password
+            - name: MONGO_DBNAME
+              value: unifi
+            - name: MONGO_AUTHSOURCE
+              value: admin
+            - name: MEM_LIMIT
+              value: "1024"
+            - name: MEM_STARTUP
+              value: "1024"
           ports:
             - name: http
               containerPort: 8443
