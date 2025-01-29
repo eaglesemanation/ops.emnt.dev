@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postiz
+  namespace: postiz
+  labels:
+    app.kubernetes.io/name: postiz
+    app.kubernetes.io/instance: postiz
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: postiz
+      app.kubernetes.io/instance: postiz
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: postiz
+        app.kubernetes.io/instance: postiz
+    spec:
+      containers:
+        - name: postiz
+          image: ghcr.io/gitroomhq/postiz-app:v1.31.1-amd64
+          env:
+            - name: MAIN_URL
+              value: https://postiz.${CLUSTER_DOMAIN}
+            - name: FRONTEND_URL
+              value: https://postiz.${CLUSTER_DOMAIN}
+            - name: NEXT_PUBLIC_BACKEND_URL
+              value: https://postiz.${CLUSTER_DOMAIN}/api
+            - name: BACKEND_INTERNAL_URL
+              value: http://localhost:3000
+            - name: IS_GENERAL
+              value: "true"
+            - name: STORAGE_PROVIDER
+              value: "local"
+            - name: UPLOAD_DIRECTORY
+              value: "/uploads"
+            - name: NEXT_PUBLIC_UPLOAD_DIRECTORY
+              value: "/uploads"
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pg-url
+                  key: PG_URL
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: keydb-url
+                  key: KEYDB_URL
+          envFrom:
+            - secretRef:
+                name: postiz-secrets
+          ports:
+            - name: http
+              containerPort: 5000
+          volumeMounts:
+            - name: uploads
+              mountPath: /uploads
+      volumes:
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: postiz-uploads
