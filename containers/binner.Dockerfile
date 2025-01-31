@@ -1,14 +1,14 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
+ARG ARCH=x64
+ARG RELEASE_TAG=2.6.3
+ARG ARTIFACT_NAME=Binner_linux-${ARCH}-${RELEASE_TAG}.tar.gz
+
 WORKDIR /app
 USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget ca-certificates && \
     rm -rf /var/lib/apt/lists/*
-
-ARG ARCH=x64
-ARG RELEASE_TAG=2.6.3
-ARG ARTIFACT_NAME=Binner_linux-${ARCH}-${RELEASE_TAG}.tar.gz
 
 RUN wget https://github.com/replaysMike/Binner/releases/download/v${RELEASE_TAG}/${ARTIFACT_NAME} -O /app/${ARTIFACT_NAME} && \
     tar -xzf /app/${ARTIFACT_NAME} -C /app && \
