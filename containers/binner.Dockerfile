@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-WORKDIR /app
 
+WORKDIR /app
 USER root
 RUN apt-get update && \
     apt-get install -y --no-install-recommends wget ca-certificates && \

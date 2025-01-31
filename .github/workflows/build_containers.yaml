@@ -53,12 +53,15 @@ jobs:
             exit 1
           fi
           echo "- Image name \`${IMAGE_NAME}\`" >> "${GITHUB_STEP_SUMMARY}"
-          IMAGE_BASE_TAG="$(cat "${IMAGE_PATH}" | gawk 'match($0, /^FROM [^ ]+:([^ ]+)$/, a) {print a[1]; exit;}')"
-          if [ "${IMAGE_BASE_TAG}" -z ]; then
-            echo "Image base tag is not found or not specified"
-            exit 1
+          BASE_TAG="$(cat "${IMAGE_PATH}" | gawk 'match($0, /^ARG RELEASE_TAG=([^ ]+)/, a) {print a[1]; exit;}')"
+          if [ -z "${BASE_TAG}" ]; then
+            BASE_TAG="$(cat "${IMAGE_PATH}" | gawk 'match($0, /^FROM [^ ]+:([^ ]+)/, a) {print a[1]; exit;}')"
+            if [ -z "${BASE_TAG}" ]; then
+              echo "Base tag is not found or not specified"
+              exit 1
+            fi
           fi
-          IMAGE_TAG="${IMAGE_BASE_TAG}_b${{ github.run_number }}-${{ github.run_attempt }}"
+          IMAGE_TAG="${BASE_TAG}_b${{ github.run_number }}-${{ github.run_attempt }}"
           echo "- New image tag \`${IMAGE_TAG}\`" >> "${GITHUB_STEP_SUMMARY}"
           echo "IMAGE_NAME=${IMAGE_NAME}" >> "${GITHUB_OUTPUT}"
           echo "IMAGE_TAG=${IMAGE_TAG}" >> "${GITHUB_OUTPUT}"
