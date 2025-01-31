@@ -4,7 +4,7 @@ RUN pip install --no-cache-dir \
         # Visualisation
         hvplot panel jupyter_bokeh shapely geoviews \
         # Working with maps
-        osmnx geopandas networkx \
+        osmnx geopandas networkx folium mapclassify \
         # Markdown parser
         jupyterlab_myst myst_parser \
         # Panel UI support
