@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: pgbackrest-binner-s3conf-template
+  namespace: local-backup-s3
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: local-backup-s3-secrets
+  target:
+    name: pgbackrest-binner-s3conf
+    template:
+      engineVersion: v2
+      metadata:
+        annotations:
+          reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
+          reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: binner
+      data:
+        s3.conf: |-
+          [global]
+          repo1-s3-key={{ .local_minio_access_key }}
+          repo1-s3-key-secret={{ .local_minio_secret_key }}
+  data:
+    - secretKey: local_minio_access_key
+      remoteRef:
+        key: pgbackrest-binner-creds
+        property: BINNER_ACCESS_KEY
+    - secretKey: local_minio_secret_key
+      remoteRef:
+        key: pgbackrest-binner-creds
+        property: BINNER_SECRET_KEY

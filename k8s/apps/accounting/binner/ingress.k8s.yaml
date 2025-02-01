@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: binner
+  namespace: binner
+  labels:
+    app.kubernetes.io/name: binner
+    app.kubernetes.io/instance: binner
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: binner
+    app.kubernetes.io/instance: binner
+  ports:
+    - name: https
+      port: 8090
+      targetPort: https
+      protocol: TCP
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/serverstransport_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: ServersTransport
+metadata:
+  name: skip-verify
+  namespace: binner
+spec:
+  serverName: binner.binner.svc.cluster.local
+  insecureSkipVerify: true
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: binner
+  namespace: binner
+  labels:
+    app.kubernetes.io/name: binner
+    app.kubernetes.io/instance: binner
+  annotations:
+    kubernetes.io/ingress.class: ingress-external-traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`binner.${CLUSTER_DOMAIN}`)
+      services:
+        - name: binner
+          namespace: binner
+          port: https
+          scheme: https
+          serversTransport: binner-skip-verify@kubernetescrd
