@@ -271,9 +271,9 @@ dns:
 
     # Split DNS (see https://tailscale.com/kb/1054/dns/),
     # a map of domains and which DNS server to use for each.
-    #split:
-    #  ${CLUSTER_DOMAIN}:
-    #    - ${SVC_DNS_ADDR}
+    split:
+      ${CLUSTER_DOMAIN}:
+        - ${SVC_DNS_ADDR}
 
   # Set custom DNS search domains. With MagicDNS enabled,
   # your tailnet base_domain is always the first search domain.
