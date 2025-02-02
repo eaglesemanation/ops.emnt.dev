@@ -159,7 +159,9 @@ spec:
           image: ghcr.io/tailscale/tailscale:v1.78.3
           env:
             - name: TS_USERSPACE
-              value: "false"
+              value: "true"
+            - name: TS_ROUTES
+              value: "${LOCAL_CIDR}"
             - name: TS_EXTRA_ARGS
               value: "--advertise-tags=tag:exit-node --advertise-exit-node --login-server=https://headscale.${CLUSTER_DOMAIN}"
             - name: TS_KUBE_SECRET
@@ -170,9 +172,8 @@ spec:
             - secretRef:
                 name: tailscale-exit-node
           securityContext:
-            capabilities:
-              add:
-                - NET_ADMIN
+            runAsUser: 1000
+            runAsGroup: 1000
           resources:
             limits:
               squat.ai/tun: 1

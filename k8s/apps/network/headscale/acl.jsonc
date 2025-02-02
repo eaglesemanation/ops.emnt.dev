@@ -1,18 +1,43 @@
 {
-  "groups": {
-    "group:admin": ["eaglesemanation"],
-  },
-  "tagOwners": {
-    "tag:exit-node": ["group:admin"],
-  },
-  "autoApprovers": {
-    "exitNode": ["tag:exit-node"],
-  },
-  "acls": [
-    {
-      "action": "accept",
-      "src": ["*"],
-      "dst": ["tag:exit-node:0", "autogroup:internet:*"],
+    "groups": {
+        "group:admin": [
+            "eaglesemanation"
+        ],
+        "group:internal": [
+            "eaglesemanation",
+            "laser532"
+        ],
     },
-  ],
+    "tagOwners": {
+        "tag:exit-node": [
+            "group:admin"
+        ],
+    },
+    "autoApprovers": {
+        "exitNode": [
+            "tag:exit-node"
+        ],
+    },
+    "acls": [
+        {
+            "action": "accept",
+            "src": [
+                "*"
+            ],
+            "dst": [
+                "tag:exit-node:0",
+                "autogroup:internet:*",
+            ],
+        },
+        {
+            "action": "accept",
+            "src": [
+                "group:internal"
+            ],
+            "dst": [
+                "${SVC_DNS_ADDR}/32:53",
+                "${SVC_INGRESS_INTERNAL_ADDR}/32:80,443"
+            ],
+        },
+    ],
 }
