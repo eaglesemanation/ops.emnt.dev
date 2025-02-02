@@ -28,7 +28,5 @@ resources:
   - pgbackrest-mealie-s3conf-template.k8s.yaml
   - pgbackrest-unifi-controller-creds.sops.yaml
   - pgbackrest-unifi-controller-s3conf-template.k8s.yaml
-  - pgbackrest-postiz-creds.sops.yaml
-  - pgbackrest-postiz-s3conf-template.k8s.yaml
   - pgbackrest-binner-creds.sops.yaml
   - pgbackrest-binner-s3conf-template.k8s.yaml
