@@ -18,6 +18,8 @@ spec:
         app.kubernetes.io/name: binner
         app.kubernetes.io/instance: binner
     spec:
+      securityContext:
+        fsGroup: 1654
       containers:
         - name: binner
           image: ghcr.io/eaglesemanation/ops.emnt.dev/binner:2.6.3_b666-1

@@ -13,7 +13,7 @@ RUN apt-get update && \
 RUN wget https://github.com/replaysMike/Binner/releases/download/v${RELEASE_TAG}/${ARTIFACT_NAME} -O /app/${ARTIFACT_NAME} && \
     tar -xzf /app/${ARTIFACT_NAME} -C /app && \
     rm /app/${ARTIFACT_NAME} && \
-    chown -R 1000:1000 /app && \
+    chown -R 1654:1654 /app && \
     chmod +x /app/Binner.Web
 
 USER app
