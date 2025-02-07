@@ -38,9 +38,11 @@ spec:
               value: Etc/UTC
             - name: ZIGBEE2MQTT_CONFIG_SERIAL_PORT
               value: /dev/ttyUSB0
-            - name: ZIGBEE2MQTT_CONFIG_AVAILABILITY
+            - name: ZIGBEE2MQTT_CONFIG_SERIAL_ADAPTER
+              value: zstack
+            - name: ZIGBEE2MQTT_CONFIG_AVAILABILITY_ENABLED
               value: "true"
-            - name: ZIGBEE2MQTT_CONFIG_HOMEASSISTANT
+            - name: ZIGBEE2MQTT_CONFIG_HOMEASSISTANT_ENABLED
               value: "true"
             - name: ZIGBEE2MQTT_CONFIG_PERMIT_JOIN
               value: "false"
