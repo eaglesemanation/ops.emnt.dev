@@ -108,7 +108,7 @@ spec:
         runAsGroup: 1000
       containers:
         - name: headscale-ui
-          image: ghcr.io/gurucomputing/headscale-ui:2024.10.10
+          image: ghcr.io/gurucomputing/headscale-ui:2025.01.20
           resources:
             requests:
               cpu: 10m
