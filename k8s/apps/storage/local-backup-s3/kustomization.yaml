@@ -30,3 +30,5 @@ resources:
   - pgbackrest-unifi-controller-s3conf-template.k8s.yaml
   - pgbackrest-binner-creds.sops.yaml
   - pgbackrest-binner-s3conf-template.k8s.yaml
+  - pgbackrest-crowdsec-creds.sops.yaml
+  - pgbackrest-crowdsec-s3conf-template.k8s.yaml

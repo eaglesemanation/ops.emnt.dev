@@ -36,6 +36,8 @@ data:
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$UNIFI_CONTROLLER_ACCESS_KEY"
     mc admin user add local-backup-s3 "$BINNER_ACCESS_KEY" "$BINNER_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$BINNER_ACCESS_KEY"
+    mc admin user add local-backup-s3 "$CROWDSEC_ACCESS_KEY" "$CROWDSEC_SECRET_KEY"
+    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$CROWDSEC_ACCESS_KEY"
 
     exit 0
 ---
@@ -97,6 +99,8 @@ spec:
                     name: pgbackrest-unifi-controller-creds
                 - secretRef:
                     name: pgbackrest-binner-creds
+                - secretRef:
+                    name: pgbackrest-crowdsec-creds
               volumeMounts:
                 - name: init-script
                   mountPath: /tmp/init.sh
