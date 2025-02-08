@@ -22,8 +22,8 @@ spec:
     crds: CreateReplace
   values:
     image:
-      # datasource=github-releases depName=crowdsecurity/crowdsec
-      tag: "v1.6.5"
+      # datasource=docker depName=docker.io/crowdsecurity/crowdsec
+      tag: "v1.6.4"
     config:
       config.yaml.local: |
         api:
