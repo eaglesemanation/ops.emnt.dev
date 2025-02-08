@@ -96,7 +96,7 @@ spec:
       mail-data:
         storageClass: freenas-api-iscsi-csi
       mail-state:
-        size: 50Gi
+        size: 60Gi
         storageClass: freenas-api-iscsi-csi
       mail-log:
         storageClass: freenas-api-iscsi-csi
