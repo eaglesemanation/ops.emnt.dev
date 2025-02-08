@@ -42,32 +42,33 @@ spec:
           port: $${DB_PORT}
           sslmode: require
     lapi:
+      enabled: true
       env:
         - name: DB_USER
           valueFrom:
             secretKeyRef:
               name: crowdsec-pg-pguser-crowdsec
-              value: user
+              key: user
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
               name: crowdsec-pg-pguser-crowdsec
-              value: password
+              key: password
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
               name: crowdsec-pg-pguser-crowdsec
-              value: dbname
+              key: dbname
         - name: DB_HOST
           valueFrom:
             secretKeyRef:
               name: crowdsec-pg-pguser-crowdsec
-              value: host
+              key: host
         - name: DB_PORT
           valueFrom:
             secretKeyRef:
               name: crowdsec-pg-pguser-crowdsec
-              value: port
+              key: port
       ingress:
         enabled: true
         ingressClassName: ingress-internal-traefik
@@ -85,6 +86,7 @@ spec:
           additionalLabels:
             release: prometheus
     agent:
+      enabled: true
       acquisition:
         - namespace: ingress
           podName: ingress-external-traefik-*
