@@ -85,6 +85,16 @@ spec:
           additionalLabels:
             release: prometheus
     agent:
+      acquisition:
+        - namespace: ingress
+          podName: ingress-external-traefik-*
+          program: traefik
+        - namespace: ingress
+          podName: ingress-internal-traefik-*
+          program: traefik
+      env:
+        - name: COLLECTIONS
+          value: "crowdsecurity/traefik"
       metrics:
         serviceMonitor:
           enabled: true
