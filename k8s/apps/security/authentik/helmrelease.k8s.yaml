@@ -43,7 +43,7 @@ spec:
             release: prometheus
       resources:
         requests:
-          cpu: 100m
+          cpu: 10m
           memory: 500Mi
         limits:
           memory: 1Gi

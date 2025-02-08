@@ -27,7 +27,7 @@ spec:
           image: ghcr.io/linuxserver/prowlarr:1.6.3.3608-ls24
           resources:
             requests:
-              cpu: 100m
+              cpu: 10m
               memory: 512Mi
             limits:
               memory: 2Gi

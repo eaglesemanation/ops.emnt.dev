@@ -88,15 +88,12 @@ spec:
     agent:
       enabled: true
       acquisition:
-        - namespace: ingress
-          podName: ingress-external-traefik-*
-          program: traefik
-        - namespace: ingress
-          podName: ingress-internal-traefik-*
-          program: traefik
+        - namespace: mailserver
+          podName: mailserver-*
+          program: syslog
       env:
         - name: COLLECTIONS
-          value: "crowdsecurity/traefik"
+          value: "crowdsecurity/traefik crowdsecurity/postfix crowdsecurity/dovecot"
       metrics:
         serviceMonitor:
           enabled: true

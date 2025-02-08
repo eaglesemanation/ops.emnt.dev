@@ -30,7 +30,7 @@ spec:
     k8sServicePort: 6443
     resources:
       requests:
-        cpu: 100m
+        cpu: 10m
         memory: 256Mi
       limits:
         memory: 1Gi
@@ -60,7 +60,7 @@ spec:
         enabled: true
       resources:
         requests:
-          cpu: 100m
+          cpu: 10m
           memory: 64Mi
         limits:
           memory: 256Mi
@@ -84,7 +84,7 @@ spec:
         enabled: true
         resources:
           requests:
-            cpu: 100m
+            cpu: 10m
             memory: 32Mi
           limits:
             memory: 128Mi
@@ -99,14 +99,14 @@ spec:
         frontend:
           resources:
             requests:
-              cpu: 100m
+              cpu: 10m
               memory: 16Mi
             limits:
               memory: 64Mi
         backend:
           resources:
             requests:
-              cpu: 100m
+              cpu: 10m
               memory: 16Mi
             limits:
               memory: 64Mi
