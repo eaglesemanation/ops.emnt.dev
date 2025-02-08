@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: opnsense
   namespace: opnsense
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: ingress-internal-traefik
   rules:

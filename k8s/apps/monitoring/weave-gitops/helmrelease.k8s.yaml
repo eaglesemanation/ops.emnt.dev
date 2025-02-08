@@ -37,5 +37,7 @@ spec:
           paths:
             - path: /
               pathType: Prefix
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
     metrics:
       enabled: true

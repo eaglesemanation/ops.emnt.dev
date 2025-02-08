@@ -6,6 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/name: autodiscover-email-settings
     app.kubernetes.io/instance: autodiscover-email-settings
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: ingress-external-traefik
   rules:

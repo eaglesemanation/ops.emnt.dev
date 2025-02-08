@@ -6,6 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/component: webhook-receiver
     app.kubernetes.io/instance: flux-system
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: ingress-external-traefik
   rules:

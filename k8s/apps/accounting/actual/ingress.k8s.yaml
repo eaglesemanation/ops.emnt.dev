@@ -6,6 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/name: actual
     app.kubernetes.io/instance: actual
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: ingress-internal-traefik
   rules:

@@ -71,7 +71,7 @@ spec:
           enabled: true
           className: ingress-external-traefik
           annotations:
-            nginx.ingress.kubernetes.io/proxy-body-size: null
+            traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
           hosts:
             - host: immich.${CLUSTER_DOMAIN}
               paths:

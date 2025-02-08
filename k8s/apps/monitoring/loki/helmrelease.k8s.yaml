@@ -162,3 +162,5 @@ spec:
       ingressClassName: ingress-internal-traefik
       hosts:
         - loki.${CLUSTER_DOMAIN}
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: web,websecure

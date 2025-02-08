@@ -6,6 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/name: speedtest
     app.kubernetes.io/instance: speedtest
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: ingress-external-traefik
   rules:

@@ -106,6 +106,8 @@ spec:
             ingressClassName: ingress-external-traefik
             hosts:
               - name: maria-mc.${CLUSTER_DOMAIN}
+            annotations:
+              traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

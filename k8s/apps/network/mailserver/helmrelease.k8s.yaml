@@ -82,6 +82,8 @@ spec:
         enabled: true
         ingressClassName: ingress-internal-traefik
         host: rspamd.${CLUSTER_DOMAIN}
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
     metrics:
       enabled: true
       serviceMonitor:

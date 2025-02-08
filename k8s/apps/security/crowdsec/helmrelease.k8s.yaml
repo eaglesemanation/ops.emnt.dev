@@ -72,6 +72,8 @@ spec:
         enabled: true
         ingressClassName: ingress-internal-traefik
         host: crowdsec.${CLUSTER_DOMAIN}
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
       persistentVolume:
         data:
           storageClassName: freenas-api-iscsi-csi

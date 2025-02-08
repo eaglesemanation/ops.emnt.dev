@@ -25,6 +25,8 @@ metadata:
   labels:
     app.kubernetes.io/name: mealie
     app.kubernetes.io/instance: mealie
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: ingress-external-traefik
   rules:

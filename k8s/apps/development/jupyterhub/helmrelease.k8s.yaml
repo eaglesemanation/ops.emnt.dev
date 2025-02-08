@@ -95,3 +95,5 @@ spec:
       ingressClassName: ingress-external-traefik
       hosts:
         - jupyterhub.${CLUSTER_DOMAIN}
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: web,websecure

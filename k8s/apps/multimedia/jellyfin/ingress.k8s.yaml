@@ -6,6 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/name: jellyfin
     app.kubernetes.io/instance: jellyfin
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
   ingressClassName: ingress-external-traefik
   rules:
