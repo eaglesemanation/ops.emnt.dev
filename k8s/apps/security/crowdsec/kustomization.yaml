@@ -6,3 +6,14 @@ resources:
   - postgres.k8s.yaml
   - console-creds.sops.yaml
   - middleware.sops.yaml
+configMapGenerator:
+  - name: grafana-dashboards
+    namespace: crowdsec
+    options:
+      labels:
+        grafana_dashboard: "1"
+    files:
+      - ./dashboards/crowdsec-details-per-machine.json
+      - ./dashboards/crowdsec-insight.json
+      - ./dashboards/crowdsec-overview.json
+      - ./dashboards/lapi-metrics.json
