@@ -4,7 +4,7 @@ metadata:
   name: s3-creds
   namespace: binner
   annotations:
-    reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-binner-s3creds"
+    reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-binner-s3conf"
 data: {}
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json
