@@ -47,6 +47,12 @@ spec:
         - name: wireguard-config
           secret:
             secretName: wireguard-config
+    experimental:
+      plugins:
+        crowdsec:
+          moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
+          # datasource=github-releases depName=maxlerebourg/crowdsec-bouncer-traefik-plugin
+          version: "v1.4.0"
     resources:
       requests:
         cpu: 10m
@@ -110,6 +116,8 @@ spec:
         proxyProtocol:
           trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
       websecure:
+        middlewares:
+          - crowdsec-bouncer@kubernetescrd
         transport:
           respondingTimeouts:
             readTimeout: 0 # TODO: Figure out if possible to limit this to immich

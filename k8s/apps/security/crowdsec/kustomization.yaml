@@ -5,3 +5,4 @@ resources:
   - helmrelease.k8s.yaml
   - postgres.k8s.yaml
   - console-creds.sops.yaml
+  - middleware.sops.yaml

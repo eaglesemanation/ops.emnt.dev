@@ -1,11 +1,16 @@
----
+keys:
+  - &k8s_age age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+  - &eaglesemanation_gpg C5B9ADB07DBE5A2E
 creation_rules:
-  # K8s secret
   - path_regex: k8s/.*\.sops\.ya?ml
-    encrypted_regex: "^(data|stringData)$"
-    pgp: C5B9ADB07DBE5A2E
-    age: >-
-      age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+    encrypted_regex: "^(data|stringData|crowdsecLapiKey)$"
+    pgp: *eaglesemanation_gpg
+    age: *k8s_age
 
   - path_regex: infra/.*\.sops\.(ya?ml|toml)
-    pgp: C5B9ADB07DBE5A2E
+    pgp: *eaglesemanation_gpg
+
+  - path_regex: nix/secrets/.*\.sops\.ya?ml
+    key_groups:
+      - pgp:
+          - *eaglesemanation_gpg

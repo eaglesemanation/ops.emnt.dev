@@ -156,11 +156,9 @@ spec:
       # Depends on selfMonitoring
       enabled: false
     gateway:
-      enabled: false
-    ingress:
-      enabled: true
-      ingressClassName: ingress-internal-traefik
-      hosts:
-        - loki.${CLUSTER_DOMAIN}
-      annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+      nginxConfig:
+        # Needed for CrowdSec to verify if Loki is ready
+        serverSnippet: |-
+          location = /ready {
+            proxy_pass "http://loki-read.loki.svc.cluster.local:3100$request_uri";
+          }
