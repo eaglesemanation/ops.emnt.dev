@@ -98,9 +98,15 @@ spec:
             {job="mailserver/mailserver", container="docker-mailserver"}
           labels:
             type: syslog
+        - source: loki
+          url: http://loki-gateway.loki.svc.cluster.local
+          query: |
+            {job="gitea/gitea"}
+          labels:
+            type: gitea
       env:
         - name: COLLECTIONS
-          value: "crowdsecurity/traefik crowdsecurity/postfix crowdsecurity/dovecot"
+          value: "crowdsecurity/traefik crowdsecurity/postfix crowdsecurity/dovecot LePresidente/gitea"
       metrics:
         serviceMonitor:
           enabled: true
