@@ -15,29 +15,29 @@ spec:
           matchType: =~
           value: warning|info
       equal:
-        - 'namespace'
-        - 'alertname'
+        - "namespace"
+        - "alertname"
     - sourceMatch:
         - name: severity
           matchType: =
           value: warning
       targetMatch:
         - name: severity
-          matchType: = 
-          value: info
-      equal:
-        - 'namespace'
-        - 'alertname'
-    - sourceMatch:
-        - name: alertname 
-          matchType: = 
-          value: InfoInhibitor
-      targetMatch:
-        - name: severity 
           matchType: =
           value: info
       equal:
-        - 'namespace'
+        - "namespace"
+        - "alertname"
+    - sourceMatch:
+        - name: alertname
+          matchType: =
+          value: InfoInhibitor
+      targetMatch:
+        - name: severity
+          matchType: =
+          value: info
+      equal:
+        - "namespace"
   route:
     groupBy:
       - namespace
@@ -48,8 +48,8 @@ spec:
     routes:
       - receiver: "null"
         matchers:
-          - name: alertname 
-            matchType: =~ 
+          - name: alertname
+            matchType: =~
             value: InfoInhibitor|Watchdog
   receivers:
     - name: "null"
@@ -59,3 +59,18 @@ spec:
             key: botToken
             name: telegram-creds
           chatID: -1001866766512
+          message: |
+            {{ if eq .Status "firing" }}
+            {{ if eq .CommonLabels.severity "critical" }}⛔️ {{ else if eq .CommonLabels.severity "warning" }}⚠️ {{ else }}❔ {{ end }}{{ len .Alerts }} alert(s):
+            Status: 🔥 FIRING
+            Severity: {{ if eq .CommonLabels.severity "critical" }}⛔️ {{ .CommonLabels.severity | title }}{{ else if eq .CommonLabels.severity "warning" }}⚠️  {{ .CommonLabels.severity | title }}{{ else }}❔ {{ or (.CommonLabels.severity | title) "Unknown" }}{{ end }}
+            {{ else if eq .Status "resolved" }}
+            ✅ {{ len .Alerts }} resolved alert(s):
+            {{ end -}}
+            {{ range $i, $a := .Alerts }}
+            Alert #{{ $i }}: {{ $a.Labels.alertname }}
+                Target: {{ or $a.Labels.job_name $a.Labels.deployment $a.Labels.pod "unknown" }}
+                Summary: {{ $a.Annotations.summary }}
+                Description: {{ $a.Annotations.description }}
+                Runbook: {{ $a.Annotations.runbook_url }}
+            {{ end }}
