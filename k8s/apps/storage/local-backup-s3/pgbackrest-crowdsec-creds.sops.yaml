@@ -7,8 +7,8 @@ metadata:
         reflector.v1.k8s.emberstack.com/reflection-allowed: "true"
         reflector.v1.k8s.emberstack.com/reflection-allowed-namespaces: crowdsec
 stringData:
-    CROWDSEC_ACCESS_KEY: ENC[AES256_GCM,data:8psdqupVh1A=,iv:sJNOnCyTw8ZqB2BYWMLTlyghMW428sMBsEHVR66tCDw=,tag:VgyqCPOoq1dHMjJQCc9Tew==,type:str]
-    CROWDSEC_SECRET_KEY: ENC[AES256_GCM,data:JbdSIh+dCPaYgxg7UPwdwzuAF1G8rgFUYypSnOmv+nk=,iv:wxR+x9P6pb4ggBlrT0HnD9lDrJAEB7pBgkELsHpUg/w=,tag:va0CXqEE3urcBWCwLUp+iw==,type:str]
+    CROWDSEC_ACCESS_KEY: ENC[AES256_GCM,data:bY17ztkMTE3uDV/P/X52i/w3Ag==,iv:hkuHl5yQ/NyR20y1xQ9k4FW+GLmjWbL/ePrHgph+3pU=,tag:sine0+JbfiE93BwnFTfoLA==,type:str]
+    CROWDSEC_SECRET_KEY: ENC[AES256_GCM,data:wWrRqVfSrM+GtgAzGYDy4e6bP1Eg54PnSTnkvsQ19H4=,iv:K8Jsu/osU0HAo+fpx8m3AM5MttliZQAIz6dIkcdXVwM=,tag:hjOUeP7JnJ8P9xQ1AxGBlg==,type:str]
 sops:
     kms: []
     gcp_kms: []
@@ -18,29 +18,29 @@ sops:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA2dFArb1JBbmlsRkVFcWov
-            RExhQi90Z3liNytZaHphMDZkMmNPZDViL1Q0CnF0U0FkNjE0dXdIclJVZUZWRkg4
-            cS9MTUFFVTBwQXRHQ2lqK1c4dHB0N2MKLS0tIDNPRjVVRXBuOVAxWHNXSktRbFdT
-            WHRiQ3drS2FwUkJOMi9vRGRLWXp0VlEKBRJbf08snbjsz7u7P7Ps4lv971yNf+Y1
-            z922w1+NU0jM9OsxF/kO8xzfYP8q1f14OSq0R2Ly9qTUiyNZAl9/ow==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBDWGNhTHdZcEV3NFRuVnli
+            S1NnNE5wQ0MreklnM0xTc29SZlB0NFdlVGxVCmNXRTFZL1h2a05ieExDZUZPUFh1
+            cmJwN3dZczNSbkNvWlVMUDd5RUdPUFUKLS0tIEp6c3UyazRGcG9hN01YaXBKRTFm
+            MTNkZ3lMM3RQbzZCZi9zbk5YTExGTkEKMtirGb9phtmm8CKR7+9uCm0JYT3hGHm4
+            yVWO2NulXlPukYDgHo/pbd8sfx7Q1k3n7e3BwHqCvY+NWMu8ZaDTPg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2025-02-08T06:57:25Z"
-    mac: ENC[AES256_GCM,data:6jAzKO7beMhLdtsl8770O0mrsQEWh5XZNZO6bZ5d1iWE907S/6lkRpAwe4s5sikxbYTU2w+w2gwjLwZlSXOZZndLLBOnT38z/ho8seaIr5VZ+CXJ2LcVHdgz12DaQUQb1VHoOLZRtAUSgBHDtJilYZtpgGZpjMoAWO+5HXvbQyU=,iv:aoKS6kx12nUh3iF7pfC4FoPmV69UhkghbrNOj+zXtYg=,tag:MK71hw5qFWtRDFOB2FHV7A==,type:str]
+    lastmodified: "2025-02-10T07:02:26Z"
+    mac: ENC[AES256_GCM,data:iXyo82cgMstUPHUVmS9u13QXKY5si3b+n9t5YScMRmkSfs/k9QuTTBQQso6WgldgdFZ8nN5K2npqRpV6XeutPPhscnb9o7oopwhtJ24OU/EVZEJAE+3OYs+hf+ReD2TdfaFtdRkjah5Z/heXyna3J9EXmLdhKZwEfmFagd6OHXk=,iv:D3/pJtjT9CFr2r8elNtyyh2SeOr2EjlB3YL2SfGGIeU=,tag:YvrSYf7u3kRaii81vwEbJA==,type:str]
     pgp:
-        - created_at: "2025-02-08T06:57:25Z"
+        - created_at: "2025-02-10T07:02:26Z"
           enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQgAgKBEjNELLdfldc3cEgSX60604j2wz/47Z/Gm04R6SLGu
-            uo+jd7Fyo+tkn62JNTQoqxIB5uAEi9ww434BB+SFWtjy0owhfjqHemexW3rEBOcd
-            1bDyRNG5QKIKpQs7S3T1HOoidSyqDz3USNKbwkZGviluNb+mNt9vf4D52TAvY8Ki
-            QQYPz5smrb+MdV7K3i27rfw0zO7TIYLKEUEaTHNOWhJpYxDNvcOhHDQlVZQB1jz2
-            UqJVL8Hj6k47F7wLuLDoQtUtx94PAyOD8DKk6HDs/6Sr0t1sZN+soY3JDCR3ELku
-            mfHmNqrDJpf4UpF2OlRrONOomZOOqBP8J/Z4URU0EdJcATBYB46zm8/+lqJ/mf08
-            XAJ3vOVdryXO3/62f10G65sOPT0FA51RrYBrJ+VnnRklsRzpvQKvDjt2Psc8MvV1
-            Os7HTL3DQI83UgjE57VZR70nbCa2mghxXdw/rG0=
-            =ZpQe
+            hQEMAzB6fv8Ha/LEAQf/U32g39r1xGF+kMFLDxZAIOr9TM11I/8SI9yDOn+PUgSk
+            dPUAENcphkg4JLRyKz0+Ig47DPZlbXS8FqzzO4UNwg402Av7LUUZrOfqBFQFlUnV
+            JxJ/YT6Gc308zO+78Vg/+gFTL3dB45767LmiL8bHvCEy+9YfO6+BijfBrZ8mep9R
+            UFoGoJsosgD2hjJItG6IRtaX/roWRcLkQDk5IhkmZTdyjJVx0EGdD+uMzAu/Em8K
+            zGqaoCW4xdojHkbouNObZlw9z3kW9rbKgJu5uYKYouB6CsGMnxasVXl90YdcGvXV
+            IIl33bVPL7rJUgGjkq5px/D8bOv20HZb7jRndpXUytJeAZZ6QiRvxD/nSopN01nv
+            Mevw6u/kxjYS3nL0AJllot3vCNaiGwRqtolXfLkpWFPeVtMBTAie/rQ88duI8q9b
+            0CGjr8dk+7+Kf2I7DvjG48m16nNWIPPD8wAijAtkRA==
+            =5lEW
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
-    encrypted_regex: ^(data|stringData)$
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
     version: 3.9.3
