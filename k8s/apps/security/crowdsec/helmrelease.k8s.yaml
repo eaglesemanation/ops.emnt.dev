@@ -114,9 +114,21 @@ spec:
             {job="gitea/gitea"}
           labels:
             type: gitea
+        - source: loki
+          url: http://loki-gateway.loki.svc.cluster.local
+          query: |
+            {job="authentik/authentik", container="server"}
+          labels:
+            type: authentik
+        - source: loki
+          url: http://loki-gateway.loki.svc.cluster.local
+          query: |
+            {job="immich/server"}
+          labels:
+            type: immich
       env:
         - name: COLLECTIONS
-          value: "crowdsecurity/traefik crowdsecurity/postfix crowdsecurity/dovecot LePresidente/gitea"
+          value: "crowdsecurity/traefik crowdsecurity/postfix crowdsecurity/dovecot LePresidente/gitea firix/authentik gauth-fr/immich"
       metrics:
         serviceMonitor:
           enabled: true
