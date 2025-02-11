@@ -1,7 +1,8 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 
 ARG ARCH=x64
-ARG RELEASE_TAG=2.6.3
+# datasource=github-releases depName=replaysMike/Binner
+ARG RELEASE_TAG=2.6.4
 ARG ARTIFACT_NAME=Binner_linux-${ARCH}-${RELEASE_TAG}.tar.gz
 
 WORKDIR /app
