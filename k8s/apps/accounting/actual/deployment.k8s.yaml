@@ -33,6 +33,15 @@ spec:
               value: "100"
             - name: ACTUAL_UPLOAD_FILE_SIZE_LIMIT_MB
               value: "100"
+            - name: ACTUAL_LOGIN_METHOD
+              value: openid
+            - name: ACTUAL_OPENID_DISCOVERY_URL
+              value: "https://authentik.${CLUSTER_DOMAIN}/application/o/actual/.well-known/openid-configuration"
+            - name: ACTUAL_OPENID_SERVER_HOSTNAME
+              value: "https://actual.${CLUSTER_DOMAIN}"
+          envFrom:
+            - secretRef:
+                name: actual-secrets
           volumeMounts:
             - name: data
               mountPath: /data
