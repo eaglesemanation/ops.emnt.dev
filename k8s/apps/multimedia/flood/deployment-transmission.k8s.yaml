@@ -97,7 +97,7 @@ spec:
                   name: airvpn-creds
                   key: addresses
         - name: mam-init
-          image: docker.io/curlimages/curl:8.11.1
+          image: docker.io/curlimages/curl:8.12.0
           args:
             - -w
             - "\nResponse code: %{http_code}\n"
