@@ -21,9 +21,6 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
-    image:
-      # datasource=docker depName=docker.io/crowdsecurity/crowdsec
-      tag: "v1.6.4"
     config:
       capi_whitelists.yaml: |
         name: eaglesemanation/mxtoolbox-whitelist
