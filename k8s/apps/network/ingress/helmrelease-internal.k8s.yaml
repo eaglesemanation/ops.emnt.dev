@@ -21,7 +21,7 @@ spec:
         crowdsec:
           moduleName: github.com/maxlerebourg/crowdsec-bouncer-traefik-plugin
           # datasource=github-releases depName=maxlerebourg/crowdsec-bouncer-traefik-plugin
-          version: "v1.4.0"
+          version: "v1.4.1"
     resources:
       requests:
         cpu: 10m
