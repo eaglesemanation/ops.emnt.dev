@@ -32,3 +32,5 @@ resources:
   - pgbackrest-binner-s3conf-template.k8s.yaml
   - pgbackrest-crowdsec-creds.sops.yaml
   - pgbackrest-crowdsec-s3conf-template.k8s.yaml
+  - pgbackrest-affine-creds.sops.yaml
+  - pgbackrest-affine-s3conf-template.k8s.yaml

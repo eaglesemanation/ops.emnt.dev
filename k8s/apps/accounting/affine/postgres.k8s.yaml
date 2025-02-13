@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: s3-creds
+  namespace: affine
+  annotations:
+    reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-affine-s3conf"
+data: {}
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgres-operator.crunchydata.com/postgrescluster_v1beta1.json
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: affine-pg
+  namespace: affine
+  annotations:
+    postgres-operator.crunchydata.com/autoCreateUserSchema: "true"
+spec:
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-15.7-1
+  postgresVersion: 15
+  users:
+    - name: affine
+      password:
+        type: AlphaNumeric
+      databases:
+        - affine
+  instances:
+    - name: instance1
+      metadata:
+        labels:
+          app.kubernetes.io/name: postgresql
+          app.kubernetes.io/instance: affine-pg
+      resources:
+        requests:
+          cpu: 50m
+          memory: 128Mi
+        limits:
+          memory: 512Mi
+      sidecars:
+        replicaCertCopy:
+          resources:
+            requests:
+              cpu: 10m
+              memory: 2Mi
+            limits:
+              memory: 16Mi
+      dataVolumeClaimSpec:
+        storageClassName: freenas-api-iscsi-csi
+        accessModes:
+          - "ReadWriteOnce"
+        resources:
+          requests:
+            storage: 10Gi
+  patroni:
+    dynamicConfiguration:
+      # Prevents failovers due to latency issues with etcd, useful for non-HA controlplane
+      failsafe_mode: true
+      postgresql:
+        parameters:
+          max_slot_wal_keep_size: 1GB
+          max_wal_size: 1GB
+  backups:
+    pgbackrest:
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.47-1
+      global:
+        repo1-s3-uri-style: path
+        repo1-path: /pgbackrest-affine/affine-pg/repo1
+        repo1-retention-full: "30"
+        repo1-retention-full-type: time
+      jobs:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 32Mi
+          limits:
+            memory: 128Mi
+      configuration:
+        - secret:
+            name: s3-creds
+      repos:
+        - name: repo1
+          s3:
+            endpoint: https://backup-s3.${CLUSTER_DOMAIN}
+            region: us-west-1
+            bucket: pgbackrest
+          schedules:
+            full: 0 6 * * 0
+            incremental: 0 6 * * 1-6
+  monitoring:
+    pgmonitor:
+      exporter:
+        resources:
+          requests:
+            cpu: 10m
+            memory: 16Mi
+          limits:
+            memory: 64Mi
+        image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0

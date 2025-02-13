@@ -1,0 +1,63 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: affine
+  namespace: affine
+  labels:
+    app.kubernetes.io/name: affine
+    app.kubernetes.io/instance: affine
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: affine
+      app.kubernetes.io/instance: affine
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: affine
+        app.kubernetes.io/instance: affine
+    spec:
+      containers:
+        - name: affine
+          image: ghcr.io/toeverything/affine-graphql:stable-c5da8dd
+          command:
+            - sh
+            - -c
+            - node ./scripts/self-host-predeploy.js && node --import ./scripts/register.js ./dist/index.js
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pg-url
+                  key: PG_URL
+            - name: REDIS_SERVER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keydb-creds
+                  key: password
+          envFrom:
+            - secretRef:
+                name: affine-secrets
+            - configMapRef:
+                name: affine-config
+          ports:
+            - name: http
+              containerPort: 3010
+          volumeMounts:
+            - name: data
+              mountPath: /root/.affine/storage
+            - name: config
+              mountPath: /root/.affine/config
+            - name: pg-certs
+              mountPath: /pg-certs
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: affine-data
+        - name: config
+          persistentVolumeClaim:
+            claimName: affine-config
+        - name: pg-certs
+          secret:
+            secretName: affine-pg-cluster-cert

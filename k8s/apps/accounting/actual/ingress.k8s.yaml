@@ -9,7 +9,7 @@ metadata:
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
 spec:
-  ingressClassName: ingress-internal-traefik
+  ingressClassName: ingress-external-traefik
   rules:
     - host: actual.${CLUSTER_DOMAIN}
       http:
