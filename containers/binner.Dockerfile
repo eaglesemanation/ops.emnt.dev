@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 
 ARG ARCH=x64
 # datasource=github-releases depName=replaysMike/Binner
