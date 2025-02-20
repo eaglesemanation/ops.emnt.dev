@@ -22,7 +22,7 @@ spec:
         fsGroup: 1654
       containers:
         - name: binner
-          image: ghcr.io/eaglesemanation/ops.emnt.dev/binner:2.6.5_b781-1
+          image: ghcr.io/eaglesemanation/ops.emnt.dev/binner:2.6.6_b783-1
           command:
             - sh
             - -c
