@@ -3,13 +3,15 @@ kind: PersistentVolumeClaim
 metadata:
   name: affine-data
   namespace: affine
+  labels:
+    emnt.dev/velero-backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 50Gi
+      storage: 100Gi
   storageClassName: freenas-api-iscsi-csi
 ---
 apiVersion: v1
