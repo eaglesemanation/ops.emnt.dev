@@ -19,7 +19,7 @@ spec:
       interval: 30m
   values:
     image:
-      # datasource=github-releases depName=immich-app/immich
+      # renovate: datasource=github-releases depName=immich-app/immich
       tag: "v1.126.1"
     immich:
       metrics:

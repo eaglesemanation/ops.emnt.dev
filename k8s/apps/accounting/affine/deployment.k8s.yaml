@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/instance: affine
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: affine
@@ -20,7 +22,8 @@ spec:
     spec:
       containers:
         - name: affine
-          image: ghcr.io/toeverything/affine-graphql:stable-c5da8dd
+          # renovate: datasource=github-releases depName=toeverything/AFFiNE version=0.20.0
+          image: ghcr.io/toeverything/affine-graphql:stable-9fd1ca1
           command:
             - sh
             - -c
