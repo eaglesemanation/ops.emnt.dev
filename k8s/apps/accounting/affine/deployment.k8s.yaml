@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: affine
-          # renovate: datasource=github-releases depName=toeverything/AFFiNE version=0.20.0
+          # renovate: datasource=github-releases depName=toeverything/AFFiNE version=0.20.2
           image: ghcr.io/toeverything/affine-graphql:stable-9fd1ca1
           command:
             - sh
