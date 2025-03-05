@@ -29,7 +29,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: core
-          image: docker.io/linuxserver/homeassistant:2025.2.3
+          image: docker.io/linuxserver/homeassistant:2025.2.5
           resources:
             requests:
               cpu: 100m
@@ -50,7 +50,7 @@ spec:
             - name: hass-config
               mountPath: /config
         - name: code-server
-          image: docker.io/codercom/code-server:4.96.4
+          image: docker.io/codercom/code-server:4.97.2
           resources:
             requests:
               cpu: 20m
