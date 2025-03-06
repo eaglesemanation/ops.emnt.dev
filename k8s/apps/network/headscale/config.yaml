@@ -316,7 +316,7 @@ oidc:
   use_expiry_from_token: false
   # Customize the scopes used in the OIDC flow, defaults to "openid", "profile" and "email" and add custom query
   # parameters to the Authorize Endpoint request. Scopes default to "openid", "profile" and "email".
-  scope: ["openid", "profile", "email", "offline_access"]
+  scope: ["openid", "profile", "email", "email_verified", "offline_access"]
   #extra_params:
   #  domain_hint: example.com
 
