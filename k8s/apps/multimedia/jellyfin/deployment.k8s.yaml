@@ -30,6 +30,7 @@ spec:
       securityContext:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
         fsGroup: 1000
+      hostNetwork: true
       containers:
         - name: jellyfin
           image: docker.io/linuxserver/jellyfin:10.10.6
@@ -75,12 +76,6 @@ spec:
           ports:
             - name: http
               containerPort: 8096
-            - name: auto-disc-1
-              containerPort: 1900
-              protocol: UDP
-            - name: auto-disc-2
-              containerPort: 7359
-              protocol: UDP
       volumes:
         - name: multimedia
           persistentVolumeClaim:
