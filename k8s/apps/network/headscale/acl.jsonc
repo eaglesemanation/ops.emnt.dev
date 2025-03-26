@@ -35,8 +35,7 @@
                 "group:internal"
             ],
             "dst": [
-                "${SVC_DNS_ADDR}/32:53",
-                "${SVC_INGRESS_INTERNAL_ADDR}/32:80,443"
+                "${LOCAL_CIDR}:*",
             ],
         },
     ],
