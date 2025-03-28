@@ -6,6 +6,7 @@ resources:
   - nodefeaturerule.k8s.yaml
   - intel-gpu-exporter.k8s.yaml
   - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/gpu_plugin/overlays/monitoring_shared-dev_nfd?ref=v0.32.0
+  - https://github.com/intel/intel-device-plugins-for-kubernetes/deployments/nfd/overlays/node-feature-rules?ref=v0.32.0
 patches:
   - target:
       group: apps
