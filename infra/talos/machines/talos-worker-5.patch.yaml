@@ -1,0 +1,13 @@
+machine:
+  install:
+    disk: /dev/sda
+  network:
+    hostname: talos-worker-5
+    interfaces:
+      - interface: eno1
+        dhcp: false
+        addresses:
+          - 192.168.25.115/24
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 192.168.25.1
