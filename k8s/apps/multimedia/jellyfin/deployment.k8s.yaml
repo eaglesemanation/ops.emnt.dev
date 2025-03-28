@@ -27,6 +27,9 @@ spec:
               - matchExpressions:
                   - key: emnt.dev/on-nas
                     operator: DoesNotExist
+                  - key: gpu.intel.com/device-id.0300-3e92.present
+                    operator: In
+                    values: ["true"]
       securityContext:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
         fsGroup: 1000
