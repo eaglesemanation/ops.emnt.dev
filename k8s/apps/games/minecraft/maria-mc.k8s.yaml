@@ -23,7 +23,7 @@ spec:
   values:
     resources:
       requests:
-        memory: 4Gi
+        memory: 8Gi
         cpu: 1
     podSecurityContext: null
     securityContext: null
@@ -64,7 +64,7 @@ spec:
       eula: "TRUE"
       type: "PAPER"
       version: "1.21.4"
-      memory: 4096M
+      memory: 8192M
       difficulty: normal
       enforceSecureProfile: false
       motd: "Welcome to Maria's Minecraft server!"
