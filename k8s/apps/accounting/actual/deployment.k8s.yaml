@@ -39,6 +39,8 @@ spec:
               value: "https://authentik.${CLUSTER_DOMAIN}/application/o/actual/.well-known/openid-configuration"
             - name: ACTUAL_OPENID_SERVER_HOSTNAME
               value: "https://actual.${CLUSTER_DOMAIN}"
+            - name: ACTUAL_PORT
+              value: "5006"
           envFrom:
             - secretRef:
                 name: actual-secrets
