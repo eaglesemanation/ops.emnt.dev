@@ -93,6 +93,7 @@ spec:
           - axiom-paper-plugin # https://modrinth.com/plugin/axiom-paper-plugin
           - bluemap # https://modrinth.com/plugin/bluemap
           - bbanner # https://modrinth.com/plugin/bbanner
+          - fishingplugin # https://modrinth.com/plugin/fishingplugin
           - multiverse-core # https://modrinth.com/plugin/multiverse-core
           - multiverse-inventories # https://modrinth.com/plugin/multiverse-inventories
           - terra:beta # https://modrinth.com/plugin/terra
