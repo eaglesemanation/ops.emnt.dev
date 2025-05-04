@@ -90,7 +90,7 @@ spec:
         enabled: true
     service:
       type: ClusterIP
-    persistence:
+    persistent_volume_claims:
       mail-config:
         storageClass: freenas-api-smb-csi
       mail-data:
