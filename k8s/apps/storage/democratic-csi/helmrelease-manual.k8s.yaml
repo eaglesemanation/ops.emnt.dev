@@ -23,7 +23,9 @@ spec:
           operator: Exists
           effect: NoSchedule
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.9.3
+        image:
+          # renovate: datasource=github-tags depName=democratic-csi/democratic-csi
+          tag: docker.io/democraticcsi/democratic-csi:v1.9.4
         resources:
           requests:
             cpu: 20m

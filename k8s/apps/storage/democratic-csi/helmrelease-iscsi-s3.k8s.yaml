@@ -22,7 +22,9 @@ spec:
   values:
     controller:
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.9.3
+        image:
+          # renovate: datasource=github-tags depName=democratic-csi/democratic-csi
+          tag: v1.9.4
         resources:
           requests:
             cpu: 20m
@@ -32,7 +34,9 @@ spec:
     node:
       hostPID: true
       driver:
-        image: docker.io/democraticcsi/democratic-csi:v1.9.3
+        image:
+          # renovate: datasource=github-tags depName=democratic-csi/democratic-csi
+          tag: v1.9.4
         resources:
           requests:
             cpu: 20m
