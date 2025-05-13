@@ -32,6 +32,14 @@ spec:
           limits:
             memory: 512Mi
     node:
+      mount:
+        checkFileSystem:
+          xfs:
+            enabled: true
+          ext4:
+            enabled: true
+          btrfs:
+            enabled: true
       tolerations:
         - key: emnt.dev/on-nas
           operator: Exists
