@@ -73,18 +73,38 @@ spec:
               mkdir -p /home/coder/.config/code-server && \
               cp /tmp/code-server-config/config.yaml /home/coder/.config/code-server/config.yaml && \
               code-server --install-extension keesschollaart.vscode-home-assistant && \
+              code-server --install-extension ESPHome.esphome-vscode && \
               entrypoint.sh --bind-addr 0.0.0.0:8080 --disable-telemetry --disable-workspace-trust ./hass-config
           volumeMounts:
             - name: data
               mountPath: /home/coder
             - name: hass-config
               mountPath: /home/coder/hass-config
+            - name: esphome-config
+              mountPath: /home/coder/esphome-config
             - name: code-server-config
               mountPath: /tmp/code-server-config
+        - name: esphome
+          image: ghcr.io/esphome/esphome:2025.4.2
+          resources:
+            requests:
+              cpu: 10m
+              memory: 32Mi
+            limits:
+              memory: 256Mi
+          ports:
+            - name: esphome
+              containerPort: 6052
+          volumeMounts:
+            - name: esphome-config
+              mountPath: /config
       volumes:
         - name: hass-config
           persistentVolumeClaim:
             claimName: home-assistant-config
+        - name: esphome-config
+          persistentVolumeClaim:
+            claimName: esphome-config
         - name: code-server-config
           configMap:
             name: code-server

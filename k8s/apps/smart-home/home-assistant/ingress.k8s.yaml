@@ -51,3 +51,18 @@ spec:
         - name: authentik-server
           namespace: authentik
           port: http
+    - kind: Rule
+      match: Host(`home-assistant-esphome.${CLUSTER_DOMAIN}`)
+      middlewares:
+        - name: authentik
+          namespace: authentik
+      services:
+        - name: home-assistant
+          namespace: home-assistant
+          port: esphome
+    - kind: Rule
+      match: Host(`home-assistant-esphome.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
+      services:
+        - name: authentik-server
+          namespace: authentik
+          port: http

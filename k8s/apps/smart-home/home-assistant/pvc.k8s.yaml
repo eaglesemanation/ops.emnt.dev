@@ -17,6 +17,20 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  name: esphome-config
+  namespace: home-assistant
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: freenas-api-iscsi-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
   name: code-server-data
   namespace: home-assistant
 spec:
