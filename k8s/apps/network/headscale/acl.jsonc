@@ -1,11 +1,11 @@
 {
     "groups": {
         "group:admin": [
-            "eaglesemanation"
+            "@eaglesemanation"
         ],
         "group:internal": [
-            "eaglesemanation",
-            "laser532"
+            "@eaglesemanation",
+            "@laser532"
         ],
     },
     "tagOwners": {

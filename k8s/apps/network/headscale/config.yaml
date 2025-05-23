@@ -265,9 +265,9 @@ dns:
 
   # List of DNS servers to expose to clients.
   nameservers:
-    #global:
-    #  - 1.1.1.1
-    #  - 1.0.0.1
+    global:
+      - 1.1.1.1
+      - 1.0.0.1
 
     # Split DNS (see https://tailscale.com/kb/1054/dns/),
     # a map of domains and which DNS server to use for each.
@@ -324,7 +324,6 @@ oidc:
   # authentication request will be rejected.
   allowed_groups:
     - authentik Users
-  strip_email_domain: true
 
 # Logtail configuration
 # Logtail is Tailscales logging and auditing infrastructure, it allows the control panel
