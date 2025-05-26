@@ -96,4 +96,4 @@ spec:
       hosts:
         - jupyterhub.${CLUSTER_DOMAIN}
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure

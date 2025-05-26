@@ -38,7 +38,7 @@ spec:
           - host: jitsi.${CLUSTER_DOMAIN}
             paths: ["/"]
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
     jvb:
       service:
         enabled: false

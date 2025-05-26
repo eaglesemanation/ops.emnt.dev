@@ -87,7 +87,7 @@ spec:
         hosts:
           - grafana.${CLUSTER_DOMAIN}
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
       resources:
         requests:
           cpu: 10m

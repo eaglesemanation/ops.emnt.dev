@@ -110,7 +110,7 @@ spec:
             hosts:
               - name: maria-mc.${CLUSTER_DOMAIN}
             annotations:
-              traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+              traefik.ingress.kubernetes.io/router.entrypoints: websecure
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

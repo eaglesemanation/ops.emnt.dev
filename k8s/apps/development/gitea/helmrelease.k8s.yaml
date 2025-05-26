@@ -27,7 +27,7 @@ spec:
       enabled: true
       className: ingress-external-traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
       hosts:
         - host: gitea.${CLUSTER_DOMAIN}
           paths:

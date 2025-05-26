@@ -28,7 +28,7 @@ spec:
       enabled: true
       ingressClassName: ingress-internal-traefik
       annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: web,websecure
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
         traefik.ingress.kubernetes.io/router.middlewares: pihole-admin-redirect@kubernetescrd
       path: /
       hosts:
