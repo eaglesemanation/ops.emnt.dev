@@ -4,6 +4,7 @@ resources:
   - angelnu.k8s.yaml
   - bitnami.k8s.yaml
   - cilium.k8s.yaml
+  - cloudnative-pg.k8s.yaml
   - crowdsec.k8s.yaml
   - crunchy-data.k8s.yaml
   - democratic-csi.k8s.yaml
@@ -28,7 +29,6 @@ resources:
   - ot-container-kit.k8s.yaml
   - pihole.k8s.yaml
   - piraeus.k8s.yaml
-  - postgres-operator.k8s.yaml
   - prometheus-community.k8s.yaml
   - traefik.k8s.yaml
   - vmware-tanzu.k8s.yaml
