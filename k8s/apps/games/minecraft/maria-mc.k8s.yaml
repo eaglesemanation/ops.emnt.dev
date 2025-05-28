@@ -84,6 +84,7 @@ spec:
         - 49016 # https://www.spigotmc.org/resources/vaultchatformatter.49016/
         - 1997 # https://www.spigotmc.org/resources/protocollib.1997/
         - 33166 # https://www.spigotmc.org/resources/vivecraft-spigot-extensions.33166/
+        - 62325 # https://www.spigotmc.org/resources/gsit-modern-sit-seat-and-chair-lay-and-crawl-plugin-1-16-1-21-5.62325/
       modrinth:
         projects:
           - discordsrv # https://modrinth.com/plugin/discordsrv
