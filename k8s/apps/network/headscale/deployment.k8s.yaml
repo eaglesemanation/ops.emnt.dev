@@ -27,7 +27,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: headscale
-          image: ghcr.io/juanfont/headscale:v0.26.0
+          image: ghcr.io/juanfont/headscale:v0.26.1
           args: ["serve"]
           resources:
             requests:
