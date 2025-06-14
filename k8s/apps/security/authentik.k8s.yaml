@@ -12,6 +12,5 @@ spec:
     kind: GitRepository
     name: emnt-ops
   dependsOn:
-    - name: postgres-operator
     - name: prometheus
   wait: true
