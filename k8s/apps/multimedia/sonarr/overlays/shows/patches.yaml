@@ -25,7 +25,7 @@ spec:
       global:
         repo1-path: /pgbackrest-sonarr/sonarr-shows-pg/repo1
 ---
-apiVersion: external-secrets.io/v1beta1
+apiVersion: external-secrets.io/v1
 kind: SecretStore
 metadata:
   name: sonarr-secrets

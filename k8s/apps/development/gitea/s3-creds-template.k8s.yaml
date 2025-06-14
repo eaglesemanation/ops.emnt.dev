@@ -7,8 +7,8 @@ metadata:
     reflector.v1.k8s.emberstack.com/reflects: "local-backup-s3/pgbackrest-gitea-creds"
 data: {}
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1beta1.json
-apiVersion: external-secrets.io/v1beta1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
   name: s3-creds-template
