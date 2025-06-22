@@ -114,9 +114,12 @@ spec:
   storage:
     storageClass: freenas-api-iscsi-csi
     size: 20Gi
+  postgresUID: 999
+  postgresGID: 999
   bootstrap:
     initdb:
       owner: immich
+      database: immich
       import:
         type: microservice
         databases:
