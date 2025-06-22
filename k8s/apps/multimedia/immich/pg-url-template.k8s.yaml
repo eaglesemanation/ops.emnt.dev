@@ -17,5 +17,5 @@ spec:
   data:
     - secretKey: uri
       remoteRef:
-        key: immich-pg-pguser-immich
+        key: immich-pg-app
         property: uri

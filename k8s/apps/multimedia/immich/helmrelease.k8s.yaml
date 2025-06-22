@@ -47,7 +47,7 @@ spec:
       IMMICH_LOG_LEVEL: debug
     persistence:
       pg-certs:
-        name: immich-pg-cluster-cert
+        name: immich-pg-ca
         enabled: true
         type: secret
         globalMounts:
