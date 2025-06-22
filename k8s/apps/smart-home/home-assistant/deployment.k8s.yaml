@@ -50,7 +50,7 @@ spec:
             - name: hass-config
               mountPath: /config
         - name: code-server
-          image: docker.io/codercom/code-server:4.100.3
+          image: docker.io/codercom/code-server:4.101.1
           resources:
             requests:
               cpu: 20m
