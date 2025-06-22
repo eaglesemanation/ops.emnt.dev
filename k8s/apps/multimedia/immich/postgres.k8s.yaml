@@ -86,3 +86,53 @@ spec:
           limits:
             memory: 64Mi
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/imagecatalog_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ImageCatalog
+metadata:
+  name: immich-postgres
+  namespace: immich
+spec:
+  images:
+    - major: 15
+      image: ghcr.io/immich-app/postgres:15-vectorchord0.4.3-pgvectors0.2.0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich-pg
+  namespace: immich
+spec:
+  instances: 1
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ImageCatalog
+    name: immich-postgres
+    major: 15
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 20Gi
+  bootstrap:
+    initdb:
+      owner: immich
+      import:
+        type: microservice
+        databases:
+          - immich
+        source:
+          externalCluster: source-db
+  externalClusters:
+    - name: source-db
+      connectionParameters:
+        host: immich-pg-primary.immich.svc
+        user: immich
+        dbname: immich
+        sslmode: require
+      password:
+        name: immich-pg-pguser-immich
+        key: password
+      sslRootCert:
+        name: immich-pg-cluster-cert
+        key: ca.crt
