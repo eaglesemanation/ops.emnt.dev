@@ -7,6 +7,7 @@ resources:
   - cloudnative-pg.k8s.yaml
   - crowdsec.k8s.yaml
   - crunchy-data.k8s.yaml
+  - crossplane.k8s.yaml
   - democratic-csi.k8s.yaml
   - docker-mailserver.k8s.yaml
   - emberstack.k8s.yaml

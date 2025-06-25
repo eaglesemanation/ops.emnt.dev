@@ -4,6 +4,7 @@ resources:
   - external-secrets.k8s.yaml
   - minio-operator.k8s.yaml
   - crunchy-operator.k8s.yaml
+  - crossplane.k8s.yaml
   - cloudnative-pg.k8s.yaml
   - rabbitmq-operator.k8s.yaml
   - reflector.k8s.yaml

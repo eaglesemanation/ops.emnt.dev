@@ -74,6 +74,8 @@ spec:
           memory: 500Mi
         limits:
           memory: 1Gi
+      livenessProbe:
+        initialDelaySeconds: 60
       volumes:
         - name: postgres-creds
           secret:
