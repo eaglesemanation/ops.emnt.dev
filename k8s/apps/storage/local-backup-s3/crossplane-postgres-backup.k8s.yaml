@@ -1,0 +1,26 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-s3
+spec:
+  package: ghcr.io/crossplane-contrib/provider-aws-s3:v1.23.0
+---
+apiVersion: aws.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: local-backup-s3
+spec:
+  credentials:
+    secretRef:
+      key: credentials
+      name: crossplane-creds
+      namespace: local-backup-s3
+    source: Secret
+  endpoint: 
+    url:
+      static: https://backup-s3.${CLUSTER_DOMAIN}
+      type: Static
+    hostnameImmutable: true
+  skip_region_validation: true
+  s3_use_path_style: true
+

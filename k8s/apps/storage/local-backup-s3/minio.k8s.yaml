@@ -101,3 +101,27 @@ spec:
             - ALL
         seccompProfile:
           type: RuntimeDefault
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: minio-config-template
+  namespace: local-backup-s3
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: local-backup-s3-secrets
+  target:
+    name: minio-config
+    template:
+      engineVersion: v2
+      data:
+        config.env: |-
+          export MINIO_ROOT_USER="{{.accessKey}}"
+          export MINIO_ROOT_PASSWORD="{{.secretKey}}"
+          export MINIO_STORAGE_CLASS_STANDARD="EC:2"
+          export MINIO_BROWSER="on"
+  dataFrom:
+    - extract:
+        key: minio-root-creds
