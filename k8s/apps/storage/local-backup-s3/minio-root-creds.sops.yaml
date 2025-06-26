@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: minio-root-creds
+    namespace: local-backup-s3
+stringData:
+    accessKey: ENC[AES256_GCM,data:xXJYFQ==,iv:2TmqxMQdvZGzjf/57AvIbPywTBYCqYorOsgNnmyTVSQ=,tag:w0iKnG6xvKCL07MTpQJE3A==,type:str]
+    secretKey: ENC[AES256_GCM,data:ZYXUv2F5KyEyy7Yzar4m4Sy2RxUFgABYmk1D98ilfqQ=,iv:7E+l0gJmQrp13RSJ8xo9zsy6oaubCW4fKmuJqQ3fkn4=,tag:avmSShkZO7XUIUO36hnpQw==,type:str]
+sops:
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBjR0lGazVZOUIxV25uQjNh
+            Y3hPK3JlcGs2eUhTdVpIRGVESUd3dmZLMmpVCmpwSHZKMmc3NWlqZlZEZ3luWllo
+            U1ViTDUwdjV0QlJrOVN5NmM3SFQ2L00KLS0tIG85cGpmUkpuY1dETUJoZnpEcTNz
+            NHBFUE4vVHR5SzNPejNhUHpoMUdGZ1kKl3JZAr3C+o8JdN5fu+6zlkhl13CyRulW
+            jtipdNjcZ1/7L4bh5Wer2BRypaV0bU2d6r9q32vQUjsU+FK+WMVwkg==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-06-26T20:06:21Z"
+    mac: ENC[AES256_GCM,data:c7dJfEXW41bmKTWi0/qClMKw4MzQIqhFZPOVCGyKYBjWrADfdgDavlqs20z/HX/ejbW/8kYClQbR9m7tX+Rhmdq8JnZZgPECNN0zwDZp6MALV0W8VgL/duiRYTySpD7MzU1yXn6SCCl+2JDfw+V79iMSezbWTA7aZaKonyrycAk=,iv:ejGROjyCeI9o3U/MwK7dzvI+s18F8ScKBb1nafneYLw=,tag:Hv0WwOQC5MGtzpAk6HXmzQ==,type:str]
+    pgp:
+        - created_at: "2025-06-26T20:06:21Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf+K8ZoM+vXGBmP6VtN7fIA7Tgxj9thip3A2m8R9XqdCQ5f
+            Af36OeaVwCqGyCuM9rkDS5/kq7dZcQ62S/oag3RRiCu3Yaw1POlVOPsYlPqhxGh5
+            pxlr2Sw8vXzD/dfCEKhCWO+5FhrhC1cDo5CK4RtwX9hLwHruGcO4nzNYi9J1LXmq
+            iTjM5kCVFDEbdUXQvVB80JeOXzHP3N/EM7XcV9pK8kbrOO4iXB1t0za30EqbbOaH
+            lcTg/5/RjdCTEEEbJ/WfHbI8WoYJO9W4TXqcuKHQ+S8bYL3HjdcfX6rVEYf6nMVp
+            dUGl2FeucUlGnnpWYugo9PiYfxYSVAXLHo8pq16IINJeAbdoJyClaFQ7lDn0eGUh
+            u0TFGIoxPoA0sMmJa6e9eR8zFl2XLJy93t5Du0xufG4p8yJK1AePtjCzkqVi7Jhd
+            zy+YdS9y/mkKo6Mg4b9JxCFmu3dxhXusili6X1DXGA==
+            =pMLy
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
+    version: 3.10.2

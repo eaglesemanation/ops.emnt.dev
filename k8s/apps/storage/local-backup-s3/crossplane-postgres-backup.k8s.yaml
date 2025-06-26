@@ -1,0 +1,53 @@
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
+metadata:
+  name: provider-aws-s3
+spec:
+  package: xpkg.crossplane.io/crossplane-contrib/provider-aws-s3:v1.23.0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: crossplane-minio-creds-template
+  namespace: local-backup-s3
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: local-backup-s3-secrets
+  target:
+    name: crossplane-minio-creds
+    template:
+      engineVersion: v2
+      data:
+        credentials: |-
+          [default]
+          aws_access_key_id = {{.accessKey}}
+          aws_secret_access_key = {{.secretKey}}
+  dataFrom:
+    - extract:
+        key: minio-root-creds
+---
+apiVersion: aws.upbound.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: local-backup-s3
+spec:
+  credentials:
+    secretRef:
+      key: credentials
+      name: crossplane-minio-creds
+      namespace: local-backup-s3
+    source: Secret
+  endpoint:
+    url:
+      static: https://backup-s3.${CLUSTER_DOMAIN}
+      type: Static
+    services:
+      - s3
+    hostnameImmutable: true
+  skip_region_validation: true
+  skip_credentials_validation: true
+  skip_metadata_api_check: true
+  skip_requesting_account_id: true
+  s3_use_path_style: true
