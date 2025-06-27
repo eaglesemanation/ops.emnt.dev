@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: b2-master-creds
+    namespace: local-backup-s3
+stringData:
+    accessKey: ENC[AES256_GCM,data:MCVcqW1lzCX6QH4E,iv:oQsJSufRe3YkziSYlzlH3JKbuGYaTv+JP17ORioFY2A=,tag:0ceQZ3weZ7j2VGSZmeGDdg==,type:str]
+    secretKey: ENC[AES256_GCM,data:Jimzn4Swh1c/+i3+vYCIrSnMJla03eVxuCGJrWy7nLHejHMJRIovajj2,iv:tL/UpmcSuL+me4oWpOHkYgv9SGPHCQqAW3lTtH/eu2U=,tag:TIdANnJtyGSGiTclL0NcZw==,type:str]
+sops:
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBMWGZqQk5abmtVV0FKQmxG
+            T1h1T0E5ZnBwOGc3T3dqRjhtM0VrMFdJdnkwCnZrY1U4ZEx3dC9BbTNsdVpQbFRj
+            MmlMNHFUbTdrOWk2YmsvK3RqenhmVXMKLS0tIDVwd25GZm51bUFyTUFKbTZvRDBX
+            YXlPZVVmeDZFK2RwWDBEVHMxWENsU0UKKGIGQThJTkdc1OPHCVgFdt34eImyuThn
+            KhWYfBOEgAU0tGPxFfV027eOPmFPtx1pc3hg9FIW6eFweM5VOAmegA==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2025-06-27T07:23:44Z"
+    mac: ENC[AES256_GCM,data:irR+YYvaht5M/iaroL8JIwywzvVJMw4YQFLpGkCS559FyXs4so10ws/YxVB3XRTqfIQeo8m0BuSccjrj4R+XHGLjaGG838Zcdu02Gf4U7054kRiiZLcb+yR8Ysre1MdndB9X7M5bHIEfpIW/mt26IVSLZ7ncIsT0x4LBatHA7iU=,iv:SGavX1MyXou3zFOdzlRMqIUA48tB2gw1Q8VtGT+RAaU=,tag:WmvDcnQmjDlxmfxhVlfPbg==,type:str]
+    pgp:
+        - created_at: "2025-06-27T07:23:44Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQEMAzB6fv8Ha/LEAQf/WcoCEXAgGcCNwuyWvODoQOxTtF9GgA0q97uyDq3Aw6Me
+            PHlWOYFnUirhkb2LV8GHsaDiGbJowkydSf4KOinzlOJFdbU4ASd9D5lzewowJx8y
+            D44OImshdLadimq18A8qoFI34vBhPjVMdf5n8MAiruSPfo/OD2oJEA8FX9ROXey+
+            0amtdDBQaxqS1/WwTMBWmfL4iMOhAqDgRW4P19J3mkWGlkOX5ILeuKUy2oqlX6Xz
+            d0ITDcWHaGM40uEqZ3sVl2ZBcKyQ6YS+SRC5OgoOyEIyODCCglsxgZHl3LsuZriE
+            slVZMSC48LyZOLmjH4n+ZqQWAoGTJlQfBY1eOZfYjNJeAff90qKokYDX9g8BV9K+
+            KjefbKNkxd8K/c3iVgMCIgEIBqzUSoEqQbCSu/N2PWeB+amg45IapcDhs4c7wbIK
+            P8ARiEPWIDoDzn90BQdmuf2khTRiSRtyFqE8wFiDjw==
+            =XN88
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
+    version: 3.10.2
