@@ -63,41 +63,41 @@ spec:
     minecraftServer:
       eula: "TRUE"
       type: "PAPER"
-      version: "1.21.4"
+      version: "1.21.5"
       memory: 8192M
       difficulty: normal
       enforceSecureProfile: false
       motd: "Welcome to Maria's Minecraft server!"
       icon: https://avatars.githubusercontent.com/u/65277548?v=4
       pluginUrls:
-        - https://github.com/oddlama/vane/releases/download/v1.17.3/vane-core-1.17.3.jar
-        - https://github.com/oddlama/vane/releases/download/v1.17.3/vane-admin-1.17.3.jar
-        - https://github.com/oddlama/vane/releases/download/v1.17.3/vane-bedtime-1.17.3.jar
-        - https://github.com/oddlama/vane/releases/download/v1.17.3/vane-enchantments-1.17.3.jar
-        - https://github.com/oddlama/vane/releases/download/v1.17.3/vane-portals-1.17.3.jar
-        - https://github.com/oddlama/vane/releases/download/v1.17.3/vane-regions-1.17.3.jar
-        - https://github.com/oddlama/vane/releases/download/v1.17.3/vane-trifles-1.17.3.jar
+        - https://github.com/oddlama/vane/releases/download/v1.18.0/vane-core-1.18.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.18.0/vane-admin-1.18.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.18.0/vane-bedtime-1.18.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.18.0/vane-enchantments-1.18.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.18.0/vane-portals-1.18.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.18.0/vane-regions-1.18.0.jar
+        - https://github.com/oddlama/vane/releases/download/v1.18.0/vane-trifles-1.18.0.jar
+        - https://ci.dmulloy2.net/job/ProtocolLib/lastSuccessfulBuild/artifact/build/libs/ProtocolLib.jar
       spigetResources:
-        - 103782 # https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-no-chat-reports-and-popup-%E2%9C%A8.103782/?ref=spiget
-        - 28140 # https://www.spigotmc.org/resources/luckperms.28140/?ref=spiget
+        - 103782 # https://www.spigotmc.org/resources/%E2%9C%A8-antipopup-no-chat-reports-and-popup-%E2%9C%A8.103782/
+        - 28140 # https://www.spigotmc.org/resources/luckperms.28140/
         - 34315 # https://www.spigotmc.org/resources/vault.34315/
-        - 49016 # https://www.spigotmc.org/resources/vaultchatformatter.49016/
-        - 1997 # https://www.spigotmc.org/resources/protocollib.1997/
         - 33166 # https://www.spigotmc.org/resources/vivecraft-spigot-extensions.33166/
         - 62325 # https://www.spigotmc.org/resources/gsit-modern-sit-seat-and-chair-lay-and-crawl-plugin-1-16-1-21-5.62325/
       modrinth:
         projects:
           - discordsrv # https://modrinth.com/plugin/discordsrv
           - chunky # https://modrinth.com/plugin/chunky
-          - chunkyborder # https://modrinth.com/plugin/chunkyborder
+          # - chunkyborder # https://modrinth.com/plugin/chunkyborder
           - viaversion # https://modrinth.com/plugin/viaversion
           - viabackwards # https://modrinth.com/plugin/viabackwards
           - axiom-paper-plugin # https://modrinth.com/plugin/axiom-paper-plugin
           - bluemap # https://modrinth.com/plugin/bluemap
           - bbanner # https://modrinth.com/plugin/bbanner
-          - fishingplugin # https://modrinth.com/plugin/fishingplugin
+          # - fishingplugin # https://modrinth.com/plugin/fishingplugin
           - multiverse-core # https://modrinth.com/plugin/multiverse-core
           - multiverse-inventories # https://modrinth.com/plugin/multiverse-inventories
+          - multiverse-legacy-api # https://modrinth.com/plugin/multiverse-legacy-api/versions
           - terra:beta # https://modrinth.com/plugin/terra
       extraPorts:
         - name: bluemap
