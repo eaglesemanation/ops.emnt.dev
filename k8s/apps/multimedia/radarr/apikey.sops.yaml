@@ -4,39 +4,40 @@ metadata:
     name: radarr-apikey
     namespace: radarr
 stringData:
-    key: ENC[AES256_GCM,data:XTNmm2sy5Pl9Ovg1/4rE3ryjdzjNiktcyYpUyrwWMr4=,iv:xdO/MJd/q+E7ekfQ3FrYMRkcHM6R7AzfKCtoSOiLnlU=,tag:buB/QBupTZT1fqVcSxtikA==,type:str]
+    key: ENC[AES256_GCM,data:9k58/S4btpbYC/0//H3rd1hQw1kHaHxY8QAO6Z7yNhQ=,iv:1eshxfI2yayQAAKIvT6AQ0u7R4HLCGMt3M6X75d0O4w=,tag:PSwczGEgDsUo7pXs3vKx+w==,type:str]
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
     age:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBnczVWTmp5ZkNvNUZWbG9p
-            eXMzcWEvc091RS9BUnJxR0FGaDZaMGtSa2c0ClExSkQ4ZG5laXZpcVg1SVVMSkJ4
-            dHhWVkx3eEpibE5JMnpzeDdUWWhneUUKLS0tIGhUOHFQODA5bitSNlVpRTMxaC8v
-            SGRZbDE4SEtLbHZBSmU4cTVuWkZNRTQK689sSO8iY5GKiFb2FMZqHx0uDw14/X9M
-            kmoT2n2WpdIZJQXxgITesovDyLvo3hSGNm6tgNJnG1G4CnyzJnnXiQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBJZ0hEVkdZUml3NkJRRFBo
+            TnZnd1JKUzEySnJNL0pWTHNFL1pBb2o5bUVBCkNZVWdOclpGMC9TUHRwQm9ZWEdM
+            azdJeXMwcFhDVHJNY2N0N1NFdmxpd28KLS0tIHZndUhCL2NtOFBRbnQ5ejhNaGRh
+            RG5zbncvSVJmUStZamRBRy9XTTdMWlUK12omALy7bNVKsbhBRpZ98505B8QWCyIK
+            rXDbYuCgGlvejRUmYxTtxkQgeBpZp9yVtcIxbBQ8AiUTzqHZF3N8vw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-08-14T06:23:01Z"
-    mac: ENC[AES256_GCM,data:YZzLGkyAs/Ap38p8iMbE76mGG1vvZUm4Jiqm7i/ZzfM98LyWT8jhSWBgaA1bKd/4TzQOJE6kv9elxfeFUmvuEqeHKdi9Ft+vrmDiRheMZWjXy7y6Yzm2WDYHfMjnjeeCbXeNSnDDMptM36MkucycQ1vKRQIuV6G5UYcznqJsr1s=,iv:MzAt9ls3ZhsqHlGS42Zsfq0VotMtKvnnnknGGMjiJ3g=,tag:R6Y44ibsGeqHB8SKJMxruA==,type:str]
+    lastmodified: "2025-07-09T10:02:56Z"
+    mac: ENC[AES256_GCM,data:+lJ07uN6c27ANXkNIcI5P/73x6HRmyI3CpLEEK3dBgTK63rfM9f2c6qZEPMlFokKtx6wNx+NeZidQgj+ZDvYpLcdPkk+O9bc8D5tEKQamCMYj+OOqdqDVxg2fgp4wl4Y2HPdAhHP0cJDOBLSLI4aMeF0SvnzF3GtUFbY/YsCZt0=,iv:5+dnsFatNaqNy/hXvzALbIOo5I8lpDuegekIzkpmzyU=,tag:JDYEVzVGXfMC+i0R9a+ksA==,type:str]
     pgp:
-        - created_at: "2023-08-14T06:23:00Z"
-          enc: |
+        - created_at: "2025-07-09T10:02:56Z"
+          enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQgAh4fg78paXds1C6IQbJ6P7KXdzqaE0gcGZln/dNPUujgu
-            aY9z3GduWudEk4B8ZqFNNJNJ/yS4gPeyGwRmXSnFOw57JO6TAr65aNfe/Jlw/kDh
-            o4XrvGZRoWfi7IaBOpZAt/pl7bJOIO0msVwigSS6V8GOSNFu9BlquzXlZa6HorYY
-            P32O6/jjIM+gcjdc0Jc0APjbG06uhzPVAc98FqmSYcXifdHrZZ8kI8Ob27s7wbBO
-            mIb0qRGZcdPZtMvLmvp9Kf8tQzqMTJGrAD8KwAf2fjc/Zf5SNrZYESFPZKNSI7mp
-            pu9jKnS8KbvvNVhqY1KlR1Y61/FFoHCfMroxAl73wNJcAQETfgnBbTKjaSaU2Y/H
-            wuxiSwSrzXdSfuj5U0m7W8skwswnIO1hW9CWXKa4s7CZO2WksODnmXmSfnyrBj6u
-            qET/B/KJ3w2XP05QVjPuu2YN8MxBtcP8/kqdRUg=
-            =YYox
+            hQIMAwVH6sRf6ijOARAAqEBtfPv1MX9CjT46EHIZYvD363GaFuvlqZedpOFjOAHu
+            EeW1KtBIHynW8jsA0v+OaOLarQjvqJ7XQ+cd3i1258Q24yXLdZqKuVvTYdw8cE7g
+            m3OIUiJl32REMU3Xwhlop+DTEcsguYF5hE0SzTs5Sxl0QXCGMp0YU42khibo/L45
+            UwCnG7N9ujNJ/zJCPIebbSkOcWBKgseeDxQosGj0ps+eUiKebWcEVeYzq1oPhOzr
+            4G/3ivDpg85LvPN969XHAaIu2oze0W7BQ3258kldxBrcy7sbgNMPa4kh5dyH/j47
+            Scc6PZVDu/rexiK42L6BgK//QcXKSWzKWhZlN54cOZ6lzJBs1pjfv/3kuLwFSp6i
+            Ihw55QQ7XefWdhsUEAzZhDt7sGgSzNvcauyElUi0cR/XYeiIl1/+EbF3MLQgd/j3
+            SWbwH8dao2eDj64TJK/Arpo+4iNmtjG3EMlTh1D/7SjsURFZD8WGjcy/c7PgLAkA
+            eOMtEsPuibrkdoC92AgDGkLdkfUvL2s3wL5/ovUYpf/q2VJo7c4bOQeyGK7crXBh
+            WtFqRavY+4Ae9sAEUSK9UtQ/Yd2f6wIbCgwgyvvh+EHu0ErJBqDBoKcFuAFc9fxK
+            l1LdxiPfSAa88LxAuv5milfEPcycrRgzgKYkPy+sI/RH8nq85G1v+FvlNFmVMWDS
+            XgEdGm3/bIGhdgP/Yc59klBl47QWM5SBIaZ352DPScZ6DQA3DOlwMNeG5KT/nsph
+            CvB2GK8+yg+852a6JjK1bnBIY0V+1Jps4McyyKy0Tb4S9OrWfJOvRsOyOHscQY4=
+            =46g7
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
+    version: 3.10.2

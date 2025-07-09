@@ -3,39 +3,40 @@ kind: Secret
 metadata:
     name: sonarr-apikey
 stringData:
-    key: ENC[AES256_GCM,data:KgahvQW8TVwv5TO7RNt0mDI61IQtdEB4mMEZnq9ThTM=,iv:wzrhVSMUQxkCVl4Is7H1NgDyuUVBz6LcY+1VaoI5HVI=,tag:wk+3+e/F3P9X0KaZILUHpA==,type:str]
+    key: ENC[AES256_GCM,data:zQLnhoSnoclGLOnOr7SKOLpeKeL9yehdWHFEyOJT2+I=,iv:+e4U21/rGU+l1ekRy0CFK6ty4UHrXan3zmMyF03UW7s=,tag:j/DYby/eHl24ToBdBEDenQ==,type:str]
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
     age:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBqbUVIbGwvYmNmcDRtUDhC
-            a0thRWp1UGZZT1ZWMTBhUG5vczFZSzh1NmhRClU2clRSbDNvSU90UkFVTmNxc1gx
-            Wm5IUTJyMjM5cTVkdlVCVWQ5bzlubzQKLS0tIElGM1VTeFNPZWQ4bTdmVmNBbVhQ
-            UkJuL29GRDMwOG4vRG42WitBeDVla2sKNpPqtkMldhBIVppxfOqU+ZZKGzyIQaYG
-            Imzg+voFCHmCiI5BhfMdoNbQauA6WNTMbFxKuS28cARVGJVCntxcyQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBLSDBxdldEWmdLaWRjVmpn
+            dWhSZTZ6Y3Vvb1dLTmdYZHh1akpmR21vYTNjCmtJSDNWTnRXaVJlVGVXTlJmOEpK
+            YzJjQnFrNktoV3RXb2w2U1pPYTVBeE0KLS0tIEpDcnhYRFBhaGxOblBrS2JJMjdU
+            M1BXNnZCdE9Ob2o5SEFSSDdnc2FFVlEKNEa/kTCK45+GIN7JhvSj0QtHwoTjeo0D
+            CWoDoBH0PhSY5BS1jT3EZ8Z7lcMrPi6xb9w4TyCLH/5MN0PUB+ERRQ==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-08-23T21:46:00Z"
-    mac: ENC[AES256_GCM,data:QnJpoYn2PXcxtnDf4bI+fEnB9WoCVzZ+vFNq4bEmz3m+WoYvQA8oocPiI9CmFpHzBllYpmAKyp1i4EiHwK2FaexKmdViLLAc9tKNX8aV74ZwKrifgkmRIPRi22mtk/QhZv+AEkey5uFEFMIJ66j1xlIQsGy10LWeL79LjkzA7DE=,iv:mqV1/02wztN8ofyajg+MvTL1kcmOXxwDqb6x5ICzFbk=,tag:2htrf3q54Hd882iKEeZMYw==,type:str]
+    lastmodified: "2025-07-09T10:02:56Z"
+    mac: ENC[AES256_GCM,data:0u0fGXb4BkSv1IhdNTA5P71lUgzcU2e4fPhXDMAFelR19u3dCvHnIzV6317qh7A2KsIRQdylqC921uMFKa0q1Y10c8sLkl421ZKkXL4ueftp9NV32UTKItjP69+laCZU4SnP+J129kelDDwXqYNMH6FRRguuw7TcZvtTU+/3bjM=,iv:/cPg+VYINK48i2hZfd73XPAHg0p1kVfr9g4PcoIJaN4=,tag:UrzzwU7XA1IcpYT0kTZYyw==,type:str]
     pgp:
-        - created_at: "2023-08-23T21:45:59Z"
-          enc: |
+        - created_at: "2025-07-09T10:02:55Z"
+          enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf6AsgCIcVQfINLwX7GVqrnvtlIkObQOae2SzOIu/WRcB1l
-            rogbyscGV/GXPuaXQNsmoIAbHXyGT5xe7m4QL0pfIO/xN4wjGt3aEnRRKMpH4LtG
-            wmg7uiyw74ZZP8025WEw7FQH12IsOYNtF3swjcVJYUmLy9lB2y8uHBfsNoE8rFzX
-            QrxMC1XkTqcqBJ0w5BUUn+ETCN84JIUpVJ7A0N1d2tym95emhgXVcGigULYpwmRl
-            opxbzt/GfuPZQo0kc5TgwSQQYBBsQYmrLGwtaH4m0lI+t7HdNosECaw0NSw7dlP/
-            EnbnrqAFUxR+1plq/fCentjOjT3YusNzNHoxVJN+m9JeAd1jeVaI1b236BT11gtq
-            2JnPciq42ZxkuCUMWtPAGVq48jfsfLWUjuBYQPeK34kcqM5082TtstLoF6sAppv4
-            FP6h01g3glBsBA6+LumF4h4uVSfkRz6Q/A0ZjWVhWQ==
-            =qVG6
+            hQIMAwVH6sRf6ijOARAAi6W6d8SDhVFutFmi3yqcG3U22IewxBwnghAOkwPfOCoJ
+            7XfrSy5m91Sx1V8QxxEiJL8EltAZYSLi7IJW1oi0Ot/EsnPvWEjsOg/MEuHF3bfr
+            bFG6TR66qVzN0sYq5RA0dO9bI+6k9QoNqf42Y42tc/IFitbe8yUj3Yz3bau4EXBv
+            CebEnQRgrv/uq21B7lLgsBRQRH7pyBGSKOGbLrPC0gv6yFuJhmAgOThBkXEd9EvI
+            b9AtodbZIe5eygCM5LUudtp1PeX4j2+qwzQ1VxJRJh+r1zeUOlpOZO+fDJ4lMZDv
+            3zjebPDI7H9WTFe35x7gqXo8i+IwAE+CwxOHrt1IHETj/x8ko/jQxenoo80S9quc
+            vheo1jsFDp3cSSXSJ1tkPYqsqz5ibydUftB7LI/g4Wmn31t680W71ybSE1dA+yqi
+            u60yojRcNgiU7LrTZaiD9cBkjD/WlaNr/n+CUEyLyoz0qOsyLiIYOPO5+zeikfOP
+            boaZWPZdlvTfsgSkvJmQVPRAdAY/Tj45sEDlGOVsBsN/cS/Bo/R+TA6tbC73Q+Gx
+            vY6D+GfaVSdybDe1Tmw9ki8DQb+fHJzf8t1qv9REctMX81TCXynxeDniw5ilQiwt
+            3Zs/N3mxb7pk+Cv9U9VG+0it5NawptJhJGe4qX3xUUlUMFc0XarbmXDQH+HNWvnS
+            XAHBc+nP2/Vd3bQEuamdsuw2SbeijDTnqBnKxNwdhZfUL5SNYGc8Dd+EbKB3c8hG
+            tG7sxogSGQ3Af0HuO0KqkYUpMrtcFnI9iiQPN9gMQRG5IENWhgZ1RQWWyHEO
+            =qwSY
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
+    version: 3.10.2

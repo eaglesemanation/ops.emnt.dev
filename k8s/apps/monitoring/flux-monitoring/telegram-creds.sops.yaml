@@ -3,39 +3,40 @@ kind: Secret
 metadata:
     name: telegram-creds
 stringData:
-    token: ENC[AES256_GCM,data:+xKcwLen2FQOnOUMAEZjEO3fsaYMoirxX8wIA4wyA36/Xh3V+X+fSzHvilZntA==,iv:IHEcKyHBLPSSG0x0yxLiGdgH4rv6d9QV55FgqYWeMaA=,tag:DP9DQbMAWyT98tURcAjb+Q==,type:str]
+    token: ENC[AES256_GCM,data:itEy0tTDclDquBkjp9dSNQ8l2sp50QSgryoQuYqmiR8CYbrf4rE+dgZELVQq3Q==,iv:UF2DtmHZezET++9TodcB4x/TDx0WgtTNtj33MddhILI=,tag:V5Qm9Yhpg7dinplZGw75PQ==,type:str]
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
     age:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSA4RW50bjVndDU2Nm1xeVds
-            endRbW1kc0oxeit4UmdpUHpoNzJKcEV5eldrCm9VNDdqckhyUHg0S0NlS3lEN0xX
-            QjRteVIwQTVZVkNob3RzQXVkeXBZbHMKLS0tIEg3dDd1V0pEWTlBZm41MFY0MjJ3
-            b245Q3hCMm42RDZTT0pYOGpyY2Z5U2cKxEJYedv9P5XkGn7x+sFx4DZh4jibUqTU
-            a4TC1aPP0/rrXnmxtZKtJgdZQzaBPgsIeLqk4gWB4CUaKk0KD49A4w==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBpVmRRWU1pRHRkcWh2SFVW
+            QWJtODIwVUtmZ2FsUklYdVlTMjRJdnAyRFN3CkpRSHluZDI5aE1uL0tabmpaSHRE
+            WGkyZXltNlZZdEREUTFtYzN6cElSMUEKLS0tIGZUdUtzaGkxaTNidDZZR1lNMDhx
+            dllxR0FTaW5BMVJoLy9NWlphNTFwUjgKGqBctjzNu5BX0FqcBgHlRhOXYG86vMx5
+            UIw2blTAAZUXPfLcEwTq1S0QC+/cbzecJF3e6EIsn8MotTv5nznErg==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-07-08T14:24:03Z"
-    mac: ENC[AES256_GCM,data:We7dY4Y7XIbl8WXWsq85W+iSRjgOtg7VBFV6NR2nOds9meifumod7sNg2nSjnzhjk0BAQ01E+mOksnaSdVLuCQ5sWYBouw4+u0Tq8Sel5Q7iMT6gTXfcyxnb5UkMYC6NogaJhg7eE+mk4wA8aW+GaaxjlDGCuJg4WksJ8Jw3otc=,iv:TkbDwyrVpiIREdTEt1yEXzdK6NEAIIH74BPq6liU0xA=,tag:ydgFpgugbCLJ564PmQDaqQ==,type:str]
+    lastmodified: "2025-07-09T10:02:55Z"
+    mac: ENC[AES256_GCM,data:XKwnxVwmt9is/+QWS+1AoU1SxCVCmc2f867+Egokrbn85poLez3CyUILaBIZailJuiXlymzOzeZGw6JrX7LmPyjawjcOuzwIBnJI8BNtILyxd36RxC9ripBE/dDmtYIO/d32rIw8rFmuNB1GTpjrtLRvQU6BL13Wk6MpiUDIycc=,iv:suHAuOt+jUSZ6YJmgIwjsJRQlQtfRBVvT8EbkORCukc=,tag:UBaMMd4ZKWgBy80AuaLF+A==,type:str]
     pgp:
-        - created_at: "2023-07-08T14:24:03Z"
-          enc: |
+        - created_at: "2025-07-09T10:02:55Z"
+          enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf+I8Pj+Q0Nc/O0vWkHzgGAujtB1lH6u2tV4IUu4nMJzY2u
-            pYgho4FdEAa8wzmBBmtUBRMuRBlotb383PyNEV5POEu+Ie+1g+ab/U2GBz/Xz/Iw
-            5wRVrKr0gcv4KAQ3u99x+mVHegL3FdI+eKrrlr1pFvdMYF+hZmK2KI4D6eKsHOLq
-            Gdv/D7sytg+TnWoPnaalvqqOLEJb4/Iex/OVYMuPqXbtnOEIui6H+RzCT9Z7Uf9a
-            sD8kUGqPexmKyg2ccloBuctkJs2V2RcWYsygz0MTs1BliVzu50LiubUwkwTAlDdy
-            b/l1WIf+gpjGz71ROUL1SPoADKbr8Y9EizzViQw8ptJeAcncFsB3b/xHuMcJnbmH
-            sCtWerslGCuYqcuHEHamRAQcS/Cx4ukN9xNGL7K7Cjr+Cifpbo1OmL7SUaCEnWws
-            rkNt2gYlxO/edMKX4ZsNGNnaCVVBO82sQ6+UEc5Nng==
-            =kzYX
+            hQIMAwVH6sRf6ijOAQ/+Lp5KjkD98iXYyNt1ri18MsNdhXBEPjAlzn+MZPD8QQ8R
+            FhoI+kOTu23oCBMVS/Tn3LCs1B1Kb7sAf7DR4h4TinPo/oxmkcfyM7aRLkTKd7oH
+            WoZR8itLeMRpZNF/l0qG0vVG2pLg0AGn1j+cipAK23LUr8m+Prz4yhkmol2l38fx
+            86z1vb4tL5s+Wqcll/F/MnfFiR/Q8MqRswOKe5YxcvlKRzM1FJcGzSTkY+y6WvDn
+            +vy2/W+ZZ5cKEX2zoJuPWdheyBbEya+M7yuAzHHstw50tA4YmOkdA7yxHxqxHOL4
+            x5EXYLDcoZrMpPn2OdDDUiCzzAKNNBJ1DHnZxmM2FxF4s74MIPTaFdTh+kZGi532
+            RQVJvFLes0XXmq3g2ywh9k8/wW+q7/KywiTKHXNEeMPzNFgPh0b3A9e2eETFIUH+
+            eUfRrSQCPyJrU58lV0q8ZkMMfKXSjnrgVyheJndwIYXaTw4Opsnj0U9SrgzOhwkM
+            qvrV59khO3iZnm+S6cZOUqoh6b+VU8rczUqorQwjjvxM9XR2tGEC/d5XuctmfykN
+            +MZJ7eAxIQF4pcJIvWvbocPvdtCZk3AVM92I1Xq2r2Yn5cpxd7tWBfNJ9bXEZvs0
+            xPvpQESH43qqdxK7/CZ75iXzPHdz6rnXC4OSjNtzahvBhv5uvTo6uK2vW4getm7S
+            XgHidCFWulizJguMw+9XYfMHLkduox4hSjaiq6+GMRdnBa71bRnAkyc/wuPbvGLI
+            29W8I9X9hb9C7AsYc749UyVTk2PrDiZUq3C43V6ZIa5xrTFXAXVMF7q6ATTCOas=
+            =6EXj
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
+    version: 3.10.2

@@ -4,39 +4,40 @@ metadata:
     name: emnt-ops-receiver-token
     namespace: flux-system
 stringData:
-    token: ENC[AES256_GCM,data:mHCBWMEN0xbxPMM/0bFGBHq5XQWmuJBoxx78jbLX9X4QjQvpStP3SA==,iv:TMCOUpgDnOZTO4Y0/X/JimXGRkhDVO0M65JXlTe/vgo=,tag:wVPMXcN628Km4NCtaJuf/A==,type:str]
+    token: ENC[AES256_GCM,data:0W9OQQ1ncI74FjqYiVQ2Bfil5vhYYOYbBVq7eXnXtWPjV7/P7NvyBg==,iv:PhCWretYhz6AsgSrsjzmbnAnziA8EtAzXkiNuSP5S+k=,tag:3U6QHZam/VFHmnlLzFphOw==,type:str]
 sops:
-    kms: []
-    gcp_kms: []
-    azure_kv: []
-    hc_vault: []
     age:
         - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
           enc: |
             -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBRaU8zbEhmSE05LytpMnJY
-            TytFWUw4Umt1VTVIbHQ3RVFQaEZNdGlOQlM0CkV1MkVIMCtTVm4yQzNocmpScHh4
-            K0FCSzRkZmxYbEZGcU9HMmVzYTFscnMKLS0tIGQrbHNiLzZnbWJ4ZEdkcURkb1Fz
-            WVNKWGFvdWZhdUlud2FvYmlnVkU3QTgKFkTQYmDKKm0luINTUMmPH7OHbsB7eP01
-            P8VQNxX50Dj9t4MsfcFRb2N28t6LWNTid/cZcKvE2CaDa4D6f5QkfQ==
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBCbnEyQ0NSTC9takJBbHdq
+            dEd2d3ZtUHR3MFRQckpNc1YwVWlzTTdVNzBJCk1BYjBtQXhqSUc4eUhsejAvTTJS
+            ZnBSWXVyOEwvWWR4YWp3QnVPTXdHbkEKLS0tIEZaYk05eGtSaUJJWDV3VDdENWxK
+            UjZ5YWRjemdRb3BsVkxEdm9aZWNQbEUKQdUzF47fiNRLx1CQMJ4BYLd7C3M5XBqG
+            IYeRNPm2jIKvX2P7t0OgHzhCDzukgRnSJRE4GNEP5U2RPpoKWivzCw==
             -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2023-10-16T04:45:53Z"
-    mac: ENC[AES256_GCM,data:r8F1fsXAesNmdV3NFQu2Kblt+IxZV1wgwtDbodC2gkW40WWBbDcaD+nisOV8k+PNpip5LzLViSqrIdZ0JE+vVLXAg15a96siNVkmly0C1f1DtkhykUKssxilgKt0ne/GvUNdpBDxy4KnOLpWCx1hbvRxxfsHdscR2oiMQ0TRehQ=,iv:LLoWhIHmhIWExPnv69k1mYbwVJvdF76tkXbl1vwG1uk=,tag:BKiBzCz3Arnrr9YOsEHVFA==,type:str]
+    lastmodified: "2025-07-09T10:02:54Z"
+    mac: ENC[AES256_GCM,data:wO3pyZ8N6zuUsEo6evlahLXE4yA1isJfOz+g8gRTbekykkd/Wl0he9AeMTINevg7hgLjtvS92Y+VvVFk4W9LZQM/+qXN4FCwAfwDF+8ZYDmh37qAaGRPOyZ7V3fne7fiEaKDwsksbDSOlAyW6CG6hf+CM+6sO5C5Sjfo7hAkfms=,iv:uZ5igWdIyZQ77U+HlSSkIMu6wpsAZGQG2B8jsol2A8k=,tag:0bTkChI8XAhCD3ICep8APg==,type:str]
     pgp:
-        - created_at: "2023-10-16T04:45:51Z"
-          enc: |
+        - created_at: "2025-07-09T10:02:54Z"
+          enc: |-
             -----BEGIN PGP MESSAGE-----
 
-            hQEMAzB6fv8Ha/LEAQf/azwRJvtklJj9YFqvNrjMoLC0dax3e57mjGpQREevNywc
-            0gYH11xTRen6RL6goHSJWRNbsJ3UDOqrxm/OWHagqlfNyRzLsj580P6yHXJnZYUU
-            KkGlnymAnEFszTEjr+EzPfmOrDmRpHsxIrJ+7LjgipkYF1BcVu2j3c7moXHgbuXm
-            bn+9EuKX6uUfAkJbecKkO61hKH+CLKqALSSbsrQYLR+zGWaHkdqMTSKEeDOldVoF
-            3YuO40iaSg7kbcqA2NbUXMU/uH5zQBPC2+J6n3dEL8GkLUtU3mePVyQ8sF0VokLc
-            NF1+Xo2riLQjui3I4PwAtw6d/5xAJ8SRQpAF3J1a3dJeAS4SI3YSt7gfdyKVBmL0
-            v3qcdSj4qZvi2hHk0eAINoRvWNDDUjijbt1Iz5H72hZFqVOzqjOwYe4vDcRvZtTe
-            LR5NH3JJChio/Rb6PxZxCbUFPfyNJhe3QqKs0OGW3A==
-            =i1ID
+            hQIMAwVH6sRf6ijOARAAsVJBVnHmndBtIsroS+dgZr474r//gvjV92M3C4uwxD75
+            N1tTUGlCXPP2rFFoDC0h4LQF8D/g2q4dM8ywZomETNKIy1uC/7g5LWGEKM5ipcfO
+            igH/0TZqGm4qfGhv8KY0WHhNYrBlQl/KW3Y82wEyJ1cFCttKzzM82Rb3oJuuH5g6
+            jprUmg0uQAB0DZRrRreoxcNu77L6RfqRnjlQOeVz7NwD5qd2SE1RcySwFkCLBih/
+            rtYPrE74ElNinQsOWrPXr3ffmqBkDSaAW0eOf/G8btYgQ8OUpJoHXq9O0uLH+Ttn
+            2nVg8zTRY+l8VVBlnG3o8R5yFglFZX/8lWpSPGP426wU3mAkKsU6WYbI93U3TG+D
+            PePjqaTofI8nN/DbHfbDcBZZ1o3hGiLwoE3TqTOW1iwP+9kBuOiOraYbBo0jRRHp
+            NHjYjGKCkoaluKS+jL/Ndx8pUsTdyqKh2I7Nip6iKIr/ugVDCkbcCBnsIPtFGMqE
+            xt4L1ZMpraepWXBbNLciD8VX6hNQQpbxJIoJnSQGRPAxluFF1ssHLeFEQztHE1lx
+            ENFbiAdBFTIuWscuZODrSFUcQSL4HoLv3+AdqcndyFVh0AspvCd1zEQ/Xr1VR809
+            mJvFZ38mwm979HVoV5VvvMYvgMlaPFVfOAt9jU4wLEfe9evlRwL1NzNhahdySQXS
+            XAGcC0rX9dTlh7wBMpWvpKG2QmxMxXAMpWPaoubBboZzO+Lk8kSvsWIEnY6dOsaF
+            JlD2xp/J+nUNrwUscZGc3Myv2BiZPKC6OfrEiyot3XsB3KYctJ65JcFjJSPc
+            =09Jk
             -----END PGP MESSAGE-----
           fp: C5B9ADB07DBE5A2E
-    encrypted_regex: ^(data|stringData)$
-    version: 3.7.3
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
+    version: 3.10.2
