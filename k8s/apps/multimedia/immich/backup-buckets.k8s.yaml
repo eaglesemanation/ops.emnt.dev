@@ -4,3 +4,43 @@ metadata:
   name: backup-buckets
   namespace: immich
 spec: {}
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: local-backup-s3
+  namespace: immich
+spec:
+  configuration:
+    destinationPath: s3://immich/
+    endpointURL: https://backup-s3.${CLUSTER_DOMAIN}
+    retentionPolicy: "30d"
+    wal:
+      compression: gzip
+    s3Credentials:
+      accessKeyId:
+        name: local-backup-s3-key
+        key: access_key
+      secretAccessKey:
+        name: local-backup-s3-key
+        key: secret_key
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: backblaze-b2
+  namespace: immich
+spec:
+  configuration:
+    destinationPath: s3://immich/
+    endpointURL: https://s3.us-east-005.backblazeb2.com
+    retentionPolicy: "30d"
+    wal:
+      compression: gzip
+    s3Credentials:
+      accessKeyId:
+        name: backblaze-b2-key
+        key: application_key_id
+      secretAccessKey:
+        name: backblaze-b2-key
+        key: application_key

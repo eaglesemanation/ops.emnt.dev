@@ -142,3 +142,25 @@ spec:
       sslRootCert:
         name: immich-pg-cluster-cert
         key: ca.crt
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: local-backup-s3
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: immich-pg-b2-backup
+  namespace: immich
+spec:
+  cluster:
+    name: immich-pg
+  schedule: '0 0 0 * * *'
+  backupOwnerReference: self
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+    parameters:
+      barmanObjectName: backblaze-b2
