@@ -1,0 +1,6 @@
+apiVersion: crossplane.emnt.dev/v1alpha1
+kind: BackupBucket
+metadata:
+  name: backup-buckets
+  namespace: immich
+spec: {}

@@ -1,0 +1,206 @@
+apiVersion: apiextensions.crossplane.io/v1
+kind: CompositeResourceDefinition
+metadata:
+  name: xbackupbuckets.crossplane.emnt.dev
+spec:
+  group: crossplane.emnt.dev
+  names:
+    kind: XBackupBucket
+    plural: xbackupbuckets
+  claimNames:
+    kind: BackupBucket
+    plural: backupbuckets
+  versions:
+    - name: v1alpha1
+      served: true
+      referenceable: true
+      schema:
+        openAPIV3Schema:
+          type: object
+          properties:
+            spec:
+              type: object
+              properties: {}
+            status:
+              type: object
+              properties: {}
+---
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: backupbuckets.crossplane.emnt.dev
+spec:
+  compositeTypeRef:
+    apiVersion: crossplane.emnt.dev/v1alpha1
+    kind: XBackupBucket
+  mode: Pipeline
+  pipeline:
+    - functionRef:
+        name: function-patch-and-transform
+      step: patch-and-transform
+      input:
+        apiVersion: pt.fn.crossplane.io/v1beta1
+        kind: Resources
+        resources:
+          - name: local-bucket
+            base:
+              apiVersion: s3.minio.crossplane.io/v1alpha1
+              kind: Bucket
+              spec:
+                forProvider: {}
+                providerConfigRef:
+                  name: local-backup-s3
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+          - name: local-user
+            base:
+              apiVersion: iam.minio.crossplane.io/v1alpha1
+              kind: User
+              spec:
+                forProvider: {}
+                providerConfigRef:
+                  name: local-backup-s3
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+          - name: local-user-key
+            base:
+              apiVersion: minio.crossplane.io/v1alpha1
+              kind: AccessKey
+              spec:
+                forProvider:
+                  userSelector:
+                    matchControllerRef: true
+                providerConfigRef:
+                  name: local-backup-s3
+                writeConnectionSecretToRef:
+                  name: local-backup-s3-key
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.writeConnectionSecretToRef.namespace
+                type: FromCompositeFieldPath
+          - name: local-policy
+            base:
+              apiVersion: iam.minio.crossplane.io/v1alpha1
+              kind: Policy
+              spec:
+                forProvider:
+                  policy: ""
+                providerConfigRef:
+                  name: local-backup-s3
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.forProvider.policy
+                transforms:
+                  - type: string
+                    string:
+                      type: Format
+                      fmt: |-
+                        {
+                          "Version": "2012-10-17",
+                          "Statement": [
+                            {
+                              "Effect": "Allow",
+                              "Action": [
+                                "s3:GetObject",
+                                "s3:GetObjectVersion",
+                                "s3:GetObjectTagging",
+                                "s3:GetObjectVersionTagging",
+                                "s3:PutObject",
+                                "s3:PutObjectTagging",
+                                "s3:PutObjectVersionTagging",
+                                "s3:DeleteObject",
+                                "s3:DeleteObjectVersion",
+                                "s3:DeleteObjectTagging",
+                                "s3:DeleteObjectVersionTagging"
+                              ],
+                              "Resource": "arn:aws:s3:::%[1]s/*"
+                            },
+                            {
+                              "Effect": "Allow",
+                              "Action": [
+                                "s3:ListBucket",
+                                "s3:ListBucketVersions",
+                                "s3:GetBucketLocation"
+                              ],
+                              "Resource": "arn:aws:s3:::%[1]s"
+                            }
+                          ]
+                        }
+                type: FromCompositeFieldPath
+          - name: local-policy-attachment
+            base:
+              apiVersion: iam.minio.crossplane.io/v1alpha1
+              kind: UserPolicyAttachment
+              spec:
+                forProvider:
+                  policySelector:
+                    matchControllerRef: true
+                  userSelector:
+                    matchControllerRef: true
+                providerConfigRef:
+                  name: local-backup-s3
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+          - name: b2-bucket
+            base:
+              apiVersion: b2.crossplane.io/v1alpha1
+              kind: Bucket
+              spec:
+                forProvider:
+                  bucketType: allPrivate
+                  defaultServerSideEncryption:
+                    - algorithm: AES256
+                      mode: SSE-B2
+                providerConfigRef:
+                  name: b2
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.forProvider.bucketName
+                transforms:
+                  - type: string
+                    string:
+                      type: Format
+                      fmt: emnt-dev-%s
+                type: FromCompositeFieldPath
+          - name: b2-application-key
+            base:
+              apiVersion: b2.crossplane.io/v1alpha1
+              kind: ApplicationKey
+              spec:
+                forProvider:
+                  bucketSelector:
+                    matchControllerRef: true
+                  capabilities:
+                    - listFiles
+                    - readFiles
+                    - writeFiles
+                    - deleteFiles
+                providerConfigRef:
+                  name: b2
+                writeConnectionSecretToRef:
+                  name: backblaze-b2-key
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.forProvider.keyName
+                type: FromCompositeFieldPath
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.writeConnectionSecretToRef.namespace
+                type: FromCompositeFieldPath
