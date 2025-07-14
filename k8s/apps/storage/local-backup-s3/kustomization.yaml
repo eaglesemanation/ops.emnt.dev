@@ -34,6 +34,6 @@ resources:
   - pgbackrest-affine-creds.sops.yaml
   - pgbackrest-affine-s3conf-template.k8s.yaml
 
-  - crossplane-postgres-backup.k8s.yaml
+  - crossplane-bucket-providers.k8s.yaml
   - minio-root-creds.sops.yaml
   - b2-crossplane-creds.sops.yaml

@@ -1,20 +1,9 @@
 apiVersion: pkg.crossplane.io/v1
-kind: Provider
+kind: Function
 metadata:
-  name: provider-aws-s3
+  name: function-patch-and-transform
 spec:
-  package: xpkg.crossplane.io/crossplane-contrib/provider-aws-s3:v1.23.0
-  runtimeConfigRef:
-    name: disable-default-tags
----
-apiVersion: pkg.crossplane.io/v1
-kind: Provider
-metadata:
-  name: provider-aws-iam
-spec:
-  package: xpkg.crossplane.io/crossplane-contrib/provider-aws-iam:v1.23.0
-  runtimeConfigRef:
-    name: disable-default-tags
+  package: xpkg.crossplane.io/crossplane-contrib/function-patch-and-transform:v0.8.2
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
@@ -23,20 +12,12 @@ metadata:
 spec:
   package: ghcr.io/eaglesemanation/provider-b2:v0.1.0
 ---
-apiVersion: pkg.crossplane.io/v1beta1
-kind: DeploymentRuntimeConfig
+apiVersion: pkg.crossplane.io/v1
+kind: Provider
 metadata:
-  name: disable-default-tags
+  name: provider-minio
 spec:
-  deploymentTemplate:
-    spec:
-      selector: {}
-      template:
-        spec:
-          containers:
-            - name: package-runtime
-              args:
-                - --skip-default-tags
+  package: ghcr.io/eaglesemanation/provider-minio:v0.1.0
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1
@@ -54,14 +35,15 @@ spec:
       engineVersion: v2
       data:
         credentials: |-
-          [default]
-          aws_access_key_id = {{.accessKey}}
-          aws_secret_access_key = {{.secretKey}}
+          {
+            "user": "{{.accessKey}}",
+            "password": "{{.secretKey}}"
+          }
   dataFrom:
     - extract:
         key: minio-root-creds
 ---
-apiVersion: aws.upbound.io/v1beta1
+apiVersion: minio.crossplane.io/v1beta1
 kind: ProviderConfig
 metadata:
   name: local-backup-s3
@@ -72,19 +54,8 @@ spec:
       name: crossplane-minio-creds
       namespace: local-backup-s3
     source: Secret
-  endpoint:
-    url:
-      static: https://backup-s3.${CLUSTER_DOMAIN}
-      type: Static
-    services:
-      - s3
-      - iam
-    hostnameImmutable: true
-  skip_region_validation: true
-  skip_credentials_validation: true
-  skip_metadata_api_check: true
-  skip_requesting_account_id: true
-  s3_use_path_style: true
+  server: backup-s3.${CLUSTER_DOMAIN}:443
+  ssl: true
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1
