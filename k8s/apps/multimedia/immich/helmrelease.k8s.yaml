@@ -43,7 +43,6 @@ spec:
           secretKeyRef:
             name: pg-url
             key: PG_URL
-      DB_VECTOR_EXTENSION: pgvector
       IMMICH_LOG_LEVEL: debug
     persistence:
       pg-certs:
