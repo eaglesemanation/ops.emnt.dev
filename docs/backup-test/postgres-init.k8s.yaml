@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: backup-test
+---
+apiVersion: crossplane.emnt.dev/v1alpha1
+kind: BackupBucket
+metadata:
+  name: backup-buckets
+  namespace: backup-test
+spec:
+  suspendMirrorJob: true
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: local-backup-s3
+  namespace: backup-test
+spec:
+  retentionPolicy: "30d"
+  configuration:
+    destinationPath: s3://backup-test/
+    endpointURL: https://backup-s3.emnt.dev
+    wal:
+      compression: gzip
+    s3Credentials:
+      accessKeyId:
+        name: local-backup-s3-key
+        key: access_key
+      secretAccessKey:
+        name: local-backup-s3-key
+        key: secret_key
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: test-pg
+  namespace: backup-test
+spec:
+  instances: 1
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 5Gi
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      parameters:
+        barmanObjectName: local-backup-s3
+  bootstrap:
+    initdb:
+      database: test
+
+
