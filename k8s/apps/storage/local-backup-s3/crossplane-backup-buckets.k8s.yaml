@@ -24,6 +24,9 @@ spec:
                 mirrorSchedule:
                   type: string
                   default: "0 0 * * *"
+                suspendMirrorJob:
+                  type: boolean
+                  default: false
             status:
               type: object
               properties: {}
@@ -189,6 +192,7 @@ spec:
                   bucketSelector:
                     matchControllerRef: true
                   capabilities:
+                    - listBuckets
                     - listFiles
                     - readFiles
                     - writeFiles
@@ -278,6 +282,9 @@ spec:
                 type: FromCompositeFieldPath
               - fromFieldPath: spec.mirrorSchedule
                 toFieldPath: spec.forProvider.manifest.spec.schedule
+                type: FromCompositeFieldPath
+              - fromFieldPath: spec.suspendMirrorJob
+                toFieldPath: spec.forProvider.manifest.spec.suspend
                 type: FromCompositeFieldPath
           - name: b2-recovery-cronjob
             base:
