@@ -20,14 +20,39 @@ spec:
         app.kubernetes.io/name: affine
         app.kubernetes.io/instance: affine
     spec:
-      containers:
-        - name: affine
-          # renovate: datasource=github-releases depName=toeverything/AFFiNE version=0.21.6
-          image: ghcr.io/toeverything/affine-graphql:stable-a166760
+      initContainers:
+        - name: affine-migration
+          image: ghcr.io/toeverything/affine:0.23.1
           command:
             - sh
             - -c
-            - node ./scripts/self-host-predeploy.js && node --import ./scripts/register.js ./dist/index.js
+            - node ./scripts/self-host-predeploy.js
+          env:
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: pg-url
+                  key: PG_URL
+            - name: REDIS_SERVER_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: keydb-creds
+                  key: password
+          envFrom:
+            - secretRef:
+                name: affine-secrets
+            - configMapRef:
+                name: affine-config
+          volumeMounts:
+            - name: data
+              mountPath: /root/.affine/storage
+            - name: config
+              mountPath: /root/.affine/config
+            - name: pg-certs
+              mountPath: /pg-certs
+      containers:
+        - name: affine
+          image: ghcr.io/toeverything/affine:0.23.1
           env:
             - name: DATABASE_URL
               valueFrom:

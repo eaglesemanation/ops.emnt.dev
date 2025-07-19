@@ -4,7 +4,6 @@ metadata:
   name: affine-config
   namespace: affine
 data:
-  NODE_ENV: production
   TELEMETRY_ENABLE: "false"
   AFFINE_SERVER_EXTERNAL_URL: https://affine.${CLUSTER_DOMAIN}
   REDIS_SERVER_HOST: affine-affine-keydb.affine.svc.cluster.local
@@ -14,7 +13,7 @@ data:
   MAILER_SECURE: "true"
   MAILER_USER: affine@${CLUSTER_DOMAIN}
   MAILER_SENDER: affine@${CLUSTER_DOMAIN}
-  OAUTH_OIDC_ISSUER: https://authentik.emnt.dev/application/o/affine/
+  OAUTH_OIDC_ISSUER: https://authentik.${CLUSTER_DOMAIN}/application/o/affine/
   OAUTH_OIDC_SCOPE: openid email profile offline_access
   OAUTH_OIDC_CLAIM_MAP_ID: preferred_username
   OAUTH_OIDC_CLAIM_MAP_EMAIL: email
