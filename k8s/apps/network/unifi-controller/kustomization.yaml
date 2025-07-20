@@ -8,6 +8,7 @@ resources:
   - pvc.k8s.yaml
   - postgres.k8s.yaml
   - ferretdb.k8s.yaml
+  - backup-buckets.k8s.yaml
 configMapGenerator:
   - name: unifi-pg-init
     namespace: unifi-controller

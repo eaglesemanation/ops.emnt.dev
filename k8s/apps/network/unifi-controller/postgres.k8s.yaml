@@ -96,3 +96,79 @@ spec:
           limits:
             memory: 64Mi
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/imagecatalog_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ImageCatalog
+metadata:
+  name: documentdb-postgres
+  namespace: unifi-controller
+spec:
+  images:
+    - major: 16
+      image: ghcr.io/ferretdb/postgres-documentdb:16-0.105.0-ferretdb-2.4.0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: ferretdb-pg
+  namespace: unifi-controller
+spec:
+  instances: 1
+  imageCatalogRef:
+    apiGroup: postgresql.cnpg.io
+    kind: ImageCatalog
+    name: documentdb-postgres
+    major: 16
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 20Gi
+  postgresUID: 999
+  postgresGID: 999
+  # DocumentDB access model is a bit wishy washy, so we'll have to connect as postgres
+  enableSuperuserAccess: true
+  postgresql:
+    shared_preload_libraries:
+      - pg_cron
+      - pg_documentdb_core
+      - pg_documentdb
+    parameters:
+      # https://github.com/FerretDB/documentdb/blob/ferretdb/packaging/10-preload.sh
+      cron.database_name: postgres
+      documentdb.enableCompact                      : "true"
+      documentdb.enableLetAndCollationForQueryMatch : "true"
+      documentdb.enableNowSystemVariable            : "true"
+      documentdb.enableSortbyIdPushDownToPrimaryKey : "true"
+      documentdb.enableSchemaValidation             : "true"
+      documentdb.enableBypassDocumentValidation     : "true"
+      documentdb.enableUserCrud                     : "true"
+      documentdb.maxUserLimit                       : "100"
+    pg_hba:
+      - host postgres postgres 127.0.0.1/32 trust
+      - host postgres postgres ::1/128 trust
+  bootstrap:
+    initdb:
+      postInitSQL:
+        # https://github.com/FerretDB/documentdb/blob/ferretdb/packaging/20-install.sql
+        - create extension documentdb cascade
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: local-backup-s3
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: ferretdb-pg-b2-backup
+  namespace: unifi-controller
+spec:
+  cluster:
+    name: ferretdb-pg
+  schedule: '0 0 6/12 * * *'
+  backupOwnerReference: self
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

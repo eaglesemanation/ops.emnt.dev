@@ -20,17 +20,24 @@ spec:
     spec:
       containers:
         - name: ferretdb
-          image: ghcr.io/ferretdb/ferretdb:1.24.0
+          image: ghcr.io/ferretdb/ferretdb:2.4.0
           ports:
             - name: mongo
               protocol: TCP
               containerPort: 27017
           env:
             - name: FERRETDB_POSTGRESQL_URL
+              value: postgresql://ferretdb-pg-rw.unifi-controller.svc.cluster.local:5432/postgres
+            - name: PGUSER
               valueFrom:
                 secretKeyRef:
-                  name: unifi-pg-pguser-unifi
-                  key: uri
+                  name: ferretdb-pg-superuser
+                  key: user
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ferretdb-pg-superuser
+                  key: password
 ---
 apiVersion: v1
 kind: Service
