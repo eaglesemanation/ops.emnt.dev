@@ -1,0 +1,73 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: gramps-web-pg
+  namespace: gramps-web
+spec:
+  instances: 1
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 20Gi
+  bootstrap:
+    initdb: {}
+  managed:
+    roles:
+      - name: gramps
+        ensure: present
+        comment: Gramps Web genealogical data
+        login: true
+      - name: grampswebuser
+        ensure: present
+        comment: Gramps Web authentication data
+        login: true
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: local-backup-s3
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: gramps-web-pg-tree
+  namespace: gramps-web
+spec:
+  name: gramps
+  owner: gramps
+  cluster:
+    name: gramps-web-pg
+  extensions:
+    - name: vector
+      ensure: present
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/database_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: gramps-web-pg-users
+  namespace: gramps-web
+spec:
+  name: grampswebuser
+  owner: grampswebuser
+  cluster:
+    name: gramps-web-pg
+  extensions:
+    - name: vector
+      ensure: present
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: gramps-web-pg-b2-backup
+  namespace: gramps-web
+spec:
+  cluster:
+    name: gramps-web-pg
+  schedule: '0 0 6/12 * * *'
+  backupOwnerReference: self
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

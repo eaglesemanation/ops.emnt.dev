@@ -5,3 +5,4 @@ resources:
   - affine.k8s.yaml
   - binner.k8s.yaml
   - mealie.k8s.yaml
+  - gramps-web.k8s.yaml
