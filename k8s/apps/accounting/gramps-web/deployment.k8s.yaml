@@ -1,0 +1,128 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gramps-web
+  namespace: gramps-web
+  labels:
+    app.kubernetes.io/name: gramps-web
+    app.kubernetes.io/instance: gramps-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: gramps-web
+      app.kubernetes.io/instance: gramps-web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: gramps-web
+        app.kubernetes.io/instance: gramps-web
+    spec:
+      containers:
+        - name: gramps-web
+          image: ghcr.io/gramps-project/grampsweb:25.7.2
+          ports:
+            - name: http
+              containerPort: 5000
+          volumeMounts: &grampsvolumes
+            - name: cache
+              mountPath: /app/cache
+            - name: thumbnail-cache
+              mountPath: /app/thumbnail_cache
+            - name: grampsdb
+              mountPath: /root/.gramps/grampsdb
+            - name: media
+              mountPath: /app/media
+            - name: tmp
+              mountPath: /tmp
+            - name: frontend-config
+              mountPath: /app/static/config.js
+              subPath: config.js
+            - name: pg-certs
+              mountPath: /pg-certs
+              readOnly: true
+          env: &grampsenv
+            - name: GRAMPSWEB_TREE
+              value: gramps
+            - name: GRAMPSWEB_BASE_URL
+              value: https://gramps.${CLUSTER_DOMAIN}
+            - name: GRAMPSWEB_NEW_DB_BACKEND
+              value: postgresql
+            - name: PGSSLCERT
+              value: /pg-certs/ca.crt
+            - name: GRAMPSWEB_REGISTRATION_DISABLED
+              value: "True"
+            - name: GRAMPSWEB_CELERY_CONFIG__broker_url
+              value: redis://localhost:6379/0
+            - name: GRAMPSWEB_CELERY_CONFIG__result_backend
+              value: redis://localhost:6379/0
+            - name: GRAMPSWEB_RATELIMIT_STORAGE_URI
+              value: redis://localhost:6379/1
+            - name: GRAMPSWEB_POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: gramps-web-pg-app
+                  key: host
+            - name: GRAMPSWEB_POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: gramps-web-pg-app
+                  key: port
+            - name: GRAMPSWEB_POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: gramps-web-pg-gramps
+                  key: username
+            - name: GRAMPSWEB_POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: gramps-web-pg-gramps
+                  key: password
+            - name: GRAMPSWEB_USER_DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: gramps-web-pg-users-url
+                  key: url
+            - name: GRAMPSWEB_SEARCH_INDEX_DB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: gramps-web-pg-gramps-url
+                  key: url
+          envFrom: &grampsenvfrom
+            - secretRef:
+                name: flask-secret
+        - name: gramps-web-celery
+          image: ghcr.io/gramps-project/grampsweb:25.7.2
+          command:
+            - celery
+            - -A
+            - gramps_webapi.celery
+            - worker
+            - --loglevel=INFO
+            - --concurrency=2
+          volumeMounts: *grampsvolumes
+          env: *grampsenv
+          envFrom: *grampsenvfrom
+        - name: valkey
+          image: ghcr.io/valkey-io/valkey:8.1.3
+      volumes:
+        - name: cache
+          persistentVolumeClaim:
+            claimName: cache
+        - name: thumbnail-cache
+          persistentVolumeClaim:
+            claimName: thumbnail-cache
+        - name: grampsdb
+          persistentVolumeClaim:
+            claimName: grampsdb
+        - name: media
+          persistentVolumeClaim:
+            claimName: media
+        - name: frontend-config
+          configMap:
+            name: frontend-config
+        - name: pg-certs
+          secret:
+            secretName: gramps-web-pg-ca
+        - name: tmp
+          emptyDir: {}

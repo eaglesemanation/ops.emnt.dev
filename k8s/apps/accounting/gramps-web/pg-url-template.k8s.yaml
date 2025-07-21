@@ -1,0 +1,43 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gramps-web-pg-users-url-template
+  namespace: gramps-web
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: gramps-web-secrets
+  target:
+    name: gramps-web-pg-users-url
+    template:
+      engineVersion: v2
+      data:
+        url: "postgresql://{{ .username }}:{{ .password }}@{{ .host }}:{{ .port }}/grampswebuser"
+  dataFrom:
+    - extract:
+        key: gramps-web-pg-app
+    - extract:
+        key: gramps-web-pg-grampswebuser
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gramps-web-pg-gramps-url-template
+  namespace: gramps-web
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: gramps-web-secrets
+  target:
+    name: gramps-web-pg-gramps-url
+    template:
+      engineVersion: v2
+      data:
+        url: "postgresql://{{ .username }}:{{ .password }}@{{ .host }}:{{ .port }}/gramps"
+  dataFrom:
+    - extract:
+        key: gramps-web-pg-app
+    - extract:
+        key: gramps-web-pg-gramps

@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: frontend-config
+  namespace: gramps-web
+data:
+  config.js: |-
+    window.grampsjsConfig = {
+        hideRegisterLink: true
+    }

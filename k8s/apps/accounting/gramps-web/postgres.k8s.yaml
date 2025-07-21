@@ -17,10 +17,14 @@ spec:
         ensure: present
         comment: Gramps Web genealogical data
         login: true
+        passwordSecret:
+          name: gramps-web-pg-gramps
       - name: grampswebuser
         ensure: present
         comment: Gramps Web authentication data
         login: true
+        passwordSecret:
+          name: gramps-web-pg-grampswebuser
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true
