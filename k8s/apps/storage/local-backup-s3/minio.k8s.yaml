@@ -44,35 +44,6 @@ spec:
         seccompProfile:
           type: RuntimeDefault
     - servers: 4
-      name: pool-3
-      volumesPerServer: 1
-      resources:
-        requests:
-          cpu: 10m
-          memory: 512Mi
-        limits:
-          memory: 2Gi
-      volumeClaimTemplate:
-        metadata:
-          name: data
-        spec:
-          storageClassName: freenas-api-iscsi-s3-csi
-          accessModes:
-            - ReadWriteOnce
-          resources:
-            requests:
-              storage: 300Gi
-      containerSecurityContext:
-        runAsUser: 1000
-        runAsGroup: 1000
-        runAsNonRoot: true
-        allowPrivilegeEscalation: false
-        capabilities:
-          drop:
-            - ALL
-        seccompProfile:
-          type: RuntimeDefault
-    - servers: 4
       name: pool-4
       volumesPerServer: 2
       resources:
