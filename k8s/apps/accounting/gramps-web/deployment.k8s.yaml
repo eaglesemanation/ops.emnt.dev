@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: gramps-web
-          image: ghcr.io/gramps-project/grampsweb:25.7.2
+          image: ghcr.io/gramps-project/grampsweb:25.8.0
           ports:
             - name: http
               containerPort: 5000
@@ -92,7 +92,7 @@ spec:
             - secretRef:
                 name: flask-secret
         - name: gramps-web-celery
-          image: ghcr.io/gramps-project/grampsweb:25.7.2
+          image: ghcr.io/gramps-project/grampsweb:25.8.0
           command:
             - celery
             - -A
