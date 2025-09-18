@@ -21,6 +21,8 @@ spec:
     image:
       # renovate: datasource=github-releases depName=immich-app/immich
       tag: "v1.142.1"
+    controller:
+      strategy: Recreate
     immich:
       metrics:
         enabled: true
