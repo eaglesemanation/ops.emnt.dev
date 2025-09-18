@@ -7,7 +7,7 @@ metadata:
 spec:
   images:
     - major: 15
-      image: ghcr.io/immich-app/postgres:15-vectorchord0.4.3-pgvectors0.2.0
+      image: ghcr.io/immich-app/postgres:15-vectorchord0.4.3-pgvectors0.2.1
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
