@@ -17,5 +17,5 @@ spec:
   data:
     - secretKey: uri
       remoteRef:
-        key: affine-pg-pguser-affine
+        key: affine-pg-app
         property: uri
