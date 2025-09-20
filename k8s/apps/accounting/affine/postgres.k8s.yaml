@@ -96,3 +96,64 @@ spec:
           limits:
             memory: 64Mi
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: affine-pg
+  namespace: affine
+spec:
+  instances: 1
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 10Gi
+  postgresql:
+    parameters:
+      pgaudit.log: "all, -misc"
+      pgaudit.log_catalog: "off"
+      pgaudit.log_parameter: "on"
+      pgaudit.log_relation: "on"
+  bootstrap:
+    initdb:
+      owner: affine
+      database: affine
+      import:
+        type: microservice
+        databases:
+          - affine
+        source:
+          externalCluster: source-db
+  externalClusters:
+    - name: source-db
+      connectionParameters:
+        host: affine-pg-primary.affine.svc
+        user: affine
+        dbname: affine
+        sslmode: require
+      password:
+        name: affine-pg-pguser-affine
+        key: password
+      sslRootCert:
+        name: affine-pg-cluster-cert
+        key: ca.crt
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: local-backup-s3
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: affine-pg-b2-backup
+  namespace: affine
+spec:
+  cluster:
+    name: affine-pg
+  schedule: '0 0 6/12 * * *'
+  backupOwnerReference: self
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

@@ -11,3 +11,4 @@ resources:
   - ingress.k8s.yaml
   - secretstore.k8s.yaml
   - pg-url-template.k8s.yaml
+  - backup-buckets.k8s.yaml
