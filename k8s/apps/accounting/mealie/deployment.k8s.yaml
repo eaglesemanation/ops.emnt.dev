@@ -56,28 +56,28 @@ spec:
             - name: POSTGRES_USER
               valueFrom:
                 secretKeyRef:
-                  key: user
-                  name: mealie-pg-pguser-mealie
+                  key: username
+                  name: mealie-pg-app
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
                   key: password
-                  name: mealie-pg-pguser-mealie
+                  name: mealie-pg-app
             - name: POSTGRES_SERVER
               valueFrom:
                 secretKeyRef:
                   key: host
-                  name: mealie-pg-pguser-mealie
+                  name: mealie-pg-app
             - name: POSTGRES_PORT
               valueFrom:
                 secretKeyRef:
                   key: port
-                  name: mealie-pg-pguser-mealie
+                  name: mealie-pg-app
             - name: POSTGRES_DB
               valueFrom:
                 secretKeyRef:
                   key: dbname
-                  name: mealie-pg-pguser-mealie
+                  name: mealie-pg-app
             - name: OIDC_AUTH_ENABLED
               value: "True"
             - name: OIDC_CONFIGURATION_URL
