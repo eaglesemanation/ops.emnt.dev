@@ -41,17 +41,17 @@ spec:
         property: key
     - secretKey: postgres_user
       remoteRef:
-        key: sonarr-pg-pguser-sonarr
-        property: user
+        key: sonarr-pg-app
+        property: username
     - secretKey: postgres_password
       remoteRef:
-        key: sonarr-pg-pguser-sonarr
+        key: sonarr-pg-app
         property: password
     - secretKey: postgres_port
       remoteRef:
-        key: sonarr-pg-pguser-sonarr
+        key: sonarr-pg-app
         property: port
     - secretKey: postgres_host
       remoteRef:
-        key: sonarr-pg-pguser-sonarr
+        key: sonarr-pg-app
         property: host
