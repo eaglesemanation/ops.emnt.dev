@@ -40,27 +40,14 @@ spec:
       labels:
         emnt.dev/velero-backup: "true"
     extraVolumes:
-      - name: pg-certs
+      - name: pg-cacert
         secret:
-          secretName: gitea-pg-cluster-cert
-      - name: pgo-cacert
-        secret:
-          secretName: pgo-root-cacert
+          secretName: gitea-pg-ca
     extraVolumeMounts:
-      - name: pg-certs
+      - name: pg-cacert
         readOnly: true
-        mountPath: /pg-certs
-      - name: pgo-cacert
-        readOnly: true
-        subPath: root.crt
+        subPath: ca.crt
         mountPath: /etc/ssl/certs/pgo-cachain.crt
-    initPreScript: |
-      mkdir -p /data/git/.postgresql
-      cp /pg-certs/ca.crt /data/git/.postgresql/root.crt
-      cp /pg-certs/tls.crt /data/git/.postgresql/postgresql.crt
-      cp /pg-certs/tls.key /data/git/.postgresql/postgresql.key
-      chown -R git:git /data/git/.postgresql/
-      chmod 400 /data/git/.postgresql/postgresql.key
     redis-cluster:
       enabled: false
     valkey-cluster:

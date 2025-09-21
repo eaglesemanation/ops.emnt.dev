@@ -27,23 +27,23 @@ spec:
   data:
     - secretKey: pg_host
       remoteRef:
-        key: gitea-pg-pguser-gitea
+        key: gitea-pg-app
         property: host
     - secretKey: pg_port
       remoteRef:
-        key: gitea-pg-pguser-gitea
+        key: gitea-pg-app
         property: port
     - secretKey: pg_dbname
       remoteRef:
-        key: gitea-pg-pguser-gitea
+        key: gitea-pg-app
         property: dbname
     - secretKey: pg_user
       remoteRef:
-        key: gitea-pg-pguser-gitea
-        property: user
+        key: gitea-pg-app
+        property: username
     - secretKey: pg_pass
       remoteRef:
-        key: gitea-pg-pguser-gitea
+        key: gitea-pg-app
         property: password
     - secretKey: keydb_pass
       remoteRef:
