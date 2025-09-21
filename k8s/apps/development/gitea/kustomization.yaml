@@ -11,6 +11,7 @@ resources:
   - s3-creds-template.k8s.yaml
   - db-creds-template.k8s.yaml
   - email-creds.sops.yaml
+  - backup-buckets.k8s.yaml
 configMapGenerator:
   - name: gitea-pg-init
     namespace: gitea
