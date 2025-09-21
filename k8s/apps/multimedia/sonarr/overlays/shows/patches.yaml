@@ -33,3 +33,11 @@ spec:
   provider:
     kubernetes:
       remoteNamespace: sonarr-shows
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: local-backup-s3
+spec:
+  configuration:
+    destinationPath: s3://sonarr-shows/
