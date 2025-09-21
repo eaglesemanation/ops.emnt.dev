@@ -42,17 +42,17 @@ spec:
         property: key
     - secretKey: postgres_user
       remoteRef:
-        key: prowlarr-pg-pguser-prowlarr
-        property: user
+        key: prowlarr-pg-app
+        property: username
     - secretKey: postgres_password
       remoteRef:
-        key: prowlarr-pg-pguser-prowlarr
+        key: prowlarr-pg-app
         property: password
     - secretKey: postgres_port
       remoteRef:
-        key: prowlarr-pg-pguser-prowlarr
+        key: prowlarr-pg-app
         property: port
     - secretKey: postgres_host
       remoteRef:
-        key: prowlarr-pg-pguser-prowlarr
+        key: prowlarr-pg-app
         property: host
