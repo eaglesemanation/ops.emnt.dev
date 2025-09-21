@@ -11,6 +11,7 @@ resources:
   - templated-config.k8s.yaml
   - secretstore.k8s.yaml
   - s3-creds-template.k8s.yaml
+  - backup-buckets.k8s.yaml
 configMapGenerator:
   - name: prowlarr-pg-init
     namespace: prowlarr

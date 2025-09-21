@@ -1,0 +1,26 @@
+apiVersion: crossplane.emnt.dev/v1alpha1
+kind: BackupBucket
+metadata:
+  name: backup-buckets
+  namespace: prowlarr
+spec: {}
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: local-backup-s3
+  namespace: prowlarr
+spec:
+  retentionPolicy: "30d"
+  configuration:
+    destinationPath: s3://prowlarr/
+    endpointURL: https://backup-s3.${CLUSTER_DOMAIN}
+    wal:
+      compression: gzip
+    s3Credentials:
+      accessKeyId:
+        name: local-backup-s3-key
+        key: access_key
+      secretAccessKey:
+        name: local-backup-s3-key
+        key: secret_key
