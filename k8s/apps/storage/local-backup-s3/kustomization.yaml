@@ -16,18 +16,13 @@ resources:
 
   - pgbackrest-policy.k8s.yaml
   - pgbackrest-bazarr-creds.sops.yaml
-  - pgbackrest-authentik-creds.sops.yaml
   - pgbackrest-jupyterhub-creds.sops.yaml
   - pgbackrest-prowlarr-creds.sops.yaml
   - pgbackrest-radarr-creds.sops.yaml
   - pgbackrest-sonarr-creds.sops.yaml
   - pgbackrest-gitea-creds.sops.yaml
-  - pgbackrest-unifi-controller-creds.sops.yaml
-  - pgbackrest-unifi-controller-s3conf-template.k8s.yaml
   - pgbackrest-binner-creds.sops.yaml
   - pgbackrest-binner-s3conf-template.k8s.yaml
-  - pgbackrest-crowdsec-creds.sops.yaml
-  - pgbackrest-crowdsec-s3conf-template.k8s.yaml
 
   - crossplane-bucket-providers.k8s.yaml
   - crossplane-backup-buckets.k8s.yaml
