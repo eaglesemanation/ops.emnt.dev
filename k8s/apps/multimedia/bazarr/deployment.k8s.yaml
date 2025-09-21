@@ -53,33 +53,33 @@ spec:
             # https://gitlab.alpinelinux.org/alpine/aports/-/issues/14565
             # Mitigates "Permission denied" errors on startup
             - name: PGSSLCERT
-              value: /config/.postgresql/postgresql.crt
+              value: /pg-certs/ca.crt
             - name: POSTGRES_ENABLED
               value: "true"
             - name: POSTGRES_HOST
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-bazarr
+                  name: bazarr-pg-app
                   key: host
             - name: POSTGRES_PORT
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-bazarr
+                  name: bazarr-pg-app
                   key: port
             - name: POSTGRES_DATABASE
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-bazarr
+                  name: bazarr-pg-app
                   key: dbname
             - name: POSTGRES_USERNAME
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-bazarr
-                  key: user
+                  name: bazarr-pg-app
+                  key: username
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: bazarr-pg-pguser-bazarr
+                  name: bazarr-pg-app
                   key: password
           volumeMounts:
             - name: multimedia
@@ -89,6 +89,9 @@ spec:
             - name: healthcheck
               subPath: healthcheck.sh
               mountPath: /healthcheck.sh
+              readOnly: true
+            - name: pg-certs
+              mountPath: /pg-certs
               readOnly: true
           ports:
             - name: http
@@ -103,3 +106,6 @@ spec:
         - name: healthcheck
           configMap:
             name: bazarr-healthcheck
+        - name: pg-certs
+          secret:
+            secretName: bazarr-pg-ca
