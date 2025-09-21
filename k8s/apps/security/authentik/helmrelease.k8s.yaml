@@ -23,7 +23,7 @@ spec:
       postgresql:
         host: file:///postgres-creds/host
         name: file:///postgres-creds/dbname
-        user: file:///postgres-creds/user
+        user: file:///postgres-creds/username
         password: file:///postgres-creds/password
       redis:
         host: keydb
@@ -50,7 +50,7 @@ spec:
       volumes:
         - name: postgres-creds
           secret:
-            secretName: authentik-pg-pguser-authentik
+            secretName: authentik-pg-app
         - name: redis-creds
           secret:
             secretName: redis-creds
@@ -79,7 +79,7 @@ spec:
       volumes:
         - name: postgres-creds
           secret:
-            secretName: authentik-pg-pguser-authentik
+            secretName: authentik-pg-app
         - name: redis-creds
           secret:
             secretName: redis-creds
