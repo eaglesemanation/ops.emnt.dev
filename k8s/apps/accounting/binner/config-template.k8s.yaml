@@ -241,21 +241,21 @@ spec:
 
     - secretKey: pg_host
       remoteRef:
-        key: binner-pg-pguser-binner
+        key: binner-pg-app
         property: host
     - secretKey: pg_port
       remoteRef:
-        key: binner-pg-pguser-binner
+        key: binner-pg-app
         property: port
     - secretKey: pg_db
       remoteRef:
-        key: binner-pg-pguser-binner
+        key: binner-pg-app
         property: dbname
     - secretKey: pg_user
       remoteRef:
-        key: binner-pg-pguser-binner
-        property: user
+        key: binner-pg-app
+        property: username
     - secretKey: pg_pass
       remoteRef:
-        key: binner-pg-pguser-binner
+        key: binner-pg-app
         property: password
