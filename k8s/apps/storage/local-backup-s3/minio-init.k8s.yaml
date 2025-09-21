@@ -22,8 +22,6 @@ data:
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$PROWLARR_ACCESS_KEY"
     mc admin user add local-backup-s3 "$SONARR_ACCESS_KEY" "$SONARR_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$SONARR_ACCESS_KEY"
-    mc admin user add local-backup-s3 "$GITEA_ACCESS_KEY" "$GITEA_SECRET_KEY"
-    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$GITEA_ACCESS_KEY"
     mc admin user add local-backup-s3 "$BINNER_ACCESS_KEY" "$BINNER_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$BINNER_ACCESS_KEY"
 
@@ -73,8 +71,6 @@ spec:
                     name: pgbackrest-prowlarr-creds
                 - secretRef:
                     name: pgbackrest-sonarr-creds
-                - secretRef:
-                    name: pgbackrest-gitea-creds
                 - secretRef:
                     name: pgbackrest-binner-creds
               volumeMounts:
