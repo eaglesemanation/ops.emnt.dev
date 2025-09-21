@@ -12,20 +12,10 @@ spec:
     app.kubernetes.io/name: binner
     app.kubernetes.io/instance: binner
   ports:
-    - name: https
+    - name: http
       port: 8090
-      targetPort: https
+      targetPort: http
       protocol: TCP
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/serverstransport_v1alpha1.json
-apiVersion: traefik.io/v1alpha1
-kind: ServersTransport
-metadata:
-  name: skip-verify
-  namespace: binner
-spec:
-  serverName: binner.binner.svc.cluster.local
-  insecureSkipVerify: true
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
 apiVersion: traefik.io/v1alpha1
@@ -47,6 +37,4 @@ spec:
       services:
         - name: binner
           namespace: binner
-          port: https
-          scheme: https
-          serversTransport: binner-skip-verify@kubernetescrd
+          port: http

@@ -22,22 +22,43 @@ spec:
         fsGroup: 1654
       containers:
         - name: binner
-          image: ghcr.io/eaglesemanation/ops.emnt.dev/binner:2.6.6_b1-1
-          command:
-            - sh
-            - -c
-            - |
-              cp /config/appsettings.json /app/appsettings.json && \
-              /app/Binner.Web
+          image: docker.io/binnerofficial/binner:v2.6.18
+          env:
+            - name: BINNER_USEHTTPS
+              value: "false"
+            - name: BINNER_PORT
+              value: "8090"
+            - name: BINNER_PUBLICURL
+              value: https://binner.${CLUSTER_DOMAIN}
+            - name: BINNER_DB_PROVIDER
+              value: Postgresql
+            - name: BINNER_DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: binner-pg-app
+                  key: host
+            - name: BINNER_DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: binner-pg-app
+                  key: port
+            - name: BINNER_DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: binner-pg-app
+                  key: username
+            - name: BINNER_DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: binner-pg-app
+                  key: password
           volumeMounts:
             - name: uploads
-              mountPath: /uploads
+              mountPath: /userfiles
             - name: pg-certs
               mountPath: /pg-certs
-            - name: config
-              mountPath: /config
           ports:
-            - name: https
+            - name: http
               protocol: TCP
               containerPort: 8090
       volumes:
@@ -46,7 +67,4 @@ spec:
             claimName: binner-uploads
         - name: pg-certs
           secret:
-            secretName: binner-pg-cluster-cert
-        - name: config
-          secret:
-            secretName: binner-config
+            secretName: binner-pg-ca
