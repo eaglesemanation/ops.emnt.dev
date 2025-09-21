@@ -8,17 +8,9 @@ resources:
   - pv.k8s.yaml
   - pvc.k8s.yaml
   - postgres.k8s.yaml
-  - secretstore.k8s.yaml
-  - s3-creds-template.k8s.yaml
   - backup-buckets.k8s.yaml
 configMapGenerator:
   - name: bazarr-healthcheck
     namespace: bazarr
     files:
       - healthcheck.sh
-  - name: bazarr-pg-init
-    namespace: bazarr
-    files:
-      - bazarr-pg-init.sql
-    options:
-      disableNameSuffixHash: true

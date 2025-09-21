@@ -14,8 +14,6 @@ data:
     # PGBackRest
     mc admin policy create local-backup-s3 pgbackrest-rw /tmp/pgbackrest-policy.json
 
-    mc admin user add local-backup-s3 "$BAZARR_ACCESS_KEY" "$BAZARR_SECRET_KEY"
-    mc admin policy attach local-backup-s3 pgbackrest-rw --user "$BAZARR_ACCESS_KEY"
     mc admin user add local-backup-s3 "$JUPYTERHUB_ACCESS_KEY" "$JUPYTERHUB_SECRET_KEY"
     mc admin policy attach local-backup-s3 pgbackrest-rw --user "$JUPYTERHUB_ACCESS_KEY"
     mc admin user add local-backup-s3 "$PROWLARR_ACCESS_KEY" "$PROWLARR_SECRET_KEY"
@@ -63,8 +61,6 @@ spec:
                       name: velero
                       key: CONSOLE_SECRET_KEY
               envFrom:
-                - secretRef:
-                    name: pgbackrest-bazarr-creds
                 - secretRef:
                     name: pgbackrest-jupyterhub-creds
                 - secretRef:
