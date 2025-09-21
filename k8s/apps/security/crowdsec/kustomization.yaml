@@ -6,6 +6,7 @@ resources:
   - postgres.k8s.yaml
   - console-creds.sops.yaml
   - middleware.sops.yaml
+  - backup-buckets.k8s.yaml
 configMapGenerator:
   - name: grafana-dashboards
     namespace: crowdsec

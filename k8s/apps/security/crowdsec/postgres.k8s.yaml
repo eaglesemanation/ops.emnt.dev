@@ -96,3 +96,64 @@ spec:
           limits:
             memory: 64Mi
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: crowdsec-pg
+  namespace: crowdsec
+spec:
+  instances: 1
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 10Gi
+  postgresql:
+    parameters:
+      pgaudit.log: "all, -misc"
+      pgaudit.log_catalog: "off"
+      pgaudit.log_parameter: "on"
+      pgaudit.log_relation: "on"
+  bootstrap:
+    initdb:
+      owner: crowdsec
+      database: crowdsec
+      import:
+        type: microservice
+        databases:
+          - crowdsec
+        source:
+          externalCluster: source-db
+  externalClusters:
+    - name: source-db
+      connectionParameters:
+        host: crowdsec-pg-primary.crowdsec.svc
+        user: crowdsec
+        dbname: crowdsec
+        sslmode: allow
+      password:
+        name: crowdsec-pg-pguser-crowdsec
+        key: password
+      sslRootCert:
+        name: crowdsec-pg-cluster-cert
+        key: ca.crt
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: local-backup-s3
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: crowdsec-pg-b2-backup
+  namespace: crowdsec
+spec:
+  cluster:
+    name: crowdsec-pg
+  schedule: '0 0 6/12 * * *'
+  backupOwnerReference: self
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
