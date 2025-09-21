@@ -57,27 +57,27 @@ spec:
         - name: DB_USER
           valueFrom:
             secretKeyRef:
-              name: crowdsec-pg-pguser-crowdsec
-              key: user
+              name: crowdsec-pg-app
+              key: username
         - name: DB_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: crowdsec-pg-pguser-crowdsec
+              name: crowdsec-pg-app
               key: password
         - name: DB_NAME
           valueFrom:
             secretKeyRef:
-              name: crowdsec-pg-pguser-crowdsec
+              name: crowdsec-pg-app
               key: dbname
         - name: DB_HOST
           valueFrom:
             secretKeyRef:
-              name: crowdsec-pg-pguser-crowdsec
+              name: crowdsec-pg-app
               key: host
         - name: DB_PORT
           valueFrom:
             secretKeyRef:
-              name: crowdsec-pg-pguser-crowdsec
+              name: crowdsec-pg-app
               key: port
       ingress:
         enabled: true
