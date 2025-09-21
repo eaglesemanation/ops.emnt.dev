@@ -15,16 +15,6 @@ spec:
     matchLabels:
       app.kubernetes.io/instance: sonarr-anime
 ---
-apiVersion: postgres-operator.crunchydata.com/v1beta1
-kind: PostgresCluster
-metadata:
-  name: sonarr-pg
-spec:
-  backups:
-    pgbackrest:
-      global:
-        repo1-path: /pgbackrest-sonarr/sonarr-anime-pg/repo1
----
 apiVersion: external-secrets.io/v1
 kind: SecretStore
 metadata:

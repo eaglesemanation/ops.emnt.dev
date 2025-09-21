@@ -16,7 +16,6 @@ resources:
 
   - pgbackrest-policy.k8s.yaml
   - pgbackrest-jupyterhub-creds.sops.yaml
-  - pgbackrest-sonarr-creds.sops.yaml
   - pgbackrest-binner-creds.sops.yaml
   - pgbackrest-binner-s3conf-template.k8s.yaml
 
