@@ -18,7 +18,6 @@ resources:
   - pgbackrest-bazarr-creds.sops.yaml
   - pgbackrest-jupyterhub-creds.sops.yaml
   - pgbackrest-prowlarr-creds.sops.yaml
-  - pgbackrest-radarr-creds.sops.yaml
   - pgbackrest-sonarr-creds.sops.yaml
   - pgbackrest-gitea-creds.sops.yaml
   - pgbackrest-binner-creds.sops.yaml
