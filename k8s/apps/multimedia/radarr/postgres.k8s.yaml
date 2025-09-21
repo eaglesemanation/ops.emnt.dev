@@ -87,3 +87,65 @@ spec:
           limits:
             memory: 64Mi
         image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres-exporter:ubi8-5.3.1-0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: radarr-pg
+  namespace: radarr
+spec:
+  instances: 1
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 10Gi
+  postgresql:
+    parameters:
+      pgaudit.log: "all, -misc"
+      pgaudit.log_catalog: "off"
+      pgaudit.log_parameter: "on"
+      pgaudit.log_relation: "on"
+  bootstrap:
+    initdb:
+      owner: radarr
+      database: radarr
+      import:
+        type: monolith
+        databases:
+          - radarr-main
+          - radarr-log
+        source:
+          externalCluster: source-db
+  externalClusters:
+    - name: source-db
+      connectionParameters:
+        host: radarr-pg-primary.radarr.svc
+        user: radarr
+        dbname: radarr
+        sslmode: allow
+      password:
+        name: radarr-pg-pguser-radarr
+        key: password
+      sslRootCert:
+        name: radarr-pg-cluster-cert
+        key: ca.crt
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: local-backup-s3
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/scheduledbackup_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: radarr-pg-b2-backup
+  namespace: radarr
+spec:
+  cluster:
+    name: radarr-pg
+  schedule: '0 0 6/12 * * *'
+  backupOwnerReference: self
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

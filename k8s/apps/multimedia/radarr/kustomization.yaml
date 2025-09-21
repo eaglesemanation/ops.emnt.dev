@@ -12,6 +12,7 @@ resources:
   - secretstore.k8s.yaml
   - apikey.sops.yaml
   - s3-creds-template.k8s.yaml
+  - backup-buckets.k8s.yaml
 configMapGenerator:
   - name: radarr-pg-init
     namespace: radarr
