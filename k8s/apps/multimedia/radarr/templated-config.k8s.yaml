@@ -42,17 +42,17 @@ spec:
         property: key
     - secretKey: postgres_user
       remoteRef:
-        key: radarr-pg-pguser-radarr
-        property: user
+        key: radarr-pg-app
+        property: username
     - secretKey: postgres_password
       remoteRef:
-        key: radarr-pg-pguser-radarr
+        key: radarr-pg-app
         property: password
     - secretKey: postgres_port
       remoteRef:
-        key: radarr-pg-pguser-radarr
+        key: radarr-pg-app
         property: port
     - secretKey: postgres_host
       remoteRef:
-        key: radarr-pg-pguser-radarr
+        key: radarr-pg-app
         property: host
