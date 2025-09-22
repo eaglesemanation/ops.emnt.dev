@@ -9,7 +9,7 @@ spec:
     - major: 17
       image: ghcr.io/ferretdb/postgres-documentdb:17-0.106.0-ferretdb-2.5.0
     - major: 16
-      image: ghcr.io/ferretdb/postgres-documentdb:16-0.106.0-ferretdb-2.5.0
+      image: ghcr.io/ferretdb/postgres-documentdb:17-0.106.0-ferretdb-2.5.0
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
