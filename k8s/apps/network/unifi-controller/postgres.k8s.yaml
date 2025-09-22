@@ -6,8 +6,8 @@ metadata:
   namespace: unifi-controller
 spec:
   images:
-    - major: 16
-      image: ghcr.io/ferretdb/postgres-documentdb:16-0.106.0-ferretdb-2.5.0
+    - major: 17
+      image: ghcr.io/ferretdb/postgres-documentdb:17-0.106.0-ferretdb-2.5.0
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
 apiVersion: postgresql.cnpg.io/v1
@@ -21,38 +21,37 @@ spec:
     apiGroup: postgresql.cnpg.io
     kind: ImageCatalog
     name: documentdb-postgres
-    major: 16
+    major: 17
   storage:
     storageClass: freenas-api-iscsi-csi
-    size: 20Gi
+    size: 10Gi
   postgresUID: 999
   postgresGID: 999
-  # DocumentDB access model is a bit wishy washy, so we'll have to connect as postgres
-  enableSuperuserAccess: true
   postgresql:
     shared_preload_libraries:
       - pg_cron
       - pg_documentdb_core
       - pg_documentdb
     parameters:
-      # https://github.com/FerretDB/documentdb/blob/ferretdb/packaging/10-preload.sh
-      cron.database_name: postgres
-      documentdb.enableCompact                      : "true"
-      documentdb.enableLetAndCollationForQueryMatch : "true"
-      documentdb.enableNowSystemVariable            : "true"
-      documentdb.enableSortbyIdPushDownToPrimaryKey : "true"
-      documentdb.enableSchemaValidation             : "true"
-      documentdb.enableBypassDocumentValidation     : "true"
-      documentdb.enableUserCrud                     : "true"
-      documentdb.maxUserLimit                       : "100"
+      cron.database_name: ferretDB
+      documentdb.enableCompact: "true"
+      documentdb.enableLetAndCollationForQueryMatch: "true"
+      documentdb.enableNowSystemVariable: "true"
+      documentdb.enableSortbyIdPushDownToPrimaryKey: "true"
+      documentdb.enableSchemaValidation: "true"
+      documentdb.enableBypassDocumentValidation: "true"
+      documentdb.enableUserCrud: "true"
+      documentdb.maxUserLimit: "100"
     pg_hba:
-      - host postgres postgres 127.0.0.1/32 trust
-      - host postgres postgres ::1/128 trust
+      - host ferretDB postgres localhost trust
   bootstrap:
     initdb:
-      postInitSQL:
-        # https://github.com/FerretDB/documentdb/blob/ferretdb/packaging/20-install.sql
-        - create extension documentdb cascade
+      database: ferretDB
+      owner: ferret
+      postInitApplicationSQL:
+        - create extension if not exists pg_cron;
+        - create extension if not exists documentdb cascade;
+        - grant documentdb_admin_role to ferret;
   plugins:
     - name: barman-cloud.cloudnative-pg.io
       isWALArchiver: true

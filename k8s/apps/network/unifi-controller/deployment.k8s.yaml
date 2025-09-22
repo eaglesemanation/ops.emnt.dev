@@ -41,11 +41,14 @@ spec:
             - name: MONGO_PORT
               value: "27017"
             - name: MONGO_USER
-              value: postgres
+              valueFrom:
+                secretKeyRef:
+                  name: ferretdb-pg-app
+                  key: user
             - name: MONGO_PASS
               valueFrom:
                 secretKeyRef:
-                  name: ferretdb-pg-superuser
+                  name: ferretdb-pg-app
                   key: password
             - name: MONGO_DBNAME
               value: unifi

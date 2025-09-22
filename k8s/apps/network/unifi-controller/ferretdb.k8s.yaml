@@ -27,17 +27,10 @@ spec:
               containerPort: 27017
           env:
             - name: FERRETDB_POSTGRESQL_URL
-              value: postgresql://ferretdb-pg-rw.unifi-controller.svc.cluster.local:5432/postgres
-            - name: PGUSER
               valueFrom:
                 secretKeyRef:
-                  name: ferretdb-pg-superuser
-                  key: user
-            - name: PGPASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: ferretdb-pg-superuser
-                  key: password
+                  name: ferretdb-pg-app
+                  key: uri
 ---
 apiVersion: v1
 kind: Service
