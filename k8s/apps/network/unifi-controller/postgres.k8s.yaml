@@ -6,6 +6,8 @@ metadata:
   namespace: unifi-controller
 spec:
   images:
+    - major: 17
+      image: ghcr.io/ferretdb/postgres-documentdb:17-0.106.0-ferretdb-2.5.0
     - major: 16
       image: ghcr.io/ferretdb/postgres-documentdb:16-0.106.0-ferretdb-2.5.0
 ---
@@ -21,7 +23,7 @@ spec:
     apiGroup: postgresql.cnpg.io
     kind: ImageCatalog
     name: documentdb-postgres
-    major: 16
+    major: 17
   storage:
     storageClass: freenas-api-iscsi-csi
     size: 20Gi
