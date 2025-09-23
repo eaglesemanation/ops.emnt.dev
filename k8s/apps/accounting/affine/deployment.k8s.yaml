@@ -88,4 +88,4 @@ spec:
             claimName: affine-config
         - name: pg-certs
           secret:
-            secretName: affine-pg-cluster-cert
+            secretName: affine-pg-ca
