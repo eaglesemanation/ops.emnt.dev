@@ -49,7 +49,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: radarr-pg-b2-backup
+  name: radarr-pg-local-backup
   namespace: radarr
 spec:
   cluster:

@@ -48,7 +48,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: bazarr-pg-b2-backup
+  name: bazarr-pg-local-backup
   namespace: bazarr
 spec:
   cluster:

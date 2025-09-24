@@ -48,7 +48,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: affine-pg-b2-backup
+  name: affine-pg-local-backup
   namespace: affine
 spec:
   cluster:

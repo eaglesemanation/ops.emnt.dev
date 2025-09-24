@@ -48,7 +48,7 @@ spec:
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
 metadata:
-  name: gitea-pg-b2-backup
+  name: gitea-pg-local-backup
   namespace: gitea
 spec:
   cluster:
