@@ -31,6 +31,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: grampsdb
   namespace: gramps-web
+  labels:
+    emnt.dev/velero-backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce
@@ -45,6 +47,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: media
   namespace: gramps-web
+  labels:
+    emnt.dev/velero-backup: "true"
 spec:
   accessModes:
     - ReadWriteOnce
