@@ -43,7 +43,10 @@ spec:
       documentdb.enableUserCrud: "true"
       documentdb.maxUserLimit: "100"
     pg_hba:
+      # Fix for pg_cron
       - host ferretDB postgres localhost trust
+      # Fix FerretDB fe_sendauth error
+      - host ferretDB ferret localhost trust
   bootstrap:
     initdb:
       database: ferretDB
