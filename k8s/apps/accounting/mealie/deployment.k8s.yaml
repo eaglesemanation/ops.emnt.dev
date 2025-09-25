@@ -101,17 +101,10 @@ spec:
             - name: pg-certs
               readOnly: true
               mountPath: /pg-certs
-            - name: pgo-cacert
-              readOnly: true
-              subPath: root.crt
-              mountPath: /etc/ssl/certs/pgo-cachain.crt
       volumes:
         - name: data
           persistentVolumeClaim:
             claimName: mealie-data
         - name: pg-certs
           secret:
-            secretName: mealie-pg-cluster-cert
-        - name: pgo-cacert
-          secret:
-            secretName: pgo-root-cacert
+            secretName: mealie-pg-ca
