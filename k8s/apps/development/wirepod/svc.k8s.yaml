@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: wirepod
+  namespace: wirepod
+  labels:
+    app.kubernetes.io/name: wirepod
+    app.kubernetes.io/instance: wirepod
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: wirepod
+    app.kubernetes.io/instance: wirepod
+  ports:
+    - name: wirepod
+      port: 8080
+      targetPort: wirepod
+      protocol: TCP

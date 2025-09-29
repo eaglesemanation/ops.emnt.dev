@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wirepod
+  namespace: wirepod
+  labels:
+    app.kubernetes.io/name: wirepod
+    app.kubernetes.io/instance: wirepod
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: wirepod
+      app.kubernetes.io/instance: wirepod
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: wirepod
+        app.kubernetes.io/instance: wirepod
+    spec:
+      hostNetwork: true
+      containers:
+        - name: wirepod
+          image: ghcr.io/kercre123/wire-pod:main
+          ports:
+            - name: wirepod
+              containerPort: 8080
+            - name: escapepod
+              containerPort: 8084
+          volumeMounts:
+            - name: model
+              mountPath: /vosk
+            - name: data
+              mountPath: /data
+          command:
+            - sh
+            - -c
+            - |
+              rm -r /chipper/jdocs /chipper/session-certs /chipper/apiConfig.json
+              ln -s /data/jdocs /chipper/jdocs
+              ln -s /data/session-certs /chipper/session-certs
+              ln -s /data/apiConfig.json /chipper/apiConfig.json
+              /chipper/start.sh
+        - name: avahi
+          image: docker.io/ydkn/avahi:337
+          ports:
+            - name: mdns
+              protocol: UDP
+              containerPort: 5353
+          volumeMounts:
+            - name: services
+              mountPath: /etc/avahi/services
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: wirepod-data
+        - name: model
+          persistentVolumeClaim:
+            claimName: wirepod-model
+        - name: services
+          configMap:
+            name: avahi-services

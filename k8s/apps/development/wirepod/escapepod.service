@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone='no'?><!--*-nxml-*-->
+<!DOCTYPE service-group SYSTEM "avahi-service.dtd">
+<service-group>
+  <name replace-wildcards="yes">Ankor Vector EscapePod</name>
+  <service>
+    <type>_app-proto._tcp</type>
+    <domain-name>local</domain-name>
+    <host-name>escapepod.local</host-name>
+    <port>8084</port>
+    <txt-record>txtv=0</txt-record>
+    <txt-record>lo=1</txt-record>
+    <txt-record>la=2</txt-record>
+  </service>
+</service-group>
