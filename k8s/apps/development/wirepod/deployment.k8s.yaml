@@ -29,6 +29,8 @@ spec:
               containerPort: 8080
             - name: escapepod
               containerPort: 8084
+            - name: conncheck
+              containerPort: 80
           volumeMounts:
             - name: model
               mountPath: /vosk
@@ -38,13 +40,17 @@ spec:
             - sh
             - -c
             - |
-              rm -r /chipper/jdocs /chipper/session-certs /chipper/apiConfig.json
+              rm -r /chipper/jdocs /chipper/session-certs /chipper/apiConfig.json /tmp/.anki_vector
               ln -s /data/jdocs /chipper/jdocs
               ln -s /data/session-certs /chipper/session-certs
               ln -s /data/apiConfig.json /chipper/apiConfig.json
+              ln -s /data/.anki_vector /tmp/.anki_vector
               /chipper/start.sh
         - name: avahi
           image: docker.io/ydkn/avahi:337
+          env:
+            - name: ALLOW_INTERFACES
+              value: eth0
           ports:
             - name: mdns
               protocol: UDP
