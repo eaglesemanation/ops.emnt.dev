@@ -11,5 +11,5 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 700Gi
+      storage: 900Gi
   storageClassName: freenas-api-iscsi-csi
