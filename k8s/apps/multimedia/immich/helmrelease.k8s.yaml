@@ -20,7 +20,7 @@ spec:
   values:
     image:
       # renovate: datasource=github-releases depName=immich-app/immich
-      tag: "v1.142.1"
+      tag: "v2.2.3"
     controller:
       strategy: Recreate
     immich:
