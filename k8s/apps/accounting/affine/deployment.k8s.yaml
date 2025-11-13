@@ -22,7 +22,7 @@ spec:
     spec:
       initContainers:
         - name: affine-migration
-          image: ghcr.io/toeverything/affine:0.24.1
+          image: ghcr.io/toeverything/affine:0.25.4
           command:
             - sh
             - -c
@@ -52,7 +52,7 @@ spec:
               mountPath: /pg-certs
       containers:
         - name: affine
-          image: ghcr.io/toeverything/affine:0.24.1
+          image: ghcr.io/toeverything/affine:0.25.4
           env:
             - name: DATABASE_URL
               valueFrom:
