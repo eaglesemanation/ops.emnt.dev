@@ -18,7 +18,7 @@ rules:
     resourceNames: ["tailscale-exit-node-state"]
     resources: ["secrets"]
     verbs: ["get", "update", "patch"]
-  - apiGroup: [""]
+  - apiGroups: [""]
     resources: ["events"]
     verbs: ["get", "create", "patch"]
 ---
