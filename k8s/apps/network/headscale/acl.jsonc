@@ -25,7 +25,7 @@
                 "*"
             ],
             "dst": [
-                "tag:exit-node:0",
+                "tag:exit-node:*",
                 "autogroup:internet:*",
             ],
         },
