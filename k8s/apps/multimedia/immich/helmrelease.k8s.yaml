@@ -29,13 +29,9 @@ spec:
       persistence:
         library:
           existingClaim: immich-data
+    valkey:
+      enabled: true
     env:
-      REDIS_HOSTNAME: immich-immich-keydb.immich.svc.cluster.local
-      REDIS_PASSWORD:
-        valueFrom:
-          secretKeyRef:
-            name: keydb-creds
-            key: password
       DB_HOSTNAME: null
       DB_USERNAME: null
       DB_DATABASE_NAME: null
