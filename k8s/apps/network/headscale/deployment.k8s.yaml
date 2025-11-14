@@ -159,7 +159,7 @@ spec:
           image: ghcr.io/tailscale/tailscale:v1.90.6
           env:
             - name: TS_USERSPACE
-              value: "true"
+              value: "0"
             - name: TS_ROUTES
               value: "${LOCAL_CIDR}"
             - name: TS_EXTRA_ARGS
@@ -168,12 +168,19 @@ spec:
               value: tailscale-exit-node-state
             - name: TS_HOSTNAME
               value: "emnt-k8s"
+            - name: POD_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: POD_UID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.uid
           envFrom:
             - secretRef:
                 name: tailscale-exit-node
           securityContext:
-            runAsUser: 1000
-            runAsGroup: 1000
+            privileged: true
           resources:
             limits:
               squat.ai/tun: 1
