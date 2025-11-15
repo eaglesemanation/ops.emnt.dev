@@ -70,7 +70,7 @@ derp:
   server:
     # If enabled, runs the embedded DERP server and merges it into the rest of the DERP config
     # The Headscale server_url defined above MUST be using https, DERP requires TLS to be in place
-    enabled: true
+    enabled: false
 
     # Region ID to use for the embedded DERP server.
     # The local DERP prevails if the region ID collides with other region ID coming from
@@ -80,6 +80,9 @@ derp:
     # Region code and name are displayed in the Tailscale UI to identify a DERP region
     region_code: "headscale"
     region_name: "Headscale Embedded DERP"
+
+    # Only allow clients associated with this server access
+    verify_clients: true
 
     # Listens over UDP at the configured address for STUN connections - to help with NAT traversal.
     # When the embedded DERP server is enabled stun_listen_addr MUST be defined.
@@ -122,7 +125,7 @@ derp:
   auto_update_enabled: true
 
   # How often should we check for DERP updates?
-  update_frequency: 24h
+  update_frequency: 3h
 
 # Disables the automatic check for headscale updates on startup
 disable_check_updates: true
@@ -262,6 +265,10 @@ dns:
   # The FQDN of the hosts will be
   # `hostname.base_domain` (e.g., _myhost.example.com_).
   base_domain: ts.${CLUSTER_DOMAIN}
+
+  # Whether to use the local DNS settings of a node or override the local DNS
+  # settings (default) and force the use of Headscale's DNS configuration.
+  override_local_dns: true
 
   # List of DNS servers to expose to clients.
   nameservers:

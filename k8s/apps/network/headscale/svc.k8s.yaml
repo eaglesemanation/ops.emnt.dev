@@ -21,10 +21,6 @@ spec:
     - name: grpc
       port: 50443
       targetPort: 50443
-    - name: stun
-      port: 3478
-      targetPort: 3478
-      protocol: UDP
 ---
 apiVersion: v1
 kind: Service

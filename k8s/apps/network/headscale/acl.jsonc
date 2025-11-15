@@ -5,7 +5,7 @@
         ],
         "group:internal": [
             "eaglesemanation@",
-            "laser532@"
+            "laser532@",
         ],
     },
     "tagOwners": {
@@ -27,12 +27,14 @@
             "dst": [
                 "tag:exit-node:*",
                 "autogroup:internet:*",
+                "${SVC_DNS_ADDR}:53",
+                "${SVC_INGRESS_INTERNAL_ADDR}:80,443",
             ],
         },
         {
             "action": "accept",
             "src": [
-                "group:internal"
+                "group:internal",
             ],
             "dst": [
                 "${LOCAL_CIDR}:*",
