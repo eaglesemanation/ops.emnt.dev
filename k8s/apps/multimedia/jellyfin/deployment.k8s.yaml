@@ -47,17 +47,9 @@ spec:
               memory: 12Gi
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
-          startupProbe:
-            failureThreshold: 30
-            periodSeconds: 10
-            httpGet:
-              path: /health
-              port: http
           livenessProbe:
-            httpGet:
-              path: /health
-              port: http
-          readinessProbe:
+            initialDelaySeconds: 300
+            periodSeconds: 10
             httpGet:
               path: /health
               port: http
