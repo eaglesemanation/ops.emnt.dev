@@ -18,11 +18,35 @@ spec:
         namespace: flux-system
       interval: 30m
   values:
-    image:
-      # renovate: datasource=github-releases depName=immich-app/immich
-      tag: "v2.2.3"
-    controller:
-      strategy: Recreate
+    controllers:
+      main:
+        strategy: Recreate
+        containers:
+          main:
+            image:
+              # renovate: datasource=github-releases depName=immich-app/immich
+              tag: "v2.2.3"
+            env:
+              DB_HOSTNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-pg-app
+                    key: host
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-pg-app
+                    key: user
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-pg-app
+                    key: password
+              DB_DATABASE_NAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: immich-pg-app
+                    key: dbname
     immich:
       metrics:
         enabled: true
@@ -39,31 +63,6 @@ spec:
         globalMounts:
           - path: /pg_certs
     server:
-      controllers:
-        main:
-          containers:
-            main:
-              env:
-                DB_HOSTNAME:
-                  valueFrom:
-                    secretKeyRef:
-                      name: immich-pg-app
-                      key: host
-                DB_USERNAME:
-                  valueFrom:
-                    secretKeyRef:
-                      name: immich-pg-app
-                      key: user
-                DB_PASSWORD:
-                  valueFrom:
-                    secretKeyRef:
-                      name: immich-pg-app
-                      key: password
-                DB_DATABASE_NAME:
-                  valueFrom:
-                    secretKeyRef:
-                      name: immich-pg-app
-                      key: dbname
       probes:
         liveness:
           spec:
