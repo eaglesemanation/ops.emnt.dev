@@ -47,7 +47,7 @@ spec:
               ln -s /data/.anki_vector /tmp/.anki_vector
               /chipper/start.sh
         - name: avahi
-          image: docker.io/ydkn/avahi:337
+          image: docker.io/ydkn/avahi:343
           env:
             - name: ALLOW_INTERFACES
               value: eth0
