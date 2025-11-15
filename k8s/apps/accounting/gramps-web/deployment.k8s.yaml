@@ -106,7 +106,7 @@ spec:
           env: *grampsenv
           envFrom: *grampsenvfrom
         - name: valkey
-          image: ghcr.io/valkey-io/valkey:8.1.4
+          image: ghcr.io/valkey-io/valkey:9.0.0
       volumes:
         - name: cache
           persistentVolumeClaim:
