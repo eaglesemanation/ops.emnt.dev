@@ -21,6 +21,10 @@ spec:
   upgrade:
     crds: CreateReplace
   values:
+    image:
+      repository: gitea
+      # renovate: datasource=docker depName=docker.gitea.com/gitea versioning=docker
+      tag: 1.25.2
     strategy:
       type: Recreate
     ingress:
@@ -81,6 +85,10 @@ spec:
       config:
         ssh.minimum_key_sizes:
           RSA: 2048
+        actions:
+          ENABLED: true
+          LOG_RETENTION_DAYS: 30
+          ARTIFACT_RETENTION_DAYS: 30
         server:
           ROOT_URL: https://gitea.${CLUSTER_DOMAIN}/
           SSH_SERVER_USE_PROXY_PROTOCOL: true
