@@ -22,16 +22,6 @@ spec:
     crds: CreateReplace
   values:
     config:
-      capi_whitelists.yaml: |
-        name: eaglesemanation/mxtoolbox-whitelist
-        description: "Whitelist events from MxToolBox monitors"
-        whitelist:
-          reason: "MxToolBox ip address"
-          ip:
-            - 44.194.168.193
-            - 52.55.244.91
-            - 18.205.72.90
-            - 18.209.86.113
       config.yaml.local: |
         api:
           server:
@@ -41,6 +31,10 @@ spec:
               allowed_ranges: # /!\ Make sure to adapt to the pod IP ranges used by your cluster
                 - "${POD_CIDR}"
         db_config:
+          flush:
+            agents_autodelete:
+              cert: 60m # This is TLS client authentication
+              login_password: 60m # This includes the auto registration token as well
           type: postgresql
           user: $${DB_USER}
           password: $${DB_PASSWORD}
