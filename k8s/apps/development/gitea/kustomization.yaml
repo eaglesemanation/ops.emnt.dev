@@ -13,3 +13,5 @@ resources:
   - backup-buckets.k8s.yaml
   - actions.k8s.yaml
   - actions-secrets.sops.yaml
+  - renovate.k8s.yaml
+  - renovate-secrets.sops.yaml

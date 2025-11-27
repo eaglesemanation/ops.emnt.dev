@@ -1,0 +1,79 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: renovate-bot
+  namespace: gitea
+spec:
+  schedule: "@daily"
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 0
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      ttlSecondsAfterFinished: 600
+      template:
+        spec:
+          containers:
+            - image: docker.io/renovate/renovate:42.26.2
+              name: renovate-bot
+              env:
+                - name: LOG_LEVEL
+                  value: debug
+              envFrom:
+                - configMapRef:
+                    name: renovate
+                - secretRef:
+                    name: renovate-redis
+                - secretRef:
+                    name: renovate-secrets
+              resources:
+                requests:
+                  cpu: 500m
+                  memory: 1Gi
+                limits:
+                  memory: 2Gi
+              volumeMounts:
+                - name: work-volume
+                  mountPath: /tmp/renovate/
+          restartPolicy: Never
+          volumes:
+            - name: work-volume
+              emptyDir: {}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: renovate
+  namespace: gitea
+data:
+  RENOVATE_AUTODISCOVER: "true"
+  RENOVATE_ENDPOINT: "http://gitea-gitea-http.gitea.svc.cluster.local:3000/api/v1/"
+  RENOVATE_PLATFORM: "gitea"
+  RENOVATE_REDIS_PREFIX: "renovate"
+  RENOVATE_USERNAME: "renovate"
+  RENOVATE_PERSIST_REPO_DATA: "true"
+  RENOVATE_TIMEZONE: "America/Toronto"
+  RENOVATE_PR_CONCURRENT_LIMIT: "0"
+  RENOVATE_PR_HOURLY_LIMIT: "0"
+  RENOVATE_OSV_VULNERABILITY_ALERTS: "true"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: renovate-redis-template
+  namespace: gitea
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: gitea-secrets
+  target:
+    name: renovate-redis
+    template:
+      engineVersion: v2
+      data:
+        RENOVATE_REDIS_URL: "redis://:{{ .password }}@gitea-gitea-keydb.gitea.svc.cluster.local:6379/0"
+  dataFrom:
+    - extract:
+        key: keydb-creds
