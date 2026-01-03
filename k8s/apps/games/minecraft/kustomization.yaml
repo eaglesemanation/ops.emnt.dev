@@ -8,7 +8,6 @@ resources:
   - ingress.k8s.yaml
   - trailing-slash-middleware.k8s.yaml
   - mc-router.k8s.yaml
-  - maria-mc.k8s.yaml
 configMapGenerator:
   - name: minecraft-dashboard
     options:
