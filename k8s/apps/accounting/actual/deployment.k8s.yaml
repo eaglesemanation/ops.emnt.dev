@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: actual-server
-          image: docker.io/actualbudget/actual-server:25.12.0
+          image: docker.io/actualbudget/actual-server:26.1.0
           env:
             - name: ACTUAL_UPLOAD_SYNC_ENCRYPTED_FILE_SYNC_SIZE_LIMIT_MB
               value: "100"
