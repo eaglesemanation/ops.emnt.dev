@@ -6,7 +6,7 @@ resources:
 namespace: rabbitmq-operator
 images:
   - name: rabbitmqoperator/cluster-operator
-    newTag: 2.18.0
+    newTag: 2.19.0
 transformers:
   - |-
     apiVersion: builtin
