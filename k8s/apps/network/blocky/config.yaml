@@ -1,0 +1,26 @@
+ports:
+  dns: 53
+  http: 4000
+upstreams:
+  groups:
+    default:
+      # tls://dns11.quad9.net
+      - sdns://AwMAAAAAAAAAAAAPZG5zMTEucXVhZDkubmV0
+customDNS:
+  mapping:
+    ${CLUSTER_DOMAIN}: ${SVC_INGRESS_INTERNAL_ADDR}
+blocking:
+  denylists:
+    ads:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+    gambling:
+      - https://raw.githubusercontent.com/StevenBlack/hosts/master/alternates/gambling-only/hosts
+  allowlists:
+    ads:
+      - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+  clientGroupsBlock:
+    default:
+      - ads
+      - gambling
+dnssec:
+  validate: true

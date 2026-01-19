@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blocky
+  namespace: blocky
+  labels:
+    app.kubernetes.io/name: blocky
+    app.kubernetes.io/instance: blocky
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: blocky
+      app.kubernetes.io/instance: blocky
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: blocky
+        app.kubernetes.io/instance: blocky
+    spec:
+      containers:
+        - name: blocky
+          image: ghcr.io/0xerr0r/blocky:v0.28.2
+          args:
+            - --config
+            - /app/config/
+          volumeMounts:
+            - name: config
+              mountPath: /app/config/config.yaml
+              subPath: config.yaml
+      volumes:
+        - name: config
+          configMap:
+            name: blocky-config
