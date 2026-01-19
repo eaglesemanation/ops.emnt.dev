@@ -10,14 +10,14 @@ kind: Provider
 metadata:
   name: provider-b2
 spec:
-  package: ghcr.io/eaglesemanation/provider-b2:v0.1.0
+  package: ghcr.io/eaglesemanation/provider-b2:v0.2.0
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
 metadata:
   name: provider-minio
 spec:
-  package: ghcr.io/eaglesemanation/provider-minio:v0.1.0
+  package: ghcr.io/eaglesemanation/provider-minio:v0.2.1
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
