@@ -11,6 +11,5 @@ resources:
   - kubelet-csr-approver.k8s.yaml
   - mailserver.k8s.yaml
   - metallb.k8s.yaml
-  - pihole.k8s.yaml
   - speedtest.k8s.yaml
   - unifi-controller.k8s.yaml

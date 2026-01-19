@@ -7,7 +7,8 @@ metadata:
     app.kubernetes.io/name: blocky
     app.kubernetes.io/instance: blocky
 spec:
-  type: ClusterIP
+  type: LoadBalancer
+  loadBalancerIP: "${SVC_DNS_ADDR}"
   selector:
     app.kubernetes.io/name: blocky
     app.kubernetes.io/instance: blocky
@@ -19,8 +20,4 @@ spec:
     - name: dns-tcp
       port: 53
       targetPort: 53
-      protocol: TCP
-    - name: http
-      port: 4000
-      targetPort: 4000
       protocol: TCP
