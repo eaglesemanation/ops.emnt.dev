@@ -25,9 +25,6 @@ spec:
         name: file:///postgres-creds/dbname
         user: file:///postgres-creds/username
         password: file:///postgres-creds/password
-      redis:
-        host: keydb
-        password: file:///redis-creds/password
       email:
         host: mail.${CLUSTER_DOMAIN}
         port: 465
@@ -51,18 +48,12 @@ spec:
         - name: postgres-creds
           secret:
             secretName: authentik-pg-app
-        - name: redis-creds
-          secret:
-            secretName: redis-creds
         - name: authentik-secrets
           secret:
             secretName: secrets-authentik
       volumeMounts:
         - name: postgres-creds
           mountPath: /postgres-creds
-          readOnly: true
-        - name: redis-creds
-          mountPath: /redis-creds
           readOnly: true
         - name: authentik-secrets
           mountPath: /authentik-secrets
@@ -80,18 +71,12 @@ spec:
         - name: postgres-creds
           secret:
             secretName: authentik-pg-app
-        - name: redis-creds
-          secret:
-            secretName: redis-creds
         - name: authentik-secrets
           secret:
             secretName: secrets-authentik
       volumeMounts:
         - name: postgres-creds
           mountPath: /postgres-creds
-          readOnly: true
-        - name: redis-creds
-          mountPath: /redis-creds
           readOnly: true
         - name: authentik-secrets
           mountPath: /authentik-secrets
