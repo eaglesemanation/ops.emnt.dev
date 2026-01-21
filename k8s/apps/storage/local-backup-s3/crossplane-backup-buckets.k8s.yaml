@@ -80,16 +80,92 @@ spec:
                 forProvider:
                   userSelector:
                     matchControllerRef: true
+                  accessKeySecretRef:
+                    key: access_key
+                    name: local-backup-s3-key
+                  secretKeySecretRef:
+                    key: secret_key
+                    name: local-backup-s3-key
+                  secretKeyVersion: v1 # TODO: Drop when sha256 implemented in provider-minio
+                writeConnectionSecretToRef:
+                  name: local-backup-s3-connectionsecret-depr
                 providerConfigRef:
                   name: local-backup-s3
-                writeConnectionSecretToRef:
-                  name: local-backup-s3-key
             patches:
               - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
                 toFieldPath: metadata.name
                 type: FromCompositeFieldPath
               - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
                 toFieldPath: spec.writeConnectionSecretToRef.namespace
+                type: FromCompositeFieldPath
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.forProvider.accessKeySecretRef.namespace
+                type: FromCompositeFieldPath
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.forProvider.secretKeySecretRef.namespace
+                type: FromCompositeFieldPath
+          - name: local-user-key-secret
+            base:
+              apiVersion: kubernetes.crossplane.io/v1alpha2
+              kind: Object
+              spec:
+                forProvider:
+                  manifest:
+                    apiVersion: external-secrets.io/v1
+                    kind: ExternalSecret
+                    metadata:
+                      name: local-backup-s3-key
+                    spec:
+                      refreshInterval: "30m0s"
+                      dataFrom:
+                        - sourceRef:
+                            generatorRef:
+                              apiVersion: generators.external-secrets.io/v1alpha1
+                              kind: Password
+                              name: local-backup-s3-key
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+                transforms:
+                  - type: string
+                    string:
+                      type: Format
+                      fmt: "%s-externalsecret-s3-key"
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.forProvider.manifest.metadata.namespace
+                type: FromCompositeFieldPath
+          - name: local-user-key-secret-generator
+            base:
+              apiVersion: kubernetes.crossplane.io/v1alpha2
+              kind: Object
+              spec:
+                forProvider:
+                  manifest:
+                    apiVersion: generators.external-secrets.io/v1alpha1
+                    kind: Password
+                    metadata:
+                      name: local-backup-s3-key
+                    spec:
+                      length: 20
+                      digits: 0
+                      symbols: 0
+                      noUpper: false
+                      allowRepeat: true
+                      secretKeys:
+                        - access_key
+                        - secret_key
+            patches:
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: metadata.name
+                type: FromCompositeFieldPath
+                transforms:
+                  - type: string
+                    string:
+                      type: Format
+                      fmt: "%s-externalsecret-s3-key-generator"
+              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+                toFieldPath: spec.forProvider.manifest.metadata.namespace
                 type: FromCompositeFieldPath
           - name: local-policy
             base:
