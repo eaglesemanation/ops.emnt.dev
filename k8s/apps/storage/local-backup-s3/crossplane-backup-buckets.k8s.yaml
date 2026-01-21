@@ -149,9 +149,9 @@ spec:
               kind: UserPolicyAttachment
               spec:
                 forProvider:
-                  policySelector:
+                  policyNameSelector:
                     matchControllerRef: true
-                  userSelector:
+                  userNameSelector:
                     matchControllerRef: true
                 providerConfigRef:
                   name: local-backup-s3
@@ -189,7 +189,7 @@ spec:
               kind: ApplicationKey
               spec:
                 forProvider:
-                  bucketSelector:
+                  bucketIdsSelector:
                     matchControllerRef: true
                   capabilities:
                     - listBuckets
