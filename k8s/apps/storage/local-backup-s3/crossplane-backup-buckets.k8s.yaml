@@ -169,6 +169,9 @@ spec:
                   defaultServerSideEncryption:
                     - algorithm: AES256
                       mode: SSE-B2
+                  lifecycleRules:
+                    - fileNamePrefix: ""
+                      daysFromHidingToDeleting: 30
                 providerConfigRef:
                   name: b2
             patches:
