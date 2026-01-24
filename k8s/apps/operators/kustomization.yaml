@@ -7,3 +7,4 @@ resources:
   - cloudnative-pg.k8s.yaml
   - rabbitmq-operator.k8s.yaml
   - reflector.k8s.yaml
+  - chisel.k8s.yaml
