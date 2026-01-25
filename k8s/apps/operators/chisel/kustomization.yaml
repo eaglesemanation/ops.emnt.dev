@@ -3,3 +3,13 @@ kind: Kustomization
 namespace: chisel
 resources:
   - https://github.com/FyraLabs/chisel-operator/deploy?ref=v0.7.1
+patches:
+  - patch: |-
+      - op: add
+        path: "/spec/template/spec/containers/0/env/-"
+        value:
+          name: LOAD_BALANCER_CLASS
+          value: chisel
+    target:
+      kind: Deployment
+      name: chisel-operator
