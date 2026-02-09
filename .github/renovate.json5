@@ -14,6 +14,54 @@
     kubernetes: {
         managerFilePatterns: ["/k8s/.+\\.k8s\\.yaml/"],
     },
+    customDatasources: {
+        digitalOceanAlpineImg: {
+            defaultRegistryUrlTemplate: "https://dl-cdn.alpinelinux.org/alpine/latest-stable/releases/cloud",
+            format: "html",
+            transformTemplates: [
+                // Extract image details from links
+                "(\
+                    $releases := releases.version[$ != \"../\"].(\
+                        $baseAndExt := $match($, /^([^\.]+\d+\.\d+\.\d+[^\.]+)(\..*)$/);\
+                        {\
+                            \"baseName\": $baseAndExt.groups[0],\
+                            \"extensions\": $baseAndExt.groups[1]\
+                        }\
+                    ){`baseName`: [extensions]};\
+                    $releases := $each($releases, function($v, $k) {(\
+                        $parts := $split($k, \"-\");\
+                        $revision := $match($k, /-r(\d+)/).groups[0];\
+                        $versionParts := $split($parts[1], \".\");\
+                        {\
+                            \"basename\": $k,\
+                            \"extensions\": $v,\
+                            \"cloud\": $substringBefore($parts[0], \"_\"),\
+                            \"version\": {\
+                                \"major\": $number($versionParts[0]),\
+                                \"minor\": $number($versionParts[1]),\
+                                \"patch\": $number($versionParts[2]),\
+                                \"revision\": $number($revision)\
+                            },\
+                            \"arch\": $parts[2],\
+                            \"fw\": $parts[3],\
+                            \"init\": $parts[4],\
+                            \"baremetal\": $parts[5] = \"metal\"\
+                        }\
+                    )})\
+                )",
+                // Filter out version that is compatible with DigitalOcean
+                "[cloud=\"generic\" and arch=\"x86_64\" and fw=\"bios\" and init=\"cloudinit\" and baremetal=false]\
+                    ^(>version.major, >version.minor, >version.patch, >version.revision)[0]",
+                // Format for Renovate to consume
+                "{\
+                    \"homepage\": \"https://alpinelinux.org\",\
+                    \"sourceUrl\": \"https://gitlab.alpinelinux.org/alpine/aports\",\
+                    \"changelogUrl\": \"https://alpinelinux.org/posts\",\
+                    \"release\": [$.{\"version\": $.basename}]\
+                }",
+            ],
+        },
+    },
     customManagers: [
         {
             customType: "regex",
