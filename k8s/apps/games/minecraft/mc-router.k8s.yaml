@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: docker.io/itzg/mc-router
-      tag: "1.39.0"
+      tag: "1.40.1"
     resources:
       requests:
         memory: 50Mi
