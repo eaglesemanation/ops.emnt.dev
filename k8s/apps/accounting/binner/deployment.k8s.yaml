@@ -22,7 +22,7 @@ spec:
         fsGroup: 1654
       containers:
         - name: binner
-          image: docker.io/binnerofficial/binner:v2.6.19
+          image: docker.io/binnerofficial/binner:v2.6.23
           env:
             - name: BINNER_USEHTTPS
               value: "false"
