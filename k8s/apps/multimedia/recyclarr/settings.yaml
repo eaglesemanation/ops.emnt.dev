@@ -37,7 +37,6 @@ sonarr:
           - name: Bluray-1080p Remux
           - name: Bluray-1080p
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
     custom_formats:
       - trash_ids:
           # HDR Formats
@@ -166,7 +165,6 @@ sonarr:
           - name: DVD
           - name: SDTV
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
     custom_formats:
       - trash_ids:
           - 949c16fe0a8147f50ba82cc2df9411c9 # Anime BD Tier 01 (Top SeaDex Muxers)
@@ -261,7 +259,6 @@ radarr:
               - WEBDL-1080p
           - name: Bluray-720p
     delete_old_custom_formats: true
-    replace_existing_custom_formats: true
     custom_formats:
       - trash_ids:
           # Movie Version
