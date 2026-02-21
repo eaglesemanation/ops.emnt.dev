@@ -4,6 +4,6 @@ resources:
   - https://github.com/rabbitmq/messaging-topology-operator/config/installation/cert-manager?ref=v1.18.2
 images:
   - name: rabbitmqoperator/messaging-topology-operator
-    newTag: 1.18.2
+    newTag: 1.18.3
 patches:
   - path: ./delete-ns-patch.yaml
