@@ -111,7 +111,7 @@ spec:
               mountPath: /mam-cookie
       containers:
         - name: transmission
-          image: docker.io/linuxserver/transmission:4.0.6
+          image: docker.io/linuxserver/transmission:4.1.0
           resources:
             requests:
               cpu: 100m
