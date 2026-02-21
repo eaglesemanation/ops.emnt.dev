@@ -22,7 +22,6 @@ resources:
   - jetstack.k8s.yaml
   - jitsi.k8s.yaml
   - jupyterhub.k8s.yaml
-  - kubelet-csr-approver.k8s.yaml
   - metrics-server.k8s.yaml
   - minio.k8s.yaml
   - node-feature-discovery.k8s.yaml
