@@ -108,23 +108,25 @@ spec:
               RequestHost: keep
     ports:
       web:
-        redirections:
-          entryPoint:
-            to: websecure
-            scheme: https
-            permanent: true
-        proxyProtocol:
-          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+        http:
+          redirections:
+            entryPoint:
+              to: websecure
+              scheme: https
+              permanent: true
+          proxyProtocol:
+            trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
       websecure:
-        middlewares:
-          - crowdsec-bouncer@kubernetescrd
-        transport:
-          respondingTimeouts:
-            readTimeout: 0 # TODO: Figure out if possible to limit this to immich
-        forwardedHeaders:
-          trustedIPs: [10.244.0.0/16]
-        proxyProtocol:
-          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+        http:
+          middlewares:
+            - crowdsec-bouncer@kubernetescrd
+          transport:
+            respondingTimeouts:
+              readTimeout: 0 # TODO: Figure out if possible to limit this to immich
+          forwardedHeaders:
+            trustedIPs: [10.244.0.0/16]
+          proxyProtocol:
+            trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
       ssh:
         protocol: TCP
         port: 22
