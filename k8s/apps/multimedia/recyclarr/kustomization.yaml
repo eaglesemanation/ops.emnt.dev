@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - cronjob.k8s.yaml
+  - pvc.k8s.yaml
   - secret.sops.yaml
 configMapGenerator:
   - name: recyclarr

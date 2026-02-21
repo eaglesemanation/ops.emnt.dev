@@ -41,7 +41,12 @@ spec:
                 - name: config
                   mountPath: /config/recyclarr.yml
                   subPath: settings.yaml
+                - name: state
+                  mountPath: /config/state
           volumes:
             - name: config
               configMap:
                 name: recyclarr
+            - name: state
+              persistentVolumeClaim:
+                claimName: recyclarr-state
