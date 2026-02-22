@@ -308,7 +308,7 @@ unix_socket_permission: "0770"
 oidc:
   only_start_if_oidc_is_available: true
   issuer: https://authentik.${CLUSTER_DOMAIN}/application/o/headscale/
-  client_id_path: /etc/headscale-secrets/oidc_client_id
+  #client_id: <specified through env>
   client_secret_path: /etc/headscale-secrets/oidc_secret_key
 
   # The amount of time from a node is authenticated with OpenID until it

@@ -49,6 +49,12 @@ spec:
               port: web
           securityContext:
             readOnlyRootFilesystem: true
+          env:
+            - name: HEADSCALE_OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: oidc_client_id
+                  name: headscale
           ports:
             - name: web
               containerPort: 8080
