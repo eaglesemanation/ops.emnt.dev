@@ -1,22 +1,21 @@
 {
     "groups": {
-        "group:admin": [
-            "eaglesemanation@"
-        ],
         "group:internal": [
             "eaglesemanation@",
             "laser532@",
         ],
     },
     "tagOwners": {
-        "tag:exit-node": [
-            "group:admin"
-        ],
+        "tag:emnt-router": ["eaglesemanation@"],
+        "tag:exit-node": ["group:internal"],
     },
     "autoApprovers": {
         "exitNode": [
             "tag:exit-node"
         ],
+        "routes": {
+            "192.168.25.0/23": ["tag:emnt-router"],
+        },
     },
     "acls": [
         {
