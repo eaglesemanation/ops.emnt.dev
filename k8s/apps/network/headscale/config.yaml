@@ -177,7 +177,6 @@ database:
   #   max_open_conns: 10
   #   max_idle_conns: 10
   #   conn_max_idle_time_secs: 3600
-
   #   # If other 'sslmode' is required instead of 'require(true)' and 'disabled(false)', set the 'sslmode' you need
   #   # in the 'ssl' field. Refers to https://www.postgresql.org/docs/current/libpq-ssl.html Table 34.1.
   #   ssl: false
@@ -309,7 +308,7 @@ unix_socket_permission: "0770"
 oidc:
   only_start_if_oidc_is_available: true
   issuer: https://authentik.${CLUSTER_DOMAIN}/application/o/headscale/
-  client_id: "SZlkZgtylJLH4y3XOUKOd902gnRuhgfMzsmi0mCc"
+  client_id_path: /etc/headscale-secrets/oidc_client_id
   client_secret_path: /etc/headscale-secrets/oidc_secret_key
 
   # The amount of time from a node is authenticated with OpenID until it
@@ -331,6 +330,8 @@ oidc:
   # authentication request will be rejected.
   allowed_groups:
     - authentik Users
+  pkce:
+    enabled: true
 
 # Logtail configuration
 # Logtail is Tailscales logging and auditing infrastructure, it allows the control panel

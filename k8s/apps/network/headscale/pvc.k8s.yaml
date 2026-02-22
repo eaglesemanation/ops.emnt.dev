@@ -11,3 +11,17 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: freenas-api-iscsi-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: headplane-data
+  namespace: headscale
+spec:
+  accessModes:
+    - ReadWriteOncePod
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: freenas-api-iscsi-csi

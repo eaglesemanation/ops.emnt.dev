@@ -1,5 +1,6 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: headscale
   namespace: headscale
@@ -7,24 +8,61 @@ metadata:
     app.kubernetes.io/name: headscale
     app.kubernetes.io/instance: headscale
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    kubernetes.io/ingress.class: ingress-external-traefik
 spec:
-  ingressClassName: ingress-external-traefik
-  rules:
-    - host: headscale.${CLUSTER_DOMAIN}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: headscale
-                port:
-                  name: web
-          - path: /web
-            pathType: Prefix
-            backend:
-              service:
-                name: headscale-ui
-                port:
-                  name: web
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`headscale.${CLUSTER_DOMAIN}`)
+      middlewares:
+        - name: cors
+          namespace: headscale
+      services:
+        - name: headscale
+          namespace: headscale
+          port: web
+    - kind: Rule
+      match: Host(`headscale.${CLUSTER_DOMAIN}`) && Path(`/`)
+      middlewares:
+        - name: headplane-redirect
+          namespace: headscale
+      services:
+        - name: headscale
+          namespace: headscale
+          port: web
+    - kind: Rule
+      match: Host(`headscale.${CLUSTER_DOMAIN}`) && Path(`/admin`)
+      services:
+        - name: headplane
+          namespace: headscale
+          port: web
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/middleware_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: headplane-redirect
+  namespace: headscale
+spec:
+  addPrefix:
+    prefix: "/admin"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/middleware_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: cors
+  namespace: headscale
+spec:
+  headers:
+    accessControlAllowHeaders:
+      - "*"
+    accessControlAllowMethods:
+      - "GET"
+      - "POST"
+      - "PUT"
+    accessControlAllowOriginList:
+      - "https://headscale.tale.me"
+    accessControlMaxAge: 100
+    addVaryHeader: true

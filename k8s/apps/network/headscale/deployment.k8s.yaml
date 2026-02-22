@@ -85,48 +85,70 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: headscale-ui
-  namespace: headscale
+  name: headplane
+  namespace: headplane
   labels:
-    app.kubernetes.io/name: headscale-ui
-    app.kubernetes.io/instance: headscale-ui
+    app.kubernetes.io/name: headplane
+    app.kubernetes.io/instance: headplane
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: headscale-ui
-      app.kubernetes.io/instance: headscale-ui
+      app.kubernetes.io/name: headplane
+      app.kubernetes.io/instance: headplane
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: headscale-ui
-        app.kubernetes.io/instance: headscale-ui
+        app.kubernetes.io/name: headplane
+        app.kubernetes.io/instance: headplane
     spec:
-      securityContext:
-        runAsNonRoot: true
-        runAsUser: 1000
-        runAsGroup: 1000
       containers:
-        - name: headscale-ui
-          image: ghcr.io/gurucomputing/headscale-ui:2025.03.21
+        - name: headplane
+          image: ghcr.io/tale/headplane:0.6.1
           resources:
             requests:
               cpu: 10m
-              memory: 32Mi
+              memory: 64Mi
             limits:
-              memory: 128Mi
-          securityContext:
-            readOnlyRootFilesystem: true
+              memory: 256Mi
           ports:
             - name: web
-              containerPort: 80
+              containerPort: 3000
           volumeMounts:
             - name: data
-              mountPath: /data
-            - name: home-local
-              mountPath: /home/appuser/.local
+              mountPath: /var/lib/headplane
+            - name: config
+              readOnly: true
+              mountPath: /etc/headplane/config.yaml
+              subPath: headplane-config.yaml
+            - name: headscale-config
+              readOnly: true
+              mountPath: /etc/headscale
+            - name: secrets
+              readOnly: true
+              mountPath: /etc/headplane-secrets
+            - name: headplane-cookie-secret
+              readOnly: true
+              mountPath: /etc/headplane-secrets/cookies
+            - name: headscale-secrets
+              readOnly: true
+              mountPath: /etc/headscale-secrets
       volumes:
         - name: data
-          emptyDir: {}
-        - name: home-local
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: headplane-data
+        - name: config
+          configMap:
+            name: headplane-config
+        - name: headscale-config
+          configMap:
+            name: headscale-config
+        - name: secrets
+          secret:
+            secretName: headplane
+        - name: cookie-secret
+          secret:
+            secretName: headplane-cookie-secret
+        - name: headscale-secrets
+          secret:
+            secretName: headscale
