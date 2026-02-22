@@ -83,19 +83,19 @@ spec:
               to: websecure
               scheme: https
               permanent: true
-          proxyProtocol:
-            trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
       websecure:
         http:
           middlewares:
             - crowdsec-bouncer@kubernetescrd
-          transport:
-            respondingTimeouts:
-              readTimeout: 0 # TODO: Figure out if possible to limit this to immich
-          proxyProtocol:
-            trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
-          forwardedHeaders:
-            trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+        transport:
+          respondingTimeouts:
+            readTimeout: 0 # TODO: Figure out if possible to limit this to immich
+        proxyProtocol:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
+        forwardedHeaders:
+          trustedIPs: [10.0.0.0/8, 172.16.0.0/12, 192.168.0.0/16]
       ssh:
         protocol: TCP
         port: 22
