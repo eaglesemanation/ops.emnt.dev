@@ -45,4 +45,12 @@
             "dst": ["autogroup:self:*"],
         },
     ],
+    "ssh": [
+        {
+            "action": "check",
+            "src": ["autogroup:member"],
+            "dst": ["autogroup:self"],
+            "users": ["autogroup:nonroot"],
+        },
+    ],
 }
