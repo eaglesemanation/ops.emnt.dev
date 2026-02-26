@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: chisel-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/FyraLabs/chisel-operator.git
+  sparseCheckout:
+    - deploy
+  ref:
+    tag: v0.7.1
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: chisel-operator-upstream
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./deploy
+  targetNamespace: chisel
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: chisel-operator
+  patches:
+    - patch: |-
+        - op: add
+          path: "/spec/template/spec/containers/0/env/-"
+          value:
+            name: LOAD_BALANCER_CLASS
+            value: chisel
+      target:
+        kind: Deployment
+        name: chisel-operator
