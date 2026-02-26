@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: rabbitmq-operator
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/rabbitmq/cluster-operator.git
+  sparseCheckout:
+    - config
+  ref:
+    tag: v2.19.1
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: rabbitmq-operator-upstream
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./config/installation
+  targetNamespace: rabbitmq-operator
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: rabbitmq-operator
+  patches:
+    - patch: |
+        - op: replace
+          path: /subjects/0/namespace
+          value: rabbitmq-operator
+      target:
+        kind: "(RoleBinding|ClusterRoleBinding)"
