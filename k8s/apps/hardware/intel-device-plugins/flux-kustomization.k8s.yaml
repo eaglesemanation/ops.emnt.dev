@@ -21,7 +21,7 @@ metadata:
 spec:
   interval: 10m
   path: ./deployments/gpu_plugin/overlays/monitoring_shared-dev_nfd
-  targetNamespace: intel-devices-plugins
+  targetNamespace: intel-device-plugins
   prune: true
   sourceRef:
     kind: GitRepository
