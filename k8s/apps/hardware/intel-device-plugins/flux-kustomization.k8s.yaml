@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: intel-device-plugins
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/intel/intel-device-plugins-for-kubernetes.git
+  sparseCheckout:
+    - deployments
+  ref:
+    tag: v0.35.0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: intel-gpu-plugin-upstream
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./deployments/gpu_plugin/overlays/monitoring_shared-dev_nfd
+  targetNamespace: intel-devices-plugins
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: intel-device-plugins
+  patches:
+    - target:
+        group: apps
+        version: v1
+        kind: DaemonSet
+        name: intel-gpu-plugin
+        labelSelector: app=intel-gpu-plugin
+      patch: |-
+        kind: not-important
+        metadata:
+          name: not-important
+        spec:
+          template:
+            spec:
+              containers:
+                - name: intel-gpu-plugin
+                  resources:
+                    requests:
+                      cpu: 10m
+                      memory: 16Mi
+                    limits:
+                      memory: 64Mi
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: intel-node-feature-rules-upstream
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./deployments/nfd/overlays/node-feature-rules
+  targetNamespace: intel-device-plugins
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: intel-device-plugins
