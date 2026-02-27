@@ -1,0 +1,65 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: metallb
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/metallb/metallb.git
+  sparseCheckout:
+    - config
+  ref:
+    tag: v0.15.3
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: metallb-upstream
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./config/native
+  targetNamespace: metallb-system
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: metallb
+  patches:
+    - patch: |
+        apiVersion: apps/v1
+        kind: DaemonSet
+        metadata:
+          name: speaker
+        spec:
+          template:
+            spec:
+              tolerations:
+                - key: emnt.dev/on-nas
+                  operator: Exists
+                  effect: NoSchedule
+              containers:
+                - name: speaker
+                  resources:
+                    requests:
+                      cpu: 10m
+                      memory: 64Mi
+                    limits:
+                      memory: 128Mi
+    - patch: |
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: controller
+        spec:
+          template:
+            spec:
+              containers:
+                - name: controller
+                  resources:
+                    requests:
+                      cpu: 10m
+                      memory: 128Mi
+                    limits:
+                      memory: 256Mi
