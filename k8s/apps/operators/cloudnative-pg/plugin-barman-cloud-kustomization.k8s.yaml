@@ -1,0 +1,36 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/source.toolkit.fluxcd.io/gitrepository_v1.json
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: plugin-barman-cloud
+  namespace: flux-system
+spec:
+  interval: 10m
+  url: https://github.com/cloudnative-pg/plugin-barman-cloud.git
+  sparseCheckout:
+    - config
+    - kubernetes
+  ref:
+    tag: v0.11.0
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: plugin-barman-cloud-upstream
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: ./kubernetes
+  targetNamespace: cloudnative-pg
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: plugin-barman-cloud
+  patches:
+    - patch: |
+        - op: replace
+          path: /subjects/0/namespace
+          value: cloudnative-pg
+      target:
+        kind: "(RoleBinding|ClusterRoleBinding)"

@@ -3,4 +3,4 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
-  - plugin-barman-cloud
+  - plugin-barman-cloud-kustomization.k8s.yaml
