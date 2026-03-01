@@ -35,6 +35,7 @@ spec:
     persistence:
       storageClass: freenas-api-iscsi-csi
       dataDir:
+        enabled: true
         Size: 30Gi
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: mc.${CLUSTER_DOMAIN}
@@ -62,3 +63,4 @@ spec:
           - veinminer
           - veinminer-enchantment
           - luckperms
+          - distant-horizons-support
