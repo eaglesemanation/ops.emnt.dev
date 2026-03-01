@@ -1,11 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - angelnu.k8s.yaml
   - cilium.k8s.yaml
   - cloudnative-pg.k8s.yaml
   - crowdsec.k8s.yaml
-  - crunchy-data.k8s.yaml
   - crossplane.k8s.yaml
   - democratic-csi.k8s.yaml
   - docker-mailserver.k8s.yaml
@@ -16,19 +14,12 @@ resources:
   - goauthentik.k8s.yaml
   - grafana.k8s.yaml
   - immich.k8s.yaml
-  - ingress-nginx.k8s.yaml
   - itzg-minecraft.k8s.yaml
-  - jameswynn.k8s.yaml
   - jetstack.k8s.yaml
-  - jitsi.k8s.yaml
-  - jupyterhub.k8s.yaml
   - metrics-server.k8s.yaml
   - minio.k8s.yaml
   - node-feature-discovery.k8s.yaml
-  - ot-container-kit.k8s.yaml
-  - pihole.k8s.yaml
   - piraeus.k8s.yaml
   - prometheus-community.k8s.yaml
   - traefik.k8s.yaml
   - vmware-tanzu.k8s.yaml
-  - weave-gitops.k8s.yaml
