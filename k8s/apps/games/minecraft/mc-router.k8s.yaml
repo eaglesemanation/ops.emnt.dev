@@ -35,3 +35,5 @@ spec:
           enabled: true
           after: "15m"
       useProxyProtocol: true
+    extraEnv:
+      RECEIVE_PROXY_PROTOCOL: "true"
