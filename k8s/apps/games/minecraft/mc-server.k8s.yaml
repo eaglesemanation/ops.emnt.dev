@@ -1,0 +1,64 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mc-server
+  namespace: flux-system
+spec:
+  interval: 30m
+  targetNamespace: minecraft
+  chart:
+    spec:
+      chart: minecraft
+      version: 5.1.1
+      sourceRef:
+        kind: HelmRepository
+        name: itzg-minecraft
+        namespace: flux-system
+      interval: 30m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    image:
+      tag: 2026.1.0-java25-graalvm
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: 1
+      limits:
+        memory: 8Gi
+        cpu: 1
+    workloadAsStatefulSet: true
+    strategyType: OnDelete
+    persistence:
+      storageClass: freenas-api-iscsi-csi
+      dataDir:
+        Size: 30Gi
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: mc.${CLUSTER_DOMAIN}
+      mc-router.itzg.me/defaultServer: "true"
+    extraEnv:
+      USE_MEOWICE_FLAGS: "TRUE"
+      USE_MEOWICE_GRAALVM_FLAGS: "TRUE"
+    minecraftServer:
+      eula: "TRUE"
+      type: "PAPER"
+      version: "1.21.10"
+      motd: "2 week obsession"
+      memory: 6G
+      modrinth:
+        downloadDependencies: required
+        allowedVersionType: release
+        projects:
+          - chunky
+          - plasmo-voice
+          - pv-addon-groups
+          - pv-addon-sculk
+          - viaversion
+          - viabackwards
+          - tabtps
+          - veinminer
+          - veinminer-enchantment
+          - luckperms

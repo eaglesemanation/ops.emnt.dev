@@ -3,4 +3,5 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - mc-router.k8s.yaml
+  - mc-server.k8s.yaml
   - ingress-routes.k8s.yaml
