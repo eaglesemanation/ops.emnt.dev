@@ -37,6 +37,16 @@ spec:
       dataDir:
         enabled: true
         Size: 30Gi
+    livenessProbe:
+      command:
+        - sh
+        - -c
+        - mc-monitor status --host localhost --port 25565 --use-proxy
+    readinessProbe:
+      command:
+        - sh
+        - -c
+        - mc-monitor status --host localhost --port 25565 --use-proxy
     serviceAnnotations:
       mc-router.itzg.me/externalServerName: mc.${CLUSTER_DOMAIN}
       mc-router.itzg.me/defaultServer: "true"
