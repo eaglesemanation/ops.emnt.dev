@@ -59,6 +59,9 @@ spec:
       version: "1.21.10"
       motd: "2 week obsession"
       memory: 6G
+      rcon:
+        enabled: true
+        withGeneratedPassword: true
       modrinth:
         downloadDependencies: required
         allowedVersionType: release
