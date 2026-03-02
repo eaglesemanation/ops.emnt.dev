@@ -62,6 +62,13 @@ spec:
       rcon:
         enabled: true
         withGeneratedPassword: true
+      extraPorts:
+        - name: squaremap
+          containerPort: 8080
+          service:
+            port: 8080
+            enabled: true
+            embedded: true
       modrinth:
         downloadDependencies: required
         allowedVersionType: release
@@ -77,3 +84,4 @@ spec:
           - veinminer-enchantment
           - luckperms
           - distant-horizons-support
+          - squaremap

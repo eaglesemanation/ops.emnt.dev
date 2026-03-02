@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: mc-server
+  namespace: minecraft
+  labels:
+    app.kubernetes.io/name: minecraft
+    app.kubernetes.io/instance: mc-server
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+spec:
+  ingressClassName: ingress-external-traefik
+  rules:
+    - host: mc.${CLUSTER_DOMAIN}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: minecraft-mc-server
+                port:
+                  name: squaremap
