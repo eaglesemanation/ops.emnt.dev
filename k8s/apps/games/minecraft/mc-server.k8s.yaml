@@ -26,10 +26,10 @@ spec:
     resources:
       requests:
         memory: 8Gi
-        cpu: 1
+        cpu: 2
       limits:
         memory: 8Gi
-        cpu: 1
+        cpu: 2
     workloadAsStatefulSet: true
     strategyType: OnDelete
     persistence:
