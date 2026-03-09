@@ -4,8 +4,8 @@ ports:
 upstreams:
   groups:
     default:
-      # tls://dns11.quad9.net
-      - sdns://AwMAAAAAAAAAAAAPZG5zMTEucXVhZDkubmV0
+      - 9.9.9.11
+      - 149.112.112.11
 customDNS:
   mapping:
     ${CLUSTER_DOMAIN}: ${SVC_INGRESS_INTERNAL_ADDR}
