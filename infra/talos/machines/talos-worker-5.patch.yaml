@@ -1,6 +1,10 @@
 machine:
   install:
     disk: /dev/sda
+  nodeLabels:
+    openebs.io/engine: mayastor
+  sysctls:
+    vm.nr_hugepages: 1024
   network:
     hostname: talos-worker-5
     interfaces:
