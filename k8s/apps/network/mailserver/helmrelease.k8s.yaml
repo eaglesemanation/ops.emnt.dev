@@ -77,6 +77,11 @@ spec:
         ENABLE_RSPAMD: 1
         ENABLE_RSPAMD_REDIS: 1
         ENABLE_FAIL2BAN: 1
+      resources:
+        requests:
+          memory: 2Gi
+        limits:
+          memory: 3Gi
     rspamd:
       ingress:
         enabled: true
