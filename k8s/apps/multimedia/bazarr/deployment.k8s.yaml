@@ -35,6 +35,7 @@ spec:
           securityContext:
             readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
           startupProbe:
+            failureThreshold: 10
             exec:
               command: ["/bin/sh", "/healthcheck.sh", "6767"]
           livenessProbe:
