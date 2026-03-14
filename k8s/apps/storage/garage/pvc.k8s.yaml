@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: meta
+  namespace: garage
+spec:
+  accessModes:
+    - ReadWriteOncePod
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: freenas-api-iscsi-csi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  namespace: garage
+spec:
+  accessModes:
+    - ReadWriteOncePod
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 1Ti
+  storageClassName: freenas-api-iscsi-csi
