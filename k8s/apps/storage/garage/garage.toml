@@ -1,0 +1,21 @@
+metadata_dir = "/mnt/meta"
+data_dir = "/mnt/data"
+db_engine = "sqlite"
+block_size = "1M"
+replication_factor = 1
+consistency_mode = "consistent"
+compression_level = 1
+rpc_bind_addr = "[::]:3901"
+
+[s3_api]
+s3_region = "garage"
+api_bind_addr = "[::]:3900"
+root_domain = ".garage.${CLUSTER_DOMAIN}"
+
+[s3_web]
+bind_addr = "[::]:3902"
+root_domain = ".www.${CLUSTER_DOMAIN}"
+index = "index.html"
+
+[admin]
+api_bind_addr = "[::]:3903"
