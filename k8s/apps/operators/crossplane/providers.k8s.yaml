@@ -24,7 +24,7 @@ kind: Provider
 metadata:
   name: provider-garage
 spec:
-  package: ghcr.io/eaglesemanation/provider-garage:v0.1.0
+  package: ghcr.io/eaglesemanation/provider-garage:v0.1.1
 ---
 apiVersion: pkg.crossplane.io/v1
 kind: Provider
