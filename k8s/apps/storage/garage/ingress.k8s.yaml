@@ -6,6 +6,8 @@ metadata:
   labels:
     app.kubernetes.io/name: garage
     app.kubernetes.io/instance: garage
+  annotations:
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   ingressClassName: ingress-internal-traefik
   rules:
@@ -30,6 +32,16 @@ spec:
                 port:
                   name: s3-api
     - host: "*.www.${CLUSTER_DOMAIN}"
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: garage
+                port:
+                  name: web-api
+    - host: "${CLUSTER_DOMAIN}"
       http:
         paths:
           - path: /

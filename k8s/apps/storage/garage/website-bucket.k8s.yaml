@@ -1,0 +1,43 @@
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  name: website-bucket
+  namespace: garage
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    globalAlias: website-bucket
+    websiteEnabled: true
+---
+apiVersion: key.garage.m.crossplane.io/v1alpha1
+kind: Key
+metadata:
+  name: website-key
+  namespace: garage
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    name: website-key
+  writeConnectionSecretToRef:
+    name: website-key
+---
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Permission
+metadata:
+  name: website-key-permission
+  namespace: garage
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    accessKeyIdRef:
+      name: website-key
+    bucketIdRef:
+      name: website-bucket
+    read: true
+    write: true

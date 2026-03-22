@@ -9,6 +9,7 @@ resources:
   - ingress.k8s.yaml
   - providerconfig.k8s.yaml
   - secretstore.k8s.yaml
+  - website-bucket.k8s.yaml
 configMapGenerator:
   - name: config
     namespace: garage
