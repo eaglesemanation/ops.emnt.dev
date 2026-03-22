@@ -41,3 +41,27 @@ spec:
           apiVersion: generators.external-secrets.io/v1alpha1
           kind: Password
           name: hex-password
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: crossplane-creds
+  namespace: garage
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: garage-secrets
+  target:
+    name: crossplane-creds
+    template:
+      engineVersion: v2
+      data:
+        credentials: |
+          {
+            "endpoint": "http://garage.garage.svc.cluster.local:3903",
+            "token": "{{ .password }}"
+          }
+  dataFrom:
+    - extract:
+        key: admin-token

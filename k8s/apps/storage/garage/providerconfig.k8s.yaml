@@ -1,0 +1,11 @@
+apiVersion: garage.m.crossplane.io/v1beta1
+kind: ClusterProviderConfig
+metadata:
+  name: garage
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      key: credentials
+      name: crossplane-creds
+      namespace: garage
