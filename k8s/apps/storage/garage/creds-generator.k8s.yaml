@@ -17,6 +17,7 @@ metadata:
   name: rpc-secret
   namespace: garage
 spec:
+  refreshPolicy: OnChange
   target:
     name: rpc-secret
   dataFrom:
@@ -33,6 +34,7 @@ metadata:
   name: admin-token
   namespace: garage
 spec:
+  refreshPolicy: OnChange
   target:
     name: admin-token
   dataFrom:
