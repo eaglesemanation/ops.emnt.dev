@@ -31,8 +31,7 @@ spec:
           namespace: garage
           port: web-api
     - kind: Rule
-      match: Host(`${CLUSTER_DOMAIN}`)
-      priority: 2 # Just above the fallback to ingress-external-traefik
+      match: Host(`www.${CLUSTER_DOMAIN}`)
       services:
         - name: garage
           namespace: garage

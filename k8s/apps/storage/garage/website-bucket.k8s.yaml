@@ -8,7 +8,7 @@ spec:
     kind: ClusterProviderConfig
     name: garage
   forProvider:
-    globalAlias: website-bucket
+    globalAlias: www.${CLUSTER_DOMAIN}
     websiteEnabled: true
     websiteIndexDocument: intex.html
 ---
