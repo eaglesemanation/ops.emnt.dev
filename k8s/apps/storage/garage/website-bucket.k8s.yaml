@@ -10,6 +10,7 @@ spec:
   forProvider:
     globalAlias: website-bucket
     websiteEnabled: true
+    websiteIndexDocument: intex.html
 ---
 apiVersion: key.garage.m.crossplane.io/v1alpha1
 kind: Key
