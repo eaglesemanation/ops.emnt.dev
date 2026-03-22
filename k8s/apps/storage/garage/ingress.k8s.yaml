@@ -1,53 +1,39 @@
-apiVersion: networking.k8s.io/v1
-kind: Ingress
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
 metadata:
   name: garage
   namespace: garage
   labels:
     app.kubernetes.io/name: garage
-    app.kubernetes.io/instance: garage
   annotations:
-    traefik.ingress.kubernetes.io/router.entrypoints: websecure
+    kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
-  ingressClassName: ingress-internal-traefik
-  rules:
-    - host: garage.${CLUSTER_DOMAIN}
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: garage
-                port:
-                  name: s3-api
-    - host: "*.garage.${CLUSTER_DOMAIN}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: garage
-                port:
-                  name: s3-api
-    - host: "*.www.${CLUSTER_DOMAIN}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: garage
-                port:
-                  name: web-api
-    - host: "${CLUSTER_DOMAIN}"
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: garage
-                port:
-                  name: web-api
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`garage.${CLUSTER_DOMAIN}`)
+      services:
+        - name: garage
+          namespace: garage
+          port: s3-api
+    - kind: Rule
+      match: Host(`*.garage.${CLUSTER_DOMAIN}`)
+      services:
+        - name: garage
+          namespace: garage
+          port: s3-api
+    - kind: Rule
+      match: Host(`*.www.${CLUSTER_DOMAIN}`)
+      services:
+        - name: garage
+          namespace: garage
+          port: web-api
+    - kind: Rule
+      match: Host(`${CLUSTER_DOMAIN}`)
+      priority: 2 # Just above the fallback to ingress-external-traefik
+      services:
+        - name: garage
+          namespace: garage
+          port: web-api
