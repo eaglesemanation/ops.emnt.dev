@@ -1,0 +1,14 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: argo-workflows-pg
+  namespace: argo-workflows
+spec:
+  instances: 1
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 10Gi
+  bootstrap:
+    initdb:
+      database: argo-workflows

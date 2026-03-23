@@ -1,0 +1,42 @@
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  name: argo-workflows
+  namespace: argo-workflows
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    globalAlias: argo-workflows
+---
+apiVersion: key.garage.m.crossplane.io/v1alpha1
+kind: Key
+metadata:
+  name: argo-workflows
+  namespace: argo-workflows
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    name: argo-workflows
+  writeConnectionSecretToRef:
+    name: garage-creds
+---
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Permission
+metadata:
+  name: argo-workflows
+  namespace: argo-workflows
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    accessKeyIdRef:
+      name: argo-workflows
+    bucketIdRef:
+      name: argo-workflows
+    read: true
+    write: true

@@ -28,3 +28,24 @@ spec:
   sourceRef:
     kind: GitRepository
     name: argo-workflows
+  patches:
+    - patch: |
+        $patch: delete
+        apiVersion: v1
+        kind: ConfigMap
+        metadata:
+          name: workflow-controller-configmap
+    - patch: |
+        apiVersion: apps/v1
+        kind: Deployment
+        metadata:
+          name: argo-server
+        spec:
+          template:
+            spec:
+              containers:
+                - name: argo-server
+                  args:
+                    - server
+                    - --auth-mode
+                    - sso
