@@ -27,7 +27,7 @@ roleRef:
   name: flux-reconcile
 subjects:
   - kind: ServiceAccount
-    name: argo-events-sa
+    name: default
     namespace: argo-events
 ---
 apiVersion: v1
