@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: blocky
-          image: ghcr.io/0xerr0r/blocky:v0.28.2
+          image: ghcr.io/0xerr0r/blocky:v0.29.0
           args:
             - --config
             - /app/config/
