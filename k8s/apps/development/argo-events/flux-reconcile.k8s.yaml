@@ -11,6 +11,9 @@ spec:
       eventSourceName: github
       eventName: emnt
       filters:
+        headers:
+          - name: X-GitHub-Event
+            value: push
         data:
           - path: body.ref
             type: string
