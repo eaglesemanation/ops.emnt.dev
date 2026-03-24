@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: github-webhook
+  namespace: argo-events
+  labels:
+    app.kubernetes.io/name: webhook-eventsource
+    app.kubernetes.io/instance: github-webhook
+spec:
+  type: ClusterIP
+  selector:
+    eventsource-name: github
+  ports:
+    - port: 12000
+      targetPort: 12000
+      protocol: TCP

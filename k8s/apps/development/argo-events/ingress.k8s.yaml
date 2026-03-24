@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: argo-events
+  namespace: argo-events
+  labels:
+    app.kubernetes.io/name: argo-events
+  annotations:
+    kubernetes.io/ingress.class: ingress-external-traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`argo-events.${CLUSTER_DOMAIN}`) && PathPrefix(`/github-webhook`)
+      middlewares:
+        - name: webhook-strip-prefix
+      services:
+        - name: github-webhook
+          namespace: argo-events
+          port: 12000
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/middleware_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: webhook-strip-prefix
+  namespace: argo-events
+spec:
+  stripPrefix:
+    prefixes:
+      - /github-webhook

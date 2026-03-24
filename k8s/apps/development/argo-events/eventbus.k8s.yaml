@@ -1,0 +1,19 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/argoproj.io/eventbus_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: EventBus
+metadata:
+  name: bus
+  namespace: argo-events
+spec:
+  jetstream:
+    # Lookup newer versions here: https://github.com/argoproj/argo-events/blob/master/manifests/base/controller-manager/controller-config.yaml
+    # TODO: Add renovate handling
+    version: 2.10.29
+    persistence:
+      storageClassName: freenas-api-iscsi-csi
+      accessMode: ReadWriteOnce
+      volumeSize: 10Gi
+    streamConfig: |
+      maxAge: 24h
+    settings: |
+      max_file_store: 1GB

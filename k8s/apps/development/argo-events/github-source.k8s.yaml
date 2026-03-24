@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: github
+  namespace: argo-events
+spec:
+  eventBusName: bus
+  github:
+    emnt:
+      repositories:
+        - owner: eaglesemanation
+          names:
+            - ops.emnt.dev
+      contentType: json
+      webhook:
+        endpoint: /push
+        port: "12000"
+        method: POST
+        url: https://argo-events.${CLUSTER_DOMAIN}/github-webhook
+      active: true
+      events:
+        - "*"
+      apiToken:
+        name: github-pat
+        key: token
+      webhookSecret:
+        name: github-webhook
+        key: secret

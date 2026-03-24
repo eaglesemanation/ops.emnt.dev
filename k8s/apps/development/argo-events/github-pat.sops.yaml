@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Secret
+metadata:
+    name: github-pat
+    namespace: argo-events
+stringData:
+    token: ENC[AES256_GCM,data:nuyUkyTG0vK+Qg11453g4Dh3CGeMJiXSZEe+67PNLTAlxGpksS+pCGmSFuds6pleT5NtcK6Q06NQz0mEvHUSvPJ6Hl3JyYXI+GyMNfR2m++fZsoYgxAiJZyY9qV1,iv:yrTXQpfwKZC8ZFy1nl1Zshgq8KlRjJDJ7NL1jFrnczU=,tag:VvzfnwMp9JGtIFEuFaUu9g==,type:str]
+sops:
+    age:
+        - recipient: age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
+          enc: |
+            -----BEGIN AGE ENCRYPTED FILE-----
+            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IFgyNTUxOSBTNnV6MjlCd3NCVHZPSDda
+            dUxuZTZPZ0oyQUx1d1FiRm9JdnBKQ1RCWWtFCm9vNzZaalV2QjAxTG9XQXl6VWpV
+            NUtWTkhEbnNqNzJVQlVsS2MyaG1DV3cKLS0tIFl6UFZQQmFPVTJ4SFc4QlJ5OUs0
+            LzBrekVBQlFIN3hrd3drNWQvUnNNVmcKdC0oGBUHUKG82mgl99huZnfvqWGH7yKS
+            MN5eYYq+CXiT6MYVqD8NZGdWL9pBZzok0WFPUdUDCklHfWVEMP+m4Q==
+            -----END AGE ENCRYPTED FILE-----
+    lastmodified: "2026-03-24T01:30:39Z"
+    mac: ENC[AES256_GCM,data:OrLPQCsbWb5411SzigJ/IWSL/k78ggOZuG2Xd2e5RP6LapKzzsa6ScVe40U5Kgf6yxrtzvrr9go9jOAQDe/1WG4QBUJ2Tc1/L0vJYfjEGfXmV+8cL7qtt9vhEj+eR76JBw6CgCVtHjnq3kRkfgrTvvo2SJ0JL+lmVb3G5vFmhHA=,iv:7mhGtfeuU3SB6Hl2U1w84rk+PAOKfk9pMpn2qLSdLSw=,tag:+6ZWnx0rpplzvcGXz6H3Gw==,type:str]
+    pgp:
+        - created_at: "2026-03-24T01:30:39Z"
+          enc: |-
+            -----BEGIN PGP MESSAGE-----
+
+            hQIMAwVH6sRf6ijOAQ//dVhXhNPClObLXR5TnUjCw0uVPU7rhgxV9omR6LK9ZU1R
+            hS07LFx2pD4hntONeWO6xdOGVOr6oluDp35QepqFpJwRO4h74JiSCP7+EW8MDpmH
+            PTHQTTGnlmdmdrkncrW+k9YjrDK4pzCQS17nhbK9xuUq8sCamIgHlYyWlgYhV0xL
+            r80AZciKu/+wrWYx0taZjwpBd35HJaohZouJb9KhlpOcJa3Eonx+cYE0OC2vT5kM
+            IQ6Sx5GXVtx8IYRdHHKNOkgrKpaVeO/YlyXNM6foh0f5stwfhRBvqYO1zPf4NZTY
+            CcdT6t1zHFLR6C38BdDcnkSqVT9FMNvPpXz7zL0yPe3hsJFVgruQD4rR1x5kHCcZ
+            +2Il6sFgh8GG+0jxCETn32EQRzXtf/B3PDT3/CaWnYYemGvrx+yMkA2DKb2JYYbT
+            YDDet1wIyviAfUyWIjCRnOLsfejigWPSGKQvgWyvWowuKwHhGqeheQCIMGpe0/Fe
+            U6Aep58XqVkCFkMtsK09Kg99mduCHMv+i7bomVCDc537C8xeKUROr0owe/h484VP
+            WzAo1V2un2tODdzhQfJm0z0EsxR3BE19PcjrpNzBnJIEXfhO0wbnjiKNeqqOFxx2
+            wDUsCxa46q0fEYjaC/hsjKHYjkvatCSjz3Bct4t7ZJKhrIcp9LWhyqG5GmuprebS
+            XgFo299x3rPr0P4Q5IHScXyugCTdqoccqwNMDlOwjUXoflJoVYx2hdBecs4y2EHC
+            cAtDxjKbLfXys89M6yhC+mPuMRoOCywvaCjR35TQUBsZ/Nto8p7swP3UPOsNljw=
+            =7ABN
+            -----END PGP MESSAGE-----
+          fp: C5B9ADB07DBE5A2E
+    encrypted_regex: ^(data|stringData|crowdsecLapiKey)$
+    version: 3.12.1
