@@ -17,6 +17,19 @@ subjects:
     name: operate-workflow-sa
     namespace: argo-events
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: operate-workflow-flux-reconcile-role-binding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: flux-reconcile
+subjects:
+  - kind: ServiceAccount
+    name: operate-workflow-sa
+    namespace: argo-events
+---
 apiVersion: v1
 kind: ServiceAccount
 metadata:
