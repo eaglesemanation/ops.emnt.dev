@@ -11,10 +11,11 @@ spec:
       eventSourceName: github
       eventName: emnt
       filters:
-        headers:
-          - name: X-GitHub-Event
-            value: push
         data:
+          - path: headers.X-GitHub-Event
+            type: string
+            value:
+              - push
           - path: body.ref
             type: string
             value:
@@ -23,8 +24,6 @@ spec:
             type: string
             value:
               - "^k8s/.*"
-        dataLogicalOperator: and
-        exprLogicalOperator: and
   triggers:
     - template:
         name: patch-git-repository
