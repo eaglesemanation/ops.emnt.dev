@@ -6,3 +6,4 @@ resources:
   - minio-config.sops.yaml
   - loki-minio-creds.sops.yaml
   - helmrelease.k8s.yaml
+  - garage-buckets.k8s.yaml
