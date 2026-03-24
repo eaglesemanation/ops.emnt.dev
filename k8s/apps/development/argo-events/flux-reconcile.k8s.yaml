@@ -20,10 +20,6 @@ spec:
             type: string
             value:
               - refs/heads/main
-          - path: body.commits.#.modified.#
-            type: string
-            value:
-              - "^k8s/.*"
   triggers:
     - template:
         name: patch-git-repository
@@ -36,26 +32,6 @@ spec:
               kind: GitRepository
               metadata:
                 name: emnt-ops
-                namespace: flux-system
-          parameters:
-            - src:
-                dependencyName: push-event
-                dataKey: body.head_commit.timestamp
-              dest: metadata.annotations.reconcile\.fluxcd\.io/requestedAt
-      retryStrategy:
-        steps: 3
-        duration: 5s
-    - template:
-        name: patch-kustomization
-        k8s:
-          operation: patch
-          patchType: merge
-          source:
-            resource:
-              apiVersion: kustomize.toolkit.fluxcd.io/v1
-              kind: Kustomization
-              metadata:
-                name: apps
                 namespace: flux-system
           parameters:
             - src:
