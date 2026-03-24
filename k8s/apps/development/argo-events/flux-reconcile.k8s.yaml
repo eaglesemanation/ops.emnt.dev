@@ -12,7 +12,7 @@ spec:
       eventName: emnt
       filters:
         data:
-          - path: headers.X-GitHub-Event
+          - path: headers.X-Github-Event
             type: string
             value:
               - push
