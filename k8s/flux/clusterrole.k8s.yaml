@@ -3,20 +3,26 @@ kind: ClusterRole
 metadata:
   name: flux-reconcile
 rules:
-  - apiGroups: source.toolkit.fluxcd.io
-    resources: gitrepositories
+  - apiGroups:
+      - source.toolkit.fluxcd.io
+    resources:
+      - gitrepositories
     verbs:
       - get
       - patch
       - update
-  - apiGroups: kustomize.toolkit.fluxcd.io
-    resources: kustomizations
+  - apiGroups:
+      - kustomize.toolkit.fluxcd.io
+    resources:
+      - kustomizations
     verbs:
       - get
       - patch
       - update
-  - apiGroups: helm.toolkit.fluxcd.io
-    resources: helmreleases
+  - apiGroups:
+      - helm.toolkit.fluxcd.io
+    resources:
+      - helmreleases
     verbs:
       - get
       - patch
