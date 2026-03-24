@@ -10,6 +10,7 @@ spec:
   sparseCheckout:
     - config
   ref:
+    # NOTE: Update Kustomization newTag as well
     tag: v1.19.0
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/kustomize.toolkit.fluxcd.io/kustomization_v1.json
@@ -20,12 +21,17 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: ./config/installation/cert-manager
+  path: ./config/installation
   targetNamespace: rabbitmq-operator
   prune: true
   sourceRef:
     kind: GitRepository
     name: messaging-topology-operator
+  images:
+    - name: localhost/messaging-topology-operator
+      newName: ghcr.io/rabbitmq/messaging-topology-operator
+      # NOTE: Update GitRepository tag as well
+      newTag: 1.19.0
   patches:
     - patch: |
         $patch: delete
@@ -39,3 +45,30 @@ spec:
           value: rabbitmq-operator
       target:
         kind: "(RoleBinding|ClusterRoleBinding)"
+    - patch: |
+        apiVersion: cert-manager.io/v1
+        kind: Certificate
+        metadata:
+          name: messaging-topology-serving-cert
+          namespace: rabbitmq-system
+        spec:
+          dnsNames:
+            - messaging-topology-webhook-service.rabbitmq-operator.svc
+            - messaging-topology-webhook-service.rabbitmq-operator.svc.cluster.local
+    - patch: |
+        apiVersion: cert-manager.io/v1
+        kind: Certificate
+        metadata:
+          name: messaging-topology-metrics-certs
+          namespace: rabbitmq-system
+        spec:
+          dnsNames:
+            - messaging-topology-controller-metrics-service.rabbitmq-operator.svc
+            - messaging-topology-controller-metrics-service.rabbitmq-operator.svc.cluster.local
+    - patch: |
+        apiVersion: admissionregistration.k8s.io/v1
+        kind: ValidatingWebhookConfiguration
+        metadata:
+          name: validating-webhook-configuration
+          annotations:
+            cert-manager.io/inject-ca-from: rabbitmq-operator/messaging-topology-serving-cert
