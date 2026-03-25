@@ -24,8 +24,12 @@ spec:
     loki:
       # TODO: Enable when ingress supports service auth, not just user auth
       auth_enabled: false
+      commonConfig:
+        replication_factor: 1
       limits_config:
         retention_period: 744h # 31 days
+      querier:
+        max_concurrent: 2
       compactor:
         working_directory: /var/loki/compactor
         retention_enabled: true
@@ -54,42 +58,23 @@ spec:
           secretAccessKey: $${S3_LOKI_SECRET_ACCESS_KEY}
           http_config:
             insecure_skip_verify: true
-    # NOTE: Currently separating access keys into secret is a mess.
-    # Keep track of https://github.com/grafana/loki/issues/8572
-    backend:
-      resources:
-        requests:
-          cpu: 20m
-          memory: 128Mi
-        limits:
-          memory: 512Mi
+
+    deploymentMode: SingleBinary
+    singleBinary:
+      replicas: 1
       persistence:
         storageClass: freenas-api-iscsi-csi
-      extraArgs:
-        - "-config.expand-env=true"
-      extraEnv:
-        - name: S3_LOKI_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: loki-minio
-              key: CONSOLE_ACCESS_KEY
-        - name: S3_LOKI_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: loki-minio
-              key: CONSOLE_SECRET_KEY
-    write:
       resources:
         requests:
           cpu: 20m
-          memory: 512Mi
+          memory: 1Gi
         limits:
           memory: 2Gi
-      persistence:
-        storageClass: freenas-api-iscsi-csi
       extraArgs:
         - "-config.expand-env=true"
       extraEnv:
+        - name: GOMEMLIMIT
+          value: 1750MiB
         - name: S3_LOKI_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
@@ -100,26 +85,32 @@ spec:
             secretKeyRef:
               name: loki-minio
               key: CONSOLE_SECRET_KEY
+
+    backend:
+      replicas: 0
     read:
-      resources:
-        requests:
-          cpu: 20m
-          memory: 128Mi
-        limits:
-          memory: 512Mi
-      extraArgs:
-        - "-config.expand-env=true"
-      extraEnv:
-        - name: S3_LOKI_ACCESS_KEY_ID
-          valueFrom:
-            secretKeyRef:
-              name: loki-minio
-              key: CONSOLE_ACCESS_KEY
-        - name: S3_LOKI_SECRET_ACCESS_KEY
-          valueFrom:
-            secretKeyRef:
-              name: loki-minio
-              key: CONSOLE_SECRET_KEY
+      replicas: 0
+    write:
+      replicas: 0
+    ingester:
+      replicas: 0
+    querier:
+      replicas: 0
+    queryFrontend:
+      replicas: 0
+    queryScheduler:
+      replicas: 0
+    distributor:
+      replicas: 0
+    compactor:
+      replicas: 0
+    indexGateway:
+      replicas: 0
+    bloomCompactor:
+      replicas: 0
+    bloomGateway:
+      replicas: 0
+
     chunksCache:
       allocatedMemory: 512 # MB
       resources:
@@ -161,5 +152,5 @@ spec:
         # Needed for CrowdSec to verify if Loki is ready
         serverSnippet: |-
           location = /ready {
-            proxy_pass "http://loki-read.loki.svc.cluster.local:3100/ready";
+            proxy_pass "http://loki.loki.svc.cluster.local:3100/ready";
           }
