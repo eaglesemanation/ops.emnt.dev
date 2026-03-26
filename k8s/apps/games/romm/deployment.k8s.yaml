@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: romm
+  namespace: romm
+  labels:
+    app.kubernetes.io/name: romm
+    app.kubernetes.io/instance: romm
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: romm
+      app.kubernetes.io/instance: romm
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: romm
+        app.kubernetes.io/instance: romm
+    spec:
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "2"
+      enableServiceLinks: false
+      containers:
+        - name: romm
+          image: ghcr.io/rommapp/romm:4.7.0
+          envFrom:
+            - secretRef:
+                name: auth-secret
+            - secretRef:
+                name: igdb-creds
+            - secretRef:
+                name: steamgriddb-creds
+            - secretRef:
+                name: retroachievements-creds
+            - secretRef:
+                name: authentik-creds
+          env:
+            - name: ROMM_BASE_URL
+              value: https://romm.${CLUSTER_DOMAIN}
+            - name: ROMM_DB_DRIVER
+              value: postgresql
+            - name: DB_HOST
+              valueFrom:
+                secretKeyRef:
+                  name: romm-pg-app
+                  key: host
+            - name: DB_PORT
+              valueFrom:
+                secretKeyRef:
+                  name: romm-pg-app
+                  key: port
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: romm-pg-app
+                  key: dbname
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: romm-pg-app
+                  key: username
+            - name: DB_PASSWD
+              valueFrom:
+                secretKeyRef:
+                  name: romm-pg-app
+                  key: password
+            - name: HASHEOUS_API_ENABLED
+              value: "true"
+            - name: HLTB_API_ENABLED
+              value: "true"
+            - name: FLASHPOINT_API_ENABLED
+              value: "true"
+            - name: DISABLE_USERPASS_LOGIN
+              value: "true"
+            - name: OIDC_ENABLED
+              value: "true"
+            - name: OIDC_AUTOLOGIN
+              value: "true"
+            - name: OIDC_PROVIDER
+              value: Authentik
+            - name: OIDC_REDIRECT_URL
+              value: https://romm.${CLUSTER_DOMAIN}/api/oauth/openid
+            - name: OIDC_SERVER_APPLICATION_ID
+              value: https://authentik.${CLUSTER_DOMAIN}/application/o/romm
+          volumeMounts:
+            - name: library
+              mountPath: /romm/library
+            - name: assets
+              mountPath: /romm/assets
+            - name: resources
+              mountPath: /romm/resources
+            - name: redis-data
+              mountPath: /redis-data
+            - name: config
+              mountPath: /romm/config/config.yml
+              subPath: config.yml
+      volumes:
+        - name: library
+          persistentVolumeClaim:
+            claimName: library
+        - name: assets
+          persistentVolumeClaim:
+            claimName: assets
+        - name: resources
+          persistentVolumeClaim:
+            claimName: resources
+        - name: redis-data
+          persistentVolumeClaim:
+            claimName: redis-data
+        - name: config
+          configMap:
+            name: romm-config
