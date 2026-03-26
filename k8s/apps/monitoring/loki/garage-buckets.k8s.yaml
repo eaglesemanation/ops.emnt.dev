@@ -40,3 +40,32 @@ spec:
       name: loki-chunks
     read: true
     write: true
+---
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  name: loki-ruler
+  namespace: loki
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    globalAlias: loki-ruler
+---
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Permission
+metadata:
+  name: loki-ruler
+  namespace: loki
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    accessKeyIdRef:
+      name: loki
+    bucketIdRef:
+      name: loki-ruler
+    read: true
+    write: true
