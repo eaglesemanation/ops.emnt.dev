@@ -48,16 +48,16 @@ spec:
               prefix: index_
       storage:
         bucketNames:
-          chunks: chunks
-          admin: admin
-          ruler: ruler
+          chunks: loki-chunks
+          admin: loki-admin
+          ruler: loki-ruler
         s3:
-          s3: https://minio.loki.svc.cluster.local
-          s3ForcePathStyle: true
+          s3: http://garage.garage.svc.cluster.local:3900
+          s3forcepathstyle: true
+          region: garage
+          insecure: true
           accessKeyId: $${S3_LOKI_ACCESS_KEY_ID}
           secretAccessKey: $${S3_LOKI_SECRET_ACCESS_KEY}
-          http_config:
-            insecure_skip_verify: true
 
     deploymentMode: SingleBinary
     singleBinary:
@@ -78,13 +78,13 @@ spec:
         - name: S3_LOKI_ACCESS_KEY_ID
           valueFrom:
             secretKeyRef:
-              name: loki-minio
-              key: CONSOLE_ACCESS_KEY
+              name: garage-creds
+              key: access_key_id
         - name: S3_LOKI_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              name: loki-minio
-              key: CONSOLE_SECRET_KEY
+              name: garage-creds
+              key: secret_access_key
 
     backend:
       replicas: 0
@@ -128,24 +128,10 @@ spec:
         limits:
           memory: 154Mi # allocatedMemory * 1.2
     monitoring:
-      lokiCanary:
-        resources:
-          requests:
-            cpu: 10m
-            memory: 64Mi
-          limits:
-            memory: 256Mi
       serviceMonitor:
         labels:
           release: prometheus
-      selfMonitoring:
-        # This is using Grafana Agent, while metrics are already being collected
-        # by serviceMonitor, not sure why I would want to have both
-        enabled: false
-        grafanaAgent:
-          installOperator: false
     test:
-      # Depends on selfMonitoring
       enabled: false
     gateway:
       nginxConfig:
