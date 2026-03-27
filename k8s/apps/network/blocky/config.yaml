@@ -22,5 +22,3 @@ blocking:
     default:
       - ads
       - gambling
-dnssec:
-  validate: true
