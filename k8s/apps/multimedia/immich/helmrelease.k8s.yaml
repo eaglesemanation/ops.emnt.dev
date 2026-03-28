@@ -8,15 +8,10 @@ spec:
   interval: 2h
   timeout: 30m
   targetNamespace: immich
-  chart:
-    spec:
-      chart: immich
-      version: 0.11.0
-      sourceRef:
-        kind: HelmRepository
-        name: immich
-        namespace: flux-system
-      interval: 30m
+  chartRef:
+    kind: OCIRepository
+    name: immich
+    namespace: flux-system
   values:
     controllers:
       main:
