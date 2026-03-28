@@ -20,6 +20,9 @@ spec:
           [b2]
           aws_access_key_id={{ .b2_access_key }}
           aws_secret_access_key={{ .b2_secret_key }}
+          [garage]
+          aws_access_key_id={{ .garage_access_key }}
+          aws_secret_access_key={{ .garage_secret_key }}
   data:
     - secretKey: local_minio_access_key
       remoteRef:
@@ -37,3 +40,11 @@ spec:
       remoteRef:
         key: b2-creds
         property: applicationKey
+    - secretKey: garage_access_key
+      remoteRef:
+        key: garage-creds
+        property: access_key_id
+    - secretKey: garage_secret_key
+      remoteRef:
+        key: garage-creds
+        property: secret_access_key

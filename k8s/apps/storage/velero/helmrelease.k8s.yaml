@@ -58,10 +58,10 @@ spec:
           provider: aws
           bucket: velero
           config:
-            profile: local_minio
-            region: us-west-1
+            profile: garage
+            region: garage
             s3ForcePathStyle: "true"
-            s3Url: https://backup-s3.${CLUSTER_DOMAIN}
+            s3Url: https://garage.${CLUSTER_DOMAIN}
         - name: b2
           provider: aws
           bucket: emnt-dev-velero
