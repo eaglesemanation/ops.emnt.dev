@@ -7,3 +7,4 @@ resources:
   - creds-template.k8s.yaml
   - local-minio-creds.k8s.yaml
   - b2-creds.sops.yaml
+  - garage-bucket.k8s.yaml
