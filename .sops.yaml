@@ -1,16 +1,31 @@
 keys:
   - &k8s_age age1exncnhces66v0uc67xm009v2d2237hgdxtaa8tdy0hvusexjry0qye4ad2
   - &eaglesemanation_gpg C5B9ADB07DBE5A2E
+  - &yubikey_20569449_age age1yubikey1qg69ltc78unjzscxta280tvcn6dzanwx8vqgk22rlm04yvvkwmh922qs29a
+  - &yubikey_28835247_age age1yubikey1q2rxawf5zugxah0lmfv59twj2n86gxqf5jksnf5vwu4axcx90crtqsfc74q
 creation_rules:
   - path_regex: k8s/.*\.sops\.ya?ml
     encrypted_regex: "^(data|stringData|crowdsecLapiKey)$"
-    pgp: *eaglesemanation_gpg
-    age: *k8s_age
+    key_groups:
+      - pgp:
+          - *eaglesemanation_gpg
+        age:
+          - *k8s_age
+          - *yubikey_20569449_age
+          - *yubikey_28835247_age
 
   - path_regex: infra/.*\.sops\.(ya?ml|toml)
-    pgp: *eaglesemanation_gpg
+    key_groups:
+      - pgp:
+          - *eaglesemanation_gpg
+        age:
+          - *yubikey_20569449_age
+          - *yubikey_28835247_age
 
   - path_regex: nix/secrets/.*\.sops\.ya?ml
     key_groups:
       - pgp:
           - *eaglesemanation_gpg
+        age:
+          - *yubikey_20569449_age
+          - *yubikey_28835247_age
