@@ -11,9 +11,6 @@ resources:
   - b2-creds.sops.yaml
   - b2-backup.k8s.yaml
 
-  - velero-policy.k8s.yaml
-  - velero-creds.sops.yaml
-
   - pgbackrest-policy.k8s.yaml
 
   - crossplane-bucket-providers.k8s.yaml
