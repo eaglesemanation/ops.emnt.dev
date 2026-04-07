@@ -62,11 +62,11 @@ spec:
             initialDelaySeconds: 30
             periodSeconds: 60
             failureThreshold: 3
+          volumeMounts:
+            - mountPath: /gluetun/auth/config.toml
+              name: gluetun-config
+              subPath: config.toml
           env:
-            - name: DNS_KEEP_NAMESERVER
-              value: "on"
-            - name: DOT
-              value: "off"
             - name: FIREWALL_INPUT_PORTS
               value: "9091"
             - name: FIREWALL_VPN_INPUT_PORTS
@@ -81,8 +81,6 @@ spec:
               value: wireguard
             - name: SERVER_COUNTRIES
               value: Canada
-            - name: SERVER_HOSTNAMES
-              value: Tejat
             - name: WIREGUARD_PRIVATE_KEY
               valueFrom:
                 secretKeyRef:
@@ -166,3 +164,6 @@ spec:
         - name: mam-cookie
           persistentVolumeClaim:
             claimName: mam-cookie
+        - name: gluetun-config
+          secret:
+            secretName: gluetun-config

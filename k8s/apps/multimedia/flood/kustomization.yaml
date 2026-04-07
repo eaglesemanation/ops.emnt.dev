@@ -11,3 +11,5 @@ resources:
   - transmission-creds.sops.yaml
   - transmission-settings.k8s.yaml
   - airvpn-creds.sops.yaml
+  - gluetun-creds.k8s.yaml
+  - secretstore.k8s.yaml
