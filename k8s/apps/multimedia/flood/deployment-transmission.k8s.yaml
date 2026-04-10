@@ -98,19 +98,6 @@ spec:
                 secretKeyRef:
                   name: airvpn-creds
                   key: addresses
-        - name: mam-init
-          image: docker.io/curlimages/curl:8.18.0
-          args:
-            - -w
-            - "\nResponse code: %{http_code}\n"
-            - -c
-            - /mam-cookie/mam.cookies
-            - -b
-            - /mam-cookie/mam.cookies
-            - https://t.myanonamouse.net/json/dynamicSeedbox.php
-          volumeMounts:
-            - name: mam-cookie
-              mountPath: /mam-cookie
       containers:
         - name: transmission
           image: docker.io/linuxserver/transmission:4.1.1
