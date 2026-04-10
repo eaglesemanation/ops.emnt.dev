@@ -21,11 +21,3 @@ creation_rules:
         age:
           - *yubikey_20569449_age
           - *yubikey_28835247_age
-
-  - path_regex: nix/secrets/.*\.sops\.ya?ml
-    key_groups:
-      - pgp:
-          - *eaglesemanation_gpg
-        age:
-          - *yubikey_20569449_age
-          - *yubikey_28835247_age
