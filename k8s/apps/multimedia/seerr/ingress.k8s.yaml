@@ -1,23 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: jellyseerr
-  namespace: jellyseerr
+  name: seerr
+  namespace: seerr
   labels:
-    app.kubernetes.io/name: jellyseerr
-    app.kubernetes.io/instance: jellyseerr
+    app.kubernetes.io/name: seerr
+    app.kubernetes.io/instance: seerr
   annotations:
     traefik.ingress.kubernetes.io/router.entrypoints: websecure
 spec:
   ingressClassName: ingress-external-traefik
   rules:
-    - host: jellyseerr.${CLUSTER_DOMAIN}
+    - host: seerr.${CLUSTER_DOMAIN}
       http:
         paths:
           - path: /
             pathType: Prefix
             backend:
               service:
-                name: jellyseerr
+                name: seerr
                 port:
                   name: http
