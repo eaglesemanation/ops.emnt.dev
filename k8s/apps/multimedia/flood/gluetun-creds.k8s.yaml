@@ -55,3 +55,32 @@ spec:
       remoteRef:
         key: gluetun-apikey
         property: apiKey
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: gomplate-config
+  namespace: flood
+spec:
+  secretStoreRef:
+    kind: SecretStore
+    name: flood-secrets
+  target:
+    name: gomplate-config
+    template:
+      engineVersion: v2
+      data:
+        .gomplate.yaml: |-
+          inputDir: /mnt/input
+          outputDir: /mnt/output
+          datasources:
+            gluetun_ip:
+              url: http://localhost:8000/v1/publicip/ip?type=application/json
+              header:
+                X-API-Key: ["{{ .apiKey }}"]
+  data:
+    - secretKey: apiKey
+      remoteRef:
+        key: gluetun-apikey
+        property: apiKey

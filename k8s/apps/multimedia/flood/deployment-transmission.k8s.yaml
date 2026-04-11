@@ -65,6 +65,8 @@ spec:
             periodSeconds: 60
             failureThreshold: 3
           volumeMounts:
+            - mountPath: /tmp/gluetun
+              name: gluetun-tmp
             - mountPath: /gluetun/auth/config.toml
               name: gluetun-config
               subPath: config.toml
@@ -98,6 +100,18 @@ spec:
                 secretKeyRef:
                   name: airvpn-creds
                   key: addresses
+        - name: gomplate
+          image: docker.io/hairyhenderson/gomplate:v5.0.0
+          env:
+            - name: GOMPLATE_CONFIG
+              value: /mnt/config/.gomplate.yaml
+          volumeMounts:
+            - mountPath: /mnt/config
+              name: gomplate-config
+            - mountPath: /mnt/input
+              name: settings-template
+            - mountPath: /mnt/output
+              name: settings-rendered
       containers:
         - name: transmission
           image: docker.io/linuxserver/transmission:4.1.1
@@ -132,7 +146,7 @@ spec:
           volumeMounts:
             - name: data
               mountPath: /config
-            - name: settings
+            - name: settings-rendered
               mountPath: /defaults/settings.json
               subPath: settings.json
             - name: multimedia
@@ -144,9 +158,11 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: transmission
-        - name: settings
+        - name: settings-template
           configMap:
             name: transmission-settings
+        - name: settings-rendered
+          emptyDir: {}
         - name: multimedia
           persistentVolumeClaim:
             claimName: multimedia
@@ -156,3 +172,8 @@ spec:
         - name: gluetun-config
           secret:
             secretName: gluetun-config
+        - name: gluetun-tmp
+          emptyDir: {}
+        - name: gomplate-config
+          secret:
+            secretName: gomplate-config
