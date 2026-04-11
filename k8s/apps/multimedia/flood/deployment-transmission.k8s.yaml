@@ -67,9 +67,6 @@ spec:
           volumeMounts:
             - mountPath: /tmp/gluetun
               name: gluetun-tmp
-            - mountPath: /gluetun/auth/config.toml
-              name: gluetun-config
-              subPath: config.toml
           env:
             - name: FIREWALL_INPUT_PORTS
               value: "9091"
@@ -100,18 +97,6 @@ spec:
                 secretKeyRef:
                   name: airvpn-creds
                   key: addresses
-        - name: gomplate
-          image: docker.io/hairyhenderson/gomplate:v5.0.0
-          env:
-            - name: GOMPLATE_CONFIG
-              value: /mnt/config/.gomplate.yaml
-          volumeMounts:
-            - mountPath: /mnt/config
-              name: gomplate-config
-            - mountPath: /mnt/input
-              name: transmission-settings-template
-            - mountPath: /mnt/output
-              name: transmission-settings-rendered
         - name: mousehole
           image: docker.io/tmmrtn/mousehole:0.2.0
           restartPolicy: Always
@@ -119,44 +104,6 @@ spec:
             - mountPath: /srv/mousehole
               name: mam-cookie
       containers:
-        - name: transmission
-          image: docker.io/linuxserver/transmission:4.1.1
-          resources:
-            requests:
-              cpu: 100m
-              memory: 512Mi
-            limits:
-              memory: 2Gi
-          securityContext:
-            readOnlyRootFilesystem: false # FIXME: Linuxserver images require writable root fs
-          env:
-            - name: PUID
-              value: "1000"
-            - name: PGID
-              value: "1000"
-            - name: TZ
-              value: Etc/UTC
-            - name: USER
-              valueFrom:
-                secretKeyRef:
-                  name: transmission-creds
-                  key: username
-            - name: PASS
-              valueFrom:
-                secretKeyRef:
-                  name: transmission-creds
-                  key: password
-          ports:
-            - name: http
-              containerPort: 9091
-          volumeMounts:
-            - name: transmission-data
-              mountPath: /config
-            - name: transmission-settings-rendered
-              mountPath: /defaults/settings.json
-              subPath: settings.json
-            - name: multimedia
-              mountPath: /multimedia
         - name: qbittorrent
           image: docker.io/linuxserver/qbittorrent:5.1.4
           env:
@@ -177,25 +124,11 @@ spec:
         - name: qbittorrent-data
           persistentVolumeClaim:
             claimName: qbittorrent
-        - name: transmission-data
-          persistentVolumeClaim:
-            claimName: transmission
-        - name: transmission-settings-template
-          configMap:
-            name: transmission-settings
-        - name: transmission-settings-rendered
-          emptyDir: {}
         - name: multimedia
           persistentVolumeClaim:
             claimName: multimedia
         - name: mam-cookie
           persistentVolumeClaim:
             claimName: mam-cookie
-        - name: gluetun-config
-          secret:
-            secretName: gluetun-config
         - name: gluetun-tmp
           emptyDir: {}
-        - name: gomplate-config
-          secret:
-            secretName: gomplate-config
