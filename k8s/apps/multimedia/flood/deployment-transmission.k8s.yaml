@@ -109,9 +109,9 @@ spec:
             - mountPath: /mnt/config
               name: gomplate-config
             - mountPath: /mnt/input
-              name: settings-template
+              name: transmission-settings-template
             - mountPath: /mnt/output
-              name: settings-rendered
+              name: transmission-settings-rendered
         - name: mousehole
           image: docker.io/tmmrtn/mousehole:0.2.0
           restartPolicy: Always
@@ -150,24 +150,40 @@ spec:
             - name: http
               containerPort: 9091
           volumeMounts:
-            - name: data
+            - name: transmission-data
               mountPath: /config
-            - name: settings-rendered
+            - name: transmission-settings-rendered
               mountPath: /defaults/settings.json
               subPath: settings.json
             - name: multimedia
               mountPath: /multimedia
-            # Attached so that first api call can be done manually
-            - name: mam-cookie
-              mountPath: /mam-cookie
+        - name: qbittorrent
+          image: docker.io/linuxserver/qbittorrent:5.1.4
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: Etc/UTC
+            - name: TORRENTING_PORT
+              value: "6887" # Replace with actual port after transmission deprication
+          volumeMounts:
+            - name: qbittorrent-data
+              mountPath: /config
+            - name: multimedia
+              mountPath: /multimedia
       volumes:
-        - name: data
+        - name: qbittorrent-data
+          persistentVolumeClaim:
+            claimName: qbittorrent
+        - name: transmission-data
           persistentVolumeClaim:
             claimName: transmission
-        - name: settings-template
+        - name: transmission-settings-template
           configMap:
             name: transmission-settings
-        - name: settings-rendered
+        - name: transmission-settings-rendered
           emptyDir: {}
         - name: multimedia
           persistentVolumeClaim:
