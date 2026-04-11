@@ -112,6 +112,12 @@ spec:
               name: settings-template
             - mountPath: /mnt/output
               name: settings-rendered
+        - name: mousehole
+          image: docker.io/tmmrtn/mousehole:0.2.0
+          restartPolicy: Always
+          volumeMounts:
+            - mountPath: /srv/mousehole
+              name: mam-cookie
       containers:
         - name: transmission
           image: docker.io/linuxserver/transmission:4.1.1
