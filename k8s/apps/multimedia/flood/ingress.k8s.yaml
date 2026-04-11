@@ -2,11 +2,11 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRoute
 metadata:
-  name: flood
+  name: qbittorrent
   namespace: flood
   labels:
-    app.kubernetes.io/name: flood
-    app.kubernetes.io/instance: flood
+    app.kubernetes.io/name: qbittorrent
+    app.kubernetes.io/instance: qbittorrent
   annotations:
     kubernetes.io/ingress.class: ingress-internal-traefik
 spec:
@@ -14,16 +14,16 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: Host(`flood.${CLUSTER_DOMAIN}`)
+      match: Host(`qbittorrent.${CLUSTER_DOMAIN}`)
       middlewares:
         - name: authentik
           namespace: authentik
       services:
-        - name: flood
+        - name: qbittorrent
           namespace: flood
-          port: 3000
+          port: http
     - kind: Rule
-      match: "Host(`flood.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`qbittorrent.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik

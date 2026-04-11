@@ -23,7 +23,7 @@ spec:
           namespace: bazarr
           port: 6767
     - kind: Rule
-      match: "Host(`flood.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
+      match: "Host(`bazarr.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)"
       services:
         - name: authentik-server
           namespace: authentik
