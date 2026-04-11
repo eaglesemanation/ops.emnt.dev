@@ -21,7 +21,7 @@ spec:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
       containers:
         - name: sonarr
-          image: docker.io/linuxserver/sonarr:develop-version-4.0.0.646
+          image: docker.io/linuxserver/sonarr:4.0.17
           resources:
             requests:
               cpu: 10m
