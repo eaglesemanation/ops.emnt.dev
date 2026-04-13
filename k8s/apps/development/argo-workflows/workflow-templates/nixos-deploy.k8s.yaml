@@ -1,0 +1,223 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/generators.external-secrets.io/sshkey_v1alpha1.json
+apiVersion: generators.external-secrets.io/v1alpha1
+kind: SSHKey
+metadata:
+  name: nixos-deploy-ssh-key
+  namespace: argo-workflows
+spec:
+  keyType: "ed25519"
+  comment: "argo-workflows@emnt.dev"
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: nixos-deploy-ssh-key
+  namespace: argo-workflows
+spec:
+  refreshInterval: "30m0s"
+  target:
+    name: nixos-deploy-ssh-key
+  dataFrom:
+    - sourceRef:
+        generatorRef:
+          apiVersion: generators.external-secrets.io/v1alpha1
+          kind: SSHKey
+          name: nixos-deploy-ssh-key
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/clusterworkflowtemplate_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: ClusterWorkflowTemplate
+metadata:
+  name: nixos-deploy
+  namespace: argo-workflows
+spec:
+  entrypoint: dag
+  arguments:
+    parameters:
+      - name: targetHost
+        value: 127.0.0.1
+      - name: sshUser
+        value: "root"
+      - name: sshSecretRef
+        description: Name of a secret that contains "privateKey" and "publicKey" key for ssh. Needs to be ed25519 for SOPS.
+        value: "nixos-deploy-ssh-key"
+      - name: replaceHostKey
+        description: If host key was already present in known hosts - replace it with new one
+        value: "false"
+      - name: flakeRepo
+        value: "https://github.com/eaglesemanation/ops.emnt.dev.git"
+      - name: flakeAttr
+        value: "placeholderVm"
+
+  templates:
+    - name: dag
+      dag:
+        tasks:
+          - name: ensure-known-hosts
+            template: ensure-known-hosts
+          - name: detect-mode
+            template: detect-mode
+            dependencies:
+              - ensure-known-hosts
+          - name: nixos-anywhere
+            template: nixos-anywhere
+            dependencies:
+              - detect-mode
+            when: '"{{tasks.detect-mode.outputs.parameters.mode}}" == "bootstrap"'
+          - name: deploy-rs
+            template: deploy-rs
+            dependencies:
+              - detect-mode
+            when: '"{{tasks.detect-mode.outputs.parameters.mode}}" == "deploy"'
+
+    - name: ensure-known-hosts
+      script:
+        image: docker.io/library/alpine:3.23.3
+        securityContext:
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+        command: [sh]
+        source: |
+          set -eux
+          HOST="{{workflow.parameters.targetHost}}"
+          REPLACE_KEY="{{workflow.parameters.replaceHostKey}}"
+          SECRET_NAME="nixos-known-hosts"
+
+          tmpdir=$(mktemp -d)
+          KNOWN_HOSTS="$tmpdir/known_hosts"
+
+          apk add openssh kubectl
+
+          if kubectl get secret "$SECRET_NAME" >/dev/null 2>&1; then
+            kubectl get secret "$SECRET_NAME" -o jsonpath='{.data.known_hosts}' | base64 -d > "$KNOWN_HOSTS"
+          else
+            touch "$KNOWN_HOSTS"
+          fi
+
+          if [ "$REPLACE_KEY" = "true" ]; then
+            ssh-keygen -R "$HOST" -f "$KNOWN_HOSTS" || true
+          fi
+          if ! grep -v '^[[:space:]]*#' "$KNOWN_HOSTS" | grep -q "$HOST"; then
+            ssh-keyscan -H "$HOST" >> "$KNOWN_HOSTS"
+          fi
+
+          kubectl create secret generic "$SECRET_NAME" \
+            --from-file=known_hosts="$KNOWN_HOSTS" \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+    - name: detect-mode
+      script:
+        image: docker.io/library/alpine:3.23.3
+        securityContext:
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+        command: [sh]
+        source: |
+          set -eux
+          HOST="{{workflow.parameters.targetHost}}"
+          USER="{{workflow.parameters.sshUser}}"
+          SSH_OPTS="-o BatchMode=yes -o ConnectTimeout=5 -o StrictHostKeyChecking=yes"
+
+          apk add openssh
+          SSH_OUTPUT=$(
+          ssh $SSH_OPTS "$USER@$HOST" /bin/sh <<EOF
+            test -f /etc/NIXOS && echo "true" || echo "false"
+            findmnt -n -o FSTYPE /
+          EOF
+          )
+          IS_NIXOS=$(echo "$SSH_OUTPUT" | head -1)
+          ROOT_FS=$(echo "$SSH_OUTPUT" | tail -1)
+
+          if [ "$IS_NIXOS" = "false" ]; then
+            echo "bootstrap" > /tmp/mode
+          else
+            case "$ROOT_FS" in
+              tmpfs|overlay|squashfs)
+                echo "bootstrap" > /tmp/mode
+                ;;
+              *)
+                echo "deploy" > /tmp/mode
+                ;;
+            esac
+          fi
+        volumeMounts:
+          - name: known-hosts
+            mountPath: /root/.ssh/known_hosts
+            subPath: known_hosts
+          - name: ssh-key
+            mountPath: /root/.ssh/id_ed25519
+            subPath: privateKey
+          - name: ssh-key
+            mountPath: /root/.ssh/id_ed25519.pub
+            subPath: publicKey
+      outputs:
+        parameters:
+          - name: mode
+            valueFrom:
+              path: /tmp/mode
+      volumes:
+        - name: known-hosts
+          secret:
+            secretName: "nixos-known-hosts"
+            defaultMode: 384 # 0600
+        - name: ssh-key
+          secret:
+            secretName: "{{workflow.parameters.sshSecretRef}}"
+            defaultMode: 384 # 0600
+
+    - name: nixos-anywhere
+      script:
+        # image: docker.io/nixos/nix:2.34.6
+        image: docker.io/library/alpine:3.23.3
+        command: [sh]
+        source: |
+          echo 'nixos-anywhere would be executed'
+        volumeMounts:
+          - name: known-hosts
+            mountPath: /root/.ssh/known_hosts
+            subPath: known_hosts
+          - name: ssh-key
+            mountPath: /root/.ssh/id_ed25519
+            subPath: privateKey
+          - name: ssh-key
+            mountPath: /root/.ssh/id_ed25519.pub
+            subPath: publicKey
+      volumes:
+        - name: known-hosts
+          secret:
+            secretName: "nixos-known-hosts"
+            defaultMode: 384 # 0600
+        - name: ssh-key
+          secret:
+            secretName: "{{workflow.parameters.sshSecretRef}}"
+            defaultMode: 384 # 0600
+
+    - name: deploy-rs
+      script:
+        # image: docker.io/nixos/nix:2.34.6
+        image: docker.io/library/alpine:3.23.3
+        command: [sh]
+        source: |
+          echo 'deploy-rs would be executed'
+        volumeMounts:
+          - name: known-hosts
+            mountPath: /root/.ssh/known_hosts
+            subPath: known_hosts
+          - name: ssh-key
+            mountPath: /root/.ssh/id_ed25519
+            subPath: privateKey
+          - name: ssh-key
+            mountPath: /root/.ssh/id_ed25519.pub
+            subPath: publicKey
+      volumes:
+        - name: known-hosts
+          secret:
+            secretName: "nixos-known-hosts"
+            defaultMode: 384 # 0600
+        - name: ssh-key
+          secret:
+            secretName: "{{workflow.parameters.sshSecretRef}}"
+            defaultMode: 384 # 0600
