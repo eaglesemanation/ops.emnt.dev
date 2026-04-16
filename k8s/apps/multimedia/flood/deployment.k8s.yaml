@@ -54,7 +54,7 @@ spec:
               memory: 64Mi
             limits:
               memory: 256Mi
-              squat.ai/tun: 1
+              devic.es/tun: 1
           startupProbe:
             exec:
               command:
