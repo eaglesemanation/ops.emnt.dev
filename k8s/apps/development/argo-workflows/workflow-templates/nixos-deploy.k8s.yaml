@@ -26,19 +26,6 @@ spec:
           kind: SSHKey
           name: nixos-deploy-ssh-key
 ---
-apiVersion: v1
-kind: Secret
-metadata:
-  name: placeholder-vm-secrets
-  namespace: argo-workflows
-stringData:
-  secrets.json: |
-    {
-      "test": {
-        "sops": "Testing sops encryption"
-      }
-    }
----
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/clusterworkflowtemplate_v1alpha1.json
 apiVersion: argoproj.io/v1alpha1
 kind: ClusterWorkflowTemplate
@@ -115,7 +102,7 @@ spec:
         command: [sh]
         source: |
           set -eux
-          HOST="{{workflow.parameters.targetHost}}"
+          SSH_HOST="{{workflow.parameters.targetHost}}"
           REPLACE_KEY="{{workflow.parameters.replaceHostKey}}"
           SECRET_NAME="nixos-known-hosts"
 
@@ -131,10 +118,10 @@ spec:
           fi
 
           if [ "$REPLACE_KEY" = "true" ]; then
-            ssh-keygen -R "$HOST" -f "$KNOWN_HOSTS" || true
+            ssh-keygen -R "$SSH_HOST" -f "$KNOWN_HOSTS" || true
           fi
-          if ! grep -q "$HOST" "$KNOWN_HOSTS"; then
-            ssh-keyscan "$HOST" | grep -v '^#' >> "$KNOWN_HOSTS"
+          if ! grep -q "$SSH_HOST" "$KNOWN_HOSTS"; then
+            ssh-keyscan "$SSH_HOST" | grep -v '^#' >> "$KNOWN_HOSTS"
           fi
 
           kubectl create secret generic "$SECRET_NAME" \
@@ -155,14 +142,14 @@ spec:
         command: [sh]
         source: |
           set -eux
-          HOST="{{workflow.parameters.targetHost}}"
+          SSH_HOST="{{workflow.parameters.targetHost}}"
 
           apk add go sops
           go install github.com/Mic92/ssh-to-age/cmd/ssh-to-age@latest
 
-          SSH_PUBKEY="$(cat /root/.ssh/known_hosts | grep "$HOST" | grep 'ssh-ed25519')"
+          SSH_PUBKEY="$(cat /root/.ssh/known_hosts | grep "$SSH_HOST" | grep 'ssh-ed25519')"
           if [[ -z "$SSH_PUBKEY" ]]; then
-            echo "ERROR: No ssh-ed25519 entry found for host '$HOST' in known_hosts" >&2
+            echo "ERROR: No ssh-ed25519 entry found for host '$SSH_HOST' in known_hosts" >&2
             exit 1
           fi
           AGE_PUBKEY="$(echo "$SSH_PUBKEY"| /root/go/bin/ssh-to-age)"
@@ -195,13 +182,13 @@ spec:
         command: [sh]
         source: |
           set -eux
-          HOST="{{workflow.parameters.targetHost}}"
-          USER="{{workflow.parameters.sshUser}}"
+          SSH_HOST="{{workflow.parameters.targetHost}}"
+          SSH_USER="{{workflow.parameters.sshUser}}"
           SSH_OPTS="-o BatchMode=yes -o ConnectTimeout=5 -o StrictHostKeyChecking=yes"
 
           apk add openssh
           SSH_OUTPUT=$(
-          ssh $SSH_OPTS "$USER@$HOST" /bin/sh <<EOF
+          ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" /bin/sh <<EOF
             test -f /etc/NIXOS && echo "true" || echo "false"
             findmnt -n -o FSTYPE /
           EOF
@@ -221,7 +208,7 @@ spec:
                 ;;
             esac
           fi
-        volumeMounts:
+        volumeMounts: &ssh-volume-mounts
           - name: known-hosts
             mountPath: /root/.ssh/known_hosts
             subPath: known_hosts
@@ -236,7 +223,7 @@ spec:
           - name: mode
             valueFrom:
               path: /tmp/mode
-      volumes:
+      volumes: &ssh-volumes
         - name: known-hosts
           secret:
             secretName: "nixos-known-hosts"
@@ -252,31 +239,29 @@ spec:
           - name: secretsSops
             path: /tmp/secrets.sops.json
       script:
-        # image: docker.io/nixos/nix:2.34.6
-        image: docker.io/library/alpine:3.23.3
+        image: docker.io/nixos/nix:2.34.6
         command: [sh]
         source: |
-          cat /tmp/secrets.sops.json
-          echo 'nixos-anywhere would be executed'
-        volumeMounts:
-          - name: known-hosts
-            mountPath: /root/.ssh/known_hosts
-            subPath: known_hosts
-          - name: ssh-key
-            mountPath: /root/.ssh/id_ed25519
-            subPath: privateKey
-          - name: ssh-key
-            mountPath: /root/.ssh/id_ed25519.pub
-            subPath: publicKey
-      volumes:
-        - name: known-hosts
-          secret:
-            secretName: "nixos-known-hosts"
-            defaultMode: 384 # 0600
-        - name: ssh-key
-          secret:
-            secretName: "{{workflow.parameters.sshSecretRef}}"
-            defaultMode: 384 # 0600
+          set -eux
+          SSH_HOST="{{workflow.parameters.targetHost}}"
+          SSH_USER="{{workflow.parameters.sshUser}}"
+
+          git clone "{{workflow.parameters.flakeRepo}}" /tmp/flake
+          cp /tmp/secrets.sops.json '/tmp/flake/{{workflow.parameters.sopsSecretTargetPath}}'
+
+          nix run github:nix-community/nixos-anywhere -- \
+            --flake '/tmp/flake#{{workflow.parameters.flakeAttr}}' \
+            -i /root/.ssh/id_ed25519 \
+            --copy-host-keys \
+            --target-host "$SSH_USER@$SSH_HOST"
+        env:
+          - name: NIX_CONFIG
+            value: &nix-config |
+              sandbox = false
+              trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
+              experimental-features = nix-command flakes
+        volumeMounts: *ssh-volume-mounts
+      volumes: *ssh-volumes
 
     - name: deploy-rs
       inputs:
@@ -284,28 +269,22 @@ spec:
           - name: secretsSops
             path: /tmp/secrets.sops.json
       script:
-        # image: docker.io/nixos/nix:2.34.6
-        image: docker.io/library/alpine:3.23.3
+        image: docker.io/nixos/nix:2.34.6
         command: [sh]
         source: |
-          cat /tmp/secrets.sops.json
-          echo 'deploy-rs would be executed'
-        volumeMounts:
-          - name: known-hosts
-            mountPath: /root/.ssh/known_hosts
-            subPath: known_hosts
-          - name: ssh-key
-            mountPath: /root/.ssh/id_ed25519
-            subPath: privateKey
-          - name: ssh-key
-            mountPath: /root/.ssh/id_ed25519.pub
-            subPath: publicKey
-      volumes:
-        - name: known-hosts
-          secret:
-            secretName: "nixos-known-hosts"
-            defaultMode: 384 # 0600
-        - name: ssh-key
-          secret:
-            secretName: "{{workflow.parameters.sshSecretRef}}"
-            defaultMode: 384 # 0600
+          set -eux
+          SSH_HOST="{{workflow.parameters.targetHost}}"
+          SSH_USER="{{workflow.parameters.sshUser}}"
+
+          git clone "{{workflow.parameters.flakeRepo}}" /tmp/flake
+          cp /tmp/secrets.sops.json '/tmp/flake/{{workflow.parameters.sopsSecretTargetPath}}'
+
+          nix run github:serokell/deploy-rs -- \
+            '/tmp/flake#{{workflow.parameters.flakeAttr}}' \
+            --ssh-user "$SSH_USER" \
+            --hostname "$SSH_HOST"
+        env:
+          - name: NIX_CONFIG
+            value: *nix-config
+        volumeMounts: *ssh-volume-mounts
+      volumes: *ssh-volumes
