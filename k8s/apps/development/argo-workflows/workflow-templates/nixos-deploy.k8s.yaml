@@ -94,7 +94,7 @@ spec:
 
     - name: ensure-known-hosts
       script:
-        image: docker.io/library/alpine:3.23.3
+        image: docker.io/library/alpine:3.23.4
         securityContext:
           runAsNonRoot: false
           readOnlyRootFilesystem: false
@@ -134,7 +134,7 @@ spec:
           - name: secretsSops
             path: /tmp/secrets.sops.json
       script:
-        image: docker.io/library/alpine:3.23.3
+        image: docker.io/library/alpine:3.23.4
         securityContext:
           runAsNonRoot: false
           readOnlyRootFilesystem: false
@@ -175,7 +175,7 @@ spec:
 
     - name: detect-mode
       script:
-        image: docker.io/library/alpine:3.23.3
+        image: docker.io/library/alpine:3.23.4
         securityContext:
           runAsNonRoot: false
           readOnlyRootFilesystem: false
