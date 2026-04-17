@@ -19,6 +19,26 @@ spec:
   dependsOn:
     - name: snapshot-controller
       namespace: external-snapshotter
+  postRenderers:
+    - kustomize:
+        patches:
+          - target:
+              kind: DaemonSet
+              name: democratic-csi-iscsi-node
+              namespace: democratic-csi
+            patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: democratic-csi-iscsi-node
+                namespace: democratic-csi
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: driver-registrar
+                        livenessProbe:
+                          timeoutSeconds: 10
   values:
     controller:
       driver:
