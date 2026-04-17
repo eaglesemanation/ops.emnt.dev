@@ -19,10 +19,25 @@ spec:
   dependsOn:
     - name: snapshot-controller
       namespace: external-snapshotter
+  postRenderers:
+    - kustomize:
+        patches:
+          - patch: |
+              apiVersion: apps/v1
+              kind: DaemonSet
+              metadata:
+                name: democratic-csi-smb-node
+              spec:
+                template:
+                  spec:
+                    containers:
+                      - name: driver-registrar
+                        livenessProbe:
+                          timeoutSeconds: 10
   values:
     controller:
       driver:
-        image: 
+        image:
           # renovate: datasource=github-tags depName=democratic-csi/democratic-csi
           tag: v1.9.3
         resources:
@@ -41,7 +56,7 @@ spec:
           btrfs:
             enabled: true
       driver:
-        image: 
+        image:
           # renovate: datasource=github-tags depName=democratic-csi/democratic-csi
           tag: v1.9.3
         resources:
