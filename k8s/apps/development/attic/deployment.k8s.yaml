@@ -1,0 +1,61 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: attic
+  namespace: attic
+  labels:
+    app.kubernetes.io/name: attic
+    app.kubernetes.io/instance: attic
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: attic
+      app.kubernetes.io/instance: attic
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: attic
+        app.kubernetes.io/instance: attic
+    spec:
+      containers:
+        - name: attic
+          image: ghcr.io/zhaofengli/attic:cf7294607583a8d9f06026007da1ced564d43c86
+          args: [-f, /etc/attic/config.toml]
+          env:
+            - name: ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64
+              valueFrom:
+                secretKeyRef:
+                  name: attic
+                  key: token-hs256-secret-base64
+            - name: ATTIC_SERVER_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: attic-pg-app
+                  key: uri
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: garage-creds
+                  key: access_key_id
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: garage-creds
+                  key: secret_access_key
+          volumeMounts:
+            - name: config
+              mountPath: /etc/attic
+              readOnly: true
+          resources:
+            requests:
+              cpu: 100m
+              memory: 128Mi
+            limits:
+              memory: 512Mi
+      volumes:
+        - name: config
+          configMap:
+            name: attic-config

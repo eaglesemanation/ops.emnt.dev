@@ -101,6 +101,7 @@ spec:
           runAsUser: 0
         command: [sh]
         source: |
+          #!/bin/sh
           set -eux
           SSH_HOST="{{workflow.parameters.targetHost}}"
           REPLACE_KEY="{{workflow.parameters.replaceHostKey}}"
@@ -112,7 +113,7 @@ spec:
           apk add openssh kubectl
 
           if kubectl get secret "$SECRET_NAME" >/dev/null 2>&1; then
-            kubectl get secret "$SECRET_NAME" -o jsonpath='{.data.known_hosts}' | base64 -d > "$KNOWN_HOSTS"
+            kubectl get secret "$SECRET_NAME" -o jsonpath='{.data.known_hosts}' | base64 -d >"$KNOWN_HOSTS"
           else
             touch "$KNOWN_HOSTS"
           fi
@@ -121,7 +122,7 @@ spec:
             ssh-keygen -R "$SSH_HOST" -f "$KNOWN_HOSTS" || true
           fi
           if ! grep -q "$SSH_HOST" "$KNOWN_HOSTS"; then
-            ssh-keyscan "$SSH_HOST" | grep -v '^#' >> "$KNOWN_HOSTS"
+            ssh-keyscan "$SSH_HOST" | grep -v '^#' >>"$KNOWN_HOSTS"
           fi
 
           kubectl create secret generic "$SECRET_NAME" \
@@ -141,6 +142,7 @@ spec:
           runAsUser: 0
         command: [sh]
         source: |
+          #!/bin/sh
           set -eux
           SSH_HOST="{{workflow.parameters.targetHost}}"
 
@@ -153,7 +155,7 @@ spec:
             echo "ERROR: No ssh-ed25519 entry found for host '$SSH_HOST' in known_hosts" >&2
             exit 1
           fi
-          AGE_PUBKEY="$(echo "$SSH_PUBKEY"| ssh-to-age)"
+          AGE_PUBKEY="$(echo "$SSH_PUBKEY" | ssh-to-age)"
 
           sops --encrypt --age "$AGE_PUBKEY" --output "/tmp/secrets.sops.json" /tmp/secrets.json
         volumeMounts:
@@ -182,6 +184,7 @@ spec:
           runAsUser: 0
         command: [sh]
         source: |
+          #!/bin/sh
           set -eux
           SSH_HOST="{{workflow.parameters.targetHost}}"
           SSH_USER="{{workflow.parameters.sshUser}}"
@@ -189,7 +192,7 @@ spec:
 
           apk add openssh
           SSH_OUTPUT=$(
-          ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" /bin/sh <<EOF
+            ssh $SSH_OPTS "$SSH_USER@$SSH_HOST" /bin/sh <<EOF
             test -f /etc/NIXOS && echo "true" || echo "false"
             findmnt -n -o FSTYPE /
           EOF
@@ -198,15 +201,15 @@ spec:
           ROOT_FS=$(echo "$SSH_OUTPUT" | tail -1)
 
           if [ "$IS_NIXOS" = "false" ]; then
-            echo "bootstrap" > /tmp/mode
+            echo "bootstrap" >/tmp/mode
           else
             case "$ROOT_FS" in
-              tmpfs|overlay|squashfs)
-                echo "bootstrap" > /tmp/mode
-                ;;
-              *)
-                echo "deploy" > /tmp/mode
-                ;;
+            tmpfs | overlay | squashfs)
+              echo "bootstrap" >/tmp/mode
+              ;;
+            *)
+              echo "deploy" >/tmp/mode
+              ;;
             esac
           fi
         volumeMounts: &ssh-volume-mounts
@@ -254,6 +257,7 @@ spec:
             memory: 4Gi
         command: [sh]
         source: |
+          #!/bin/sh
           set -eux
           SSH_HOST="{{workflow.parameters.targetHost}}"
           SSH_USER="{{workflow.parameters.sshUser}}"
@@ -299,6 +303,7 @@ spec:
             memory: 4Gi
         command: [sh]
         source: |
+          #!/bin/sh
           set -eux
           SSH_HOST="{{workflow.parameters.targetHost}}"
           SSH_USER="{{workflow.parameters.sshUser}}"
