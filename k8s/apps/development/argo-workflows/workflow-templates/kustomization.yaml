@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - sa.k8s.yaml
   - nixos-deploy.k8s.yaml
+  - attic-creds.sops.yaml

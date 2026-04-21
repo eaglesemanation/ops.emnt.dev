@@ -51,11 +51,11 @@ spec:
       - name: flakeAttr
         value: "placeholderVm"
       - name: sopsSecretRef
-        description: Name of a k8s secret that contains "secrets.json". It will be converted into sops file for sops-nix use
+        description: Name of a k8s secret that contains "secrets.yaml". It will be converted into sops file for sops-nix use
         value: "placeholder-vm-secrets"
       - name: sopsSecretTargetPath
         description: Path under flakeRepo where sops encrypted secrets should be written
-        value: nix/secrets.sops.json
+        value: nix/secrets.sops.yaml
 
   templates:
     - name: dag
@@ -133,7 +133,7 @@ spec:
       outputs:
         artifacts:
           - name: secretsSops
-            path: /tmp/secrets.sops.json
+            path: /tmp/secrets.sops.yaml
       script:
         image: docker.io/library/alpine:3.23.3
         securityContext:
@@ -157,14 +157,14 @@ spec:
           fi
           AGE_PUBKEY="$(echo "$SSH_PUBKEY" | ssh-to-age)"
 
-          sops --encrypt --age "$AGE_PUBKEY" --output "/tmp/secrets.sops.json" /tmp/secrets.json
+          sops --encrypt --age "$AGE_PUBKEY" --output "/tmp/secrets.sops.yaml" /tmp/secrets.yaml
         volumeMounts:
           - name: known-hosts
             mountPath: /root/.ssh/known_hosts
             subPath: known_hosts
           - name: secrets-source
-            mountPath: /tmp/secrets.json
-            subPath: secrets.json
+            mountPath: /tmp/secrets.yaml
+            subPath: secrets.yaml
       volumes:
         - name: known-hosts
           secret:
@@ -241,7 +241,7 @@ spec:
       inputs:
         artifacts:
           - name: secretsSops
-            path: /tmp/secrets.sops.json
+            path: /tmp/secrets.sops.yaml
       script:
         image: docker.io/nixos/nix:2.34.6
         securityContext:
@@ -264,8 +264,14 @@ spec:
 
           git clone "{{workflow.parameters.flakeRepo}}" /tmp/flake
           cd /tmp/flake
-          cp /tmp/secrets.sops.json '{{workflow.parameters.sopsSecretTargetPath}}'
+          cp /tmp/secrets.sops.yaml '{{workflow.parameters.sopsSecretTargetPath}}'
           git add '{{workflow.parameters.sopsSecretTargetPath}}'
+
+          nix profile add nixpkgs#attic-client
+          attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
+
+          nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel'
+          attic push default result -j 2
 
           nix run github:nix-community/nixos-anywhere -- \
             --flake '.#{{workflow.parameters.flakeAttr}}' \
@@ -273,13 +279,18 @@ spec:
             --ssh-option StrictHostKeyChecking=yes \
             --copy-host-keys \
             --target-host "$SSH_USER@$SSH_HOST"
-        env:
+        env: &nix-env
           - name: NIX_CONFIG
-            value: &nix-config |
+            value: |
               sandbox = true
-              substituters = https://cache.nixos.org https://nix-community.cachix.org
-              trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs=
+              substituters = https://cache.nixos.org https://nix-community.cachix.org https://attic.emnt.dev/default
+              trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= default:hwRcW4hVIsYo61KYYT/OWcFBfpApDvzwptGziVEHhUY=
               experimental-features = nix-command flakes
+          - name: ATTIC_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: attic-creds
         volumeMounts: *ssh-volume-mounts
       volumes: *ssh-volumes
 
@@ -287,7 +298,7 @@ spec:
       inputs:
         artifacts:
           - name: secretsSops
-            path: /tmp/secrets.sops.json
+            path: /tmp/secrets.sops.yaml
       script:
         image: docker.io/nixos/nix:2.34.6
         securityContext:
@@ -310,15 +321,19 @@ spec:
 
           git clone "{{workflow.parameters.flakeRepo}}" /tmp/flake
           cd /tmp/flake
-          cp /tmp/secrets.sops.json '{{workflow.parameters.sopsSecretTargetPath}}'
+          cp /tmp/secrets.sops.yaml '{{workflow.parameters.sopsSecretTargetPath}}'
           git add '{{workflow.parameters.sopsSecretTargetPath}}'
+
+          nix profile add nixpkgs#attic-client
+          attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
+
+          nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel'
+          attic push default result -j 2
 
           nix run github:serokell/deploy-rs -- \
             '.#{{workflow.parameters.flakeAttr}}' \
             --ssh-user "$SSH_USER" \
             --hostname "$SSH_HOST"
-        env:
-          - name: NIX_CONFIG
-            value: *nix-config
+        env: *nix-env
         volumeMounts: *ssh-volume-mounts
       volumes: *ssh-volumes
