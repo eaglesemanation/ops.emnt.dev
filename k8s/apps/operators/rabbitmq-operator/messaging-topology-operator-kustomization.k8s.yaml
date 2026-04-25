@@ -31,7 +31,7 @@ spec:
     - name: localhost/messaging-topology-operator
       newName: ghcr.io/rabbitmq/messaging-topology-operator
       # NOTE: Update GitRepository tag as well
-      newTag: 1.19.0
+      newTag: 1.19.1
   patches:
     - patch: |
         $patch: delete
