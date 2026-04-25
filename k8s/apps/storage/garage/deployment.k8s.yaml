@@ -39,7 +39,7 @@ spec:
         runAsNonRoot: true
       containers:
         - name: garage
-          image: docker.io/dxflrs/garage:v2.2.0
+          image: docker.io/dxflrs/garage:v2.3.0
           securityContext:
             capabilities:
               drop:
