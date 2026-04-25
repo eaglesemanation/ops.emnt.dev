@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: controller
-          image: ghcr.io/linuxserver/unifi-network-application:10.1.89
+          image: ghcr.io/linuxserver/unifi-network-application:10.3.55
           resources:
             requests:
               cpu: 10m
