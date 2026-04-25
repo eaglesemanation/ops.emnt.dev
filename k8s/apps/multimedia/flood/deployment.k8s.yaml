@@ -105,7 +105,7 @@ spec:
               name: mam-cookie
       containers:
         - name: qbittorrent
-          image: docker.io/linuxserver/qbittorrent:5.1.4
+          image: docker.io/linuxserver/qbittorrent:20.04.1
           env:
             - name: PUID
               value: "1000"
