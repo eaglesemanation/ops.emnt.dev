@@ -4,8 +4,8 @@ ports:
 upstreams:
   groups:
     default:
-      - 9.9.9.11
-      - 149.112.112.11
+      - tcp-tls:1.1.1.1:853
+      - tcp-tls:1.0.0.1:853
 customDNS:
   mapping:
     ${CLUSTER_DOMAIN}: ${SVC_INGRESS_INTERNAL_ADDR}
