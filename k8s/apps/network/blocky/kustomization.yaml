@@ -8,4 +8,8 @@ configMapGenerator:
   - name: blocky-config
     namespace: blocky
     files:
-      - config.yaml
+      - blocky-config.yaml
+  - name: unbound-config
+    namespace: blocky
+    files:
+      - unbound-config.conf

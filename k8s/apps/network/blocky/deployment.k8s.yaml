@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: blocky
     app.kubernetes.io/instance: blocky
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/name: blocky
@@ -18,17 +18,113 @@ spec:
         app.kubernetes.io/name: blocky
         app.kubernetes.io/instance: blocky
     spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: blocky
+                    app.kubernetes.io/instance: blocky
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: unbound
+                    app.kubernetes.io/instance: unbound
+                topologyKey: kubernetes.io/hostname
+              weight: 100
       containers:
         - name: blocky
           image: ghcr.io/0xerr0r/blocky:v0.29.0
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
           args:
             - --config
             - /app/config/
+          ports:
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 53
+              protocol: UDP
           volumeMounts:
             - name: config
               mountPath: /app/config/config.yaml
-              subPath: config.yaml
+              subPath: blocky-config.yaml
       volumes:
         - name: config
           configMap:
             name: blocky-config
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: unbound
+  namespace: blocky
+  labels:
+    app.kubernetes.io/name: unbound
+    app.kubernetes.io/instance: unbound
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: unbound
+      app.kubernetes.io/instance: unbound
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: unbound
+        app.kubernetes.io/instance: unbound
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: unbound
+                    app.kubernetes.io/instance: unbound
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+        podAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: blocky
+                    app.kubernetes.io/instance: blocky
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      containers:
+        - name: unbound
+          image: docker.io/klutchell/unbound:1.24.2
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              memory: 128Mi
+          ports:
+            - name: dns-tcp
+              containerPort: 53
+              protocol: TCP
+            - name: dns-udp
+              containerPort: 53
+              protocol: UDP
+          volumeMounts:
+            - name: config
+              mountPath: /etc/unbound/custom.conf.d/unbound-config.conf
+              subPath: unbound-config.conf
+      volumes:
+        - name: config
+          configMap:
+            name: unbound-config
