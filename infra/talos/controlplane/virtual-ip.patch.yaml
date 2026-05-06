@@ -1,7 +1,4 @@
-machine:
-  network:
-    interfaces:
-      - interface: eth0
-        dhcp: true
-        vip:
-          ip: 192.168.25.100
+apiVersion: v1alpha1
+kind: Layer2VIPConfig
+name: 192.168.25.100
+link: eth0

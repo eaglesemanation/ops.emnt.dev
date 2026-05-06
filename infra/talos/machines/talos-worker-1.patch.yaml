@@ -5,13 +5,22 @@ machine:
     emnt/on-nas: true:NoSchedule
   install:
     disk: /dev/vda
-  network:
-    hostname: talos-worker-1
-    interfaces:
-      - interface: eth0
-        dhcp: false
-        addresses:
-          - 192.168.25.111/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.25.1
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: eth0
+selector:
+    match: mac(link.permanent_addr) == "00:a0:98:28:67:6c"
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: eth0
+up: true
+addresses:
+  - address: 192.168.25.111/24
+routes:
+  - gateway: 192.168.25.1
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: talos-worker-1

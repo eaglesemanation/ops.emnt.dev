@@ -5,13 +5,22 @@ machine:
     openebs.io/engine: mayastor
   sysctls:
     vm.nr_hugepages: 1024
-  network:
-    hostname: talos-worker-2
-    interfaces:
-      - interface: eth0
-        dhcp: false
-        addresses:
-          - 192.168.25.112/24
-        routes:
-          - network: 0.0.0.0/0
-            gateway: 192.168.25.1
+---
+apiVersion: v1alpha1
+kind: LinkAliasConfig
+name: eth0
+selector:
+    match: mac(link.permanent_addr) == "6c:4b:90:1e:6e:3c"
+---
+apiVersion: v1alpha1
+kind: LinkConfig
+name: eth0
+up: true
+addresses:
+  - address: 192.168.25.112/24
+routes:
+  - gateway: 192.168.25.1
+---
+apiVersion: v1alpha1
+kind: HostnameConfig
+hostname: talos-worker-2
