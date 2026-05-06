@@ -20,7 +20,7 @@ data:
     type = "s3"
     region = "garage"
     bucket = "attic"
-    endpoint = "https://garage.${CLUSTER_DOMAIN}"
+    endpoint = "http://garage.garage.svc.cluster.local"
 
     [chunking]
     nar-size-threshold = 65536 # 64 KiB or larger
