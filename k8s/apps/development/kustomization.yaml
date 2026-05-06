@@ -4,5 +4,4 @@ resources:
   - attic.k8s.yaml
   - argo-events.k8s.yaml
   - argo-workflows.k8s.yaml
-  - gitea.k8s.yaml
   - wirepod.k8s.yaml
