@@ -2,6 +2,6 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.k8s.yaml
-  - helmrelease.k8s.yaml
-  - providers.k8s.yaml
-  - composed-resources-clusterrole.k8s.yaml
+  - argo-sa.k8s.yaml
+  - composite-resource-definition.k8s.yaml
+  - composition.k8s.yaml

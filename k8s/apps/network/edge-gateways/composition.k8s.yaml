@@ -1,0 +1,59 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/apiextensions.crossplane.io/composition_v1.json
+apiVersion: apiextensions.crossplane.io/v1
+kind: Composition
+metadata:
+  name: edgegateways
+spec:
+  compositeTypeRef:
+    apiVersion: crossplane.emnt.dev/v1alpha1
+    kind: XEdgeGateway
+  mode: Pipeline
+  pipeline:
+    - functionRef:
+        name: function-patch-and-transform
+      step: patch-and-transform
+      input:
+        apiVersion: pt.fn.crossplane.io/v1beta1
+        kind: Resources
+        resources:
+          - name: ssh-generator
+            patches:
+              - type: FromCompositeFieldPath
+                fromFieldPath: metadata.name
+                toFieldPath: metadata.name
+                transforms: &ssh-key-transform
+                  - type: string
+                    string:
+                      type: Format
+                      fmt: "%s-ssh-key"
+            base:
+              apiVersion: generators.external-secrets.io/v1alpha1
+              kind: SSHKey
+              spec:
+                keyType: "ed25519"
+                comment: "argo-workflows@emnt.dev"
+          - name: ssh-key
+            patches:
+              - type: FromCompositeFieldPath
+                fromFieldPath: metadata.name
+                toFieldPath: metadata.name
+                transforms: *ssh-key-transform
+              - type: FromCompositeFieldPath
+                fromFieldPath: metadata.name
+                toFieldPath: spec.target.name
+                transforms: *ssh-key-transform
+              - type: FromCompositeFieldPath
+                fromFieldPath: metadata.name
+                toFieldPath: spec.dataFrom[0].sourceRef.generatorRef.name
+                transforms: *ssh-key-transform
+            base:
+              apiVersion: external-secrets.io/v1
+              kind: ExternalSecret
+              spec:
+                refreshInterval: "30m0s"
+                refreshPolicy: OnChange
+                dataFrom:
+                  - sourceRef:
+                      generatorRef:
+                        apiVersion: generators.external-secrets.io/v1alpha1
+                        kind: SSHKey
