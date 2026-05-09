@@ -6,6 +6,7 @@ replication_factor = 1
 consistency_mode = "consistent"
 compression_level = 1
 rpc_bind_addr = "[::]:3901"
+metadata_auto_snapshot_interval = "6h"
 
 [s3_api]
 s3_region = "garage"
