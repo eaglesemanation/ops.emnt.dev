@@ -1,0 +1,44 @@
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Bucket
+metadata:
+  name: modpacks-bucket
+  namespace: minecraft
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    globalAlias: mc-modpacks.${CLUSTER_DOMAIN}
+    websiteEnabled: true
+    websiteIndexDocument: intex.html
+---
+apiVersion: key.garage.m.crossplane.io/v1alpha1
+kind: Key
+metadata:
+  name: modpacks-key
+  namespace: minecraft
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    name: modpacks-key
+  writeConnectionSecretToRef:
+    name: modpacks-key
+---
+apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+kind: Permission
+metadata:
+  name: modpacks-key-permission
+  namespace: minecraft
+spec:
+  providerConfigRef:
+    kind: ClusterProviderConfig
+    name: garage
+  forProvider:
+    accessKeyIdRef:
+      name: modpacks-key
+    bucketIdRef:
+      name: modpacks-bucket
+    read: true
+    write: true

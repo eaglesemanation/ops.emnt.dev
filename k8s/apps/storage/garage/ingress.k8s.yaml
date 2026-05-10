@@ -36,3 +36,24 @@ spec:
         - name: garage
           namespace: garage
           port: web-api
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/traefik.io/ingressroute_v1alpha1.json
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: garage-external
+  namespace: garage
+  labels:
+    app.kubernetes.io/name: garage
+  annotations:
+    kubernetes.io/ingress.class: ingress-external-traefik
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: Host(`mc-modpacks.${CLUSTER_DOMAIN}`)
+      services:
+        - name: garage
+          namespace: garage
+          port: web-api
