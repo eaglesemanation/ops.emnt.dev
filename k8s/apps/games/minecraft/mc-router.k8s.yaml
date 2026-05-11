@@ -34,7 +34,7 @@ spec:
         down:
           enabled: true
           after: "20m"
-      useProxyProtocol: true
+      useProxyProtocol: false
     extraEnv:
       AUTO_SCALE_ASLEEP_MOTD: "Server is asleep. Join again to wake it up."
       AUTO_SCALE_LOADING_MOTD: "Server is waking up. Refresh until it's up."

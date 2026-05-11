@@ -1,0 +1,71 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/helm.toolkit.fluxcd.io/helmrelease_v2.json
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: aeronautics-mc-server
+  namespace: flux-system
+spec:
+  interval: 30m
+  targetNamespace: minecraft
+  chart:
+    spec:
+      chart: minecraft
+      version: 5.1.2
+      sourceRef:
+        kind: HelmRepository
+        name: itzg-minecraft
+        namespace: flux-system
+      interval: 30m
+  install:
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
+  values:
+    image:
+      tag: java25
+    resources:
+      requests:
+        memory: 8Gi
+        cpu: 2
+      limits:
+        memory: 8Gi
+        cpu: 2
+    workloadAsStatefulSet: true
+    strategyType: OnDelete
+    persistence:
+      storageClass: freenas-api-iscsi-csi
+      dataDir:
+        enabled: true
+        Size: 100Gi
+    extraVolumes:
+      - volumeMounts:
+          - name: secrets
+            mountPath: /config/proxy-compatible-forge.toml
+            subPath: proxy-compatible-forge.toml
+            readOnly: true
+        volumes:
+          - name: secrets
+            secret:
+              secretName: mc-proxy-secrets
+    serviceAnnotations:
+      mc-router.itzg.me/externalServerName: aeronautics-mc.${CLUSTER_DOMAIN}
+      mc-router.itzg.me/proxyServerName: minecraft-mc-proxy-minecraft-proxy.minecraft.svc.cluster.local:25565
+    podLabels:
+      kuvel.azisaba.net/enable-server-discovery: "true"
+      kuvel.azisaba.net/preferred-server-name: aeronautics-mc
+    extraEnv:
+      USE_MEOWICE_FLAGS: "TRUE"
+      MODRINTH_MODPACK: https://mc-modpacks.${CLUSTER_DOMAIN}/aeronautics-1.0.0.mrpack
+    minecraftServer:
+      eula: "TRUE"
+      type: "MODRINTH"
+      version: "LATEST"
+      onlineMode: false
+      clusterIP: 10.111.111.10
+      motd: "thingamajigs that fly. kinda"
+      memory: 6G
+      ops: eaglesemanation
+      icon: https://mc-modpacks.${CLUSTER_DOMAIN}/aeronautics-icon.png
+      rcon:
+        enabled: true
+        withGeneratedPassword: true
