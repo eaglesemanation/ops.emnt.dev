@@ -4,4 +4,5 @@ resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
   - providers.k8s.yaml
+  - functions.k8s.yaml
   - composed-resources-clusterrole.k8s.yaml

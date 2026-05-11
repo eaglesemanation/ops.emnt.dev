@@ -9,9 +9,9 @@ spec:
     kind: XEdgeGateway
   mode: Pipeline
   pipeline:
-    - functionRef:
+    - step: patch-and-transform
+      functionRef:
         name: function-patch-and-transform
-      step: patch-and-transform
       input:
         apiVersion: pt.fn.crossplane.io/v1beta1
         kind: Resources
@@ -57,3 +57,16 @@ spec:
                       generatorRef:
                         apiVersion: generators.external-secrets.io/v1alpha1
                         kind: SSHKey
+    - step: detect-readiness
+      functionRef:
+        name: function-auto-ready
+    - step: sequence-creation
+      functionRef:
+        name: function-sequencer
+      input:
+        apiVersion: sequencer.fn.crossplane.io/v1beta1
+        kind: Input
+        rules:
+          - sequence:
+            - vm
+            - workflow
