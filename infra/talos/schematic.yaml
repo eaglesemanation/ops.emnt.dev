@@ -1,4 +1,8 @@
 customization:
+  bootloader: sd-boot
+  extraKernelArgs:
+    - cpufreq.default_governor=performance
+    - intel_idle.max_cstate=0
   systemExtensions:
     officialExtensions:
       - siderolabs/i915
