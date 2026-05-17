@@ -1,0 +1,12 @@
+apiVersion: digitalocean.m.crossplane.io/v1beta1
+kind: ProviderConfig
+metadata:
+  name: digitalocean
+  namespace: edge-gateways
+spec:
+  credentials:
+    source: Secret
+    secretRef:
+      name: digitalocean-creds
+      namespace: edge-gateways
+      key: credentials

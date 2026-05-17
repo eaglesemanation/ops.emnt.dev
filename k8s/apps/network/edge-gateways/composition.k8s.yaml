@@ -9,64 +9,77 @@ spec:
     kind: XEdgeGateway
   mode: Pipeline
   pipeline:
-    - step: patch-and-transform
+    - step: ssh-key
       functionRef:
-        name: function-patch-and-transform
+        name: function-go-templating
       input:
-        apiVersion: pt.fn.crossplane.io/v1beta1
-        kind: Resources
-        resources:
-          - name: ssh-generator
-            patches:
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: metadata.name
-                transforms: &ssh-key-transform
-                  - type: string
-                    string:
-                      type: Format
-                      fmt: "%s-ssh-key"
-            base:
-              apiVersion: generators.external-secrets.io/v1alpha1
-              kind: SSHKey
-              spec:
-                keyType: "ed25519"
-                comment: "argo-workflows@emnt.dev"
-          - name: ssh-key
-            patches:
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: metadata.name
-                transforms: *ssh-key-transform
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: spec.target.name
-                transforms: *ssh-key-transform
-              - type: FromCompositeFieldPath
-                fromFieldPath: metadata.name
-                toFieldPath: spec.dataFrom[0].sourceRef.generatorRef.name
-                transforms: *ssh-key-transform
-            base:
-              apiVersion: external-secrets.io/v1
-              kind: ExternalSecret
-              spec:
-                refreshInterval: "30m0s"
-                refreshPolicy: OnChange
-                dataFrom:
-                  - sourceRef:
-                      generatorRef:
-                        apiVersion: generators.external-secrets.io/v1alpha1
-                        kind: SSHKey
+        apiVersion: gotemplating.fn.crossplane.io/v1beta1
+        kind: GoTemplate
+        source: Inline
+        inline:
+          template: |
+            # vim:ft=yaml
+            {{ $compositeName := .observed.composite.resource.metadata.name }}
+            apiVersion: generators.external-secrets.io/v1alpha1
+            kind: SSHKey
+            metadata:
+              name: {{ $compositeName }}-ssh-key
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "ssh-key-generator" }}
+            ---
+            apiVersion: external-secrets.io/v1
+            kind: ExternalSecret
+            metadata:
+              name: {{ $compositeName }}-ssh-key
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "ssh-key-external-secret" }}
+            spec:
+              refreshInterval: "30m0s"
+              refreshPolicy: OnChange
+              target:
+                name: {{ $compositeName }}-ssh-key
+              dataFrom:
+                - sourceRef:
+                    generatorRef:
+                      apiVersion: generators.external-secrets.io/v1alpha1
+                      kind: SSHKey
+                      name: {{ $compositeName }}-ssh-key
+    - step: digitalocean
+      functionRef:
+        name: function-go-templating
+      input:
+        apiVersion: gotemplating.fn.crossplane.io/v1beta1
+        kind: GoTemplate
+        source: Inline
+        inline:
+          template: |
+            # vim:ft=yaml
+            {{ $compositeName := .observed.composite.resource.metadata.name }}
+            apiVersion: meta.gotemplating.fn.crossplane.io/v1alpha1
+            kind: ExtraResources
+            requirements:
+              sshKey:
+                apiVersion: v1
+                kind: Secret
+                matchName: {{ $compositeName }}-ssh-key
+                namespace: edge-gateways
+            ---
+            apiVersion: sshkey.digitalocean.m.crossplane.io/v1alpha1
+            kind: Key
+            metadata:
+              name: {{ $compositeName }}-ssh-key
+                namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "ssh-key-digitalocean" }}
+            spec:
+              forProvider:
+                name: {{ $compositeName }}-ssh-key
+                publicKey: {{ (index .requiredResources "sshKey").data.publicKey | b64dec }}
+              providerConfigRef:
+                kind: ProviderConfig
+                name: digitalocean
     - step: detect-readiness
       functionRef:
         name: function-auto-ready
-    - step: sequence-creation
-      functionRef:
-        name: function-sequencer
-      input:
-        apiVersion: sequencer.fn.crossplane.io/v1beta1
-        kind: Input
-        rules:
-          - sequence:
-            - vm
-            - workflow

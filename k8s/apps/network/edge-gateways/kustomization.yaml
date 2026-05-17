@@ -5,3 +5,5 @@ resources:
   - argo-sa.k8s.yaml
   - composite-resource-definition.k8s.yaml
   - composition.k8s.yaml
+  - digitalocean-config.k8s.yaml
+  - digitalocean-creds.sops.yaml
