@@ -7,3 +7,4 @@ resources:
   - composition.k8s.yaml
   - digitalocean-config.k8s.yaml
   - digitalocean-creds.sops.yaml
+  - ssh-key-generator.k8s.yaml

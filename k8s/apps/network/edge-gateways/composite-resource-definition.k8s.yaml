@@ -7,7 +7,7 @@ spec:
   scope: Namespaced
   group: crossplane.emnt.dev
   names:
-    kind: XEdgeGateway
+    kind: EdgeGateway
     plural: edgegateways
   versions:
     - name: v1alpha1
@@ -19,6 +19,26 @@ spec:
           properties:
             spec:
               type: object
-              #required: []
-              #properties: {}
-
+              required: ["cloud"]
+              properties:
+                cloud:
+                  type: string
+                  enum:
+                    - nocloud
+                    - digitalocean
+                digitaloceanConfig:
+                  type: object
+                  required: ["region"]
+                  properties:
+                    image:
+                      type: string
+                      default: ubuntu-24-04-x64
+                    region:
+                      type: string
+                      enum: ["nyc1", "nyc2", "nyc3", "sfo1", "sfo2", "sfo3", "ams2", "ams3", "sgp1", "lon1", "fra1", "tor1", "blr1", "syd1", "atl1", "ric1"]
+                    size:
+                      type: string
+                      default: s-1vcpu-1gb
+                    importReservedIPv4:
+                      type: string
+                      description: Use already preexisting Reserved IPv4 address

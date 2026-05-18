@@ -6,7 +6,7 @@ metadata:
 spec:
   compositeTypeRef:
     apiVersion: crossplane.emnt.dev/v1alpha1
-    kind: XEdgeGateway
+    kind: EdgeGateway
   mode: Pipeline
   pipeline:
     - step: ssh-key
@@ -20,14 +20,6 @@ spec:
           template: |
             # vim:ft=yaml
             {{ $compositeName := .observed.composite.resource.metadata.name }}
-            apiVersion: generators.external-secrets.io/v1alpha1
-            kind: SSHKey
-            metadata:
-              name: {{ $compositeName }}-ssh-key
-              namespace: edge-gateways
-              annotations:
-                {{ setResourceNameAnnotation "ssh-key-generator" }}
-            ---
             apiVersion: external-secrets.io/v1
             kind: ExternalSecret
             metadata:
@@ -45,7 +37,7 @@ spec:
                     generatorRef:
                       apiVersion: generators.external-secrets.io/v1alpha1
                       kind: SSHKey
-                      name: {{ $compositeName }}-ssh-key
+                      name: ssh-key-generator
     - step: digitalocean
       functionRef:
         name: function-go-templating
@@ -56,7 +48,10 @@ spec:
         inline:
           template: |
             # vim:ft=yaml
-            {{ $compositeName := .observed.composite.resource.metadata.name }}
+            {{- $composite := .observed.composite.resource }}
+            {{- $spec := $composite.spec }}
+            {{- if (eq $spec.cloud "digitalocean") }}
+            {{- $compositeName := $composite.metadata.name }}
             apiVersion: meta.gotemplating.fn.crossplane.io/v1alpha1
             kind: ExtraResources
             requirements:
@@ -66,20 +61,122 @@ spec:
                 matchName: {{ $compositeName }}-ssh-key
                 namespace: edge-gateways
             ---
-            apiVersion: sshkey.digitalocean.m.crossplane.io/v1alpha1
+            {{- if and
+                (hasKey .extraResources "sshKey")
+                (hasKey .extraResources.sshKey "items")
+                (eq (len .extraResources.sshKey.items) 1)
+            }}
+            {{ $sshKeyRes := index .extraResources.sshKey.items 0 }}
+            apiVersion: digitalocean.m.crossplane.io/v1alpha1
             kind: Key
             metadata:
               name: {{ $compositeName }}-ssh-key
-                namespace: edge-gateways
+              namespace: edge-gateways
               annotations:
                 {{ setResourceNameAnnotation "ssh-key-digitalocean" }}
             spec:
               forProvider:
                 name: {{ $compositeName }}-ssh-key
-                publicKey: {{ (index .requiredResources "sshKey").data.publicKey | b64dec }}
+                publicKey: {{ $sshKeyRes.resource.data.publicKey | b64dec }}
               providerConfigRef:
                 kind: ProviderConfig
                 name: digitalocean
+            ---
+            apiVersion: digitalocean.m.crossplane.io/v1alpha1
+            kind: Droplet
+            metadata:
+              name: {{ $compositeName }}-vm
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "vm" }}
+            spec:
+              forProvider:
+                name: test-vm
+                region: {{ $spec.digitaloceanConfig.region }}
+                size: {{ $spec.digitaloceanConfig.size }}
+                image: {{ $spec.digitaloceanConfig.image }}
+                sshKeysRefs:
+                  - name: {{ $compositeName }}-ssh-key
+              providerConfigRef:
+                kind: ProviderConfig
+                name: digitalocean
+            ---
+            apiVersion: digitalocean.m.crossplane.io/v1alpha1
+            kind: IP
+            metadata:
+              name: {{ $compositeName }}-ipv4
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "ipv4" }}
+                {{- if hasKey $spec.digitaloceanConfig "importReservedIPv4" }}
+                crossplane.io/external-name: {{ $spec.digitaloceanConfig.importReservedIPv4 }}
+                {{- end }}
+            spec:
+              forProvider:
+                region: {{ $spec.digitaloceanConfig.region }}
+              {{- if hasKey $spec.digitaloceanConfig "importReservedIPv4" }}
+              managementPolicies: ["Observe"]
+              {{- end }}
+              providerConfigRef:
+                kind: ProviderConfig
+                name: digitalocean
+            ---
+            apiVersion: digitalocean.m.crossplane.io/v1alpha1
+            kind: IPAssignment
+            metadata:
+              name: {{ $compositeName }}-ipv4-assignment
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "ipv4-assignment" }}
+            spec:
+              forProvider:
+                dropletIdRef:
+                  name: {{ $compositeName }}-vm
+                ipAddressRef:
+                  name: {{ $compositeName }}-ipv4
+              providerConfigRef:
+                kind: ProviderConfig
+                name: digitalocean
+            ---
+            apiVersion: protection.crossplane.io/v1beta1
+            kind: Usage
+            metadata:
+              name: {{ $compositeName }}-assign-usage-ipv4
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "assign-usage-ipv4" }}
+            spec:
+              of:
+                apiVersion: digitalocean.m.crossplane.io/v1alpha1
+                kind: IP
+                resourceRef:
+                  name: {{ $compositeName }}-ipv4
+              by:
+                apiVersion: digitalocean.m.crossplane.io/v1alpha1
+                kind: IPAssignment
+                resourceRef:
+                  name: {{ $compositeName }}-ipv4-assignment
+            ---
+            apiVersion: protection.crossplane.io/v1beta1
+            kind: Usage
+            metadata:
+              name: {{ $compositeName }}-assign-usage-droplet
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "assign-usage-droplet" }}
+            spec:
+              of:
+                apiVersion: digitalocean.m.crossplane.io/v1alpha1
+                kind: Droplet
+                resourceRef:
+                  name: {{ $compositeName }}-vm
+              by:
+                apiVersion: digitalocean.m.crossplane.io/v1alpha1
+                kind: IPAssignment
+                resourceRef:
+                  name: {{ $compositeName }}-ipv4-assignment
+            {{- end }}
+            {{- end }}
     - step: detect-readiness
       functionRef:
         name: function-auto-ready
