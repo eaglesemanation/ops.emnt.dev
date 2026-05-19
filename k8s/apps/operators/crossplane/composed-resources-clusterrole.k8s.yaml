@@ -19,7 +19,27 @@ rules:
       - external-secrets.io
     resources:
       - externalsecrets
+      - externalsecrets/status
+      - externalsecrets/finalizers
       - secretstores
+      - secretstores/status
+      - secretstores/finalizers
       - pushsecrets
+      - pushsecrets/status
+      - pushsecrets/finalizers
+    verbs:
+      - "*"
+  - apiGroups:
+      - chisel-operator.io
+    resources:
+      - exitnodes
+    verbs:
+      - "*"
+  - apiGroups:
+      - argoproj.io
+    resources:
+      - cronworkflows
+      - workflows
+      - workflowtemplates
     verbs:
       - "*"

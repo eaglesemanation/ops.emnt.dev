@@ -28,7 +28,6 @@ spec:
               annotations:
                 {{ setResourceNameAnnotation "ssh-key-external-secret" }}
             spec:
-              refreshInterval: "30m0s"
               refreshPolicy: OnChange
               target:
                 name: {{ $compositeName }}-ssh-key
@@ -38,7 +37,7 @@ spec:
                       apiVersion: generators.external-secrets.io/v1alpha1
                       kind: SSHKey
                       name: ssh-key-generator
-    - step: digitalocean
+    - step: cloud
       functionRef:
         name: function-go-templating
       input:
@@ -88,10 +87,10 @@ spec:
               name: {{ $compositeName }}-vm
               namespace: edge-gateways
               annotations:
-                {{ setResourceNameAnnotation "vm" }}
+                {{ setResourceNameAnnotation "droplet" }}
             spec:
               forProvider:
-                name: test-vm
+                name: ${CLUSTER_DOMAIN}
                 region: {{ $spec.digitaloceanConfig.region }}
                 size: {{ $spec.digitaloceanConfig.size }}
                 image: {{ $spec.digitaloceanConfig.image }}
@@ -101,6 +100,17 @@ spec:
                 kind: ProviderConfig
                 name: digitalocean
             ---
+            {{- if and
+                (hasKey .observed.resources "droplet")
+                (hasKey .observed.resources.droplet.resource "status")
+                (.observed.resources.droplet.resource.status.atProvider.ipv4Address)
+            }}
+            apiVersion: crossplane.emnt.dev/v1alpha1
+            kind: EdgeGateway
+            status:
+              publicIP: {{ .observed.resources.droplet.resource.status.atProvider.ipv4Address }}
+            ---
+            {{- end }}
             apiVersion: digitalocean.m.crossplane.io/v1alpha1
             kind: IP
             metadata:
@@ -176,6 +186,145 @@ spec:
                 resourceRef:
                   name: {{ $compositeName }}-ipv4-assignment
             {{- end }}
+            ---
+            {{- else if eq $spec.cloud "nocloud"}}
+            apiVersion: crossplane.emnt.dev/v1alpha1
+            kind: EdgeGateway
+            status:
+              publicIP: {{ $spec.nocloudConfig.ip }}
+            {{- end }}
+    - step: chisel
+      functionRef:
+        name: function-go-templating
+      input:
+        apiVersion: gotemplating.fn.crossplane.io/v1beta1
+        kind: GoTemplate
+        source: Inline
+        inline:
+          template: |
+            # vim:ft=yaml
+            {{- $composite := .observed.composite.resource }}
+            {{- $compositeName := $composite.metadata.name }}
+            {{- if $composite.status.publicIP }}
+            apiVersion: chisel-operator.io/v1
+            kind: ExitNode
+            metadata:
+              name: {{ $compositeName }}
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "chisel-exit-node" }}
+                gotemplating.fn.crossplane.io/ready: "True"
+            spec:
+              host: {{ $composite.status.publicIP }}
+              port: 9090
+              auth: {{ $compositeName }}-chisel-auth
+            ---
+            {{- end }}
+            apiVersion: external-secrets.io/v1
+            kind: ExternalSecret
+            metadata:
+              name: {{ $compositeName }}-chisel-auth
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "chisel-auth" }}
+            spec:
+              refreshPolicy: OnChange
+              target:
+                name: {{ $compositeName }}-chisel-auth
+                template:
+                  engineVersion: v2
+                  data:
+                    auth: chisel:{{`{{ .password }}`}}
+              dataFrom:
+                - sourceRef:
+                    generatorRef:
+                      apiVersion: generators.external-secrets.io/v1alpha1
+                      kind: Password
+                      name: password-generator
+    - step: nixos-workflow
+      functionRef:
+        name: function-go-templating
+      input:
+        apiVersion: gotemplating.fn.crossplane.io/v1beta1
+        kind: GoTemplate
+        source: Inline
+        inline:
+          template: |
+            # vim:ft=yaml
+            {{- $composite := .observed.composite.resource }}
+            {{- $spec := $composite.spec }}
+            {{- $compositeName := $composite.metadata.name }}
+            apiVersion: external-secrets.io/v1
+            kind: ExternalSecret
+            metadata:
+              name: {{ $compositeName }}-nixos-secrets
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "nixos-secrets" }}
+            spec:
+              secretStoreRef:
+                kind: SecretStore
+                name: edge-gateways-secrets
+              target:
+                name: {{ $compositeName }}-nixos-secrets
+                template:
+                  engineVersion: v2
+                  data:
+                    secrets.yaml: |
+                      ssh:
+                        root:
+                          authorizedKeys: |
+                            {{`{{.sshPublicKey}}`}}
+                      chisel:
+                        authfile.json: |
+                          {
+                            "{{`{{.chiselAuth}}`}}": [""]
+                          }
+                      crowdsecBouncer:
+                        apikey: "TODO - put actual API key"
+              data:
+                - secretKey: sshPublicKey
+                  remoteRef:
+                    key: {{ $compositeName }}-ssh-key
+                    property: publicKey
+                - secretKey: chiselAuth
+                  remoteRef:
+                    key: {{ $compositeName }}-chisel-auth
+                    property: auth
+            ---
+            {{- $flakeAttr := "edgeGatewayGeneric" }}
+            {{- if eq $spec.cloud "digitalocean" }}
+              {{- $flakeAttr = "edgeGatewayDigitalocean" }}
+            {{- end }}
+            {{- if $composite.status.publicIP }}
+            apiVersion: argoproj.io/v1alpha1
+            kind: CronWorkflow
+            metadata:
+              name: {{ $compositeName }}-nixos
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "nixos-cron-workflow" }}
+                gotemplating.fn.crossplane.io/ready: "True"
+            spec:
+              concurrencyPolicy: Forbid
+              schedules:
+                - "0 10 * * 1"
+              workflowSpec:
+                entrypoint: dag
+                serviceAccountName: argo-workflows
+                arguments:
+                  parameters:
+                    - name: targetHost
+                      value: {{ $composite.status.publicIP }}
+                    - name: sshSecretRef
+                      value: {{ $compositeName }}-ssh-key
+                    - name: flakeAttr
+                      value: {{ $flakeAttr }}
+                    - name: sopsSecretRef
+                      value: {{ $compositeName }}-nixos-secrets
+                workflowTemplateRef:
+                  clusterScope: true
+                  name: nixos-deploy
             {{- end }}
     - step: detect-readiness
       functionRef:

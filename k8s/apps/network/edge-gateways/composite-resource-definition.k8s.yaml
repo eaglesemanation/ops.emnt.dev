@@ -42,3 +42,14 @@ spec:
                     importReservedIPv4:
                       type: string
                       description: Use already preexisting Reserved IPv4 address
+                nocloudConfig:
+                  type: object
+                  required: ["ip"]
+                  properties:
+                    ip:
+                      type: string
+            status:
+              type: object
+              properties:
+                publicIP:
+                  type: string
