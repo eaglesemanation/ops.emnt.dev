@@ -1,0 +1,31 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: garage-creds
+  namespace: edge-gateways
+spec:
+  secretStoreRef:
+    name: argo-workflows-secrets
+    kind: ClusterSecretStore
+  target:
+    name: garage-creds
+  dataFrom:
+    - extract:
+        key: garage-creds
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: attic-creds
+  namespace: edge-gateways
+spec:
+  secretStoreRef:
+    name: argo-workflows-secrets
+    kind: ClusterSecretStore
+  target:
+    name: attic-creds
+  dataFrom:
+    - extract:
+        key: attic-creds
