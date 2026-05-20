@@ -242,7 +242,7 @@ spec:
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
 
           nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel'
-          attic push default result -j 2
+          attic push default result -j 2 || true
 
           nix run github:nix-community/nixos-anywhere -- \
             --flake '.#{{workflow.parameters.flakeAttr}}' \
@@ -299,7 +299,7 @@ spec:
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
 
           nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel'
-          attic push default result -j 2
+          attic push default result -j 2 || true
 
           nix run github:serokell/deploy-rs -- \
             '.#{{workflow.parameters.flakeAttr}}' \
