@@ -5,3 +5,4 @@ resources:
   - argo-events.k8s.yaml
   - argo-workflows.k8s.yaml
   - wirepod.k8s.yaml
+  - forgejo.k8s.yaml
