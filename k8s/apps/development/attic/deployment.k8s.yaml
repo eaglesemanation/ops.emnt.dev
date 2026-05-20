@@ -24,12 +24,10 @@ spec:
         - name: attic
           image: ghcr.io/zhaofengli/attic:cf7294607583a8d9f06026007da1ced564d43c86
           args: [-f, /etc/attic/config.toml]
+          envFrom:
+            - secretRef:
+                name: jwt-secrets
           env:
-            - name: ATTIC_SERVER_TOKEN_HS256_SECRET_BASE64
-              valueFrom:
-                secretKeyRef:
-                  name: attic
-                  key: token-hs256-secret-base64
             - name: ATTIC_SERVER_DATABASE_URL
               valueFrom:
                 secretKeyRef:

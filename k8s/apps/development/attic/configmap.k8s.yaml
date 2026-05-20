@@ -34,3 +34,6 @@ data:
     [garbage-collection]
     interval = "12 hours"
     default-retention-period = "1 month"
+
+    [jwt]
+    iss = "attic.${CLUSTER_DOMAIN}"
