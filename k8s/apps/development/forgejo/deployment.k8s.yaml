@@ -73,6 +73,10 @@ spec:
               value: "true"
             - name: FORGEJO__oauth2_client__ACCOUNT_LINKING
               value: auto
+            - name: FORGEJO__server__SSH_PORT
+              value: "22"
+            - name: FORGEJO__server__SSH_LISTEN_PORT
+              value: "2222"
           volumeMounts:
             - name: data
               mountPath: /var/lib/gitea

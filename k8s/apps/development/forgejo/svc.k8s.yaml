@@ -16,7 +16,25 @@ spec:
       port: 3000
       targetPort: http
       protocol: TCP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: forgejo-ssh
+  namespace: forgejo
+  labels:
+    app.kubernetes.io/name: forgejo
+    app.kubernetes.io/instance: forgejo
+  annotations:
+    metallb.io/allow-shared-ip: "local-ingress-ip"
+    metallb.io/loadBalancerIPs: "${SVC_INGRESS_INTERNAL_ADDR}"
+spec:
+  type: LoadBalancer
+  selector:
+    app.kubernetes.io/name: forgejo
+    app.kubernetes.io/instance: forgejo
+  ports:
     - name: ssh
-      port: 2222
+      port: 22
       targetPort: ssh
       protocol: TCP
