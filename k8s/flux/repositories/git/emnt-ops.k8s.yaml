@@ -8,7 +8,7 @@ spec:
   interval: 10m
   ref:
     branch: main
-  url: https://github.com/eaglesemanation/ops.emnt.dev.git
+  url: https://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git
   ignore: |
     /*
     !/k8s
