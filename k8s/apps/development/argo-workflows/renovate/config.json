@@ -1,0 +1,21 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+
+  "platform": "forgejo",
+  "endpoint": "http://forgejo.forgejo.svc.cluster.local:3000",
+
+  "autodiscover": true,
+  "autodiscoverTopics": ["renovate-bot"],
+
+  "onboarding": true,
+  "requireConfig": "optional",
+  "dryRun": null,
+
+  "prHourlyLimit": 5,
+  "prConcurrentLimit": 10,
+
+  "timezone": "America/Toronto",
+  "schedule": ["at any time"],
+
+  "gitAuthor": "Renovate Bot <renovate-bot@${CLUSTER_DOMAIN}>"
+}
