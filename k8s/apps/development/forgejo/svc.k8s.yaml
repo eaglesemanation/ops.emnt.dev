@@ -25,11 +25,8 @@ metadata:
   labels:
     app.kubernetes.io/name: forgejo
     app.kubernetes.io/instance: forgejo
-  annotations:
-    metallb.io/allow-shared-ip: "local-ingress-ip"
-    metallb.io/loadBalancerIPs: "${SVC_INGRESS_INTERNAL_ADDR}"
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   selector:
     app.kubernetes.io/name: forgejo
     app.kubernetes.io/instance: forgejo

@@ -77,6 +77,8 @@ spec:
               value: "22"
             - name: FORGEJO__server__SSH_LISTEN_PORT
               value: "2222"
+            - name: FORGEJO__server__SSH_SERVER_USE_PROXY_PROTOCOL
+              value: "true"
           volumeMounts:
             - name: data
               mountPath: /var/lib/gitea
