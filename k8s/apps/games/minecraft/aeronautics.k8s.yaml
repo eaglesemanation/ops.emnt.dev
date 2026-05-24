@@ -55,7 +55,7 @@ spec:
       kuvel.azisaba.net/preferred-server-name: aeronautics-mc
     extraEnv:
       USE_MEOWICE_FLAGS: "TRUE"
-      MODRINTH_MODPACK: https://mc-modpacks.${CLUSTER_DOMAIN}/aeronautics-1.0.0.mrpack
+      MODRINTH_MODPACK: https://mc-modpacks.${CLUSTER_DOMAIN}/aeronautics-1.0.1.mrpack
     minecraftServer:
       eula: "TRUE"
       type: "MODRINTH"
