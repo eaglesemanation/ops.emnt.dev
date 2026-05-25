@@ -16,6 +16,24 @@
       url = "github:serokell/deploy-rs";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nixos-anywhere = {
+      url = "github:nix-community/nixos-anywhere";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixos-stable.follows = "nixpkgs";
+        disko.follows = "disko";
+        flake-parts.follows = "flake-parts";
+      };
+    };
+    attic = {
+      url = "git+https://forgejo.emnt.dev/public/attic";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        nixpkgs-stable.follows = "nixpkgs";
+        flake-parts.follows = "flake-parts";
+      };
+    };
+    nix2container.url = "github:nlewo/nix2container";
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";

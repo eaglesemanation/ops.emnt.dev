@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: nix-containers-authfile
+  namespace: argo-workflows
+spec:
+  secretStoreRef:
+    name: argo-workflows-secrets
+    kind: ClusterSecretStore
+  target:
+    name: nix-containers-authfile
+    template:
+      engineVersion: v2
+      data:
+        authfile.json: |
+          {
+            "auths": {
+              "forgejo.${CLUSTER_DOMAIN}": {
+                "auth": "{{ .creds | b64enc }}"
+              }
+            }
+          }
+  dataFrom:
+    - extract:
+        key: nix-containers-forgejo-creds

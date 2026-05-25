@@ -13,3 +13,4 @@ resources:
   - sa.k8s.yaml
   - nixos-deploy
   - renovate
+  - nix-containers

@@ -1,0 +1,89 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/workflowtemplate_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: nix-containers
+  namespace: argo-workflows
+spec:
+  entrypoint: dag
+  serviceAccountName: argo-workflows
+  retryStrategy:
+    limit: 2
+    retryPolicy: Always
+    backoff:
+      duration: 30s
+      factor: 2
+  podSpecPatch: |
+    restartPolicy: Never
+  templates:
+    - name: dag
+      dag:
+        tasks:
+          # TODO: dynamically figure out containers that could be built and do that in parallel
+          # TODO: bootstrap nix2container image with nixos/nix one
+          - name: build-nixos-build
+            template: build-nixos-build
+          - name: build-attic-server
+            template: build-attic-server
+    - name: build-nixos-build
+      script:
+        image: forgejo.emnt.dev/public/nix2container:latest
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "1"
+          limits:
+            memory: "8Gi"
+            cpu: "2"
+        securityContext:
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+          allowPrivilegeEscalation: true
+          privileged: true
+        command: [sh]
+        source: |
+          #!/bin/sh
+          set -eux
+          nix run git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage.copyTo -- \
+            docker://forgejo.emnt.dev/public/nixos-build:latest \
+            --authfile /tmp/authfile.json
+        volumeMounts:
+          - name: authfile
+            mountPath: /tmp/authfile.json
+            subPath: authfile.json
+      volumes:
+        - name: authfile
+          secret:
+            secretName: nix-containers-authfile
+    - name: build-attic-server
+      script:
+        image: forgejo.emnt.dev/public/nix2container:latest
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "1"
+          limits:
+            memory: "8Gi"
+            cpu: "2"
+        securityContext:
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+          allowPrivilegeEscalation: true
+          privileged: true
+        command: [sh]
+        source: |
+          #!/bin/sh
+          set -eux
+          nix run git+https://forgejo.emnt.dev/public/ops.emnt.dev#atticServerDockerImage.copyTo -- \
+            docker://forgejo.emnt.dev/public/attic-server:latest \
+            --authfile /tmp/authfile.json
+        volumeMounts:
+          - name: authfile
+            mountPath: /tmp/authfile.json
+            subPath: authfile.json
+      volumes:
+        - name: authfile
+          secret:
+            secretName: nix-containers-authfile
