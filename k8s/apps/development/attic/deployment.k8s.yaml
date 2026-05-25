@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: attic
-          image: ghcr.io/zhaofengli/attic:cf7294607583a8d9f06026007da1ced564d43c86
+          image: forgejo.emnt.dev/public/attic-server:latest
           args: [-f, /etc/attic/config.toml]
           envFrom:
             - secretRef:
