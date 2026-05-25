@@ -20,25 +20,31 @@
       tag = "latest";
       maxLayers = 64;
       initializeNixDatabase = true;
-      copyToRoot = pkgs.buildEnv {
-        name = "image-root";
-        paths =
-          (with pkgs; [
-            nix
-            bashInteractive
-            coreutils
-            gitMinimal
-            sops
-            openssh
-          ])
-          ++ [
-            attic-client
-            nixos-anywhere
-            deploy-rs
-          ];
-        pathsToLink = ["/bin" "/etc" "/lib" "/share/nix"];
-        extraOutputsToInstall = [];
-      };
+      copyToRoot = [
+        (pkgs.runCommand "dirs" {} ''
+          mkdir -p $out/tmp
+        '')
+        (pkgs.buildEnv {
+          name = "image-root";
+          paths =
+            (with pkgs; [
+              nix
+              bashInteractive
+              coreutils
+              gitMinimal
+              sops
+              openssh
+            ])
+            ++ [
+              ./nix-root
+              attic-client
+              nixos-anywhere
+              deploy-rs
+            ];
+          pathsToLink = ["/bin" "/etc" "/lib" "/share/nix"];
+          extraOutputsToInstall = [];
+        })
+      ];
       config = {
         Env = [
           "ENV=/etc/profile.d/nix.sh"

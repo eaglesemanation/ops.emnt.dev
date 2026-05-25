@@ -42,26 +42,18 @@ spec:
             template: detect-mode
             dependencies:
               - ensure-known-hosts
-          - name: nixos-anywhere
-            template: nixos-anywhere
+          - name: deploy
+            template: deploy
             dependencies:
               - encrypt-secrets
               - detect-mode
-            when: '"{{tasks.detect-mode.outputs.parameters.mode}}" == "bootstrap"'
             arguments:
+              parameters:
+                - name: mode
+                  value: '{{tasks.detect-mode.outputs.parameters.mode}}'
               artifacts:
                 - name: secretsSops
-                  from: "{{tasks.encrypt-secrets.outputs.artifacts.secretsSops}}"
-          - name: deploy-rs
-            template: deploy-rs
-            dependencies:
-              - encrypt-secrets
-              - detect-mode
-            when: '"{{tasks.detect-mode.outputs.parameters.mode}}" == "deploy"'
-            arguments:
-              artifacts:
-                - name: secretsSops
-                  from: "{{tasks.encrypt-secrets.outputs.artifacts.secretsSops}}"
+                  from: '{{tasks.encrypt-secrets.outputs.artifacts.secretsSops}}'
 
     - name: ensure-known-hosts
       script:
@@ -208,13 +200,15 @@ spec:
             secretName: "{{workflow.parameters.sshSecretRef}}"
             defaultMode: 384 # 0600
 
-    - name: nixos-anywhere
+    - name: deploy
       inputs:
         artifacts:
           - name: secretsSops
             path: /tmp/secrets.sops.yaml
+        parameters:
+          - name: mode
       script:
-        image: docker.io/nixos/nix:2.34.6
+        image: forgejo.emnt.dev/public/nixos-build:latest
         securityContext:
           runAsNonRoot: false
           readOnlyRootFilesystem: false
@@ -230,81 +224,42 @@ spec:
         source: |
           #!/bin/sh
           set -eux
-          SSH_HOST="{{workflow.parameters.targetHost}}"
-          SSH_USER="{{workflow.parameters.sshUser}}"
+          SSH_HOST='{{workflow.parameters.targetHost}}'
+          SSH_USER='{{workflow.parameters.sshUser}}'
 
-          git clone "{{workflow.parameters.flakeRepo}}" /tmp/flake
+          git clone '{{workflow.parameters.flakeRepo}}' /tmp/flake
           cd /tmp/flake
           cp /tmp/secrets.sops.yaml '{{workflow.parameters.sopsSecretTargetPath}}'
           git add '{{workflow.parameters.sopsSecretTargetPath}}'
 
-          nix profile add nixpkgs#attic-client
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
-
           nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel'
           attic push default result -j 2 || true
 
-          nix run github:nix-community/nixos-anywhere -- \
-            --flake '.#{{workflow.parameters.flakeAttr}}' \
-            -i /root/.ssh/id_ed25519 \
-            --ssh-option StrictHostKeyChecking=yes \
-            --copy-host-keys \
-            --target-host "$SSH_USER@$SSH_HOST"
-        env: &nix-env
-          - name: NIX_CONFIG
-            value: |
-              sandbox = true
-              substituters = https://cache.nixos.org https://nix-community.cachix.org https://attic.emnt.dev/default
-              trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs= default:hwRcW4hVIsYo61KYYT/OWcFBfpApDvzwptGziVEHhUY=
-              experimental-features = nix-command flakes
+          case '{{inputs.parameters.mode}}' in
+          'bootstrap')
+            nixos-anywhere \
+              --flake '.#{{workflow.parameters.flakeAttr}}' \
+              -i /root/.ssh/id_ed25519 \
+              --ssh-option StrictHostKeyChecking=yes \
+              --copy-host-keys \
+              --target-host "$SSH_USER@$SSH_HOST"
+            ;;
+          'deploy')
+            deploy '.#{{workflow.parameters.flakeAttr}}' \
+              --ssh-user "$SSH_USER" \
+              --hostname "$SSH_HOST"
+            ;;
+          *)
+            echo 'Target machine is in unexpected state'
+            exit 1
+            ;;
+          esac
+        env:
           - name: ATTIC_TOKEN
             valueFrom:
               secretKeyRef:
                 key: token
                 name: attic-creds
-        volumeMounts: *ssh-volume-mounts
-      volumes: *ssh-volumes
-
-    - name: deploy-rs
-      inputs:
-        artifacts:
-          - name: secretsSops
-            path: /tmp/secrets.sops.yaml
-      script:
-        image: docker.io/nixos/nix:2.34.6
-        securityContext:
-          runAsNonRoot: false
-          readOnlyRootFilesystem: false
-          runAsUser: 0
-          allowPrivilegeEscalation: true
-          privileged: true
-        resources:
-          requests:
-            memory: 1Gi
-          limits:
-            memory: 4Gi
-        command: [sh]
-        source: |
-          #!/bin/sh
-          set -eux
-          SSH_HOST="{{workflow.parameters.targetHost}}"
-          SSH_USER="{{workflow.parameters.sshUser}}"
-
-          git clone "{{workflow.parameters.flakeRepo}}" /tmp/flake
-          cd /tmp/flake
-          cp /tmp/secrets.sops.yaml '{{workflow.parameters.sopsSecretTargetPath}}'
-          git add '{{workflow.parameters.sopsSecretTargetPath}}'
-
-          nix profile add nixpkgs#attic-client
-          attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
-
-          nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel'
-          attic push default result -j 2 || true
-
-          nix run github:serokell/deploy-rs -- \
-            '.#{{workflow.parameters.flakeAttr}}' \
-            --ssh-user "$SSH_USER" \
-            --hostname "$SSH_HOST"
-        env: *nix-env
         volumeMounts: *ssh-volume-mounts
       volumes: *ssh-volumes

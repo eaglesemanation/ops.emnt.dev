@@ -11,33 +11,42 @@
   }: let
     system = pkgs.stdenv.hostPlatform.system;
     nix2containerPkgs = inputs.nix2container.packages.${system};
+    attic-client = inputs.attic.packages.${system}.attic-client;
   in {
     packages.nix2containerDockerImage = nix2containerPkgs.nix2container.buildImage {
       name = "nix2container";
       tag = "latest";
       maxLayers = 64;
       initializeNixDatabase = true;
-      copyToRoot = pkgs.buildEnv {
-        name = "image-root";
-        paths =
-          [./nix-root]
-          ++ (with nix2containerPkgs; [
-            nix2container-bin
-            skopeo-nix2container
-          ])
-          ++ (with pkgs; [
-            nix
-            bashInteractive
-            gitMinimal
-            coreutils
-            gnutar
-            gzip
-            openssh
-            xz
-          ]);
-        pathsToLink = ["/bin" "/etc" "/lib" "/share/nix"];
-        extraOutputsToInstall = [];
-      };
+      copyToRoot = [
+        (pkgs.runCommand "dirs" {} ''
+          mkdir -p $out/tmp
+        '')
+        (pkgs.buildEnv {
+          name = "image-root";
+          paths =
+            [
+              ./nix-root
+              attic-client
+            ]
+            ++ (with nix2containerPkgs; [
+              nix2container-bin
+              skopeo-nix2container
+            ])
+            ++ (with pkgs; [
+              nix
+              bashInteractive
+              gitMinimal
+              coreutils
+              gnutar
+              gzip
+              openssh
+              xz
+            ]);
+          pathsToLink = ["/bin" "/etc" "/lib" "/share/nix"];
+          extraOutputsToInstall = [];
+        })
+      ];
       config = {
         WorkingDir = "/app";
         Cmd = ["/bin/bash"];
