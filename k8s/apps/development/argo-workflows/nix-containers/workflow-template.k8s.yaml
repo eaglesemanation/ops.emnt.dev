@@ -45,9 +45,19 @@ spec:
         source: |
           #!/bin/sh
           set -eux
+          attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
+          nix build git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage
+          attic push default result -j 2 || true
+
           nix run git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage.copyTo -- \
             docker://forgejo.emnt.dev/public/nixos-build:latest \
             --authfile /tmp/authfile.json
+        env:
+          - name: ATTIC_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: attic-creds
         volumeMounts:
           - name: authfile
             mountPath: /tmp/authfile.json
@@ -76,9 +86,19 @@ spec:
         source: |
           #!/bin/sh
           set -eux
+          attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
+          nix build git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage
+          attic push default result -j 2 || true
+
           nix run git+https://forgejo.emnt.dev/public/ops.emnt.dev#atticServerDockerImage.copyTo -- \
             docker://forgejo.emnt.dev/public/attic-server:latest \
             --authfile /tmp/authfile.json
+        env:
+          - name: ATTIC_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: attic-creds
         volumeMounts:
           - name: authfile
             mountPath: /tmp/authfile.json
