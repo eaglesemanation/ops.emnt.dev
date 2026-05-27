@@ -16,7 +16,6 @@
     packages.nix2containerDockerImage = nix2containerPkgs.nix2container.buildImage {
       name = "nix2container";
       tag = "latest";
-      maxLayers = 64;
       initializeNixDatabase = true;
       copyToRoot = [
         (pkgs.runCommand "dirs" {} ''

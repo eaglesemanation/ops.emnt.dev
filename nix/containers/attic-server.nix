@@ -16,7 +16,6 @@
     packages.atticServerDockerImage = nix2container.buildImage {
       name = "attic-server";
       tag = "latest";
-      maxLayers = 32;
       copyToRoot = [
         attic-server
         pkgs.busybox

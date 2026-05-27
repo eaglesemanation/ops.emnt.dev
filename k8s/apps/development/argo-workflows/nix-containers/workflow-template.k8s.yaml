@@ -46,6 +46,7 @@ spec:
           #!/bin/sh
           set -eux
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
+          attic use default
           nix build git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage
           attic push default result -j 2 || true
 
@@ -87,6 +88,7 @@ spec:
           #!/bin/sh
           set -eux
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
+          attic use default
           nix build git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage
           attic push default result -j 2 || true
 
