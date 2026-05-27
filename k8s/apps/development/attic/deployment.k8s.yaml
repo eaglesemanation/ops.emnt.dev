@@ -28,6 +28,8 @@ spec:
             - secretRef:
                 name: jwt-secrets
           env:
+            - name: RUST_LOG
+              value: attic_server=debug
             - name: ATTIC_SERVER_DATABASE_URL
               valueFrom:
                 secretKeyRef:
