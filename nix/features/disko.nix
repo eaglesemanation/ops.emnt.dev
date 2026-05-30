@@ -1,4 +1,20 @@
-{lib, ...}: {
+{
+  inputs,
+  lib,
+  self,
+  ...
+}: {
+  flake.nixosModules.disko = {
+    pkgs,
+    config,
+    ...
+  }: {
+    imports = [
+      inputs.disko.nixosModules.disko
+      self.diskoConfigurations.default
+    ];
+  };
+
   flake.diskoConfigurations.default = {
     disko.devices = {
       disk.disk1 = {
@@ -11,6 +27,7 @@
               name = "boot";
               size = "1M";
               type = "EF02";
+              attributes = [0];
             };
             esp = {
               name = "ESP";
@@ -26,26 +43,9 @@
               name = "root";
               size = "100%";
               content = {
-                type = "lvm_pv";
-                vg = "pool";
-              };
-            };
-          };
-        };
-      };
-      lvm_vg = {
-        pool = {
-          type = "lvm_vg";
-          lvs = {
-            root = {
-              size = "100%FREE";
-              content = {
                 type = "filesystem";
                 format = "ext4";
                 mountpoint = "/";
-                mountOptions = [
-                  "defaults"
-                ];
               };
             };
           };

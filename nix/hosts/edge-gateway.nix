@@ -8,6 +8,7 @@
     system = "x86_64-linux";
     modules = [
       self.nixosModules.edgeGateway
+      self.nixosModules.disko
     ];
   };
 
@@ -15,6 +16,7 @@
     system = "x86_64-linux";
     modules = [
       self.nixosModules.edgeGateway
+      self.nixosModules.disko
       {disko.devices.disk.disk1.device = "/dev/vda";}
     ];
   };
@@ -24,15 +26,14 @@
     modules = [
       self.nixosModules.edgeGateway
       self.nixosModules.digitalocean
-      {disko.devices.disk.disk1.device = "/dev/vda";}
     ];
   };
 
   flake.nixosModules.edgeGateway = {pkgs, ...}: {
-    imports = [
-      self.nixosModules.base
-      self.nixosModules.chisel
-      self.nixosModules.crowdsecBouncer
+    imports = with self.nixosModules; [
+      base
+      sops
+      chisel
     ];
   };
 }

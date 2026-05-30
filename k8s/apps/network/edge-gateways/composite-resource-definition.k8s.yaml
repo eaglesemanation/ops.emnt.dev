@@ -30,15 +30,20 @@ spec:
                   type: object
                   required: ["region"]
                   properties:
+                    name:
+                      type: string
+                      description: Name of the droplet. Affects PTR record for droplet IP, set accordingly for mail server to not get flagged.
+                      default: mail.${CLUSTER_DOMAIN}
                     image:
                       type: string
-                      default: ubuntu-24-04-x64
+                      description: Either a slug or an ID of a droplet image. Defaults to minimal nixos image
+                      default: "231071368"
                     region:
                       type: string
                       enum: ["nyc1", "nyc2", "nyc3", "sfo1", "sfo2", "sfo3", "ams2", "ams3", "sgp1", "lon1", "fra1", "tor1", "blr1", "syd1", "atl1", "ric1"]
                     size:
                       type: string
-                      default: s-1vcpu-1gb
+                      default: s-1vcpu-512mb-10gb
                     importReservedIPv4:
                       type: string
                       description: Use already preexisting Reserved IPv4 address

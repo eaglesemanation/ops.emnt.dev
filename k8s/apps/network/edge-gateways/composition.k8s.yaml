@@ -90,10 +90,10 @@ spec:
                 {{ setResourceNameAnnotation "droplet" }}
             spec:
               forProvider:
-                name: ${CLUSTER_DOMAIN}
+                name: {{ $spec.digitaloceanConfig.name }}
                 region: {{ $spec.digitaloceanConfig.region }}
                 size: {{ $spec.digitaloceanConfig.size }}
-                image: {{ $spec.digitaloceanConfig.image }}
+                image: "{{ $spec.digitaloceanConfig.image }}"
                 sshKeysRefs:
                   - name: {{ $compositeName }}-ssh-key
               providerConfigRef:

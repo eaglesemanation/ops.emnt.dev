@@ -12,6 +12,8 @@
     # do not use DHCP, as DigitalOcean provisions IPs using cloud-init
     networking.useDHCP = lib.mkForce false;
 
+    services.do-agent.enable = true;
+
     # Disables all modules that do not work with NixOS
     services.cloud-init = {
       enable = true;
