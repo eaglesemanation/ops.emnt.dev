@@ -34,6 +34,7 @@
       base
       sops
       chisel
+      crowdsecBouncer
     ];
   };
 }

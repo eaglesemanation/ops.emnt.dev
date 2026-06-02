@@ -281,7 +281,7 @@ spec:
                             "{{`{{.chiselAuth}}`}}": [""]
                           }
                       crowdsecBouncer:
-                        apikey: "TODO - put actual API key"
+                        apikey: "{{.crowdsecApiKey}}"
               data:
                 - secretKey: sshPublicKey
                   remoteRef:
@@ -291,6 +291,10 @@ spec:
                   remoteRef:
                     key: {{ $compositeName }}-chisel-auth
                     property: auth
+                - secretKey: crowdsecApiKey
+                  remoteRef:
+                    key: {{ $spec.crowdsecApiKeySecret.name }}
+                    property: {{ $spec.crowdsecApiKeySecret.key }}
             ---
             {{- $flakeAttr := "edgeGatewayGeneric" }}
             {{- if eq $spec.cloud "digitalocean" }}

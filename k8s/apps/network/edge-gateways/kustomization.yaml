@@ -10,3 +10,4 @@ resources:
   - secret-generators.k8s.yaml
   - secretstore.k8s.yaml
   - argo-creds-clone.k8s.yaml
+  - crowdsec-creds.sops.yaml

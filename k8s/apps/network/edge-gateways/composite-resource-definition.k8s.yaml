@@ -26,6 +26,15 @@ spec:
                   enum:
                     - nocloud
                     - digitalocean
+                crowdsecApiKeySecret:
+                  type: object
+                  required: ["name"]
+                  properties:
+                    name:
+                      type: string
+                    key:
+                      type: string
+                      default: apiKey
                 digitaloceanConfig:
                   type: object
                   required: ["region"]
