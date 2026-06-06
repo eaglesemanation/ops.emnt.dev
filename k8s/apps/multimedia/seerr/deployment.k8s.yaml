@@ -28,6 +28,7 @@ spec:
       containers:
         - name: seerr
           image: ghcr.io/seerr-team/seerr:preview-new-oidc
+          imagePullPolicy: Always # While it's in preview-new-oidc
           resources:
             requests:
               cpu: 10m
