@@ -77,6 +77,33 @@ spec:
         ENABLE_RSPAMD: 1
         ENABLE_RSPAMD_REDIS: 1
         ENABLE_FAIL2BAN: 1
+        # LDAP
+        ACCOUNT_PROVISIONER: LDAP
+        LDAP_SERVER_HOST: ldap://ak-outpost-authentik-ldap-outpost.authentik.svc.cluster.local
+        LDAP_SEARCH_BASE: ou=users,dc=ldap,dc=goauthentik,dc=io
+        LDAP_BIND_DN:
+          valueFrom:
+            secretKeyRef:
+              name: ldap-account
+              key: dn
+        LDAP_BIND_PW:
+          valueFrom:
+            secretKeyRef:
+              name: ldap-account
+              key: password
+        LDAP_QUERY_FILTER_DOMAIN: (internalMail=*@%s)
+        LDAP_QUERY_FILTER_USER: (&(objectClass=inetOrgPerson)(internalMail=%s))
+        LDAP_QUERY_FILTER_GROUP: (|)
+        LDAP_QUERY_FILTER_ALIAS: (|)
+        LDAP_QUERY_FILTER_SENDERS: (&(objectClass=inetOrgPerson)(internalMail=%s))
+        LDAP_RESULT_ATTRIBUTE: internalMail
+        DOVECOT_USER_ATTRS: =home=/var/mail/${CLUSTER_DOMAIN}/%{ldap:cn},=mail=maildir:~/Maildir,=uid=5000,=gid=5000
+        DOVECOT_PASS_ATTRS: =user=%{ldap:internalMail}
+        DOVECOT_AUTH_BIND: yes
+        DOVECOT_USER_FILTER: (&(objectClass=inetOrgPerson)(internalMail=%u))
+        ENABLE_SASLAUTHD: 1
+        SASLAUTHD_MECHANISMS: ldap
+        SASLAUTHD_LDAP_FILTER: (&(objectClass=inetOrgPerson)(internalMail=%U@${CLUSTER_DOMAIN}))
       resources:
         requests:
           memory: 2Gi
