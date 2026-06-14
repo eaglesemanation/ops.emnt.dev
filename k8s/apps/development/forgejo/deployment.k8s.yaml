@@ -79,6 +79,8 @@ spec:
               value: "2222"
             - name: FORGEJO__server__SSH_SERVER_USE_PROXY_PROTOCOL
               value: "true"
+            - name: FORGEJO__repository__ENABLE_PUSH_CREATE_USER
+              value: "true"
           volumeMounts:
             - name: data
               mountPath: /var/lib/gitea
