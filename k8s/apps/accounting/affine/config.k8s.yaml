@@ -13,6 +13,7 @@ data:
   MAILER_SECURE: "true"
   MAILER_USER: affine@${CLUSTER_DOMAIN}
   MAILER_SENDER: affine@${CLUSTER_DOMAIN}
+  MAILER_SERVERNAME: affine.${CLUSTER_DOMAIN}
   OAUTH_OIDC_ISSUER: https://authentik.${CLUSTER_DOMAIN}/application/o/affine/
   OAUTH_OIDC_SCOPE: openid email profile offline_access
   OAUTH_OIDC_CLAIM_MAP_ID: preferred_username
