@@ -5,7 +5,6 @@ resources:
   - helmrelease.k8s.yaml
   - dkim-keys.sops.yaml
   - secrets.sops.yaml
-  - accounts.sops.yaml
   - secretsstore.k8s.yaml
   - config-template.k8s.yaml
   - ingress-ports.k8s.yaml

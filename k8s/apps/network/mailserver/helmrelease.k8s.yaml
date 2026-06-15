@@ -245,7 +245,3 @@ spec:
         create: false
         key: worker-controller.inc
         path: /etc/rspamd/local.d/worker-controller.inc
-      # Hardcoded accounts
-      postfix-accounts.cf:
-        create: false
-        path: postfix-accounts.cf
