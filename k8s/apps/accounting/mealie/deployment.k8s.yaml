@@ -78,6 +78,28 @@ spec:
                 secretKeyRef:
                   key: dbname
                   name: mealie-pg-app
+            - name: LDAP_AUTH_ENABLED
+              value: "True"
+            - name: LDAP_SERVER_URL
+              value: ldap://ak-outpost-authentik-ldap-outpost.authentik.svc.cluster.local
+            - name: LDAP_BASE_DN
+              value: ou=users,dc=ldap,dc=goauthentik,dc=io
+            - name: LDAP_QUERY_BIND
+              valueFrom:
+                secretKeyRef:
+                  name: ldap-account
+                  key: dn
+            - name: LDAP_QUERY_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: ldap-account
+                  key: password
+            - name: LDAP_USER_FILTER
+              value: (memberOf=cn=authentik Users,ou=groups,dc=ldap,dc=goauthentik,dc=io)
+            - name: LDAP_ADMIN_FILTER
+              value: (memberOf=cn=authentik Admins,ou=groups,dc=ldap,dc=goauthentik,dc=io)
+            - name: LDAP_ID_ATTRIBUTE
+              value: cn
             - name: OIDC_AUTH_ENABLED
               value: "True"
             - name: OIDC_CONFIGURATION_URL
