@@ -110,6 +110,8 @@ spec:
               value: Authentik
             - name: OIDC_REMEMBER_ME
               value: "True"
+            - name: OIDC_CLIENT_TIMEOUT
+              value: "None"
             - name: SMTP_HOST
               value: mail.${CLUSTER_DOMAIN}
             - name: SMTP_FROM_EMAIL
