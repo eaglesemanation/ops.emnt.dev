@@ -3,8 +3,7 @@ kind: Kustomization
 resources:
   - namespace.k8s.yaml
   - helmrelease.k8s.yaml
-  - grafana-creds.sops.yaml
-  - grafana-oidc.sops.yaml
   - alertmanager-global-config.k8s.yaml
   - telegram-creds.sops.yaml
   - prometheus-ingress.k8s.yaml
+  - grafana-datasource.k8s.yaml

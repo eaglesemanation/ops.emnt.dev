@@ -8,3 +8,4 @@ resources:
   - rabbitmq-operator.k8s.yaml
   - reflector.k8s.yaml
   - chisel.k8s.yaml
+  - grafana-operator.k8s.yaml

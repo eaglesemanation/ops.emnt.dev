@@ -2,6 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.k8s.yaml
-  - helmrelease.k8s.yaml
-  - garage-buckets.k8s.yaml
-  - grafana-datasource.k8s.yaml
+  - secrets.sops.yaml
+  - grafana.k8s.yaml

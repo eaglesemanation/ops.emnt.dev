@@ -40,60 +40,12 @@ spec:
       endpoints:
         - ${K8S_CONTROLLER_1_ADDR}
     grafana:
-      grafana.ini:
-        server:
-          root_url: https://grafana.${CLUSTER_DOMAIN}/
-        auth.basic:
-          enabled: "false"
-        auth.generic_oauth:
-          enabled: "true"
-          auto_login: "true"
-          name: authentik
-          client_id: jQ9qSWQebjh5yzXdo1LwjtMDYCrtE63MtIM4wsD7
-          scopes: openid profile email
-          auth_url: https://authentik.${CLUSTER_DOMAIN}/application/o/authorize/
-          token_url: https://authentik.${CLUSTER_DOMAIN}/application/o/token/
-          api_url: https://authentik.${CLUSTER_DOMAIN}/application/o/userinfo/
-          role_attribute_path: "contains(groups[*], 'authentik Admins') && 'Admin' || 'Viewer'"
-        auth:
-          signout_redirect_url: https://authentik.${CLUSTER_DOMAIN}/application/o/grafana/end-session/
-          disable_signout_menu: "true"
-      envFromSecrets:
-        - name: grafana-oidc
-      admin:
-        existingSecret: grafana-creds
-        userKey: username
-        passwordKey: password
-      sidecar:
-        dashboards:
-          # Workaround for Basic Auth requirement
-          skipReload: true
-        datasources:
-          # Workaround for Basic Auth requirement
-          skipReload: true
-      additionalDataSources:
-        - name: Loki
-          type: loki
-          access: proxy
-          url: http://loki-gateway.loki.svc.cluster.local
-          # TODO: Look into enabling Loki ruler component
-          manageAlerts: false
-          jsonData:
-            maxLines: 1000
-      defaultDashboardsTimezone: browser
-      ingress:
-        enabled: true
-        ingressClassName: ingress-external-traefik
-        hosts:
-          - grafana.${CLUSTER_DOMAIN}
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-      resources:
-        requests:
-          cpu: 10m
-          memory: 256Mi
-        limits:
-          memory: 1Gi
+      enabled: false
+      forceDeployDashboards: true
+      operator:
+        matchLabels:
+          app.kubernetes.io/name: grafana
+        dashboardsConfigMapRefEnabled: true
     prometheusOperator:
       resources:
         requests:
@@ -121,6 +73,19 @@ spec:
           memory: 64Mi
     prometheus:
       prometheusSpec:
+        # Disable scraping handling, Alloy is taking care of that
+        serviceMonitorSelector:
+          matchLabels:
+            prometheus-operator.emnt.dev/prevent-scraping: "false"
+        podMonitorSelector:
+          matchLabels:
+            prometheus-operator.emnt.dev/prevent-scraping: "false"
+        probeSelector:
+          matchLabels:
+            prometheus-operator.emnt.dev/prevent-scraping: "false"
+        # Instead of matching on "release: prometheus" lable just grab everything
+        ruleSelectorNilUsesHelmValues: false
+        enableRemoteWriteReceiver: true
         resources:
           requests:
             cpu: 200m

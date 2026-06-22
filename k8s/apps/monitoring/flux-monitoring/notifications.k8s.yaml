@@ -2,17 +2,6 @@
 apiVersion: notification.toolkit.fluxcd.io/v1beta3
 kind: Provider
 metadata:
-  name: grafana
-spec:
-  type: grafana
-  address: "http://prometheus-grafana.prometheus.svc.cluster.local:80/api/annotations"
-  secretRef:
-    name: grafana-creds
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/notification.toolkit.fluxcd.io/provider_v1beta2.json
-apiVersion: notification.toolkit.fluxcd.io/v1beta3
-kind: Provider
-metadata:
   name: telegram
 spec:
   type: telegram
@@ -20,20 +9,6 @@ spec:
   channel: "-1001866766512"
   secretRef:
     name: telegram-creds
----
-# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/notification.toolkit.fluxcd.io/alert_v1beta2.json
-apiVersion: notification.toolkit.fluxcd.io/v1beta3
-kind: Alert
-metadata:
-  name: grafana
-spec:
-  providerRef:
-    name: grafana
-  eventSeverity: info
-  eventSources:
-    - kind: GitRepository
-      name: '*'
-      namespace: flux-system
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/notification.toolkit.fluxcd.io/alert_v1beta2.json
 apiVersion: notification.toolkit.fluxcd.io/v1beta3
