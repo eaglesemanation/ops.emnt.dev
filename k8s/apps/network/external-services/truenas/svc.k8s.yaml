@@ -6,8 +6,8 @@ metadata:
   namespace: truenas
 spec:
   serverName: ${NAS_URL}
-  rootCAsSecrets:
-    - truenas-ca
+  rootCAs:
+    - secret: truenas-ca
 ---
 apiVersion: v1
 kind: Service
