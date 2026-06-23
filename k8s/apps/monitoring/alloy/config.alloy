@@ -66,6 +66,11 @@ local.file_match "node_logs" {
   }]
 }
 
+local.file_match "pod_logs" {
+  path_targets = discovery.relabel.pod_logs.output
+  sync_period  = "5s"
+}
+
 prometheus.operator.servicemonitors "service_monitors" {
   forward_to = [prometheus.remote_write.prometheus.receiver]
 
@@ -89,12 +94,14 @@ prometheus.remote_write "prometheus" {
 }
 
 loki.source.file "pod_logs" {
-  targets    = discovery.relabel.pod_logs.output
+  targets    = local.file_match.pod_logs.targets
+  forward_to = [loki.process.pod_logs.receiver]
+}
+
+loki.process "pod_logs" {
   forward_to = [loki.write.loki.receiver]
 
-  file_match {
-    enabled = true
-  }
+  stage.cri {}
 }
 
 loki.source.file "node_logs" {

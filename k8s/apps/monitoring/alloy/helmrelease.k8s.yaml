@@ -33,7 +33,7 @@ spec:
         privileged: true
         runAsUser: 0
       mounts:
-        dockercontainers: true
+        varlog: true
         extra:
           - name: proc
             mountPath: /proc
