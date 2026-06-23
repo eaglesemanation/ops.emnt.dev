@@ -59,11 +59,15 @@ discovery.relabel "pod_logs" {
 }
 
 local.file_match "node_logs" {
-  path_targets = [{
-      __path__  = "/var/log/syslog",
-      job       = "node/syslog",
-      node_name = sys.env("HOSTNAME"),
-  }]
+  path_targets = [
+    { __path__ = "/var/log/kubelet.log",    job = "node/kubelet",     node_name = sys.env("HOSTNAME") },
+    { __path__ = "/var/log/containerd.log", job = "node/containerd",  node_name = sys.env("HOSTNAME") },
+    { __path__ = "/var/log/kernel.log",     job = "node/kernel",      node_name = sys.env("HOSTNAME") },
+    { __path__ = "/var/log/auditd.log",     job = "node/auditd",      node_name = sys.env("HOSTNAME") },
+    { __path__ = "/var/log/machined.log",   job = "node/machined",    node_name = sys.env("HOSTNAME") },
+    { __path__ = "/var/log/apid.log",       job = "node/apid",        node_name = sys.env("HOSTNAME") },
+    { __path__ = "/var/log/cri.log",        job = "node/cri",         node_name = sys.env("HOSTNAME") },
+  ]
 }
 
 local.file_match "pod_logs" {
