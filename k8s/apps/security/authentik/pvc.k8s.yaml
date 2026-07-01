@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: authentik-avatars
+  namespace: authentik
+spec:
+  accessModes:
+    - ReadWriteOncePod
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: freenas-api-iscsi-csi

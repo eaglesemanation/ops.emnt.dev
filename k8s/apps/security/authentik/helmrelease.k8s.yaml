@@ -32,7 +32,26 @@ spec:
         from: authentik@${CLUSTER_DOMAIN}
         username: authentik@${CLUSTER_DOMAIN}
         password: file:///authentik-secrets/email_password
+    global:
+      volumes:
+        - name: postgres-creds
+          secret:
+            secretName: authentik-pg-app
+        - name: authentik-secrets
+          secret:
+            secretName: secrets-authentik
+      volumeMounts:
+        - name: postgres-creds
+          mountPath: /postgres-creds
+          readOnly: true
+        - name: authentik-secrets
+          mountPath: /authentik-secrets
+          readOnly: true
+      securityContext:
+        fsGroup: 1000
     server:
+      deploymentStrategy:
+        type: Recreate
       metrics:
         serviceMonitor:
           enabled: true
@@ -45,19 +64,12 @@ spec:
         limits:
           memory: 1Gi
       volumes:
-        - name: postgres-creds
-          secret:
-            secretName: authentik-pg-app
-        - name: authentik-secrets
-          secret:
-            secretName: secrets-authentik
+        - name: avatars
+          persistentVolumeClaim:
+            claimName: authentik-avatars
       volumeMounts:
-        - name: postgres-creds
-          mountPath: /postgres-creds
-          readOnly: true
-        - name: authentik-secrets
-          mountPath: /authentik-secrets
-          readOnly: true
+        - name: avatars
+          mountPath: /data/media/public/user-avatars
     worker:
       resources:
         requests:
@@ -67,20 +79,6 @@ spec:
           memory: 1Gi
       livenessProbe:
         initialDelaySeconds: 60
-      volumes:
-        - name: postgres-creds
-          secret:
-            secretName: authentik-pg-app
-        - name: authentik-secrets
-          secret:
-            secretName: secrets-authentik
-      volumeMounts:
-        - name: postgres-creds
-          mountPath: /postgres-creds
-          readOnly: true
-        - name: authentik-secrets
-          mountPath: /authentik-secrets
-          readOnly: true
     prometheus:
       rules:
         enabled: true
