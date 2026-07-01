@@ -34,6 +34,7 @@ spec:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
         fsGroup: 1000
       hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: jellyfin
           image: docker.io/linuxserver/jellyfin:10.11.8
