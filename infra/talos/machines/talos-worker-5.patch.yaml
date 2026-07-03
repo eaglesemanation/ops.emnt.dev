@@ -7,14 +7,8 @@ machine:
     vm.nr_hugepages: 1024
 ---
 apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: eth0
-selector:
-    match: mac(link.permanent_addr) == "b8:85:84:bb:cb:6f"
----
-apiVersion: v1alpha1
 kind: LinkConfig
-name: eth0
+name: enp1s0
 up: true
 addresses:
   - address: 192.168.25.115/24
