@@ -9,3 +9,4 @@ resources:
   - reflector.k8s.yaml
   - chisel.k8s.yaml
   - grafana-operator.k8s.yaml
+  - kubelet-csr-approver.k8s.yaml

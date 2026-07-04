@@ -3,14 +3,8 @@ machine:
     disk: /dev/vda
 ---
 apiVersion: v1alpha1
-kind: LinkAliasConfig
-name: eth0
-selector:
-    match: mac(link.permanent_addr) == "00:a0:98:6f:39:a1"
----
-apiVersion: v1alpha1
 kind: LinkConfig
-name: eth0
+name: ens3
 up: true
 addresses:
   - address: 192.168.25.101/24

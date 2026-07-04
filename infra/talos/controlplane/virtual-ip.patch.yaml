@@ -1,4 +1,4 @@
 apiVersion: v1alpha1
 kind: Layer2VIPConfig
 name: 192.168.25.100
-link: eth0
+link: ens3
