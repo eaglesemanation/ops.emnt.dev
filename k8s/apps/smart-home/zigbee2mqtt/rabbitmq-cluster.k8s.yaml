@@ -16,6 +16,7 @@ spec:
       memory: 256Mi
     limits:
       memory: 512Mi
+  image: docker.io/library/rabbitmq:4.3.2
   rabbitmq:
     additionalPlugins:
       - rabbitmq_mqtt
