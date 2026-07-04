@@ -37,10 +37,12 @@ spec:
             - name: data
               mountPath: /data
         - name: avahi
-          image: docker.io/ydkn/avahi:362
+          image: docker.io/flungo/avahi@sha256:98fac3e2ed9d65cc88cd93aa873ee24f84ba9d050b2b7b0c551de3e7544182eb
           env:
-            - name: ALLOW_INTERFACES
-              value: eth0
+            - name: SERVER_ALLOW_INTERFACES
+              value: enp1s0,ens3
+            - name: SERVER_HOST_NAME
+              value: escapepod
           ports:
             - name: mdns
               protocol: UDP
