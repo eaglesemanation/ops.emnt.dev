@@ -71,6 +71,8 @@ spec:
               value: "false"
             - name: FORGEJO__oauth2_client__ENABLE_AUTO_REGISTRATION
               value: "true"
+            - name: FORGEJO__oauth2_client__UPDATE_AVATAR
+              value: "true"
             - name: FORGEJO__oauth2_client__ACCOUNT_LINKING
               value: auto
             - name: FORGEJO__server__SSH_PORT
