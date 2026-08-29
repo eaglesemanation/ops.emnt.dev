@@ -8,7 +8,7 @@ spec:
   instances: 1
   storage:
     storageClass: freenas-api-iscsi-csi
-    size: 10Gi
+    size: 11Gi
   postgresql:
     parameters:
       pgaudit.log: "all, -misc"

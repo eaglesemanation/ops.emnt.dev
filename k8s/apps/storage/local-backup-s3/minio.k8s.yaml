@@ -72,6 +72,35 @@ spec:
             - ALL
         seccompProfile:
           type: RuntimeDefault
+    - servers: 4
+      name: pool-5
+      volumesPerServer: 2
+      resources:
+        requests:
+          cpu: 10m
+          memory: 512Mi
+        limits:
+          memory: 2Gi
+      volumeClaimTemplate:
+        metadata:
+          name: data
+        spec:
+          storageClassName: freenas-api-iscsi-s3-csi
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 150Gi
+      containerSecurityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+        allowPrivilegeEscalation: false
+        capabilities:
+          drop:
+            - ALL
+        seccompProfile:
+          type: RuntimeDefault
 ---
 # yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/external-secrets.io/externalsecret_v1.json
 apiVersion: external-secrets.io/v1

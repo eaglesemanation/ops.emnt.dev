@@ -8,7 +8,7 @@ machine:
 ---
 apiVersion: v1alpha1
 kind: LinkConfig
-name: enp1s0
+name: enp0s31f6
 up: true
 addresses:
   - address: 192.168.25.113/24
