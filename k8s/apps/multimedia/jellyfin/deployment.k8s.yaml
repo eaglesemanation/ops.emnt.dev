@@ -33,6 +33,7 @@ spec:
       securityContext:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
         fsGroup: 1000
+        fsGroupChangePolicy: OnRootMismatch
       hostNetwork: true
       dnsPolicy: ClusterFirstWithHostNet
       containers:
