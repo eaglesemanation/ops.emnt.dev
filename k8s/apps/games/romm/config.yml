@@ -11,3 +11,7 @@ emulatorjs:
       - urls: "turn:openrelay.metered.ca:443"
         username: "openrelayproject"
         credential: "openrelayproject"
+filesystem:
+  structure:
+    default: "roms/{platform}/{game}"
+    firmware: "bios/{platform}"
