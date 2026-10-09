@@ -23,7 +23,7 @@ spec:
   values:
     image:
       repository: docker.io/itzg/mc-proxy
-      tag: 2025.10.0
+      tag: 2026.10.0
     serviceAccountName: velocity-account
     extraVolumes:
       - volumeMounts:
