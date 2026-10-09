@@ -99,17 +99,16 @@ spec:
           honorLabels: true
           additionalLabels:
             release: prometheus
-    logs:
-      general:
-        format: json
-        level: DEBUG
-      access:
-        format: json
-        enabled: true
-        fields:
-          headers:
-            names:
-              RequestHost: keep
+    log:
+      format: json
+      level: DEBUG
+    accessLog:
+      format: json
+      enabled: true
+      fields:
+        headers:
+          names:
+            RequestHost: keep
     ports:
       web:
         http:
