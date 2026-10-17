@@ -31,13 +31,17 @@ spec:
     - name: find-containers
       script:
         image: docker.io/library/alpine:3.22
+        securityContext:
+          runAsNonRoot: false
+          runAsUser: 0
+          readOnlyRootFilesystem: false
         command: [sh]
 
         source: |
           #!/bin/sh
           set -eu
 
-          apk add --no-cache git jq
+          apk add --no-cache git jq >/dev/null
 
           BEFORE="{{workflow.parameters.before}}"
           AFTER="{{workflow.parameters.after}}"

@@ -26,16 +26,34 @@ spec:
   templates:
     - name: build
       inputs:
-        artifacts:
-          - name: source
-            path: /workspace
-            git:
-              repo: https://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git
-              revision: "{{workflow.parameters.revision}}"
+        parameters:
+          - name: container
+            value: "{{workflow.parameters.container}}"
+          - name: revision
+            value: "{{workflow.parameters.revision}}"
 
-      script:
-        image: docker.io/moby/buildkit:rootless
-        command: [sh]
+      container:
+        image: ghcr.io/osscontainertools/kaniko:latest
+        command: ["/kaniko/executor"]
+        securityContext:
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+          runAsNonRoot: false
+          capabilities:
+            drop:
+              - ALL
+            add:
+              - CHOWN
+              - SETUID
+              - SETGID
+              - FOWNER
+              - DAC_OVERRIDE
+        args:
+          - "--context=git://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git#refs/heads/main#{{inputs.parameters.revision}}"
+          - "--context-sub-path=k8s/containers/{{inputs.parameters.container}}/"
+          - "--dockerfile=Containerfile"
+          - "--destination=forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:{{inputs.parameters.revision}}"
+          - "--destination=forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:latest"
 
         resources:
           requests:
@@ -45,54 +63,11 @@ spec:
             memory: "8Gi"
             cpu: "4"
 
-        securityContext:
-          runAsNonRoot: true
-          runAsUser: 1000
-          runAsGroup: 1000
-          allowPrivilegeEscalation: false
-          seccompProfile:
-            type: Unconfined
-
-        env:
-          - name: DOCKER_CONFIG
-            value: /docker-config
-
-        source: |
-          #!/bin/sh
-          set -eux
-
-          CONTAINER="{{workflow.parameters.container}}"
-          REVISION="{{workflow.parameters.revision}}"
-
-          CONTEXT="/workspace/k8s/containers/$CONTAINER"
-          IMAGE="forgejo.${CLUSTER_DOMAIN}/public/$CONTAINER"
-
-          test -d "$CONTEXT"
-          test -f "$CONTEXT/Containerfile"
-
-          echo "Building $IMAGE:$REVISION"
-
-          buildctl-daemonless.sh build \
-            --frontend dockerfile.v0 \
-            --local context="$CONTEXT" \
-            --local dockerfile="$CONTEXT" \
-            --opt filename=Containerfile \
-            --output "type=image,name=$IMAGE:$REVISION,push=true"
-
-          buildctl-daemonless.sh build \
-            --frontend dockerfile.v0 \
-            --local context="$CONTEXT" \
-            --local dockerfile="$CONTEXT" \
-            --opt filename=Containerfile \
-            --output "type=image,name=$IMAGE:latest,push=true"
-
         volumeMounts:
           - name: docker-config
-            mountPath: /docker-config
+            mountPath: /kaniko/.docker/config.json
+            subPath: config.json
             readOnly: true
-
-          - name: buildkitd
-            mountPath: /home/user/.local/share/buildkit
 
       volumes:
         - name: docker-config
@@ -102,5 +77,3 @@ spec:
               - key: authfile.json
                 path: config.json
 
-        - name: buildkitd
-          emptyDir: {}
