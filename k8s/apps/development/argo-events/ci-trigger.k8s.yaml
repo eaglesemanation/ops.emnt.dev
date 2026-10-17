@@ -38,6 +38,10 @@ spec:
                 generateName: build-changed-containers-
                 namespace: argo-workflows
               spec:
+                arguments:
+                parameters:
+                  - name: before
+                  - name: after
                 workflowTemplateRef:
                   name: build-changed-containers
       parameters:
