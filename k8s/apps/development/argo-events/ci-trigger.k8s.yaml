@@ -38,12 +38,14 @@ spec:
                 generateName: build-changed-containers-
                 namespace: argo-workflows
               spec:
+                workflowTemplateRef:
+                  name: build-changed-containers
                 arguments:
                   parameters:
                     - name: before
+                      value: ""
                     - name: after
-                workflowTemplateRef:
-                  name: build-changed-containers
+                      value: ""
       parameters:
         - src:
             dependencyName: forgejo-push
