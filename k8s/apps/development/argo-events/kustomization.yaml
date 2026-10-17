@@ -12,3 +12,4 @@ resources:
   - ingress.k8s.yaml
   - workflow-sa.k8s.yaml
   - flux-reconcile.k8s.yaml
+  - ci-trigger.k8s.yaml
