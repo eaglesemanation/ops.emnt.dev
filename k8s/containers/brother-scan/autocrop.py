@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Normalise a flatbed scan to a standard portrait page size, in place.
+"""
+Normalise a flatbed scan to a standard portrait page size, in place.
 
 Usage: autocrop.py <png file> <dpi> [size]
 
