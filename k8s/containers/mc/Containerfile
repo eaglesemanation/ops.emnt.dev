@@ -1,0 +1,13 @@
+FROM docker.io/library/debian:trixie-slim
+
+LABEL org.opencontainers.image.source="https://forgejo.emnt.dev/public/ops.emnt.dev" \
+      org.opencontainers.image.licenses="MIT"
+
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends minio-client && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN ln -s /usr/bin/minio-client /usr/local/bin/mc
+
+ENTRYPOINT ["mc"]
+CMD ["--help"]

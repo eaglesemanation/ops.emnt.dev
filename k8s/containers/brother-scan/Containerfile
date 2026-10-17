@@ -1,4 +1,4 @@
-FROM docker.io/library/debian:12-slim
+FROM docker.io/library/debian:trixie-slim
 
 LABEL org.opencontainers.image.source="https://forgejo.emnt.dev/public/ops.emnt.dev" \
       org.opencontainers.image.licenses="MIT"
