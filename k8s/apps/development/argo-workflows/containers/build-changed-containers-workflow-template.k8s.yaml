@@ -1,0 +1,91 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/workflowtemplate_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: build-changed-containers
+  namespace: argo-workflows
+spec:
+  entrypoint: build-changed
+  serviceAccountName: argo-workflows
+  arguments:
+    parameters:
+      - name: before
+      - name: after
+  templates:
+    - name: build-changed
+      steps:
+        - - name: find-containers
+            template: find-containers
+        - - name: build
+            templateRef:
+              name: build-container
+              template: build
+            arguments:
+              parameters:
+                - name: container
+                  value: "{{item}}"
+                - name: revision
+                  value: "{{workflow.parameters.after}}"
+            withParam: "{{steps.find-containers.outputs.result}}"
+
+    - name: find-containers
+      script:
+        image: docker.io/library/alpine:3.22
+        command: [sh]
+
+        source: |
+          #!/bin/sh
+          set -eu
+
+          apk add --no-cache git jq
+
+          BEFORE="{{workflow.parameters.before}}"
+          AFTER="{{workflow.parameters.after}}"
+
+          git clone \
+            --filter=blob:none \
+            --no-checkout \
+            https://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git \
+            /workspace
+
+          cd /workspace
+
+          if [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              FILES="$(
+                  git diff-tree \
+                    --root \
+                    --no-commit-id \
+                    --name-only \
+                    -r \
+                    "$AFTER" \
+                    -- \
+                    k8s/containers/
+              )"
+          else
+              git fetch origin "$BEFORE"
+
+              FILES="$(
+                  git diff \
+                    --name-only \
+                    "$BEFORE" \
+                    "$AFTER" \
+                    -- \
+                    k8s/containers/
+              )"
+          fi
+
+          printf '%s\n' "$FILES" |
+              cut -d/ -f3 |
+              sort -u |
+              while read -r container; do
+                  [ -n "$container" ] || continue
+
+                  # Only build containers that still have a Containerfile
+                  # at the target revision.
+                  if git cat-file -e \
+                      "$AFTER:k8s/containers/$container/Containerfile" \
+                      2>/dev/null; then
+                      printf '%s\n' "$container"
+                  fi
+              done |
+              jq -R -s 'split("\n") | map(select(length > 0))'

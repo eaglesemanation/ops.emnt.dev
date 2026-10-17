@@ -14,3 +14,4 @@ resources:
   - nixos-deploy
   - renovate
   - nix-containers
+  - containers

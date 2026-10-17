@@ -1,0 +1,106 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/workflowtemplate_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: build-container
+  namespace: argo-workflows
+spec:
+  entrypoint: build
+  serviceAccountName: argo-workflows
+
+  arguments:
+    parameters:
+      - name: container
+      - name: revision
+
+  retryStrategy:
+    limit: 2
+    retryPolicy: Always
+    backoff:
+      duration: 30s
+      factor: 2
+
+  podSpecPatch: |
+    restartPolicy: Never
+
+  templates:
+    - name: build
+      inputs:
+        artifacts:
+          - name: source
+            path: /workspace
+            git:
+              repo: https://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git
+              revision: "{{workflow.parameters.revision}}"
+
+      script:
+        image: docker.io/moby/buildkit:rootless
+        command: [sh]
+
+        resources:
+          requests:
+            memory: "2Gi"
+            cpu: "1"
+          limits:
+            memory: "8Gi"
+            cpu: "4"
+
+        securityContext:
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+          allowPrivilegeEscalation: false
+          seccompProfile:
+            type: Unconfined
+
+        env:
+          - name: DOCKER_CONFIG
+            value: /docker-config
+
+        source: |
+          #!/bin/sh
+          set -eux
+
+          CONTAINER="{{workflow.parameters.container}}"
+          REVISION="{{workflow.parameters.revision}}"
+
+          CONTEXT="/workspace/k8s/containers/$CONTAINER"
+          IMAGE="forgejo.${CLUSTER_DOMAIN}/public/$CONTAINER"
+
+          test -d "$CONTEXT"
+          test -f "$CONTEXT/Containerfile"
+
+          echo "Building $IMAGE:$REVISION"
+
+          buildctl-daemonless.sh build \
+            --frontend dockerfile.v0 \
+            --local context="$CONTEXT" \
+            --local dockerfile="$CONTEXT" \
+            --opt filename=Containerfile \
+            --output "type=image,name=$IMAGE:$REVISION,push=true"
+
+          buildctl-daemonless.sh build \
+            --frontend dockerfile.v0 \
+            --local context="$CONTEXT" \
+            --local dockerfile="$CONTEXT" \
+            --opt filename=Containerfile \
+            --output "type=image,name=$IMAGE:latest,push=true"
+
+        volumeMounts:
+          - name: docker-config
+            mountPath: /docker-config
+            readOnly: true
+
+          - name: buildkitd
+            mountPath: /home/user/.local/share/buildkit
+
+      volumes:
+        - name: docker-config
+          secret:
+            secretName: nix-containers-authfile
+            items:
+              - key: authfile.json
+                path: config.json
+
+        - name: buildkitd
+          emptyDir: {}

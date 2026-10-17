@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: ci-trigger
+  namespace: argo-events
+spec:
+  serviceAccountName: operate-workflow-sa
+  eventBusName: bus
+  dependencies:
+    - name: forgejo-push
+      eventSourceName: forgejo
+      eventName: forgejo
+      filters:
+        data:
+          - path: headers.X-Forgejo-Event
+            type: string
+            value:
+              - push
+          - path: body.repository.full_name
+            type: string
+            value:
+              - public/ops.${CLUSTER_DOMAIN}
+          - path: body.ref
+            type: string
+            value:
+              - refs/heads/main
+  triggers:
+    - template:
+        name: build-containers
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: build-changed-containers-
+                namespace: argo-workflows
+              spec:
+                workflowTemplateRef:
+                  name: build-changed-containers
+      parameters:
+        - src:
+            dependencyName: forgejo-push
+            dataKey: body.before
+          dest: spec.arguments.parameters.0.value
+        - src:
+            dependencyName: forgejo-push
+            dataKey: body.after
+          dest: spec.arguments.parameters.1.value
