@@ -1,0 +1,25 @@
+FROM docker.io/library/debian:12-slim
+
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    sane-utils netbase wget ca-certificates procps img2pdf python3-pil \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN wget -O /tmp/brscan4.deb \
+    https://download.brother.com/welcome/dlf105200/brscan4-0.4.11-1.amd64.deb \
+    && wget -O /tmp/brscan-skey.deb \
+    https://download.brother.com/welcome/dlf006652/brscan-skey-0.3.5-0.amd64.deb \
+    && dpkg -i --force-all /tmp/brscan4.deb /tmp/brscan-skey.deb \
+    && rm /tmp/*.deb
+
+COPY brscan-skey.config /opt/brother/scanner/brscan-skey/brscan-skey.config
+COPY scan-to-paperless.sh /opt/brother/scanner/brscan-skey/script/scan-to-paperless.sh
+COPY autocrop.py /usr/local/bin/autocrop.py
+COPY to_jpeg.py /usr/local/bin/to_jpeg.py
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /opt/brother/scanner/brscan-skey/script/scan-to-paperless.sh \
+             /usr/local/bin/autocrop.py /usr/local/bin/to_jpeg.py /entrypoint.sh
+
+ENV CONSUME_DIR=/consume \
+    SCAN_RESOLUTION=300
+
+ENTRYPOINT ["/entrypoint.sh"]
