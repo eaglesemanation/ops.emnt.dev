@@ -4,7 +4,8 @@ metadata:
   name: ci-trigger
   namespace: argo-events
 spec:
-  serviceAccountName: operate-workflow-sa
+  template:
+    serviceAccountName: operate-workflow-sa
   eventBusName: bus
   dependencies:
     - name: forgejo-push

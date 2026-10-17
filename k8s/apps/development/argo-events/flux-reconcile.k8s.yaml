@@ -4,7 +4,8 @@ metadata:
   name: flux-reconcile-on-push
   namespace: argo-events
 spec:
-  serviceAccountName: operate-workflow-sa
+  template:
+    serviceAccountName: operate-workflow-sa
   eventBusName: bus
   dependencies:
     - name: push-event
