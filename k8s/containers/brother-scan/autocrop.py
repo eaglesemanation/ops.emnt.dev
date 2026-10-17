@@ -33,7 +33,8 @@ DEFAULT_NAME = "Letter"  # used when the page looks blank
 
 MARGIN_MM = 8.0  # keep at least this much space beyond the content
 WHITE_BELOW = 225  # pixels darker than this (0-255) count as content
-EDGE_IGNORE_MM = 6.0  # ignore this border on the left, right and bottom: the scanner's own edge shadows must not count as content
+EDGE_IGNORE_MM = 6.0  # ignore this border on the left, right and bottom: the
+# scanner's own edge shadows must not count as content
 
 # Threshold lookup table: one entry per grey level
 THRESHOLD = [255 if level < WHITE_BELOW else 0 for level in range(256)]
