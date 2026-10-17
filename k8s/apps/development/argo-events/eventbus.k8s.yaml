@@ -9,10 +9,6 @@ spec:
     # Lookup newer versions here: https://github.com/argoproj/argo-events/blob/master/manifests/base/controller-manager/controller-config.yaml
     # TODO: Add renovate handling
     version: 2.10.29
-    persistence:
-      storageClassName: freenas-api-iscsi-csi
-      accessMode: ReadWriteOnce
-      volumeSize: 10Gi
     streamConfig: |
       maxAge: 24h
     settings: |
