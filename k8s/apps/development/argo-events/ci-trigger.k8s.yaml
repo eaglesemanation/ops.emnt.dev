@@ -12,7 +12,7 @@ spec:
       eventName: forgejo
       filters:
         data:
-          - path: headers.X-Forgejo-Event
+          - path: header.X-Forgejo-Event
             type: string
             value:
               - push
