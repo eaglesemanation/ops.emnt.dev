@@ -1,6 +1,7 @@
 FROM docker.io/library/debian:12-slim
 
-LABEL org.opencontainers.image.source="https://forgejo.emnt.dev/public/ops.emnt.dev"
+LABEL org.opencontainers.image.source="https://forgejo.emnt.dev/public/ops.emnt.dev" \
+      org.opencontainers.image.licenses="MIT"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
     sane-utils netbase wget ca-certificates procps img2pdf python3-pil \
