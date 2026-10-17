@@ -4,6 +4,7 @@ resources:
   - namespace.k8s.yaml
   - flux-kustomization.k8s.yaml
   - eventbus.k8s.yaml
+  - forgejo-source.k8s.yaml
   - github-source.k8s.yaml
   - github-pat.sops.yaml
   - webhook-secrets.k8s.yaml
