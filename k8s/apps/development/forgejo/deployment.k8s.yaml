@@ -83,6 +83,8 @@ spec:
               value: "true"
             - name: FORGEJO__repository__ENABLE_PUSH_CREATE_USER
               value: "true"
+            - name: FORGEJO__webhook__ALLOWED_HOST_LIST
+              value: private,*.cluster.local
           volumeMounts:
             - name: data
               mountPath: /var/lib/gitea
