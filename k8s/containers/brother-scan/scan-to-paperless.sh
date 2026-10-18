@@ -47,6 +47,11 @@ ts=$(date +%Y%m%d-%H%M%S)
 work=$(mktemp -d /tmp/scan-XXXXXX)
 trap 'rm -rf "$work"' EXIT
 
+# brscan4 has an initialization quirk when invoked from brscan-skey:
+# explicitly enumerate devices first, otherwise sane_open() can return
+# EINVAL for the otherwise-valid network device.
+scanimage -L >/dev/null 2>&1 || true
+
 echo "[$(date)] scan requested via '$MODE' on $DEVICE (page size: $PAGE_SIZE)"
 timeout "$TIMEOUT" scanimage -d "$DEVICE" --resolution "$RES" --format=png \
 	--batch="$work/p%03d.png"
