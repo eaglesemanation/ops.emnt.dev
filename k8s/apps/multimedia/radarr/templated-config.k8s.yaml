@@ -34,6 +34,8 @@ spec:
             <PostgresPassword>{{ .postgres_password | replace "&" "&amp;" | replace "'" "&apos;" | replace "<" "&lt;" | replace ">" "&gt;" | replace "\"" "&quot;" }}</PostgresPassword>
             <PostgresPort>{{ .postgres_port }}</PostgresPort>
             <PostgresHost>{{ .postgres_host }}</PostgresHost>
+            <AllowedHosts></AllowedHosts>
+            <TrustedNetworks></TrustedNetworks>
           </Config>
   data:
     - secretKey: api_key
