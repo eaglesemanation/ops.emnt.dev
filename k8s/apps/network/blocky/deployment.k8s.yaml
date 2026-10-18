@@ -106,7 +106,7 @@ spec:
               weight: 100
       containers:
         - name: unbound
-          image: docker.io/klutchell/unbound:1.25.0
+          image: docker.io/klutchell/unbound:v1.26.1
           resources:
             requests:
               cpu: 10m
