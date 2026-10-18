@@ -25,6 +25,18 @@ spec:
             type: string
             value:
               - refs/heads/main
+          - path: "[body.commits.#.[added,modified].@flatten].@flatten.@flatten"
+            type: bool
+            value:
+              - "true"
+            template: >-
+              {{- $matched := false -}}
+              {{- range .Input | fromJson -}}
+                  {{- if regexMatch `^k8s/containers/` . -}}
+                      {{- $matched = true -}}
+                  {{- end -}}
+              {{- end -}}
+              {{- $matched -}}
   triggers:
     - template:
         name: build-containers

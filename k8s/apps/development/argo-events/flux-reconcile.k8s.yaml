@@ -8,19 +8,35 @@ spec:
     serviceAccountName: operate-workflow-sa
   eventBusName: bus
   dependencies:
-    - name: push-event
-      eventSourceName: github
-      eventName: emnt
+    - name: forgejo-push
+      eventSourceName: forgejo
+      eventName: forgejo
       filters:
         data:
-          - path: headers.X-Github-Event
+          - path: header.X-Forgejo-Event
             type: string
             value:
               - push
+          - path: body.repository.full_name
+            type: string
+            value:
+              - public/ops.${CLUSTER_DOMAIN}
           - path: body.ref
             type: string
             value:
               - refs/heads/main
+          - path: "[body.commits.#.[added,removed,modified].@flatten].@flatten.@flatten"
+            type: bool
+            value:
+              - "true"
+            template: >-
+              {{- $matched := false -}}
+              {{- range .Input | fromJson -}}
+                  {{- if or (regexMatch `^k8s/apps/` .) (regexMatch `^k8s/flux` .) -}}
+                      {{- $matched = true -}}
+                  {{- end -}}
+              {{- end -}}
+              {{- $matched -}}
   triggers:
     - template:
         name: patch-git-repository
