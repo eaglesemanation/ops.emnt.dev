@@ -27,6 +27,7 @@ spec:
             <LogLevel>info</LogLevel>
             <SslCertPath></SslCertPath>
             <SslCertPassword></SslCertPassword>
+            <TrustedNetworks></TrustedNetworks>
             <UrlBase></UrlBase>
             <InstanceName>Prowlarr</InstanceName>
             <UpdateMechanism>Docker</UpdateMechanism>
