@@ -21,7 +21,7 @@ spec:
       hostNetwork: true
       containers:
         - name: brother-scan
-          image: forgejo.emnt.dev/public/brother-scan:b8e2aa0f7b6fdaa81edf9564822a0cf6e92a022e
+          image: forgejo.emnt.dev/public/brother-scan:6383627a553f4aeb688d0f241bcb89a15294804c
           envFrom:
             - secretRef:
                 name: printer-secrets
