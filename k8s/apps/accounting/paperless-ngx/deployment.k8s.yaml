@@ -1,0 +1,134 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: paperless-ngx
+  namespace: paperless-ngx
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate # RWO volumes, single instance
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: paperless-ngx
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: paperless-ngx
+    spec:
+      containers:
+        - name: paperless-ngx
+          image: ghcr.io/paperless-ngx/paperless-ngx:3.3.2
+          ports:
+            - name: http
+              containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: paperless-config
+            - secretRef:
+                name: paperless-secret-key
+          env:
+            - name: PAPERLESS_DBUSER
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-pg-app
+                  key: username
+            - name: PAPERLESS_DBPASS
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-pg-app
+                  key: password
+            - name: PAPERLESS_DBNAME
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-pg-app
+                  key: dbname
+            - name: PAPERLESS_DBHOST
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-pg-app
+                  key: host
+            - name: PAPERLESS_DBPORT
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-pg-app
+                  key: port
+            - name: OIDC_SLUG
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-oidc
+                  key: slug
+            - name: OIDC_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-oidc
+                  key: client_id
+            - name: OIDC_CLIENT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: paperless-ngx-oidc
+                  key: client_secret
+            - name: PAPERLESS_SOCIALACCOUNT_PROVIDERS
+              value: >-
+                {
+                  "openid_connect": {
+                    "OAUTH_PKCE_ENABLED": true,
+                    "SCOPE": ["openid", "profile", "email"],
+                    "APPS": [{
+                      "provider_id": "authentik",
+                      "name": "Authentik",
+                      "client_id": "$(OIDC_CLIENT_ID)",
+                      "secret": "$(OIDC_CLIENT_SECRET)",
+                      "settings": {
+                        "fetch_userinfo": true,
+                        "server_url": "https://authentik.${CLUSTER_DOMAIN}/application/o/$(OIDC_SLUG)/.well-known/openid-configuration"
+                      }
+                    }]
+                  }
+                }
+            - name: PAPERLESS_LOGOUT_REDIRECT_URL
+              value: https://authentik.${CLUSTER_DOMAIN}/application/o/$(OIDC_SLUG)/end-session/
+          volumeMounts:
+            - name: data
+              mountPath: /usr/src/paperless/data
+            - name: media
+              mountPath: /usr/src/paperless/media
+            - name: export
+              mountPath: /usr/src/paperless/export
+            - name: consume
+              mountPath: /usr/src/paperless/consume
+          startupProbe:
+            tcpSocket:
+              port: http
+            periodSeconds: 10
+            failureThreshold: 60 # up to 10 min for first-run migrations
+          readinessProbe:
+            httpGet:
+              path: /accounts/login/
+              port: http
+            periodSeconds: 15
+            timeoutSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /accounts/login/
+              port: http
+            periodSeconds: 30
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 250m
+              memory: 1Gi
+            limits:
+              memory: 3Gi
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: data
+        - name: media
+          persistentVolumeClaim:
+            claimName: media
+        - name: export
+          persistentVolumeClaim:
+            claimName: export
+        - name: consume
+          persistentVolumeClaim:
+            claimName: consume

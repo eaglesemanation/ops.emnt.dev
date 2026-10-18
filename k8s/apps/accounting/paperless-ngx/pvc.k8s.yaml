@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: data
+  namespace: paperless-ngx
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: freenas-api-iscsi-csi
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: media
+  namespace: paperless-ngx
+spec:
+  accessModes: ["ReadWriteOnce"]
+  storageClassName: freenas-api-iscsi-csi
+  resources:
+    requests:
+      storage: 20Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: consume
+  namespace: paperless-ngx
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: freenas-api-smb-csi
+  resources:
+    requests:
+      storage: 5Gi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: export
+  namespace: paperless-ngx
+spec:
+  accessModes: ["ReadWriteMany"]
+  storageClassName: freenas-api-smb-csi
+  resources:
+    requests:
+      storage: 5Gi
+

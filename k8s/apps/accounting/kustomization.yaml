@@ -6,3 +6,4 @@ resources:
   - binner.k8s.yaml
   - mealie.k8s.yaml
   - gramps-web.k8s.yaml
+  - paperless-ngx.k8s.yaml

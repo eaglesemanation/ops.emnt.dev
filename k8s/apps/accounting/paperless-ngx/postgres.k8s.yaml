@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/postgresql.cnpg.io/cluster_v1.json
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: paperless-ngx-pg
+  namespace: paperless-ngx
+spec:
+  instances: 1
+  storage:
+    storageClass: freenas-api-iscsi-csi
+    size: 10Gi
+  bootstrap:
+    initdb:
+      database: paperless-ngx
+      owner: paperless-ngx
+
