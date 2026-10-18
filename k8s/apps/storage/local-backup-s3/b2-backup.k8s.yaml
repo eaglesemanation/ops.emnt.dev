@@ -24,7 +24,7 @@ spec:
           serviceAccountName: mc-job-sa
           containers:
             - name: mc
-              image: docker.io/minio/mc:RELEASE.2024-06-20T14-50-54Z
+              image: forgejo.emnt.dev/public/mc:latest
               command: ["sh", "/tmp/backup.sh"]
               env:
                 - name: MC_HOST_local-backup-s3
