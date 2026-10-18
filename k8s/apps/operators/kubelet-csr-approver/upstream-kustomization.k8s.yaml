@@ -46,3 +46,5 @@ spec:
                       value: ^talos-(worker|controlplane)-\d+$
                     - name: PROVIDER_IP_PREFIXES
                       value: "${LOCAL_CIDR}"
+                    - name: BYPASS_DNS_RESOLUTION
+                      value: "true"
