@@ -23,6 +23,22 @@ spec:
       securityContext:
         fsGroup: 1000
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
+      initContainers:
+        - name: config
+          image: docker.io/library/busybox:1.37
+          command:
+            - sh
+            - -c
+            - |
+              cp /config-source/config.xml /config/config.xml
+              chown 1000:1000 /config/config.xml
+              chmod 600 /config/config.xml
+          volumeMounts:
+            - name: data
+              mountPath: /config
+            - name: config
+              mountPath: /config-source
+              readOnly: true
       containers:
         - name: radarr
           image: docker.io/linuxserver/radarr:6.4.4
@@ -58,9 +74,6 @@ spec:
               mountPath: /multimedia
             - name: data
               mountPath: /config
-            - name: config
-              mountPath: /config/config.xml
-              subPath: config.xml
           ports:
             - name: http
               containerPort: 7878
