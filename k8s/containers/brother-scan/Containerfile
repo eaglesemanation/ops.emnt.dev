@@ -4,7 +4,7 @@ LABEL org.opencontainers.image.source="https://forgejo.emnt.dev/public/ops.emnt.
       org.opencontainers.image.licenses="MIT"
 
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    sane-utils netbase wget ca-certificates procps img2pdf python3-pil \
+    sane-utils netbase wget ca-certificates procps img2pdf python3-pil curl \
     && rm -rf /var/lib/apt/lists/*
 
 RUN wget -O /tmp/brscan4.deb \
