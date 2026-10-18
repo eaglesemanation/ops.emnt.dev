@@ -13,3 +13,5 @@ resources:
   - valkey.k8s.yaml
   - gotenberg.k8s.yaml
   - tika.k8s.yaml
+  - brother-scan.k8s.yaml
+  - printer-secrets.sops.yaml

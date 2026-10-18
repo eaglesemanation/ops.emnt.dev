@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: brother-scan
+  namespace: paperless-ngx
+  labels:
+    app.kubernetes.io/name: brother-scan
+    app.kubernetes.io/instance: brother-scan
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: brother-scan
+      app.kubernetes.io/instance: brother-scan
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: brother-scan
+        app.kubernetes.io/instance: brother-scan
+    spec:
+      hostNetwork: true
+      containers:
+        - name: brother-scan
+          image: forgejo.emnt.dev/public/brother-scan:b8e2aa0f7b6fdaa81edf9564822a0cf6e92a022e
+          envFrom:
+            - secretRef:
+                name: printer-secrets
+          volumeMounts:
+            - mountPath: /consume
+              name: consume
+      volumes:
+        - name: consume
+          persistentVolumeClaim:
+            claimName: consume
