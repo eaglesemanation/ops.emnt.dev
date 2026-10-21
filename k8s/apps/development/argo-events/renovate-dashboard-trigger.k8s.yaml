@@ -1,0 +1,66 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: renovate-dashboard-trigger
+  namespace: argo-events
+spec:
+  template:
+    serviceAccountName: operate-workflow-sa
+  eventBusName: bus
+  dependencies:
+    - name: forgejo-dashboard-edit
+      eventSourceName: forgejo
+      eventName: forgejo
+      filters:
+        data:
+          - path: header.X-Forgejo-Event
+            type: string
+            value:
+              - issues
+          - path: body.action
+            type: string
+            value:
+              - edited
+          - path: body.repository.full_name
+            type: string
+            value:
+              - public/ops.${CLUSTER_DOMAIN}
+          - path: body.issue.title
+            type: string
+            value:
+              - Dependency Dashboard
+          # Issue must be the one Renovate owns
+          - path: body.issue.user.login
+            type: string
+            value:
+              - renovate-bot
+          # Ignore Renovate's own edits, otherwise it loops forever
+          - path: body.sender.login
+            type: string
+            comparator: "!="
+            value:
+              - renovate-bot
+          # Only run when at least one checkbox is ticked
+          - path: body.issue.body
+            type: string
+            value:
+              - '\[x\]'
+  triggers:
+    - template:
+        name: run-renovate
+        argoWorkflow:
+          operation: submit
+          source:
+            resource:
+              apiVersion: argoproj.io/v1alpha1
+              kind: Workflow
+              metadata:
+                generateName: renovate-bot-dashboard-
+                namespace: argo-workflows
+              spec:
+                arguments:
+                  parameters:
+                    - name: debounce-seconds
+                      value: "60"
+                workflowTemplateRef:
+                  name: renovate-bot

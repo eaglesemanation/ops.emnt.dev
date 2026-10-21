@@ -1,0 +1,84 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/workflowtemplate_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: renovate-bot
+  namespace: argo-workflows
+spec:
+  entrypoint: main
+  serviceAccountName: argo-workflows
+  arguments:
+    parameters:
+      - name: debounce-seconds
+        value: "0"
+  volumes:
+    - name: renovate-config
+      configMap:
+        name: renovate-config
+    - name: renovate-cache
+      persistentVolumeClaim:
+        claimName: renovate-cache
+  securityContext:
+    runAsUser: 1000
+    fsGroup: 1000
+  templates:
+    - name: main
+      steps:
+        - - name: debounce
+            template: debounce
+        - - name: run-renovate
+            template: run-renovate
+            when: "{{steps.debounce.outputs.result}} == run"
+
+    - name: debounce
+      script:
+        image: docker.io/alpine/k8s:1.37.1
+        command: [sh]
+        source: |
+          DELAY="{{workflow.parameters.debounce-seconds}}"
+          if [ "$DELAY" = "0" ]; then echo run; exit 0; fi
+          sleep "$DELAY"
+          NEWER=$(kubectl get wf -n argo-workflows \
+            -l workflows.argoproj.io/workflow-template=renovate-bot -o json | jq -r \
+            --arg mine "{{workflow.creationTimestamp}}" \
+            --arg self "{{workflow.name}}" '
+              [ .items[]
+                | select((.status.phase) as $p | ["Succeeded","Failed","Error"] | index($p) | not)
+                | select(.metadata.creationTimestamp > $mine
+                    or (.metadata.creationTimestamp == $mine and .metadata.name > $self))
+              ] | length')
+          if [ "$NEWER" -gt 0 ]; then echo skip; else echo run; fi
+
+    - name: run-renovate
+      synchronization:
+        mutexes:
+          - name: renovate-bot
+      container:
+        image: docker.io/renovate/renovate:44.148
+        envFrom:
+          - secretRef:
+              name: renovate-secrets
+        env:
+          - name: RENOVATE_CONFIG_FILE
+            value: /mnt/renovate-config/config.json
+          - name: RENOVATE_BASE_DIR
+            value: /mnt/renovate-cache
+          - name: LOG_LEVEL
+            value: info
+          - name: LOG_FORMAT
+            value: json
+          - name: GIT_CONFIG_NOSYSTEM
+            value: "1"
+        volumeMounts:
+          - name: renovate-config
+            mountPath: /mnt/renovate-config
+            readOnly: true
+          - name: renovate-cache
+            mountPath: /mnt/renovate-cache
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            cpu: "1"
+            memory: 2Gi

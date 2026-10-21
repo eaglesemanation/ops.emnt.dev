@@ -6,49 +6,8 @@ metadata:
   namespace: argo-workflows
 spec:
   schedules:
-    - "0 * * * *" # every hour
+    - "0 * * * *"
   concurrencyPolicy: Forbid
   workflowSpec:
-    entrypoint: run-renovate
-    serviceAccountName: argo-workflows
-    volumes:
-      - name: renovate-config
-        configMap:
-          name: renovate-config
-      - name: renovate-cache
-        persistentVolumeClaim:
-          claimName: renovate-cache
-    securityContext:
-      runAsUser: 1000
-      fsGroup: 1000
-    templates:
-      - name: run-renovate
-        container:
-          image: docker.io/renovate/renovate:44.148
-          envFrom:
-            - secretRef:
-                name: renovate-secrets
-          env:
-            - name: RENOVATE_CONFIG_FILE
-              value: /mnt/renovate-config/config.json
-            - name: RENOVATE_BASE_DIR
-              value: /mnt/renovate-cache
-            - name: LOG_LEVEL
-              value: info
-            - name: LOG_FORMAT
-              value: json
-            - name: GIT_CONFIG_NOSYSTEM
-              value: "1"
-          volumeMounts:
-            - name: renovate-config
-              mountPath: /mnt/renovate-config
-              readOnly: true
-            - name: renovate-cache
-              mountPath: /mnt/renovate-cache
-          resources:
-            requests:
-              cpu: 250m
-              memory: 512Mi
-            limits:
-              cpu: "1"
-              memory: 2Gi
+    workflowTemplateRef:
+      name: renovate-bot

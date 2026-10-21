@@ -13,3 +13,4 @@ resources:
   - workflow-sa.k8s.yaml
   - flux-reconcile.k8s.yaml
   - ci-trigger.k8s.yaml
+  - renovate-dashboard-trigger.k8s.yaml

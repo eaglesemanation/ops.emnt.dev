@@ -30,7 +30,7 @@ spec:
 
     - name: find-containers
       script:
-        image: docker.io/library/alpine:3.22
+        image: docker.io/alpine/k8s:1.37.1
         securityContext:
           runAsNonRoot: false
           runAsUser: 0
@@ -40,8 +40,6 @@ spec:
         source: |
           #!/bin/sh
           set -eu
-
-          apk add --no-cache git jq >/dev/null
 
           BEFORE="{{workflow.parameters.before}}"
           AFTER="{{workflow.parameters.after}}"

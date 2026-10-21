@@ -4,6 +4,7 @@ resources:
   - secrets.sops.yaml
   - cron-workflow.k8s.yaml
   - pvc.k8s.yaml
+  - workflow-template.k8s.yaml
 configMapGenerator:
   - name: renovate-config
     namespace: argo-workflows
