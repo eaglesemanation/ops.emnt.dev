@@ -23,7 +23,7 @@ spec:
       enableServiceLinks: false
       containers:
         - name: romm
-          image: ghcr.io/rommapp/romm:5.3.1
+          image: ghcr.io/rommapp/romm:5.4.0
           envFrom:
             - secretRef:
                 name: auth-secret
