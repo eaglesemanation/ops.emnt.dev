@@ -37,8 +37,7 @@ spec:
         runAsNonRoot: false # FIXME: Linuxserver images require root for init
       initContainers:
         - name: gluetun
-          # TODO: Return back to a tagged version when >v3.41.1 gets released
-          image: docker.io/qmcgaw/gluetun:latest
+          image: docker.io/qmcgaw/gluetun:v3.41.3
           lifecycle:
             postStart:
               exec:
@@ -61,13 +60,21 @@ spec:
               devic.es/tun: 1
           startupProbe:
             exec:
-              command:
-                - sh
-                - -c
-                - case "$(wget -q -O /dev/stdout https://airvpn.org/api/whatismyip/ | grep airvpn)" in *'true'*) exit 0;; *) exit 1;; esac
-            initialDelaySeconds: 30
-            periodSeconds: 60
+              command: ["/gluetun-entrypoint", "healthcheck"]
+            periodSeconds: 5
+            timeoutSeconds: 10
+            failureThreshold: 30
+          livenessProbe:
+            exec:
+              command: ["/gluetun-entrypoint", "healthcheck"]
+            periodSeconds: 30
+            timeoutSeconds: 10
             failureThreshold: 3
+          readinessProbe:
+            exec:
+              command: ["/gluetun-entrypoint", "healthcheck"]
+            periodSeconds: 10
+            timeoutSeconds: 10
           volumeMounts:
             - mountPath: /tmp/gluetun
               name: gluetun-tmp
