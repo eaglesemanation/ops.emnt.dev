@@ -86,11 +86,14 @@
     ],
     packageRules: [
         {
-            matchPackageNames: [
-                "docker.io/linuxserver/jellyfin",
-                "docker.io/linuxserver/transmission",
+            "description": "LinuxServer.io Jellyfin: <major>.<minor>.<patch>[ubuNNNN]-ls<N>",
+            "matchDatasources": ["docker"],
+            "matchPackageNames": [
+                "lscr.io/linuxserver/jellyfin",
+                "ghcr.io/linuxserver/jellyfin",
+                "linuxserver/jellyfin"
             ],
-            allowedVersions: "<1000",
+            "versioning": "regex:^(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?<compatibility>ubu\\d+)?-ls(?<revision>\\d+)$"
         },
     ],
 }
