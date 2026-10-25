@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ai-upscaler
+  namespace: jellyfin
+  labels:
+    app.kubernetes.io/name: ai-upscaler
+    app.kubernetes.io/instance: ai-upscaler
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: ai-upscaler
+      app.kubernetes.io/instance: ai-upscaler
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: ai-upscaler
+        app.kubernetes.io/instance: ai-upscaler
+    spec:
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+      containers:
+        - name: ai-upscaler
+          image: docker.io/kuscheltier/jellyfin-ai-upscaler:v1.8.3.35-cpu
+          env:
+            - name: API_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: ai-upscaler
+                  key: token
+          resources:
+            limits:
+              cpu: 1
+              memory: 8Gi
+            requests:
+              cpu: 1
+              memory: 4Gi
+          volumeMounts:
+            - name: models
+              mountPath: /app/models
+      volumes:
+        - name: models
+          persistentVolumeClaim:
+            claimName: ai-upscaler-models

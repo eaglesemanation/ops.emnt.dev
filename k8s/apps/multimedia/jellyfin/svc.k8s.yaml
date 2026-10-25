@@ -24,3 +24,22 @@ spec:
       port: 7359
       targetPort: 7359
       protocol: UDP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: ai-upscaler
+  namespace: jellyfin
+  labels:
+    app.kubernetes.io/name: ai-upscaler
+    app.kubernetes.io/instance: ai-upscaler
+spec:
+  type: ClusterIP
+  selector:
+    app.kubernetes.io/name: ai-upscaler
+    app.kubernetes.io/instance: ai-upscaler
+  ports:
+    - name: http
+      port: 5000
+      targetPort: 5000
+      protocol: TCP

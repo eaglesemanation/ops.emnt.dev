@@ -28,3 +28,18 @@ spec:
     matchLabels:
       app.kubernetes.io/name: jellyfin
       app.kubernetes.io/instance: jellyfin
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-upscaler-models
+  namespace: jellyfin
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Filesystem
+  resources:
+    requests:
+      storage: 20Gi
+  storageClassName: freenas-api-iscsi-csi
+
