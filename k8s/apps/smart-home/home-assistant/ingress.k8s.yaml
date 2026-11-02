@@ -13,28 +13,11 @@ spec:
   entryPoints:
     - websecure
   routes:
-    # Insert Authentik middleware for Home Assistant auth API and authentik callback
-    - kind: Rule
-      match: Host(`home-assistant.${CLUSTER_DOMAIN}`) && (PathPrefix(`/auth/`) || PathPrefix(`/outpost.goauthentik.io/callback`)) && !PathPrefix(`/auth/token`)
-      middlewares:
-        - name: authentik
-          namespace: authentik
-      services:
-        - name: home-assistant
-          namespace: home-assistant
-          port: http
-    # No need for middleware, user already authenticated
     - kind: Rule
       match: Host(`home-assistant.${CLUSTER_DOMAIN}`)
       services:
         - name: home-assistant
           namespace: home-assistant
-          port: http
-    - kind: Rule
-      match: Host(`home-assistant.${CLUSTER_DOMAIN}`) && PathPrefix(`/outpost.goauthentik.io/`)
-      services:
-        - name: authentik-server
-          namespace: authentik
           port: http
     - kind: Rule
       match: Host(`home-assistant-vscode.${CLUSTER_DOMAIN}`)
