@@ -23,5 +23,5 @@ spec:
   volumeMode: Filesystem
   resources:
     requests:
-      storage: 1Ti
+      storage: 2Ti
   storageClassName: freenas-api-iscsi-csi
