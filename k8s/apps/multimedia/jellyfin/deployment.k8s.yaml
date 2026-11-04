@@ -38,7 +38,7 @@ spec:
       dnsPolicy: ClusterFirstWithHostNet
       containers:
         - name: jellyfin
-          image: ghcr.io/linuxserver/jellyfin:version-12.3ubu2604
+          image: ghcr.io/linuxserver/jellyfin:version-12.4ubu2604
           resources:
             requests:
               cpu: 100m
