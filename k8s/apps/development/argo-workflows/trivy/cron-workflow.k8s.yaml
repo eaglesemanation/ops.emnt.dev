@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/cronworkflow_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: CronWorkflow
+metadata:
+  name: trivy-scan-nightly
+  namespace: argo-workflows
+spec:
+  schedules:
+    - "0 2 * * *"
+  concurrencyPolicy: Forbid
+  startingDeadlineSeconds: 3600
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  workflowSpec:
+    serviceAccountName: trivy-scan
+    workflowTemplateRef:
+      name: trivy-scan
+

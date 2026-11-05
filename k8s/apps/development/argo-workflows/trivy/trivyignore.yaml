@@ -1,0 +1,11 @@
+vulnerabilities: []
+#  - id: CVE-2024-12345
+#    statement: Not reachable, component is not exposed
+#    expired_at: 2027-03-01
+misconfigurations: []
+#  - id: AVD-KSV-0014          # read-only root filesystem
+#    statement: Needs writable /tmp, tracked in JIRA-123
+#    expired_at: 2027-03-01
+secrets: []
+licenses: []
+

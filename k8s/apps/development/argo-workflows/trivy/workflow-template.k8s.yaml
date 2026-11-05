@@ -1,0 +1,109 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/refs/heads/main/argoproj.io/workflowtemplate_v1alpha1.json
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: trivy-scan
+  namespace: argo-workflows
+spec:
+  entrypoint: main
+  serviceAccountName: argo-workflows
+  arguments:
+    parameters:
+      - name: revision
+        value: main
+      - name: severity
+        value: "MEDIUM,HIGH,CRITICAL"
+      - name: ignore-unfixed
+        value: "false"
+  ttlStrategy:
+    secondsAfterCompletion: 259200
+    secondsAfterFailure: 259200
+  podGC:
+    strategy: OnWorkflowCompletion
+  volumeClaimTemplates:
+    - metadata:
+        name: work
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 10Gi
+  volumes:
+    - name: scripts
+      configMap:
+        name: trivy-scan-config
+        defaultMode: 0755
+
+  templates:
+    - name: main
+      steps:
+        - - name: render
+            template: render
+        - - name: scan
+            template: scan
+            arguments:
+              artifacts:
+                - name: repo
+                  from: "{{steps.render.outputs.artifacts.repo}}"
+
+    - name: render
+      inputs:
+        artifacts:
+          - name: repo
+            path: /repo
+            git:
+              repo: "https://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git"
+              revision: "{{workflow.parameters.revision}}"
+              depth: 1
+      container:
+        image: forgejo.emnt.dev/public/flate:e90b30d917a217689b196db6c2830ec974b676f5
+        command: [sh, -c]
+        args:
+          - |
+            set -eu
+            rm -rf /work/out && mkdir -p /work/out
+            sh /scripts/render.sh
+        env:
+          - {name: REPO, value: /repo}
+          - {name: OUT, value: /work/out}
+        resources:
+          requests: {cpu: 500m, memory: 1Gi}
+          limits: {memory: 4Gi}
+        volumeMounts:
+          - {name: work, mountPath: /work}
+          - {name: scripts, mountPath: /scripts}
+      outputs:
+        artifacts:
+          - name: repo
+            path: /repo
+
+    - name: scan
+      inputs:
+        artifacts:
+          - name: repo
+            path: /repo
+      container:
+        image: ghcr.io/aquasecurity/trivy:0.76.2
+        command: [sh, /scripts/scan.sh]
+        env:
+          - {name: REPO, value: /repo}
+          - {name: OUT, value: /work/out}
+          - {name: SEVERITY, value: "{{workflow.parameters.severity}}"}
+          - {name: IGNORE_UNFIXED, value: "{{workflow.parameters.ignore-unfixed}}"}
+          - {name: TRIVY_CACHE_DIR, value: /work/cache}
+          - {name: TRIVY_CONFIG, value: /scripts/trivy.yaml}
+          - {name: TRIVY_IGNOREFILE, value: /scripts/trivyignore.yaml}
+        resources:
+          requests: {cpu: "1", memory: 2Gi}
+          limits: {memory: 6Gi}
+        volumeMounts:
+          - {name: work, mountPath: /work}
+          - {name: scripts, mountPath: /scripts}
+      outputs:
+        artifacts:
+          - name: reports
+            path: /work/out/reports
+            archive:
+              none: {}
+            s3:
+              key: "{{workflow.name}}/{{pod.name}}/reports/"

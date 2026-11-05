@@ -1,0 +1,8 @@
+timeout: 20m
+scan:
+  skip-dirs:
+    - .git
+# db:
+#   repository: mirror.gcr.io/aquasec/trivy-db:2
+#   java-repository: mirror.gcr.io/aquasec/trivy-java-db:1
+
