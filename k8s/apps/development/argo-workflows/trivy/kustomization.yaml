@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - cron-workflow.k8s.yaml
   - workflow-template.k8s.yaml
+  - pvc.k8s.yaml
 configMapGenerator:
   - name: trivy-scan-config
     namespace: argo-workflows

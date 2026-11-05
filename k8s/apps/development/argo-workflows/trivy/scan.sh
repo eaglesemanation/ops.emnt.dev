@@ -34,6 +34,17 @@ render() {
   fi
 }
 
+# Trivy has no age-based cache expiry (--cache-ttl is Redis-only), so wipe the
+# scan cache every CACHE_MAX_AGE_DAYS. The vulnerability DB replaces itself on
+# update and needs no cleaning. Cost: the first run after a wipe re-pulls layers.
+MARK="$CACHE/.last-scan-cache-clean"
+[ -f "$MARK" ] || touch "$MARK"
+if [ -n "$(find "$MARK" -mtime +"${CACHE_MAX_AGE_DAYS:-30}")" ]; then
+  echo "==> scan cache older than ${CACHE_MAX_AGE_DAYS:-30} days, cleaning"
+  trivy clean --quiet --cache-dir "$CACHE" --scan-cache
+  touch "$MARK"
+fi
+
 echo "==> refreshing vulnerability DB"
 # shellcheck disable=SC2086
 trivy image $COMMON --download-db-only || echo "WARN: DB download failed; using cached DB if any" >&2
