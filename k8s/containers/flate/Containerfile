@@ -1,0 +1,19 @@
+FROM docker.io/library/golang:1.27 AS build
+ENV CGO_ENABLED=0 GOBIN=/out
+# renovate: datasource=github-releases depName=home-operations/flate
+ARG FLATE_VERSION=v0.6.5
+RUN go install github.com/home-operations/flate/cmd/flate@${FLATE_VERSION}
+
+FROM docker.io/library/debian:trixie-slim
+
+LABEL org.opencontainers.image.source="https://forgejo.emnt.dev/public/ops.emnt.dev" \
+      org.opencontainers.image.licenses="MIT"
+
+RUN apt-get update\
+    && apt-get install -y --no-install-recommends ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+COPY --from=build /out/flate /usr/local/bin/flate
+
+ENTRYPOINT ["flate"]
+CMD ["--help"]

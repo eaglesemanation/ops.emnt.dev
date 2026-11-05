@@ -1,15 +1,12 @@
 {
     $schema: "https://docs.renovatebot.com/renovate-schema.json",
-    extends: ["config:recommended"],
+    extends: ["config:recommended", "customManagers:dockerfileVersions"],
     timezone: "America/Toronto",
     schedule: ["after 19:00 on friday"],
     prHourlyLimit: 5,
     rangeStrategy: "bump",
     flux: {
         managerFilePatterns: ["/k8s/.+\\.k8s\\.yaml/"],
-    },
-    dockerfile: {
-        managerFilePatterns: ["/containers/.+\\.Dockerfile/"],
     },
     kubernetes: {
         managerFilePatterns: ["/k8s/.+\\.k8s\\.yaml/"],
