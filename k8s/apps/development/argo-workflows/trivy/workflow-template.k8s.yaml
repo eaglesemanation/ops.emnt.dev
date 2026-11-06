@@ -19,7 +19,14 @@ spec:
     secondsAfterCompletion: 259200
     secondsAfterFailure: 259200
   podGC:
-    strategy: OnWorkflowCompletion
+    strategy: OnWorkflowSuccess
+  securityContext:
+    fsGroup: 65532
+    runAsGroup: 65532
+    runAsNonRoot: true
+    runAsUser: 65532
+    seccompProfile:
+      type: RuntimeDefault
   synchronization:
     mutexes:
       - name: trivy-scan
@@ -59,11 +66,14 @@ spec:
         args:
           - |
             set -eu
-            rm -rf /work/out && mkdir -p /work/out
+            rm -rf /work/out /work/tmp
+            mkdir -p /work/out /work/tmp /work/home
             sh /scripts/render.sh
         env:
-          - {name: REPO, value: /repo}
+          - {name: REPO, value: /repo/k8s/apps}
           - {name: OUT, value: /work/out}
+          - {name: HOME, value: /work/home}
+          - {name: TMPDIR, value: /work/tmp}
         resources:
           requests: {cpu: 500m, memory: 1Gi}
           limits: {memory: 4Gi}
@@ -86,6 +96,8 @@ spec:
         env:
           - {name: REPO, value: /repo}
           - {name: OUT, value: /work/out}
+          - {name: HOME, value: /work/home}
+          - {name: TMPDIR, value: /work/tmp}
           - {name: SEVERITY, value: "{{workflow.parameters.severity}}"}
           - {name: IGNORE_UNFIXED, value: "{{workflow.parameters.ignore-unfixed}}"}
           - {name: TRIVY_CACHE_DIR, value: /work/cache}

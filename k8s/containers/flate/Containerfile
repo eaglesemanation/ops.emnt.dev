@@ -11,8 +11,7 @@ LABEL org.opencontainers.image.source="https://forgejo.emnt.dev/public/ops.emnt.
 
 RUN apt-get update\
     && apt-get install -y --no-install-recommends ca-certificates \
-    && rm -rf /var/lib/apt/lists/* \
-    && chmod 0755 /etc/ssl/private
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=build /out/flate /usr/local/bin/flate
 
