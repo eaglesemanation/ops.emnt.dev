@@ -7,9 +7,6 @@
 #        OUT    output dir      (default: ./work/out)
 set -eu
 
-REPO="${REPO:-.}"
-OUT="${OUT:-./work/out}"
-
 mkdir -p "$OUT/rendered"
 
 echo "==> flate build all"

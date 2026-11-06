@@ -10,8 +10,6 @@
 set -eu
 
 HERE=$(cd "$(dirname "$0")" && pwd)
-REPO="${REPO:-.}"
-OUT="${OUT:-./work/out}"
 SEVERITY="${SEVERITY:-MEDIUM,HIGH,CRITICAL}"
 CACHE="${TRIVY_CACHE_DIR:-$HOME/.cache/trivy}"
 CFG="${TRIVY_CONFIG:-$HERE/../trivy.yaml}"
