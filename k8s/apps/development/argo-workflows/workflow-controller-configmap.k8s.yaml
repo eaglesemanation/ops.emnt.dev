@@ -129,7 +129,7 @@ data:
         memory: 64Mi
       limits:
         cpu: 0.5
-        memory: 512Mi
+        memory: 1Gi
 
   # metricsConfig controls the path and port for prometheus metrics. Metrics are enabled and emitted on localhost:9090/metrics
   # by default.

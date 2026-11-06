@@ -74,6 +74,8 @@ spec:
           - {name: OUT, value: /work/out}
           - {name: HOME, value: /work/home}
           - {name: TMPDIR, value: /work/tmp}
+          - name: GOMEMLIMIT
+            value: 3500MiB
           - name: FLATE_API_VERSIONS
             value: "monitoring.coreos.com/v1,monitoring.coreos.com/v1/ServiceMonitor,monitoring.coreos.com/v1/PodMonitor,monitoring.coreos.com/v1/PrometheusRule"
         resources:
