@@ -74,13 +74,14 @@ spec:
           - {name: OUT, value: /work/out}
           - {name: HOME, value: /work/home}
           - {name: TMPDIR, value: /work/tmp}
+          - {name: FLATE_CACHE_DIR, value: /work/flate-cache}
           - name: GOMEMLIMIT
-            value: 3500MiB
+            value: 700MiB
           - name: FLATE_API_VERSIONS
             value: "monitoring.coreos.com/v1,monitoring.coreos.com/v1/ServiceMonitor,monitoring.coreos.com/v1/PodMonitor,monitoring.coreos.com/v1/PrometheusRule"
         resources:
-          requests: {cpu: 500m, memory: 1Gi}
-          limits: {memory: 4Gi}
+          requests: {cpu: 1, memory: 512Mi}
+          limits: {cpu: 1, memory: 1Gi}
         volumeMounts:
           - {name: work, mountPath: /work}
           - {name: scripts, mountPath: /scripts}
@@ -108,8 +109,8 @@ spec:
           - {name: TRIVY_CONFIG, value: /scripts/trivy.yaml}
           - {name: TRIVY_IGNOREFILE, value: /scripts/trivyignore.yaml}
         resources:
-          requests: {cpu: 500m, memory: 2Gi}
-          limits: {memory: 6Gi}
+          requests: {cpu: 1, memory: 1Gi}
+          limits: {cpu: 1, memory: 2Gi}
         volumeMounts:
           - {name: work, mountPath: /work}
           - {name: scripts, mountPath: /scripts}
