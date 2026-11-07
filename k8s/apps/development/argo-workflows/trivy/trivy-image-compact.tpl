@@ -6,7 +6,7 @@
   <style>
     body {
       font-family: sans-serif;
-      margin: 2rem auto;
+      margin: 0 auto 2rem;
       padding: 0 1rem;
       max-width: 100rem;
     }
@@ -28,9 +28,20 @@
     .severity-CRITICAL { color: #c00; }
     .severity-UNKNOWN { color: #777; }
     td.pkg-name { overflow-wrap: anywhere; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      margin: 0 -1rem 1rem;
+      padding: 0.5rem 1rem;
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+    }
+    .topbar a { text-decoration: none; font-weight: bold; }
   </style>
 </head>
 <body>
+  <nav class="topbar"><a href="../index.html">&larr; Back</a></nav>
   <h1>Trivy Image Report</h1>
 
   {{- if not . }}

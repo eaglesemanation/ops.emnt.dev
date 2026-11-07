@@ -12,6 +12,7 @@ configMapGenerator:
       - scan.sh
       - trivy-image-compact.tpl
       - trivy-image-summary.tpl
+      - trivy-report.tpl
       - trivy.yaml
       - trivyignore.yaml
 generatorOptions:

@@ -14,7 +14,7 @@ IGN="$${TRIVY_IGNOREFILE:-$HERE/trivyignore.yaml}"
 
 R="$OUT/reports"
 
-HTML_TEMPLATE="$${TRIVY_HTML_TEMPLATE:-/contrib/html.tpl}"
+HTML_TEMPLATE="$${TRIVY_HTML_TEMPLATE:-$HERE/trivy-report.tpl}"
 IMAGE_HTML_TEMPLATE="$${TRIVY_IMAGE_HTML_TEMPLATE:-$HERE/trivy-image-compact.tpl}"
 IMAGE_SUMMARY_TEMPLATE="$${TRIVY_IMAGE_SUMMARY_TEMPLATE:-$HERE/trivy-image-summary.tpl}"
 
@@ -53,6 +53,16 @@ trivy_cmd() {
   trivy --quiet --cache-dir "$CACHE" "$@"
 }
 
+# Instantiate the shared report template with a report title.
+# usage: make_template <title> <output file>
+make_template() {
+  # HTML-escape, then escape what is special in a sed replacement (& | \).
+  safe_title=$(printf '%s' "$1" |
+    sed -e 's/&/\&amp;/g' -e 's/</\&lt;/g' -e 's/>/\&gt;/g' |
+    sed -e 's/[&|\\]/\\&/g')
+  sed "s|@@TITLE@@|$safe_title|g" "$HTML_TEMPLATE" >"$2"
+}
+
 version=$(trivy --version | head -n 1)
 
 # Cache cleanup marker lives outside the scan cache.
@@ -74,22 +84,26 @@ trivy_cmd image --download-db-only ||
 
 echo "==> Scanning rendered Flux output"
 
+make_template "Kubernetes misconfigurations (rendered Flux output)" "$TMPDIR/report-rendered.tpl"
 trivy_cmd config \
   --severity "$SEVERITY" \
   --format template \
-  --template "@$HTML_TEMPLATE" \
+  --template "@$TMPDIR/report-rendered.tpl" \
   --output "$R/misconfig-rendered.html" \
   "$OUT/rendered"
 
 echo "==> Scanning repository"
 
+make_template "Repository vulnerabilities and misconfigurations" "$TMPDIR/report-repo.tpl"
 trivy_cmd fs \
   --scanners vuln,misconfig \
   --severity "$SEVERITY" \
   --format template \
-  --template "@$HTML_TEMPLATE" \
+  --template "@$TMPDIR/report-repo.tpl" \
   --output "$R/fs-repo.html" \
   "$REPO"
+
+rm -f "$TMPDIR/report-rendered.tpl" "$TMPDIR/report-repo.tpl"
 
 echo "==> Scanning container images"
 
@@ -182,6 +196,16 @@ done <"$OUT/images.txt"
 
 echo "==> Generating report index"
 
+# Table cell for a severity count: coloured when non-zero, muted when zero.
+# usage: sev_cell <SEVERITY> <count>
+sev_cell() {
+  if [ "$2" -gt 0 ]; then
+    printf '<td class="sev-%s">%s</td>' "$1" "$2"
+  else
+    printf '<td class="zero">0</td>'
+  fi
+}
+
 {
   echo '<!doctype html>'
   echo '<html><head><meta charset="utf-8">'
@@ -195,6 +219,14 @@ echo "==> Generating report index"
   echo 'th{background:#eee}'
   echo 'td:nth-child(n+2){text-align:center;font-variant-numeric:tabular-nums}'
   echo 'td:first-child{overflow-wrap:anywhere}'
+  # Same severity colours as the per-image reports; zero counts are muted.
+  echo 'th.sev-CRITICAL,td.sev-CRITICAL{color:#c00}'
+  echo 'th.sev-HIGH,td.sev-HIGH{color:#d66b00}'
+  echo 'th.sev-MEDIUM,td.sev-MEDIUM{color:#a58b00}'
+  echo 'th.sev-LOW,td.sev-LOW{color:#398a20}'
+  echo 'th.sev-UNKNOWN,td.sev-UNKNOWN{color:#777}'
+  echo 'td[class^=sev-]{font-weight:bold}'
+  echo 'td.zero{color:#aaa}'
   echo '</style></head><body>'
 
   echo '<h1>Trivy report</h1>'
@@ -210,11 +242,11 @@ echo "==> Generating report index"
   echo '<table>'
   echo '<thead><tr>'
   echo '<th>Image</th>'
-  echo '<th>Critical</th>'
-  echo '<th>High</th>'
-  echo '<th>Medium</th>'
-  echo '<th>Low</th>'
-  echo '<th>Unknown</th>'
+  echo '<th class="sev-CRITICAL">Critical</th>'
+  echo '<th class="sev-HIGH">High</th>'
+  echo '<th class="sev-MEDIUM">Medium</th>'
+  echo '<th class="sev-LOW">Low</th>'
+  echo '<th class="sev-UNKNOWN">Unknown</th>'
   echo '<th>Total</th>'
   echo '</tr></thead><tbody>'
 
@@ -237,11 +269,11 @@ echo "==> Generating report index"
 
       printf '<tr>'
       printf '<td><a href="images/%s">%s</a></td>' "$report" "$safe_img"
-      printf '<td>%s</td>' "$critical"
-      printf '<td>%s</td>' "$high"
-      printf '<td>%s</td>' "$medium"
-      printf '<td>%s</td>' "$low"
-      printf '<td>%s</td>' "$unknown"
+      sev_cell CRITICAL "$critical"
+      sev_cell HIGH "$high"
+      sev_cell MEDIUM "$medium"
+      sev_cell LOW "$low"
+      sev_cell UNKNOWN "$unknown"
       printf '<td><strong>%s</strong></td>' "$total"
       printf '</tr>\n'
     done
