@@ -133,59 +133,6 @@ spec:
       mail-log:
         storageClass: freenas-api-iscsi-csi
     configMaps:
-      # Configuring PROXY protocol
-      dovecot.cf:
-        data: |
-          {{- if .Values.proxyProtocol.enabled }}
-            haproxy_trusted_networks = {{ .Values.proxyProtocol.trustedNetworks }}
-
-            {{- if and (.Values.deployment.env.ENABLE_IMAP) (not .Values.deployment.env.SMTP_ONLY) }}
-            service imap-login {
-                inet_listener imap {
-                    haproxy = yes
-                    port = 143
-                }
-              
-                inet_listener imaps {
-                    haproxy = yes
-                    port = 993
-                    ssl = yes
-                }
-            }    
-            {{- end -}}
-
-            {{- if and (.Values.deployment.env.ENABLE_POP3) (not .Values.deployment.env.SMTP_ONLY) }}
-            service pop3-login {
-                inet_listener pop3 {
-                    haproxy = yes
-                    port = 110
-                }
-              
-                inet_listener pop3s {
-                    haproxy = yes
-                    port = 995
-                    ssl = yes
-                }
-            }
-            {{- end -}}
-          {{- end -}}
-      postfix-main.cf:
-        create: true
-        path: postfix-main.cf
-        data: |
-          {{- if .Values.proxyProtocol.enabled }}
-          postscreen_upstream_proxy_protocol = haproxy
-          {{- end -}}
-          smtpd_banner = $myhostname Service ready
-      postfix-master.cf:
-        create: true
-        path: postfix-master.cf
-        data: |
-          {{- if .Values.proxyProtocol.enabled }}
-          smtp/inet/postscreen_upstream_proxy_protocol=haproxy
-          submission/inet/smtpd_upstream_proxy_protocol=haproxy
-          submissions/inet/smtpd_upstream_proxy_protocol=haproxy
-          {{- end -}}
       # Configuring DKIM on RSPAMD side
       dkim-signing.conf:
         create: true
