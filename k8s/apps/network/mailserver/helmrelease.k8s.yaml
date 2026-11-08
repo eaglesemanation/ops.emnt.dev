@@ -100,7 +100,7 @@ spec:
         DOVECOT_USER_ATTRS: =home=/var/mail/${CLUSTER_DOMAIN}/%{ldap:cn},=mail=maildir:~/Maildir,=uid=5000,=gid=5000
         DOVECOT_PASS_ATTRS: =user=%{ldap:internalMail}
         DOVECOT_AUTH_BIND: yes
-        DOVECOT_USER_FILTER: (&(objectClass=inetOrgPerson)(internalMail=%u))
+        DOVECOT_USER_FILTER: (&(objectClass=inetOrgPerson)(internalMail=%{user}))
         ENABLE_SASLAUTHD: 1
         SASLAUTHD_MECHANISMS: ldap
         SASLAUTHD_LDAP_FILTER: (&(objectClass=inetOrgPerson)(internalMail=%U@${CLUSTER_DOMAIN}))
