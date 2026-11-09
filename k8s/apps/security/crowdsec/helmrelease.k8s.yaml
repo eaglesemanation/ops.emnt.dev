@@ -5,7 +5,7 @@ metadata:
   name: crowdsec
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 1h
   targetNamespace: crowdsec
   chart:
     spec:
@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: crowdsec
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

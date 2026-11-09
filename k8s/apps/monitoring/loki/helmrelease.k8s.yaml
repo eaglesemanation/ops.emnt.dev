@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: grafana-community
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:
@@ -34,7 +34,7 @@ spec:
         working_directory: /var/loki/compactor
         retention_enabled: true
         delete_request_store: s3
-        compaction_interval: 10m
+        compaction_interval: 1h
         retention_delete_delay: 2h
         upload_parallelism: 2
       schemaConfig:

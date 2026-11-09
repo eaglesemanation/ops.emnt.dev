@@ -5,7 +5,7 @@ metadata:
   name: cilium
   namespace: cilium
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: cilium
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: cilium
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

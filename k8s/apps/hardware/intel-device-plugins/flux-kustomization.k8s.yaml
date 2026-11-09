@@ -5,7 +5,7 @@ metadata:
   name: intel-device-plugins
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   url: https://github.com/intel/intel-device-plugins-for-kubernetes.git
   sparseCheckout:
     - deployments
@@ -19,7 +19,7 @@ metadata:
   name: intel-gpu-plugin-upstream
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./deployments/gpu_plugin/overlays/monitoring_shared-dev_nfd
   targetNamespace: intel-device-plugins
   prune: true
@@ -56,7 +56,7 @@ metadata:
   name: intel-node-feature-rules-upstream
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./deployments/nfd/overlays/node-feature-rules
   targetNamespace: intel-device-plugins
   prune: true

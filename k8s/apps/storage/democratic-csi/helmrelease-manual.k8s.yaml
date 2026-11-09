@@ -5,7 +5,7 @@ metadata:
   name: democratic-csi-manual
   namespace: democratic-csi
 spec:
-  interval: 30m
+  interval: 1h
   releaseName: democratic-csi-manual
   chart:
     spec:
@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: democratic-csi
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   postRenderers:
     - kustomize:
         patches:

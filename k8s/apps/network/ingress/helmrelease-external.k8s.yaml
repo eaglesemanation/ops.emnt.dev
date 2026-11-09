@@ -5,7 +5,7 @@ metadata:
   name: ingress-external
   namespace: ingress
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: traefik
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: traefik
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

@@ -5,7 +5,7 @@ metadata:
   name: prometheus
   namespace: prometheus
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: kube-prometheus-stack
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: prometheus-community
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

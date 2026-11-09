@@ -5,7 +5,7 @@ metadata:
   name: velero
   namespace: velero
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: velero
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: vmware-tanzu
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

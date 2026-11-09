@@ -5,7 +5,7 @@ metadata:
   name: grafana-operator
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 1h
   targetNamespace: grafana-operator
   chartRef:
     kind: OCIRepository

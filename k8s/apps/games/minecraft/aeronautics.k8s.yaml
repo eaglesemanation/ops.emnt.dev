@@ -5,7 +5,7 @@ metadata:
   name: aeronautics-mc-server
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 1h
   targetNamespace: minecraft
   chart:
     spec:
@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: itzg-minecraft
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

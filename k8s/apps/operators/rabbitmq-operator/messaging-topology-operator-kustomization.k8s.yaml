@@ -5,7 +5,7 @@ metadata:
   name: messaging-topology-operator
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   url: https://github.com/rabbitmq/messaging-topology-operator.git
   sparseCheckout:
     - config
@@ -20,7 +20,7 @@ metadata:
   name: messaging-topology-operator-upstream
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./config/installation
   targetNamespace: rabbitmq-operator
   prune: true

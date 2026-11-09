@@ -5,7 +5,7 @@ metadata:
   name: kube-system
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./k8s/apps/network/kube-system
   prune: true
   sourceRef:

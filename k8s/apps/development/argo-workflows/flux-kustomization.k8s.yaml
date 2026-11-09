@@ -5,7 +5,7 @@ metadata:
   name: argo-workflows
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   url: https://github.com/argoproj/argo-workflows.git
   sparseCheckout:
     - manifests
@@ -19,7 +19,7 @@ metadata:
   name: argo-workflows-upstream
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./manifests/cluster-install
   targetNamespace: argo-workflows
   dependsOn:

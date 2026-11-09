@@ -5,7 +5,7 @@ metadata:
   name: chisel-operator
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   url: https://github.com/FyraLabs/chisel-operator.git
   sparseCheckout:
     - deploy
@@ -19,7 +19,7 @@ metadata:
   name: chisel-operator-upstream
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./deploy
   targetNamespace: chisel
   prune: true

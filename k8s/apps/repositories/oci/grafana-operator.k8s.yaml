@@ -5,7 +5,7 @@ metadata:
   name: grafana-operator
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   url: oci://ghcr.io/grafana/helm-charts/grafana-operator
   ref:
     tag: 5.25.0

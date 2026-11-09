@@ -5,7 +5,7 @@ metadata:
   name: local-backup-s3
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./k8s/apps/storage/local-backup-s3
   prune: true
   sourceRef:

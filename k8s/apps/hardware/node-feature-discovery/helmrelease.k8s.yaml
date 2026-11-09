@@ -5,7 +5,7 @@ metadata:
   name: node-feature-discovery
   namespace: node-feature-discovery
 spec:
-  interval: 30m
+  interval: 1h
   chart:
     spec:
       chart: node-feature-discovery
@@ -14,7 +14,7 @@ spec:
         kind: HelmRepository
         name: node-feature-discovery
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

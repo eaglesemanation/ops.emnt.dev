@@ -5,7 +5,7 @@ metadata:
   name: argo-events
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   url: https://github.com/argoproj/argo-events.git
   sparseCheckout:
     - manifests
@@ -19,7 +19,7 @@ metadata:
   name: argo-events-upstream
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./manifests/cluster-install
   targetNamespace: argo-events
   prune: true

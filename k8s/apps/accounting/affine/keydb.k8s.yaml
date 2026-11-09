@@ -5,7 +5,7 @@ metadata:
   name: affine-keydb
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 1h
   targetNamespace: affine
   chart:
     spec:
@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: enapter
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   values:
     existingSecret: keydb-creds
     existingSecretKey: password

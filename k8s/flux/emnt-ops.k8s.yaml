@@ -5,7 +5,7 @@ metadata:
   name: emnt-ops
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   ref:
     branch: main
   url: https://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git

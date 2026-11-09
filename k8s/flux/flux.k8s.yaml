@@ -5,7 +5,7 @@ metadata:
   name: flux
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./
   prune: true
   wait: true
@@ -58,7 +58,7 @@ metadata:
   name: flux-config
   namespace: flux-system
 spec:
-  interval: 10m
+  interval: 1h
   path: ./k8s/flux
   prune: true
   sourceRef:

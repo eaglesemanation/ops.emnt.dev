@@ -16,7 +16,7 @@ spec:
         kind: HelmRepository
         name: grafana
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:

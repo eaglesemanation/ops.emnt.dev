@@ -5,7 +5,7 @@ metadata:
   name: snapshot-controller
   namespace: external-snapshotter
 spec:
-  interval: 30m
+  interval: 1h
   releaseName: snapshot-controller
   chart:
     spec:
@@ -15,7 +15,7 @@ spec:
         kind: HelmRepository
         name: piraeus
         namespace: flux-system
-      interval: 30m
+      interval: 1h
   install:
     crds: CreateReplace
   upgrade:
