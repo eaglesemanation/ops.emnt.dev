@@ -12,7 +12,7 @@ spec:
   successfulJobsHistoryLimit: 3
   failedJobsHistoryLimit: 3
   workflowSpec:
-    serviceAccountName: trivy-scan
+    serviceAccountName: argo-workflows
     workflowTemplateRef:
       name: trivy-scan
 
