@@ -1,5 +1,6 @@
 metadata_dir = "/mnt/meta"
 data_dir = [{ path = "/mnt/data", capacity = "1T" }]
+data_fsync = true
 db_engine = "sqlite"
 block_size = "1M"
 replication_factor = 1
@@ -7,6 +8,7 @@ consistency_mode = "consistent"
 compression_level = 1
 rpc_bind_addr = "[::]:3901"
 metadata_auto_snapshot_interval = "6h"
+metadata_fsync = true
 
 [s3_api]
 s3_region = "garage"

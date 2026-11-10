@@ -9,6 +9,9 @@ spec:
   storage:
     storageClass: freenas-api-iscsi-csi
     size: 10Gi
+  walStorage:
+    storageClass: freenas-api-iscsi-csi
+    size: 10Gi
   bootstrap:
     initdb:
       database: forgejo

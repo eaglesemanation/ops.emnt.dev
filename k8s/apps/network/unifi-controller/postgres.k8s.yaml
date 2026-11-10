@@ -25,6 +25,9 @@ spec:
   storage:
     storageClass: freenas-api-iscsi-csi
     size: 16Gi
+  walStorage:
+    storageClass: freenas-api-iscsi-csi
+    size: 10Gi
   postgresUID: 999
   postgresGID: 999
   postgresql:
