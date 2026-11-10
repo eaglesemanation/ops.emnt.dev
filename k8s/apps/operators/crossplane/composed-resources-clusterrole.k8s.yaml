@@ -43,3 +43,6 @@ rules:
       - workflowtemplates
     verbs:
       - "*"
+  - apiGroups: ["batch"]
+    resources: ["cronjobs"]
+    verbs: ["*"]

@@ -24,7 +24,7 @@ spec:
     major: 17
   storage:
     storageClass: freenas-api-iscsi-csi
-    size: 16Gi
+    size: 17Gi
   walStorage:
     storageClass: freenas-api-iscsi-csi
     size: 10Gi

@@ -5,6 +5,7 @@ metadata:
   namespace: immich
 spec: {}
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/barmancloud.cnpg.io/objectstore_v1.json
 apiVersion: barmancloud.cnpg.io/v1
 kind: ObjectStore
 metadata:
@@ -14,19 +15,21 @@ spec:
   retentionPolicy: "30d"
   instanceSidecarConfiguration:
     env:
+      - name: AWS_DEFAULT_REGION
+        value: garage
       - name: AWS_REQUEST_CHECKSUM_CALCULATION
         value: when_required
       - name: AWS_RESPONSE_CHECKSUM_VALIDATION
         value: when_required
   configuration:
     destinationPath: s3://immich/
-    endpointURL: https://backup-s3.${CLUSTER_DOMAIN}
+    endpointURL: http://garage.garage.svc.cluster.local:3900
     wal:
       compression: gzip
     s3Credentials:
       accessKeyId:
         name: local-backup-s3-key
-        key: access_key
+        key: access_key_id
       secretAccessKey:
         name: local-backup-s3-key
-        key: secret_key
+        key: secret_access_key

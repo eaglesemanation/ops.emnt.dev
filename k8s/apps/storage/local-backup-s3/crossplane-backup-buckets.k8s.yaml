@@ -1,13 +1,12 @@
-apiVersion: apiextensions.crossplane.io/v1
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/apiextensions.crossplane.io/compositeresourcedefinition_v2.json
+apiVersion: apiextensions.crossplane.io/v2
 kind: CompositeResourceDefinition
 metadata:
-  name: xbackupbuckets.crossplane.emnt.dev
+  name: backupbuckets.crossplane.emnt.dev
 spec:
+  scope: Namespaced
   group: crossplane.emnt.dev
   names:
-    kind: XBackupBucket
-    plural: xbackupbuckets
-  claimNames:
     kind: BackupBucket
     plural: backupbuckets
   versions:
@@ -31,6 +30,7 @@ spec:
               type: object
               properties: {}
 ---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/datreeio/CRDs-catalog/main/apiextensions.crossplane.io/composition_v1.json
 apiVersion: apiextensions.crossplane.io/v1
 kind: Composition
 metadata:
@@ -38,7 +38,7 @@ metadata:
 spec:
   compositeTypeRef:
     apiVersion: crossplane.emnt.dev/v1alpha1
-    kind: XBackupBucket
+    kind: BackupBucket
   mode: Pipeline
   pipeline:
     - functionRef:
@@ -50,118 +50,63 @@ spec:
         resources:
           - name: local-bucket
             base:
-              apiVersion: s3.minio.crossplane.io/v1alpha1
+              apiVersion: bucket.garage.m.crossplane.io/v1alpha1
               kind: Bucket
               spec:
                 forProvider: {}
                 providerConfigRef:
-                  name: local-backup-s3
+                  kind: ClusterProviderConfig
+                  name: garage
             patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+              - fromFieldPath: metadata.namespace
                 toFieldPath: metadata.name
                 type: FromCompositeFieldPath
-          - name: local-user
+              - fromFieldPath: metadata.namespace
+                toFieldPath: spec.forProvider.globalAlias
+                type: FromCompositeFieldPath
+          - name: local-key
             base:
-              apiVersion: iam.minio.crossplane.io/v1alpha1
-              kind: User
+              apiVersion: key.garage.m.crossplane.io/v1alpha1
+              kind: Key
               spec:
                 forProvider: {}
                 providerConfigRef:
-                  name: local-backup-s3
-            patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: metadata.name
-                type: FromCompositeFieldPath
-          - name: local-service-account
-            base:
-              apiVersion: iam.minio.crossplane.io/v1alpha1
-              kind: ServiceAccount
-              spec:
-                forProvider:
-                  targetUserSelector:
-                    matchControllerRef: true
+                  kind: ClusterProviderConfig
+                  name: garage
                 writeConnectionSecretToRef:
                   name: local-backup-s3-key
-                providerConfigRef:
-                  name: local-backup-s3
             patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+              - fromFieldPath: metadata.namespace
                 toFieldPath: metadata.name
                 type: FromCompositeFieldPath
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: spec.writeConnectionSecretToRef.namespace
+              - fromFieldPath: metadata.namespace
+                toFieldPath: spec.forProvider.name
                 type: FromCompositeFieldPath
-          - name: local-policy
+          - name: local-permission
             base:
-              apiVersion: iam.minio.crossplane.io/v1alpha1
-              kind: Policy
+              apiVersion: bucket.garage.m.crossplane.io/v1alpha1
+              kind: Permission
               spec:
                 forProvider:
-                  policy: ""
+                  read: true
+                  write: true
                 providerConfigRef:
-                  name: local-backup-s3
+                  kind: ClusterProviderConfig
+                  name: garage
             patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+              - fromFieldPath: metadata.namespace
                 toFieldPath: metadata.name
                 type: FromCompositeFieldPath
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: spec.forProvider.policy
-                transforms:
-                  - type: string
-                    string:
-                      type: Format
-                      fmt: |-
-                        {
-                          "Version": "2012-10-17",
-                          "Statement": [
-                            {
-                              "Effect": "Allow",
-                              "Action": [
-                                "s3:GetObject",
-                                "s3:GetObjectVersion",
-                                "s3:GetObjectTagging",
-                                "s3:GetObjectVersionTagging",
-                                "s3:PutObject",
-                                "s3:PutObjectTagging",
-                                "s3:PutObjectVersionTagging",
-                                "s3:DeleteObject",
-                                "s3:DeleteObjectVersion",
-                                "s3:DeleteObjectTagging",
-                                "s3:DeleteObjectVersionTagging"
-                              ],
-                              "Resource": "arn:aws:s3:::%[1]s/*"
-                            },
-                            {
-                              "Effect": "Allow",
-                              "Action": [
-                                "s3:ListBucket",
-                                "s3:ListBucketVersions",
-                                "s3:GetBucketLocation"
-                              ],
-                              "Resource": "arn:aws:s3:::%[1]s"
-                            }
-                          ]
-                        }
+              # Key and Bucket are both named after the claim namespace (see patches above)
+              - fromFieldPath: metadata.namespace
+                toFieldPath: spec.forProvider.accessKeyIdRef.name
                 type: FromCompositeFieldPath
-          - name: local-policy-attachment
-            base:
-              apiVersion: iam.minio.crossplane.io/v1alpha1
-              kind: UserPolicyAttachment
-              spec:
-                forProvider:
-                  policyNameSelector:
-                    matchControllerRef: true
-                  userNameSelector:
-                    matchControllerRef: true
-                providerConfigRef:
-                  name: local-backup-s3
-            patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: metadata.name
+              - fromFieldPath: metadata.namespace
+                toFieldPath: spec.forProvider.bucketIdRef.name
                 type: FromCompositeFieldPath
           - name: b2-bucket
             base:
-              apiVersion: b2.crossplane.io/v1alpha1
+              apiVersion: b2.m.crossplane.io/v1alpha1
               kind: Bucket
               spec:
                 forProvider:
@@ -173,12 +118,13 @@ spec:
                     - fileNamePrefix: ""
                       daysFromHidingToDeleting: 30
                 providerConfigRef:
+                  kind: ClusterProviderConfig
                   name: b2
             patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+              - fromFieldPath: metadata.namespace
                 toFieldPath: metadata.name
                 type: FromCompositeFieldPath
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+              - fromFieldPath: metadata.namespace
                 toFieldPath: spec.forProvider.bucketName
                 transforms:
                   - type: string
@@ -188,7 +134,7 @@ spec:
                 type: FromCompositeFieldPath
           - name: b2-application-key
             base:
-              apiVersion: b2.crossplane.io/v1alpha1
+              apiVersion: b2.m.crossplane.io/v1alpha1
               kind: ApplicationKey
               spec:
                 forProvider:
@@ -201,166 +147,136 @@ spec:
                     - writeFiles
                     - deleteFiles
                 providerConfigRef:
+                  kind: ClusterProviderConfig
                   name: b2
                 writeConnectionSecretToRef:
                   name: backblaze-b2-key
             patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+              - fromFieldPath: metadata.namespace
                 toFieldPath: metadata.name
                 type: FromCompositeFieldPath
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
+              - fromFieldPath: metadata.namespace
                 toFieldPath: spec.forProvider.keyName
                 type: FromCompositeFieldPath
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: spec.writeConnectionSecretToRef.namespace
-                type: FromCompositeFieldPath
           - name: b2-replication-cronjob
+            readinessChecks:
+              - type: None
             base:
-              apiVersion: kubernetes.crossplane.io/v1alpha2
-              kind: Object
+              apiVersion: batch/v1
+              kind: CronJob
+              metadata:
+                name: local-to-b2-backup-mirror
               spec:
-                forProvider:
-                  manifest:
-                    apiVersion: batch/v1
-                    kind: CronJob
-                    metadata:
-                      name: local-to-b2-backup-mirror
-                    spec:
-                      concurrencyPolicy: Forbid
-                      successfulJobsHistoryLimit: 3
-                      failedJobsHistoryLimit: 3
-                      jobTemplate:
-                        spec:
-                          template:
-                            spec:
-                              restartPolicy: OnFailure
-                              containers:
-                                - name: mc-mirror
-                                  image: forgejo.emnt.dev/public/mc:latest
-                                  command:
-                                    - /bin/sh
-                                    - -c
-                                    - |
-                                      set -e
-                                      mc alias set local https://backup-s3.${CLUSTER_DOMAIN} $LOCAL_ACCESS_KEY $LOCAL_SECRET_KEY
-                                      mc alias set remote https://s3.us-east-005.backblazeb2.com $REMOTE_ACCESS_KEY $REMOTE_SECRET_KEY
-                                      mc mirror --remove --overwrite local/$BUCKET_NAME remote/emnt-dev-$BUCKET_NAME
-                                  env:
-                                    - name: BUCKET_NAME
-                                      value: ""
-                                    - name: LOCAL_ACCESS_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: local-backup-s3-key
-                                          key: access_key
-                                    - name: LOCAL_SECRET_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: local-backup-s3-key
-                                          key: secret_key
-                                    - name: REMOTE_ACCESS_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: backblaze-b2-key
-                                          key: application_key_id
-                                    - name: REMOTE_SECRET_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: backblaze-b2-key
-                                          key: application_key
+                concurrencyPolicy: Forbid
+                successfulJobsHistoryLimit: 3
+                failedJobsHistoryLimit: 3
+                jobTemplate:
+                  spec:
+                    template:
+                      spec:
+                        restartPolicy: OnFailure
+                        containers:
+                          - name: mc-mirror
+                            image: forgejo.emnt.dev/public/mc:latest
+                            command:
+                              - /bin/sh
+                              - -c
+                              - |
+                                set -e
+                                mc alias set local http://garage.garage.svc.cluster.local $LOCAL_ACCESS_KEY $LOCAL_SECRET_KEY --api S3v4 --path on
+                                mc alias set remote https://s3.us-east-005.backblazeb2.com $REMOTE_ACCESS_KEY $REMOTE_SECRET_KEY
+                                mc mirror --remove --overwrite local/$BUCKET_NAME remote/emnt-dev-$BUCKET_NAME
+                            env:
+                              - name: BUCKET_NAME
+                                value: ""
+                              - name: LOCAL_ACCESS_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: local-backup-s3-key
+                                    key: access_key_id
+                              - name: LOCAL_SECRET_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: local-backup-s3-key
+                                    key: secret_access_key
+                              - name: REMOTE_ACCESS_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: backblaze-b2-key
+                                    key: application_key_id
+                              - name: REMOTE_SECRET_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: backblaze-b2-key
+                                    key: application_key
             patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: metadata.name
-                type: FromCompositeFieldPath
-                transforms:
-                  - type: string
-                    string:
-                      type: Format
-                      fmt: "%s-backup-mirror-cronjob"
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: spec.forProvider.manifest.metadata.namespace
-                type: FromCompositeFieldPath
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: spec.forProvider.manifest.spec.jobTemplate.spec.template.spec.containers[0].env[0].value
+              - fromFieldPath: metadata.namespace
+                toFieldPath: spec.jobTemplate.spec.template.spec.containers[0].env[0].value
                 type: FromCompositeFieldPath
               - fromFieldPath: spec.mirrorSchedule
-                toFieldPath: spec.forProvider.manifest.spec.schedule
+                toFieldPath: spec.schedule
                 type: FromCompositeFieldPath
               - fromFieldPath: spec.suspendMirrorJob
-                toFieldPath: spec.forProvider.manifest.spec.suspend
+                toFieldPath: spec.suspend
                 type: FromCompositeFieldPath
           - name: b2-recovery-cronjob
+            readinessChecks:
+              - type: None
             base:
-              apiVersion: kubernetes.crossplane.io/v1alpha2
-              kind: Object
+              apiVersion: batch/v1
+              kind: CronJob
+              metadata:
+                name: b2-to-local-recovery
               spec:
-                forProvider:
-                  manifest:
-                    apiVersion: batch/v1
-                    kind: CronJob
-                    metadata:
-                      name: b2-to-local-recovery
-                    spec:
-                      concurrencyPolicy: Forbid
-                      suspend: true
-                      schedule: "0 0 31 2 *"
-                      successfulJobsHistoryLimit: 3
-                      failedJobsHistoryLimit: 3
-                      jobTemplate:
-                        spec:
-                          template:
-                            spec:
-                              restartPolicy: OnFailure
-                              containers:
-                                - name: mc-mirror
-                                  image: forgejo.emnt.dev/public/mc:latest
-                                  command:
-                                    - /bin/sh
-                                    - -c
-                                    - |
-                                      set -e
-                                      mc alias set local https://backup-s3.${CLUSTER_DOMAIN} $LOCAL_ACCESS_KEY $LOCAL_SECRET_KEY
-                                      mc alias set remote https://s3.us-east-005.backblazeb2.com $REMOTE_ACCESS_KEY $REMOTE_SECRET_KEY
+                concurrencyPolicy: Forbid
+                suspend: true
+                schedule: "0 0 31 2 *"
+                successfulJobsHistoryLimit: 3
+                failedJobsHistoryLimit: 3
+                jobTemplate:
+                  spec:
+                    template:
+                      spec:
+                        restartPolicy: OnFailure
+                        containers:
+                          - name: mc-mirror
+                            image: forgejo.emnt.dev/public/mc:latest
+                            command:
+                              - /bin/sh
+                              - -c
+                              - |
+                                set -e
+                                mc alias set local http://garage.garage.svc.cluster.local $LOCAL_ACCESS_KEY $LOCAL_SECRET_KEY --api S3v4 --path on
+                                mc alias set remote https://s3.us-east-005.backblazeb2.com $REMOTE_ACCESS_KEY $REMOTE_SECRET_KEY
 
-                                      echo "WARNING: This job will overwrite local backups with remote ones, which are probably outdated."
-                                      echo "Make sure you know what you're doing. Sleeping for 2 minutes to give a chance to abort"
-                                      sleep 120
-                                      mc mirror --remove --overwrite remote/emnt-dev-$BUCKET_NAME local/$BUCKET_NAME
-                                  env:
-                                    - name: BUCKET_NAME
-                                      value: ""
-                                    - name: LOCAL_ACCESS_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: local-backup-s3-key
-                                          key: access_key
-                                    - name: LOCAL_SECRET_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: local-backup-s3-key
-                                          key: secret_key
-                                    - name: REMOTE_ACCESS_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: backblaze-b2-key
-                                          key: application_key_id
-                                    - name: REMOTE_SECRET_KEY
-                                      valueFrom:
-                                        secretKeyRef:
-                                          name: backblaze-b2-key
-                                          key: application_key
+                                echo "WARNING: This job will overwrite local backups with remote ones, which are probably outdated."
+                                echo "Make sure you know what you're doing. Sleeping for 2 minutes to give a chance to abort"
+                                sleep 120
+                                mc mirror --remove --overwrite remote/emnt-dev-$BUCKET_NAME local/$BUCKET_NAME
+                            env:
+                              - name: BUCKET_NAME
+                                value: ""
+                              - name: LOCAL_ACCESS_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: local-backup-s3-key
+                                    key: access_key_id
+                              - name: LOCAL_SECRET_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: local-backup-s3-key
+                                    key: secret_access_key
+                              - name: REMOTE_ACCESS_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: backblaze-b2-key
+                                    key: application_key_id
+                              - name: REMOTE_SECRET_KEY
+                                valueFrom:
+                                  secretKeyRef:
+                                    name: backblaze-b2-key
+                                    key: application_key
             patches:
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: metadata.name
-                type: FromCompositeFieldPath
-                transforms:
-                  - type: string
-                    string:
-                      type: Format
-                      fmt: "%s-backup-recovery-cronjob"
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: spec.forProvider.manifest.metadata.namespace
-                type: FromCompositeFieldPath
-              - fromFieldPath: metadata.labels["crossplane.io/claim-namespace"]
-                toFieldPath: spec.forProvider.manifest.spec.jobTemplate.spec.template.spec.containers[0].env[0].value
+              - fromFieldPath: metadata.namespace
+                toFieldPath: spec.jobTemplate.spec.template.spec.containers[0].env[0].value
                 type: FromCompositeFieldPath

@@ -60,8 +60,8 @@ spec:
     - extract:
         key: b2-crossplane-creds
 ---
-apiVersion: b2.crossplane.io/v1beta1
-kind: ProviderConfig
+apiVersion: b2.m.crossplane.io/v1beta1
+kind: ClusterProviderConfig
 metadata:
   name: b2
 spec:
