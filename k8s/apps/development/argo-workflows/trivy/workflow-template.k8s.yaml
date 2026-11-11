@@ -80,8 +80,8 @@ spec:
           - name: FLATE_API_VERSIONS
             value: "monitoring.coreos.com/v1,monitoring.coreos.com/v1/ServiceMonitor,monitoring.coreos.com/v1/PodMonitor,monitoring.coreos.com/v1/PrometheusRule"
         resources:
-          requests: {cpu: 1, memory: 512Mi}
-          limits: {cpu: 1, memory: 1Gi}
+          requests: {cpu: 1, memory: 1Gi}
+          limits: {cpu: 1, memory: 2Gi}
         volumeMounts:
           - {name: work, mountPath: /work}
           - {name: scripts, mountPath: /scripts}
