@@ -8,6 +8,8 @@ metadata:
     app.kubernetes.io/name: grafana
 spec:
   config:
+    plugins:
+      preinstall_disabled: "true"
     server:
       root_url: https://grafana.${CLUSTER_DOMAIN}/
     auth:

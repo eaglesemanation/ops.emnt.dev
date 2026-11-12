@@ -14,3 +14,6 @@ spec:
     type: loki
     access: proxy
     url: http://loki-gateway.loki.svc.cluster.local:80
+  plugins:
+    - name: loki
+      version: 13.2.5

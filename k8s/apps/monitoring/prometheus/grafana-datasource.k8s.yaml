@@ -15,4 +15,6 @@ spec:
     access: proxy
     url: http://prom-prometheus.prometheus.svc.cluster.local:9090
     isDefault: true
-
+  plugins:
+    - name: prometheus
+      version: 13.2.6
