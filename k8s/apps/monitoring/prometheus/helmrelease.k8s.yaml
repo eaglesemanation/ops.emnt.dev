@@ -116,3 +116,6 @@ spec:
             memory: 128Mi
         alertmanagerConfiguration:
           name: alertmanager-global-config
+    kubeApiServer:
+      serviceMonitor:
+        interval: 60s
