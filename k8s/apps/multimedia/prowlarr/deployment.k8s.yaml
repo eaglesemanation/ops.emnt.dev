@@ -40,7 +40,7 @@ spec:
               readOnly: true
       containers:
         - name: prowlarr
-          image: ghcr.io/linuxserver/prowlarr:2.6.5
+          image: ghcr.io/linuxserver/prowlarr:2.7.0
           resources:
             requests:
               cpu: 10m
