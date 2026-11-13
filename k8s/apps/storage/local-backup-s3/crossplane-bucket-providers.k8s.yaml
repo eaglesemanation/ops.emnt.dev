@@ -71,11 +71,3 @@ spec:
       name: crossplane-b2-creds
       namespace: local-backup-s3
     source: Secret
----
-apiVersion: kubernetes.crossplane.io/v1alpha1
-kind: ProviderConfig
-metadata:
-  name: default
-spec:
-  credentials:
-    source: InjectedIdentity
