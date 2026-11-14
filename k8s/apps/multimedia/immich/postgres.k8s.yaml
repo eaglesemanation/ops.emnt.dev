@@ -23,7 +23,7 @@ spec:
     apiGroup: postgresql.cnpg.io
     kind: ImageCatalog
     name: immich-postgres
-    major: 17
+    major: 18
   storage:
     storageClass: freenas-api-iscsi-csi
     size: 20Gi
