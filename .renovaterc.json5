@@ -1,0 +1,51 @@
+{
+    $schema: "https://docs.renovatebot.com/renovate-schema.json",
+    extends: ["config:recommended", "customManagers:dockerfileVersions"],
+    timezone: "America/Toronto",
+    schedule: ["after 19:00 on friday"],
+    prHourlyLimit: 5,
+    rangeStrategy: "bump",
+    flux: {
+        managerFilePatterns: ["/k8s/.+\\.k8s\\.yaml/"],
+    },
+    kubernetes: {
+        managerFilePatterns: ["/k8s/.+\\.k8s\\.yaml/"],
+    },
+    nix: {
+        enabled: true,
+    },
+    customManagers: [
+        {
+            customType: "regex",
+            description: "Update container images in CRDs",
+            datasourceTemplate: "docker",
+            managerFilePatterns: ["/k8s/.+\\.k8s\\.yaml$/"],
+            matchStrings: [
+                "apiVersion:\\s+minio.min.io\\/v\\d+.*\\nkind:\\s+Tenant\\s*\\n(?:.*\\n)*?\\s*image:\\s*(?<depName>[\\w\\.\\/\\-]+):(?<currentValue>[\\w+\\.\\-]*)",
+            ],
+        },
+        {
+            customType: "regex",
+            description: "Process custom dependencies",
+            managerFilePatterns: ["/k8s/.+\\.k8s\\.yaml$/"],
+            matchStrings: [
+                'renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))?\n.*?"(?<currentValue>.*)"\n',
+                "renovate: datasource=(?<datasource>\\S+) depName=(?<depName>\\S+)( versioning=(?<versioning>\\S+))? version=(?<currentValue>.*)\n",
+            ],
+            datasourceTemplate: "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+            versioningTemplate: "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}",
+        },
+    ],
+    packageRules: [
+        {
+            "description": "LinuxServer.io Jellyfin: version-<major>.<minor>[.<patch>]ubu<NNNN>",
+            "matchDatasources": ["docker"],
+            "matchPackageNames": [
+                "lscr.io/linuxserver/jellyfin",
+                "ghcr.io/linuxserver/jellyfin",
+                "linuxserver/jellyfin"
+            ],
+            "versioning": "regex:^version-(?<major>\\d+)\\.(?<minor>\\d+)(?:\\.(?<patch>\\d+))?(?<compatibility>ubu\\d+)$"
+        },
+    ],
+}
