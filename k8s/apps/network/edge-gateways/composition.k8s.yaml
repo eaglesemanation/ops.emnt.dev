@@ -100,15 +100,19 @@ spec:
                 kind: ProviderConfig
                 name: digitalocean
             ---
-            {{- if and
-                (hasKey .observed.resources "droplet")
-                (hasKey .observed.resources.droplet.resource "status")
-                (.observed.resources.droplet.resource.status.atProvider.ipv4Address)
-            }}
+            {{- /* publicIP is the reserved IP, the one DNS/PTR/users care about.
+                   dropletIP is the machine's own address, used for SSH and chisel control. */}}
+            {{- $dropletIP := dig "resources" "droplet" "resource" "status" "atProvider" "ipv4Address" "" .observed }}
+            {{- $reservedIP := dig "resources" "ipv4" "resource" "status" "atProvider" "id" "" .observed }}
+            {{- if hasKey $spec.digitaloceanConfig "importReservedIPv4" }}
+              {{- $reservedIP = $spec.digitaloceanConfig.importReservedIPv4 }}
+            {{- end }}
+            {{- if and $dropletIP $reservedIP }}
             apiVersion: crossplane.emnt.dev/v1alpha1
             kind: EdgeGateway
             status:
-              publicIP: {{ .observed.resources.droplet.resource.status.atProvider.ipv4Address }}
+              dropletIP: {{ $dropletIP }}
+              publicIP: {{ $reservedIP }}
             ---
             {{- end }}
             apiVersion: digitalocean.m.crossplane.io/v1alpha1
@@ -191,6 +195,7 @@ spec:
             apiVersion: crossplane.emnt.dev/v1alpha1
             kind: EdgeGateway
             status:
+              dropletIP: {{ $spec.nocloudConfig.ip }}
               publicIP: {{ $spec.nocloudConfig.ip }}
             {{- end }}
     - step: chisel
@@ -205,7 +210,9 @@ spec:
             # vim:ft=yaml
             {{- $composite := .observed.composite.resource }}
             {{- $compositeName := $composite.metadata.name }}
-            {{- if $composite.status.publicIP }}
+            {{- $dropletIP := dig "status" "dropletIP" "" $composite }}
+            {{- $publicIP := dig "status" "publicIP" "" $composite }}
+            {{- if and $dropletIP $publicIP }}
             apiVersion: chisel-operator.io/v1
             kind: ExitNode
             metadata:
@@ -215,7 +222,10 @@ spec:
                 {{ setResourceNameAnnotation "chisel-exit-node" }}
                 gotemplating.fn.crossplane.io/ready: "True"
             spec:
-              host: {{ $composite.status.publicIP }}
+              # Control plane: dial the machine directly, independent of reserved IP assignment
+              host: {{ $dropletIP }}
+              # What Services of class chisel advertise in status.loadBalancer.ingress
+              external_host: {{ $publicIP }}
               port: 9090
               auth: {{ $compositeName }}-chisel-auth
             ---
@@ -281,7 +291,7 @@ spec:
                             "{{`{{.chiselAuth}}`}}": [""]
                           }
                       crowdsecBouncer:
-                        apikey: "{{.crowdsecApiKey}}"
+                        apikey: "{{`{{.crowdsecApiKey}}`}}"
               data:
                 - secretKey: sshPublicKey
                   remoteRef:
@@ -300,7 +310,36 @@ spec:
             {{- if eq $spec.cloud "digitalocean" }}
               {{- $flakeAttr = "edgeGatewayDigitalocean" }}
             {{- end }}
-            {{- if $composite.status.publicIP }}
+            {{- $dropletIP := dig "status" "dropletIP" "" $composite }}
+            {{- if $dropletIP }}
+            {{- /* Deploy over the machine's own address: it is reachable before the reserved IP is
+                   attached, and a replaced droplet gets a fresh address so known_hosts never clashes. */}}
+            {{- $arguments := dict "parameters" (list
+                  (dict "name" "targetHost" "value" $dropletIP)
+                  (dict "name" "sshSecretRef" "value" (printf "%s-ssh-key" $compositeName))
+                  (dict "name" "flakeAttr" "value" $flakeAttr)
+                  (dict "name" "sopsSecretRef" "value" (printf "%s-nixos-secrets" $compositeName))
+                ) }}
+            {{- /* The CronWorkflow only fires weekly, so run the first deploy right away. Keyed on the
+                   droplet ID: a replaced droplet gets a new Workflow, the old one is garbage collected. */}}
+            {{- $deployKey := dig "resources" "droplet" "resource" "status" "atProvider" "id" "initial" .observed }}
+            apiVersion: argoproj.io/v1alpha1
+            kind: Workflow
+            metadata:
+              name: {{ $compositeName }}-nixos-{{ $deployKey }}
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation (printf "nixos-initial-workflow-%s" $deployKey) }}
+                gotemplating.fn.crossplane.io/ready: "True"
+            spec:
+              entrypoint: dag
+              serviceAccountName: argo-workflows
+              arguments:
+                {{- $arguments | toYaml | nindent 4 }}
+              workflowTemplateRef:
+                clusterScope: true
+                name: nixos-deploy
+            ---
             apiVersion: argoproj.io/v1alpha1
             kind: CronWorkflow
             metadata:
@@ -317,15 +356,7 @@ spec:
                 entrypoint: dag
                 serviceAccountName: argo-workflows
                 arguments:
-                  parameters:
-                    - name: targetHost
-                      value: {{ $composite.status.publicIP }}
-                    - name: sshSecretRef
-                      value: {{ $compositeName }}-ssh-key
-                    - name: flakeAttr
-                      value: {{ $flakeAttr }}
-                    - name: sopsSecretRef
-                      value: {{ $compositeName }}-nixos-secrets
+                  {{- $arguments | toYaml | nindent 6 }}
                 workflowTemplateRef:
                   clusterScope: true
                   name: nixos-deploy

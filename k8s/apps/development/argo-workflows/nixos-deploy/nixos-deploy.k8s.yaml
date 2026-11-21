@@ -56,6 +56,12 @@ spec:
                   from: '{{tasks.encrypt-secrets.outputs.artifacts.secretsSops}}'
 
     - name: ensure-known-hosts
+      retryStrategy: &wait-for-ssh
+        limit: "20"
+        retryPolicy: OnFailure
+        backoff:
+          duration: 15s
+          factor: "1"
       script:
         image: docker.io/library/alpine:3.23.3
         securityContext:
@@ -139,6 +145,7 @@ spec:
             defaultMode: 384 # 0600
 
     - name: detect-mode
+      retryStrategy: *wait-for-ssh
       script:
         image: docker.io/library/alpine:3.23.3
         securityContext:

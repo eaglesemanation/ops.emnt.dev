@@ -13,6 +13,10 @@ spec:
     - name: v1alpha1
       referenceable: true
       served: true
+      additionalPrinterColumns:
+        - name: PUBLIC-IP
+          type: string
+          jsonPath: .status.publicIP
       schema:
         openAPIV3Schema:
           type: object
@@ -28,10 +32,14 @@ spec:
                     - digitalocean
                 crowdsecApiKeySecret:
                   type: object
-                  required: ["name"]
+                  description: Secret in the edge-gateways namespace that holds the CrowdSec bouncer API key
+                  default:
+                    name: crowdsec-creds
+                    key: apiKey
                   properties:
                     name:
                       type: string
+                      default: crowdsec-creds
                     key:
                       type: string
                       default: apiKey
@@ -67,3 +75,7 @@ spec:
               properties:
                 publicIP:
                   type: string
+                  description: Address the world uses to reach the gateway. The reserved IP on DigitalOcean, the configured ip for nocloud. Also advertised on chisel LoadBalancer Services.
+                dropletIP:
+                  type: string
+                  description: Address of the machine itself. Used for SSH deploys and as the chisel control-plane endpoint.
