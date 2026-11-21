@@ -222,12 +222,70 @@ spec:
                 {{ setResourceNameAnnotation "chisel-exit-node" }}
                 gotemplating.fn.crossplane.io/ready: "True"
             spec:
-              # Control plane: dial the machine directly, independent of reserved IP assignment
               host: {{ $dropletIP }}
-              # What Services of class chisel advertise in status.loadBalancer.ingress
               external_host: {{ $publicIP }}
               port: 9090
               auth: {{ $compositeName }}-chisel-auth
+            ---
+            apiVersion: apps/v1
+            kind: Deployment
+            metadata:
+              name: {{ $compositeName }}-smtp-relay
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "chisel-smtp-relay" }}
+                gotemplating.fn.crossplane.io/ready: "True"
+            spec:
+              replicas: 1
+              selector:
+                matchLabels:
+                  app: {{ $compositeName }}-smtp-relay
+              template:
+                metadata:
+                  labels:
+                    app: {{ $compositeName }}-smtp-relay
+                spec:
+                  containers:
+                    - name: chisel
+                      image: docker.io/jpillora/chisel:1.13.0
+                      args:
+                        - client
+                        - http://{{ $publicIP }}:9090
+                        # <local bind in this pod>:<port>:<host the SERVER connects to>:<port>
+                        - 0.0.0.0:2525:127.0.0.1:25
+                      env:
+                        - name: AUTH
+                          valueFrom:
+                            secretKeyRef:
+                              name: {{ $compositeName }}-chisel-auth
+                              key: auth
+                      securityContext:
+                        runAsNonRoot: true
+                        runAsUser: 65534
+                        allowPrivilegeEscalation: false
+                        capabilities:
+                          drop: ["ALL"]
+                      resources:
+                        requests: { cpu: 10m, memory: 16Mi }
+                        limits: { memory: 64Mi }
+            ---
+            apiVersion: v1
+            kind: Service
+            metadata:
+              name: {{ $compositeName }}-smtp-relay
+              namespace: edge-gateways
+              annotations:
+                {{ setResourceNameAnnotation "chisel-smtp-relay-svc" }}
+                gotemplating.fn.crossplane.io/ready: "True"
+            spec:
+              type: ClusterIP
+              selector:
+                  app: {{ $compositeName }}-smtp-relay
+              ports:
+                - name: smtp
+                  port: 25
+                  targetPort: 2525
+                  protocol: TCP
             ---
             {{- end }}
             apiVersion: external-secrets.io/v1

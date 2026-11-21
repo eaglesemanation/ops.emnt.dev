@@ -241,7 +241,7 @@ spec:
 
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
           attic use default
-          nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel'
+          nix build '.#nixosConfigurations.{{workflow.parameters.flakeAttr}}.config.system.build.toplevel' --fallback
           attic push default result -j 2 || true
 
           case '{{inputs.parameters.mode}}' in

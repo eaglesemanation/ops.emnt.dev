@@ -35,6 +35,7 @@
       sops
       chisel
       crowdsecBouncer
+      smtpRelay
     ];
   };
 }
