@@ -7,6 +7,20 @@ metadata:
 spec:
   entrypoint: dag
   serviceAccountName: argo-workflows
+  arguments:
+    parameters:
+      - name: repo
+        description: Git URL of the flake repository to build images from.
+        value: https://forgejo.${CLUSTER_DOMAIN}/public/ops.${CLUSTER_DOMAIN}.git
+      - name: ref
+        description: Branch or tag of `repo` to build images from.
+        value: main
+      - name: attrSuffix
+        description: >-
+          Suffix of the flake packages that produce an OCI image. The image is
+          pushed as the kebab-case of the attribute name without this suffix,
+          so `nixosBuildDockerImage` becomes `nixos-build`.
+        value: DockerImage
   retryStrategy:
     limit: 2
     retryPolicy: Always
@@ -16,60 +30,99 @@ spec:
   podSpecPatch: |
     restartPolicy: Never
   templates:
+    # Containers are discovered from the flake, so adding an image only means
+    # adding a `packages.<name>DockerImage` package under `nix/containers/`;
+    # no change to this workflow is needed. `nix2containerDockerImage` is
+    # discovered too, but the pod image used here still has to be bootstrapped
+    # (built and pushed) out of band the very first time.
     - name: dag
       dag:
         tasks:
-          # TODO: dynamically figure out containers that could be built and do that in parallel
-          # TODO: bootstrap nix2container image with nixos/nix one
-          - name: build-nixos-build
-            template: build-nixos-build
-          - name: build-attic-server
-            template: build-attic-server
-    - name: build-nixos-build
-      script:
-        image: forgejo.emnt.dev/public/nix2container:latest
-        resources:
-          requests:
-            memory: "4Gi"
-            cpu: "1"
-          limits:
-            memory: "8Gi"
-            cpu: "2"
-        securityContext:
-          runAsNonRoot: false
-          readOnlyRootFilesystem: false
-          runAsUser: 0
-          allowPrivilegeEscalation: true
-          privileged: true
-        command: [sh]
-        source: |
-          #!/bin/sh
-          set -eux
-          attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
-          attic use default
-          nix build git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage
-          attic push default result -j 2 || true
+          - name: discover
+            template: discover
+          # Expands into one parallel `build` task per discovered image.
+          - name: build
+            template: build
+            dependencies:
+              - discover
+            withParam: "{{tasks.discover.outputs.parameters.containers}}"
+            arguments:
+              parameters:
+                - name: attr
+                  value: "{{item.attr}}"
+                - name: container
+                  value: "{{item.container}}"
 
-          nix run git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage.copyTo -- \
-            docker://forgejo.emnt.dev/public/nixos-build:latest \
-            --authfile /tmp/authfile.json
-        env:
-          - name: ATTIC_TOKEN
+    - name: discover
+      outputs:
+        parameters:
+          - name: containers
             valueFrom:
-              secretKeyRef:
-                key: token
-                name: attic-creds
-        volumeMounts:
-          - name: authfile
-            mountPath: /tmp/authfile.json
-            subPath: authfile.json
-      volumes:
-        - name: authfile
-          secret:
-            secretName: nix-containers-authfile
-    - name: build-attic-server
+              path: /tmp/containers.json
       script:
-        image: forgejo.emnt.dev/public/nix2container:latest
+        image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "1"
+        securityContext:
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+          allowPrivilegeEscalation: true
+        command: [bash]
+        source: |
+          #!/bin/bash
+          set -euo pipefail
+
+          flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
+          suffix="{{workflow.parameters.attrSuffix}}"
+          system="$(nix eval --raw --impure --expr builtins.currentSystem)"
+
+          attrs="$(
+            nix eval --raw "${flake}#packages.${system}" \
+              --apply 'packages: builtins.concatStringsSep " " (builtins.attrNames packages)'
+          )"
+
+          # `nixosBuild` -> `nixos-build`
+          kebab-case() {
+            local name="$1" out="" char i
+            for ((i = 0; i < ${#name}; i++)); do
+              char="${name:i:1}"
+              if [[ "${char}" == [[:upper:]] ]]; then
+                out+="-${char,,}"
+              else
+                out+="${char}"
+              fi
+            done
+            printf '%s' "${out}"
+          }
+
+          items=()
+          for attr in ${attrs}; do
+            [[ "${attr}" == *"${suffix}" ]] || continue
+            items+=("{\"attr\":\"${attr}\",\"container\":\"$(kebab-case "${attr%"${suffix}"}")\"}")
+          done
+
+          if [[ "${#items[@]}" -eq 0 ]]; then
+            echo "no '*${suffix}' packages found in ${flake}#packages.${system}" >&2
+            exit 1
+          fi
+
+          printf '[%s]\n' "$(IFS=,; printf '%s' "${items[*]}")" > /tmp/containers.json
+
+    - name: build
+      inputs:
+        parameters:
+          - name: attr
+            description: Flake package that produces the OCI image.
+          - name: container
+            description: Repository name to push to, under the Forgejo public org.
+      script:
+        image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
         resources:
           requests:
             memory: "4Gi"
@@ -87,13 +140,18 @@ spec:
         source: |
           #!/bin/sh
           set -eux
+
+          flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
+          attr="{{inputs.parameters.attr}}"
+          image="docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:latest"
+
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
           attic use default
-          nix build git+https://forgejo.emnt.dev/public/ops.emnt.dev#nixosBuildDockerImage
+          nix build "${flake}#${attr}"
           attic push default result -j 2 || true
 
-          nix run git+https://forgejo.emnt.dev/public/ops.emnt.dev#atticServerDockerImage.copyTo -- \
-            docker://forgejo.emnt.dev/public/attic-server:latest \
+          nix run "${flake}#${attr}.copyTo" -- \
+            "${image}" \
             --authfile /tmp/authfile.json
         env:
           - name: ATTIC_TOKEN

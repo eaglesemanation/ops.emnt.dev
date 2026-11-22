@@ -10,6 +10,10 @@
     ...
   }: let
     cfg = config.services.chisel-server;
+    # Fork with PROXY protocol v2 support for reverse remotes. The server is the
+    # peer that emits the PROXY header, so it must run the fork too (and it has
+    # to match the chisel client image used by chisel-operator).
+    chisel = self.packages.${pkgs.stdenv.hostPlatform.system}.chisel;
   in {
     sops.secrets."chisel/authfile.json" = {};
     services.chisel-server = {
@@ -28,7 +32,7 @@
         # Overriding due to cfg.authfile being restricted to path type
         ExecStart = [
           ""
-          ("${pkgs.chisel}/bin/chisel server --authfile %d/authfile "
+          ("${chisel}/bin/chisel server --authfile %d/authfile "
             + lib.concatStringsSep " " (
               lib.optional (cfg.host != null) "--host ${cfg.host}"
               ++ lib.optional (cfg.port != null) "--port ${toString cfg.port}"

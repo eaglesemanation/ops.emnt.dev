@@ -226,6 +226,9 @@ spec:
               external_host: {{ $publicIP }}
               port: 9090
               auth: {{ $compositeName }}-chisel-auth
+              # Built from the PROXY protocol fork by the nix-containers workflow
+              # (nix/containers/chisel.nix). Must match the server on the gateway.
+              chisel_image: forgejo.emnt.dev/public/chisel:latest
             ---
             apiVersion: apps/v1
             kind: Deployment
@@ -247,7 +250,7 @@ spec:
                 spec:
                   containers:
                     - name: chisel
-                      image: docker.io/jpillora/chisel:1.13.0
+                      image: forgejo.emnt.dev/public/chisel:latest
                       args:
                         - client
                         - http://{{ $publicIP }}:9090
