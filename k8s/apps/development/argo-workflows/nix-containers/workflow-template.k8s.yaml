@@ -35,12 +35,16 @@ spec:
     # no change to this workflow is needed. `nix2containerDockerImage` is
     # discovered too, but the pod image used here still has to be bootstrapped
     # (built and pushed) out of band the very first time.
+    #
+    # Images whose derivation output is already published are filtered out in
+    # `discover`, so a run with nothing to do builds nothing.
     - name: dag
       dag:
         tasks:
           - name: discover
             template: discover
-          # Expands into one parallel `build` task per discovered image.
+          # Expands into one parallel `build` task per changed image. An empty
+          # list leaves the task group in the `Skipped` phase.
           - name: build
             template: build
             dependencies:
@@ -52,6 +56,8 @@ spec:
                   value: "{{item.attr}}"
                 - name: container
                   value: "{{item.container}}"
+                - name: revision
+                  value: "{{item.revision}}"
 
     - name: discover
       outputs:
@@ -87,12 +93,34 @@ spec:
 
           flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
           suffix="{{workflow.parameters.attrSuffix}}"
+          registry="forgejo.${CLUSTER_DOMAIN}/public"
           system="$(nix eval --raw --impure --expr builtins.currentSystem)"
 
-          attrs="$(
-            nix eval --raw "$flake#packages.$system" \
-              --apply 'packages: builtins.concatStringsSep " " (builtins.attrNames packages)'
+          # Emit `<attr> <outPath>` for every image package. Derivations are
+          # pure, so the output path is a function of the flake lock plus the
+          # package definition: it identifies the image without building it.
+          packages="$(
+            nix eval --raw "$flake#packages.$system" --apply '
+              packages:
+              let
+                suffix = "'"$suffix"'";
+                hasSuffix = name: s:
+                  let
+                    n = builtins.stringLength name;
+                    m = builtins.stringLength s;
+                  in n >= m && builtins.substring (n - m) m name == s;
+                describe = name: name + " " + (builtins.getAttr name packages).outPath;
+              in
+                builtins.concatStringsSep "\n" (
+                  map describe (builtins.filter (name: hasSuffix name suffix) (builtins.attrNames packages))
+                )
+            '
           )"
+
+          if [[ -z "$packages" ]]; then
+            echo "no '*$suffix' packages found in $flake#packages.$system" >&2
+            exit 1
+          fi
 
           # `nixosBuild` -> `nixos-build`
           kebab-case() {
@@ -109,17 +137,38 @@ spec:
           }
 
           items=()
-          for attr in $attrs; do
-            [[ "$attr" == *"$suffix" ]] || continue
-            items+=("{\"attr\":\"$attr\",\"container\":\"$(kebab-case "$${attr%"$suffix"}")\"}")
-          done
+          skipped=()
+          while read -r attr out_path; do
+            [[ -n "$attr" ]] || continue
+            container="$(kebab-case "$${attr%"$suffix"}")"
+            # /nix/store/<hash>-<name> -> <hash>. `build` pushes this hash as
+            # an extra tag, so its presence means this exact derivation output
+            # was already published and the build can be skipped.
+            store_name="$${out_path##*/}"
+            revision="$${store_name%%-*}"
 
-          if [[ "$${#items[@]}" -eq 0 ]]; then
-            echo "no '*$suffix' packages found in $flake#packages.$system" >&2
-            exit 1
+            if skopeo inspect --authfile /tmp/authfile.json \
+              "docker://$registry/$container:$revision" >/dev/null 2>&1; then
+              skipped+=("$container")
+              continue
+            fi
+
+            items+=("{\"attr\":\"$attr\",\"container\":\"$container\",\"revision\":\"$revision\"}")
+          done <<< "$packages"
+
+          if [[ "$${#skipped[@]}" -gt 0 ]]; then
+            echo "already published, skipping: $${skipped[*]}" >&2
           fi
 
           printf '[%s]\n' "$(IFS=,; printf '%s' "$${items[*]}")" > /tmp/containers.json
+        volumeMounts:
+          - name: authfile
+            mountPath: /tmp/authfile.json
+            subPath: authfile.json
+      volumes:
+        - name: authfile
+          secret:
+            secretName: nix-containers-authfile
 
     - name: build
       inputs:
@@ -128,6 +177,10 @@ spec:
             description: Flake package that produces the OCI image.
           - name: container
             description: Repository name to push to, under the Forgejo public org.
+          - name: revision
+            description: >-
+              Nix store hash of the image derivation output, also pushed as an
+              extra tag so later runs can tell this image is already published.
       script:
         image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
         resources:
@@ -153,6 +206,7 @@ spec:
           flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
           attr="{{inputs.parameters.attr}}"
           image="docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:latest"
+          revision="{{inputs.parameters.revision}}"
 
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
           attic use default
@@ -161,6 +215,13 @@ spec:
 
           nix run "$flake#$attr.copyTo" -- \
             "$image" \
+            --authfile /tmp/authfile.json
+
+          # Same image, content-addressed tag. `:latest` is pushed first so a
+          # failure here only causes a redundant rebuild next run, never a
+          # stale `:latest`.
+          nix run "$flake#$attr.copyTo" -- \
+            "docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:$revision" \
             --authfile /tmp/authfile.json
         env:
           - name: ATTIC_TOKEN

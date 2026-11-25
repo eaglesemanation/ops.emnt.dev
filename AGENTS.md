@@ -127,7 +127,7 @@ When changing a host, keep secrets out of the Nix store. Use `sops-nix` and `con
 - Forgejo webhooks feed Argo Events sensors.
 - Pushes touching `k8s/apps/` or `k8s/flux` trigger a Flux GitRepository reconcile.
 - Pushes touching `k8s/containers/` trigger Kaniko builds for changed containers. The image is pushed to `forgejo.${CLUSTER_DOMAIN}/public/<container>:<revision>` and `:latest`.
-- Nix container images are built/pushed through the `nix-containers` Argo WorkflowTemplate, using Attic for caching. It discovers every `packages.<name>DockerImage` in the flake and pushes it to `forgejo.${CLUSTER_DOMAIN}/public/<kebab-case name>:latest`, so a new image only needs a package under `nix/containers/`.
+- Nix container images are built/pushed through the `nix-containers` Argo WorkflowTemplate, using Attic for caching. It discovers every `packages.<name>DockerImage` in the flake and pushes it to `forgejo.${CLUSTER_DOMAIN}/public/<kebab-case name>:latest`, so a new image only needs a package under `nix/containers/`. Each build also pushes the Nix store hash of the image derivation output as a tag; since derivations are pure, a run skips images whose output is already tagged in the registry.
 - Renovate runs from an in-cluster CronWorkflow. Its config is `.renovaterc.json5`; the runtime `config.json` lives under `k8s/apps/development/argo-workflows/renovate/`.
 - Renovate schedules updates after 19:00 on Fridays in `America/Toronto`.
 
