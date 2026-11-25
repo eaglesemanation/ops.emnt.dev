@@ -76,6 +76,10 @@ spec:
         command: [bash]
         source: |
           #!/bin/bash
+          # Flux postBuild substitution (k8s/flux/apps.k8s.yaml) rewrites every
+          # brace expression in this file, so shell expansions are written as
+          # $${...} and are unescaped by envsubst at apply time. Plain $var
+          # references are left untouched.
           set -euo pipefail
 
           flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
@@ -83,36 +87,36 @@ spec:
           system="$(nix eval --raw --impure --expr builtins.currentSystem)"
 
           attrs="$(
-            nix eval --raw "${flake}#packages.${system}" \
+            nix eval --raw "$flake#packages.$system" \
               --apply 'packages: builtins.concatStringsSep " " (builtins.attrNames packages)'
           )"
 
           # `nixosBuild` -> `nixos-build`
           kebab-case() {
             local name="$1" out="" char i
-            for ((i = 0; i < ${#name}; i++)); do
-              char="${name:i:1}"
-              if [[ "${char}" == [[:upper:]] ]]; then
-                out+="-${char,,}"
+            for ((i = 0; i < $${#name}; i++)); do
+              char="$${name:i:1}"
+              if [[ "$char" == [[:upper:]] ]]; then
+                out+="-$${char,,}"
               else
-                out+="${char}"
+                out+="$char"
               fi
             done
-            printf '%s' "${out}"
+            printf '%s' "$out"
           }
 
           items=()
-          for attr in ${attrs}; do
-            [[ "${attr}" == *"${suffix}" ]] || continue
-            items+=("{\"attr\":\"${attr}\",\"container\":\"$(kebab-case "${attr%"${suffix}"}")\"}")
+          for attr in $attrs; do
+            [[ "$attr" == *"$suffix" ]] || continue
+            items+=("{\"attr\":\"$attr\",\"container\":\"$(kebab-case "$${attr%"$suffix"}")\"}")
           done
 
-          if [[ "${#items[@]}" -eq 0 ]]; then
-            echo "no '*${suffix}' packages found in ${flake}#packages.${system}" >&2
+          if [[ "$${#items[@]}" -eq 0 ]]; then
+            echo "no '*$suffix' packages found in $flake#packages.$system" >&2
             exit 1
           fi
 
-          printf '[%s]\n' "$(IFS=,; printf '%s' "${items[*]}")" > /tmp/containers.json
+          printf '[%s]\n' "$(IFS=,; printf '%s' "$${items[*]}")" > /tmp/containers.json
 
     - name: build
       inputs:
@@ -139,6 +143,8 @@ spec:
         command: [sh]
         source: |
           #!/bin/sh
+          # See the note in the discover template: $${...} is unescaped by Flux
+          # postBuild substitution, plain $var is not touched.
           set -eux
 
           flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
@@ -147,11 +153,11 @@ spec:
 
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
           attic use default
-          nix build "${flake}#${attr}"
+          nix build "$flake#$attr"
           attic push default result -j 2 || true
 
-          nix run "${flake}#${attr}.copyTo" -- \
-            "${image}" \
+          nix run "$flake#$attr.copyTo" -- \
+            "$image" \
             --authfile /tmp/authfile.json
         env:
           - name: ATTIC_TOKEN
