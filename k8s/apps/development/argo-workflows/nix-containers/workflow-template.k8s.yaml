@@ -73,6 +73,9 @@ spec:
           readOnlyRootFilesystem: false
           runAsUser: 0
           allowPrivilegeEscalation: true
+          # Argo's mainContainer defaults drop all capabilities and nix touches
+          # store permissions when adding paths, so keep this privileged for now.
+          privileged: true
         command: [bash]
         source: |
           #!/bin/bash
