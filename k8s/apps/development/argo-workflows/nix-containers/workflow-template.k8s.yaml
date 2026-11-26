@@ -21,12 +21,9 @@ spec:
           pushed as the kebab-case of the attribute name without this suffix,
           so `nixosBuildDockerImage` becomes `nixos-build`.
         value: DockerImage
-  retryStrategy:
-    limit: 2
-    retryPolicy: Always
-    backoff:
-      duration: 30s
-      factor: 2
+  # Retries are per template on purpose. A retryStrategy at this level also
+  # wraps the entrypoint `dag`, so a single failing image would restart the
+  # whole DAG instead of just that image.
   podSpecPatch: |
     restartPolicy: Never
   templates:
@@ -40,15 +37,37 @@ spec:
     # `discover`, so a run with nothing to do builds nothing.
     - name: dag
       dag:
+        # Wait for every image build instead of failing as soon as the first
+        # one does. The DAG phase is what decides success, and letting the
+        # successful builds finish keeps their `:<revision>` tags around so a
+        # later attempt skips them.
+        failFast: false
         tasks:
           - name: discover
             template: discover
+          # Builds everything the remaining images depend on, but not the
+          # images themselves, and publishes it to attic. The images share
+          # most of their toolchain, so building it once here keeps the
+          # parallel `build` tasks from repeating that work in every pod.
+          # Failure is tolerated: `build` then falls back to doing the work
+          # itself, which is what every run did before this step existed.
+          - name: warm
+            template: warm
+            dependencies:
+              - discover
+            continueOn:
+              failed: true
+            arguments:
+              parameters:
+                - name: attrs
+                  value: "{{tasks.discover.outputs.parameters.attrs}}"
           # Expands into one parallel `build` task per changed image. An empty
           # list leaves the task group in the `Skipped` phase.
           - name: build
             template: build
             dependencies:
               - discover
+              - warm
             withParam: "{{tasks.discover.outputs.parameters.containers}}"
             arguments:
               parameters:
@@ -60,11 +79,22 @@ spec:
                   value: "{{item.revision}}"
 
     - name: discover
+      retryStrategy: &retry
+        limit: 2
+        retryPolicy: Always
+        backoff:
+          duration: 30s
+          factor: 2
       outputs:
         parameters:
           - name: containers
             valueFrom:
               path: /tmp/containers.json
+          - name: attrs
+            description: >-
+              Flake package attributes of the images that still need building.
+            valueFrom:
+              path: /tmp/attrs.txt
       script:
         image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
         resources:
@@ -138,6 +168,7 @@ spec:
 
           items=()
           skipped=()
+          attrs=()
           while read -r attr out_path; do
             [[ -n "$attr" ]] || continue
             container="$(kebab-case "$${attr%"$suffix"}")"
@@ -153,6 +184,7 @@ spec:
               continue
             fi
 
+            attrs+=("$attr")
             items+=("{\"attr\":\"$attr\",\"container\":\"$container\",\"revision\":\"$revision\"}")
           done <<< "$packages"
 
@@ -161,6 +193,11 @@ spec:
           fi
 
           printf '[%s]\n' "$(IFS=,; printf '%s' "$${items[*]}")" > /tmp/containers.json
+          if [[ "$${#attrs[@]}" -gt 0 ]]; then
+            printf '%s\n' "$${attrs[@]}" > /tmp/attrs.txt
+          else
+            : > /tmp/attrs.txt
+          fi
         volumeMounts:
           - name: authfile
             mountPath: /tmp/authfile.json
@@ -170,7 +207,87 @@ spec:
           secret:
             secretName: nix-containers-authfile
 
+    - name: warm
+      retryStrategy: *retry
+      inputs:
+        parameters:
+          - name: attrs
+            description: >-
+              Flake package attributes chosen by `discover`. One per line.
+      script:
+        image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
+        resources:
+          requests:
+            memory: "4Gi"
+            cpu: "1"
+          limits:
+            memory: "8Gi"
+            cpu: "2"
+        securityContext:
+          runAsNonRoot: false
+          readOnlyRootFilesystem: false
+          runAsUser: 0
+          allowPrivilegeEscalation: true
+          privileged: true
+        command: [bash]
+        source: |
+          #!/bin/bash
+          # See the note in the discover template: $${...} is unescaped by Flux
+          # postBuild substitution, plain $var is not touched.
+          set -euo pipefail
+
+          flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
+
+          attrs=()
+          while read -r attr; do
+            [[ -n "$attr" ]] && attrs+=("$attr")
+          done <<< "{{inputs.parameters.attrs}}"
+
+          if [[ "$${#attrs[@]}" -eq 0 ]]; then
+            echo "nothing to warm, every image is already published" >&2
+            exit 0
+          fi
+
+          attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
+          attic use default
+
+          # Instantiate the image derivations. This also writes the .drv files
+          # that nix-store needs below; derivation paths are pure, so no build
+          # happens yet.
+          image_drvs=()
+          for attr in "$${attrs[@]}"; do
+            image_drvs+=("$(nix eval --raw "$flake#$attr.drvPath")")
+          done
+
+          # Every store path needed to build the images. `--include-outputs`
+          # adds the outputs of input derivations, while an image's own output
+          # is not part of its requisites, so the images themselves stay out.
+          # This is the union across images, i.e. the shared build closure.
+          nix-store --query --requisites --include-outputs "$${image_drvs[@]}" \
+            | sort -u \
+            | grep -v '\.drv$' \
+            > /tmp/shared
+          mapfile -t shared < /tmp/shared
+
+          # Realise the closure rather than the images, then publish it. The
+          # `build` tasks keep building the images; they just substitute the
+          # shared parts from attic instead of rebuilding them per pod. Batched
+          # by hand because the image has no xargs.
+          for ((i = 0; i < $${#shared[@]}; i += 64)); do
+            nix-store --realise "$${shared[@]:i:64}" > /dev/null
+          done
+          for ((i = 0; i < $${#shared[@]}; i += 512)); do
+            attic push default -j 2 "$${shared[@]:i:512}" || true
+          done
+        env:
+          - name: ATTIC_TOKEN
+            valueFrom:
+              secretKeyRef:
+                key: token
+                name: attic-creds
+
     - name: build
+      retryStrategy: *retry
       inputs:
         parameters:
           - name: attr
@@ -207,6 +324,15 @@ spec:
           attr="{{inputs.parameters.attr}}"
           image="docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:latest"
           revision="{{inputs.parameters.revision}}"
+
+          # The `:revision` tag is written last, so if it is already there this
+          # image was published by an earlier attempt (or by a concurrent run)
+          # and there is nothing left to do.
+          if skopeo inspect --authfile /tmp/authfile.json \
+            "docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:$revision" >/dev/null 2>&1; then
+            echo "already published, skipping" >&2
+            exit 0
+          fi
 
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
           attic use default
