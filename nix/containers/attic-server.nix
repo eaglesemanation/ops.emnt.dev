@@ -28,7 +28,7 @@
           "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
         ];
         Labels = {
-          "org.opencontainers.image.source" = "https://forgejo.emnt.dev/public/attic";
+          "org.opencontainers.image.source" = "https://github.com/zhaofengli/attic";
         };
       };
     };

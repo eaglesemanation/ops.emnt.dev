@@ -26,7 +26,7 @@
       };
     };
     attic = {
-      url = "git+https://forgejo.emnt.dev/public/attic";
+      url = "github:zhaofengli/attic";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         nixpkgs-stable.follows = "nixpkgs";

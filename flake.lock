@@ -16,26 +16,26 @@
         ]
       },
       "locked": {
-        "lastModified": 1779677236,
-        "narHash": "sha256-dHw8/3ma7UvEYeRLhENzWd3Nee84ubO41PJmMdwMgvU=",
-        "ref": "refs/heads/main",
-        "rev": "6fc99f5fbd088f8196fcbc9e576f09f9c24079b2",
-        "revCount": 428,
-        "type": "git",
-        "url": "https://forgejo.emnt.dev/public/attic"
+        "lastModified": 1783346450,
+        "narHash": "sha256-AyXLhsc2drC+lunm+TB6Xs6XMMJ/m4B1YjMM1N8JXhU=",
+        "owner": "zhaofengli",
+        "repo": "attic",
+        "rev": "7a19204df10d606c5070e6bb72615c3461900c05",
+        "type": "github"
       },
       "original": {
-        "type": "git",
-        "url": "https://forgejo.emnt.dev/public/attic"
+        "owner": "zhaofengli",
+        "repo": "attic",
+        "type": "github"
       }
     },
     "crane": {
       "locked": {
-        "lastModified": 1751562746,
-        "narHash": "sha256-smpugNIkmDeicNz301Ll1bD7nFOty97T79m4GUMUczA=",
+        "lastModified": 1781825982,
+        "narHash": "sha256-SlXKwIRIhrOSAcTjCB3ftPLzJWZStQIPS7J1FlZPnKk=",
         "owner": "ipetkov",
         "repo": "crane",
-        "rev": "aed2020fd3dc26e1e857d4107a5a67a33ab6c1fd",
+        "rev": "469fd08d0bcf6926321fa973c6777fbc87785dd7",
         "type": "github"
       },
       "original": {
@@ -89,11 +89,11 @@
     "flake-compat": {
       "flake": false,
       "locked": {
-        "lastModified": 1747046372,
-        "narHash": "sha256-CIVLLkVgvHYbgI2UpXvIIBJ12HWgX+fjA8Xf8PUmqCY=",
+        "lastModified": 1767039857,
+        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
         "owner": "edolstra",
         "repo": "flake-compat",
-        "rev": "9100a0f413b0c601e0533d1d94ffd501ce2e7885",
+        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
         "type": "github"
       },
       "original": {
