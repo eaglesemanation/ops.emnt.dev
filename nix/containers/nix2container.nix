@@ -35,12 +35,18 @@
             ++ (with pkgs; [
               nix
               bashInteractive
-              gitMinimal
               coreutils
+              gitMinimal
               gnutar
               gzip
               openssh
               xz
+              # Standard text utilities used by the nix-containers workflow
+              # scripts; nix and coreutils do not provide them.
+              findutils # xargs
+              gnugrep
+              gnused
+              jq
             ]);
           pathsToLink = ["/bin" "/etc" "/lib" "/share/nix"];
           extraOutputsToInstall = [];

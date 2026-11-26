@@ -154,19 +154,10 @@ spec:
 
           # `nixosBuild` -> `nixos-build`
           kebab-case() {
-            local name="$1" out="" char i
-            for ((i = 0; i < $${#name}; i++)); do
-              char="$${name:i:1}"
-              if [[ "$char" == [[:upper:]] ]]; then
-                out+="-$${char,,}"
-              else
-                out+="$char"
-              fi
-            done
-            printf '%s' "$out"
+            printf '%s' "$1" | sed -E 's/([A-Z])/-\l\1/g'
           }
 
-          items=()
+          : > /tmp/containers.jsonl
           skipped=()
           attrs=()
           while read -r attr out_path; do
@@ -185,14 +176,17 @@ spec:
             fi
 
             attrs+=("$attr")
-            items+=("{\"attr\":\"$attr\",\"container\":\"$container\",\"revision\":\"$revision\"}")
+            jq -cn --arg attr "$attr" --arg container "$container" --arg revision "$revision" \
+              '{attr: $attr, container: $container, revision: $revision}' >> /tmp/containers.jsonl
           done <<< "$packages"
 
           if [[ "$${#skipped[@]}" -gt 0 ]]; then
             echo "already published, skipping: $${skipped[*]}" >&2
           fi
 
-          printf '[%s]\n' "$(IFS=,; printf '%s' "$${items[*]}")" > /tmp/containers.json
+          # Slurping the per-item objects gives the JSON list `withParam`
+          # expects, and `[]` when every image was already published.
+          jq -s . /tmp/containers.jsonl > /tmp/containers.json
           if [[ "$${#attrs[@]}" -gt 0 ]]; then
             printf '%s\n' "$${attrs[@]}" > /tmp/attrs.txt
           else
@@ -267,18 +261,12 @@ spec:
             | sort -u \
             | grep -v '\.drv$' \
             > /tmp/shared
-          mapfile -t shared < /tmp/shared
 
           # Realise the closure rather than the images, then publish it. The
           # `build` tasks keep building the images; they just substitute the
-          # shared parts from attic instead of rebuilding them per pod. Batched
-          # by hand because the image has no xargs.
-          for ((i = 0; i < $${#shared[@]}; i += 64)); do
-            nix-store --realise "$${shared[@]:i:64}" > /dev/null
-          done
-          for ((i = 0; i < $${#shared[@]}; i += 512)); do
-            attic push default -j 2 "$${shared[@]:i:512}" || true
-          done
+          # shared parts from attic instead of rebuilding them per pod.
+          xargs -r -n 64 nix-store --realise < /tmp/shared > /dev/null
+          xargs -r -n 512 attic push default -j 2 < /tmp/shared || true
         env:
           - name: ATTIC_TOKEN
             valueFrom:
