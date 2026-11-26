@@ -31,7 +31,9 @@ spec:
     # adding a `packages.<name>DockerImage` package under `nix/containers/`;
     # no change to this workflow is needed. `nix2containerDockerImage` is
     # discovered too, but the pod image used here still has to be bootstrapped
-    # (built and pushed) out of band the very first time.
+    # (built and pushed) out of band the very first time, and whenever it gains
+    # tools the scripts below start depending on; run `build` as the entrypoint
+    # with `attr=nix2containerDockerImage` for that.
     #
     # Images whose derivation output is already published are filtered out in
     # `discover`, so a run with nothing to do builds nothing.
@@ -281,11 +283,16 @@ spec:
           - name: attr
             description: Flake package that produces the OCI image.
           - name: container
-            description: Repository name to push to, under the Forgejo public org.
+            description: >-
+              Repository name to push to, under the Forgejo public org. Derived
+              from `attr` when empty, so the template can be run on its own.
+            value: ""
           - name: revision
             description: >-
               Nix store hash of the image derivation output, also pushed as an
               extra tag so later runs can tell this image is already published.
+              Derived from `attr` when empty.
+            value: ""
       script:
         image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
         resources:
@@ -301,23 +308,53 @@ spec:
           runAsUser: 0
           allowPrivilegeEscalation: true
           privileged: true
-        command: [sh]
+        command: [bash]
         source: |
-          #!/bin/sh
+          #!/bin/bash
           # See the note in the discover template: $${...} is unescaped by Flux
           # postBuild substitution, plain $var is not touched.
           set -eux
 
+          # `nixosBuild` -> `nixos-build`
+          kebab-case() {
+            local s="$1" out="" c i
+            for ((i = 0; i < $${#s}; i++)); do
+              c="$${s:i:1}"
+              if [[ "$c" == [[:upper:]] ]]; then
+                out+="-$${c,,}"
+              else
+                out+="$c"
+              fi
+            done
+            printf '%s' "$out"
+          }
+
           flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
+          suffix="{{workflow.parameters.attrSuffix}}"
           attr="{{inputs.parameters.attr}}"
-          image="docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:latest"
+          container="{{inputs.parameters.container}}"
           revision="{{inputs.parameters.revision}}"
+
+          # `discover` passes both, but when this template is used as a
+          # standalone entry point they are derived from the flake here. Keep
+          # this bash-only: it also runs against the currently published image
+          # (to bootstrap a new one), which may predate tools like sed/grep.
+          if [ -z "$container" ]; then
+            container="$(kebab-case "$${attr%"$suffix"}")"
+          fi
+          if [ -z "$revision" ]; then
+            out_path="$(nix eval --raw "$flake#$attr.outPath")"
+            store_name="$${out_path##*/}"
+            revision="$${store_name%%-*}"
+          fi
+
+          image="docker://forgejo.${CLUSTER_DOMAIN}/public/$container:latest"
 
           # The `:revision` tag is written last, so if it is already there this
           # image was published by an earlier attempt (or by a concurrent run)
           # and there is nothing left to do.
           if skopeo inspect --authfile /tmp/authfile.json \
-            "docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:$revision" >/dev/null 2>&1; then
+            "docker://forgejo.${CLUSTER_DOMAIN}/public/$container:$revision" >/dev/null 2>&1; then
             echo "already published, skipping" >&2
             exit 0
           fi
@@ -335,7 +372,7 @@ spec:
           # failure here only causes a redundant rebuild next run, never a
           # stale `:latest`.
           nix run "$flake#$attr.copyTo" -- \
-            "docker://forgejo.${CLUSTER_DOMAIN}/public/{{inputs.parameters.container}}:$revision" \
+            "docker://forgejo.${CLUSTER_DOMAIN}/public/$container:$revision" \
             --authfile /tmp/authfile.json
         env:
           - name: ATTIC_TOKEN
