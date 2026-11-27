@@ -349,7 +349,10 @@ spec:
 
           attic login --set-default default https://attic.${CLUSTER_DOMAIN} $ATTIC_TOKEN
           attic use default
-          nix build "$flake#$attr"
+          # Nix only shows the last 25 lines of a failing derivation's log
+          # (`log-lines`). Raise it so failures (including dependency failures)
+          # print their whole log, without streaming logs of successful builds.
+          nix build "$flake#$attr" --log-lines 100000
           attic push default result -j 2 || true
 
           nix run "$flake#$attr.copyTo" -- \
