@@ -21,6 +21,13 @@ spec:
           pushed as the kebab-case of the attribute name without this suffix,
           so `nixosBuildDockerImage` becomes `nixos-build`.
         value: DockerImage
+  # Toolchain image for every script template. Pinned to the derivation tag
+  # `build` pushed for it, because `:latest` can resolve to a stale image on
+  # the nodes. Bump this when `nix2container` is rebuilt (its `:<revision>`
+  # tag is the derivation hash).
+  templateDefaults:
+    script:
+      image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:s6j793rcx5f5gb911jqjlk8k5qzz7061
   # Retries are per template on purpose. A retryStrategy at this level also
   # wraps the entrypoint `dag`, so a single failing image would restart the
   # whole DAG instead of just that image.
@@ -98,7 +105,6 @@ spec:
             valueFrom:
               path: /tmp/attrs.txt
       script:
-        image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
         resources:
           requests:
             memory: "1Gi"
@@ -211,7 +217,6 @@ spec:
             description: >-
               Flake package attributes chosen by `discover`. One per line.
       script:
-        image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
         resources:
           requests:
             memory: "4Gi"
@@ -294,7 +299,6 @@ spec:
               Derived from `attr` when empty.
             value: ""
       script:
-        image: forgejo.${CLUSTER_DOMAIN}/public/nix2container:latest
         resources:
           requests:
             memory: "4Gi"
@@ -308,26 +312,12 @@ spec:
           runAsUser: 0
           allowPrivilegeEscalation: true
           privileged: true
-        command: [bash]
+        command: [sh]
         source: |
-          #!/bin/bash
+          #!/bin/sh
           # See the note in the discover template: $${...} is unescaped by Flux
           # postBuild substitution, plain $var is not touched.
           set -eux
-
-          # `nixosBuild` -> `nixos-build`
-          kebab-case() {
-            local s="$1" out="" c i
-            for ((i = 0; i < $${#s}; i++)); do
-              c="$${s:i:1}"
-              if [[ "$c" == [[:upper:]] ]]; then
-                out+="-$${c,,}"
-              else
-                out+="$c"
-              fi
-            done
-            printf '%s' "$out"
-          }
 
           flake="git+{{workflow.parameters.repo}}?ref={{workflow.parameters.ref}}"
           suffix="{{workflow.parameters.attrSuffix}}"
@@ -336,11 +326,9 @@ spec:
           revision="{{inputs.parameters.revision}}"
 
           # `discover` passes both, but when this template is used as a
-          # standalone entry point they are derived from the flake here. Keep
-          # this bash-only: it also runs against the currently published image
-          # (to bootstrap a new one), which may predate tools like sed/grep.
+          # standalone entry point they are derived from the flake here.
           if [ -z "$container" ]; then
-            container="$(kebab-case "$${attr%"$suffix"}")"
+            container="$(printf '%s' "$${attr%"$suffix"}" | sed -E 's/([A-Z])/-\l\1/g')"
           fi
           if [ -z "$revision" ]; then
             out_path="$(nix eval --raw "$flake#$attr.outPath")"
